@@ -1,0 +1,1156 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>알파CD 시장 진입 전략 보고서</title>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Noto+Sans+KR:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <style>
+        /* Global Reset & Base Styles */
+        html, body {
+            margin: 0; padding: 0; overflow: hidden;
+            background: #1a1a1a; width: 100%; height: 100%;
+            font-family: 'Noto Sans KR', sans-serif;
+            color: #fff;
+            font-size: 18px; /* Base body font size */
+            font-weight: 400; /* Regular */
+            line-height: 1.6;
+        }
+        strong { font-weight: 700; } /* Semi-bold */
+
+        /* Slide Container CSS (Exact as provided) */
+        .slide {
+            position: fixed; top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            display: none;
+            align-items: center; justify-content: center;
+            overflow: hidden;
+        }
+        .slide.active { display: flex; }
+        .slide-inner {
+            width: 1600px; height: 800px;
+            position: relative; overflow: hidden;
+            box-sizing: border-box;
+            background-color: #1a1a1a; /* Ensure inner background is consistent */
+        }
+        .slide-header {
+            position: absolute; top: 0; left: 0; right: 0;
+            height: 100px; padding: 0 80px;
+            display: flex; align-items: flex-end; padding-bottom: 16px;
+            box-sizing: border-box;
+        }
+        .slide-body {
+            position: absolute; top: 100px; left: 0; right: 0;
+            bottom: 50px; padding: 20px 80px 0;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+        .slide-footer {
+            position: absolute; bottom: 0; left: 0; right: 0;
+            height: 50px; padding: 0 80px;
+            display: flex; align-items: center; justify-content: flex-end;
+            font-size: 12px; opacity: 0.5;
+            box-sizing: border-box;
+        }
+
+        /* Typography */
+        h1 { /* 대제목: 44px Bold */
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 44px;
+            font-weight: 900;
+            margin: 0;
+        }
+        h2 { /* 소제목: 24px Semi-bold */
+            font-size: 24px;
+            font-weight: 700;
+            margin: 0;
+        }
+        .caption { /* 캡션: 13px Light */
+            font-size: 13px;
+            font-weight: 300;
+            line-height: 1.5;
+        }
+        .text-regular {
+            font-size: 18px;
+            font-weight: 400;
+        }
+        .text-small {
+            font-size: 14px;
+            font-weight: 400;
+        }
+
+        /* Accent Color */
+        :root {
+            --accent-color: #FF5722;
+            --bg-color: #1a1a1a;
+        }
+        .accent-text { color: var(--accent-color); }
+        .accent-bg { background-color: var(--accent-color); }
+        .accent-border-left { border-left-color: var(--accent-color); }
+        .accent-border-top { border-top-color: var(--accent-color); }
+
+        /* Insight Box (Common Component) */
+        .insight-box {
+            border-left: 3px solid var(--accent-color);
+            padding: 10px 16px;
+            background: rgba(255, 87, 34, 0.07); /* Using RGB from accent color */
+            margin-bottom: 0;
+            flex-shrink: 0; /* Important for flex column layout */
+            margin-top: auto; /* Pushes to bottom in flex column */
+        }
+        .insight-box-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin: 0 0 3px;
+        }
+        .insight-box-content {
+            font-size: 13px;
+            line-height: 1.5;
+            margin: 0;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+
+        /* Navigation UI Styles */
+        .nav-button {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 24px;
+            border-radius: 5px;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+        .nav-button:hover { opacity: 1; }
+        #nav-prev { left: 16px; }
+        #nav-next { right: 16px; }
+        #slide-num-display {
+            position: fixed;
+            bottom: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+            color: #fff;
+            font-size: 14px;
+            opacity: 0.7;
+        }
+        #fullscreen-button {
+            position: fixed;
+            top: 16px;
+            right: 16px;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border: none;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 14px;
+            border-radius: 5px;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+        #fullscreen-button:hover { opacity: 1; }
+
+        /* Specific slide styles */
+        .section-divider-chapter-num { font-family: 'Archivo Black', sans-serif; }
+        .big-number-value { font-family: 'Archivo Black', sans-serif; }
+        .card-grid-item a { font-family: 'Noto Sans KR', sans-serif; } /* Ensure brand names are not Archivo Black */
+        .bubble-chart-label { font-family: 'Noto Sans KR', sans-serif; }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation UI -->
+    <button id="nav-prev" class="nav-button" onclick="show(cur-1)">&#8592;</button>
+    <button id="nav-next" class="nav-button" onclick="show(cur+1)">&#8594;</button>
+    <div id="slide-num-display"><span id="slide-num">1 / 15</span></div>
+    <button id="fullscreen-button" onclick="document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen();">전체화면</button>
+
+    <!-- Slide 1: Cover -->
+    <div class="slide" id="slide-1">
+        <div class="slide-inner" style="display:flex; align-items:center; justify-content:center; flex-direction:column; text-align:center;">
+            <h1 style="font-size:64px; margin-bottom:16px;">알파CD 시장 진입 전략 보고서</h1>
+            <h2 style="font-size:36px; font-weight:400; opacity:0.9;">NPD 시장 분석</h2>
+            <p class="caption" style="margin-top:24px; opacity:0.7;">2026년 4월 14일</p>
+            <div style="width:100px; height:4px; background:var(--accent-color); margin-top:32px;"></div>
+            <p class="text-regular" style="margin-top:32px; font-weight:700; color:var(--accent-color); font-size:24px;">변동성 높은 시장 속, 전략적 접근을 통한 새로운 기회 모색</p>
+        </div>
+    </div>
+
+    <!-- Slide 2: Section Divider 01 -->
+    <div class="slide" id="slide-2">
+      <div class="slide-inner" style="background:var(--accent-color); display:flex; align-items:center; justify-content:center; flex-direction:column; text-align:center;">
+        <div style="font-size:13px; letter-spacing:0.2em; text-transform:uppercase; opacity:0.6; margin-bottom:16px; color:#fff;">CHAPTER 01</div>
+        <div class="section-divider-chapter-num" style="font-size:64px; font-weight:900; color:#fff; line-height:1;">01</div>
+        <div style="font-size:32px; font-weight:400; color:#fff; margin-top:16px; opacity:0.9;">시장 현황</div>
+        <div style="width:60px; height:3px; background:#fff; margin-top:24px;"></div>
+      </div>
+    </div>
+
+    <!-- Slide 3: Big Number -->
+    <div class="slide" id="slide-3">
+        <div class="slide-inner">
+            <div class="slide-header">
+                <h2>01 시장 현황 | 시장 기회 스코어카드</h2>
+            </div>
+            <div class="slide-body" style="display:flex; flex-direction:column; gap:0;">
+                <div style="display:flex; gap:16px; align-items:stretch; flex:1; min-height:0;">
+                    <!-- Card 1: 시장 성장성 -->
+                    <div style="flex:1; padding:18px 20px; display:flex; flex-direction:column; gap:4px; border:1px solid rgba(255,255,255,0.1); border-radius:6px; overflow:hidden;">
+                        <h3 style="font-size:14px; opacity:0.65; margin:0 0 4px; font-weight:400;">시장 성장성 (Market Growth)</h3>
+                        <div class="big-number-value" style="font-size:48px; font-weight:900; line-height:1; margin:0 0 6px; color:var(--accent-color);">2/5</div>
+                        <p class="caption" style="line-height:1.5; opacity:0.75; margin:0 0 12px; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
+                            최근 1년간 검색량 급감 추세로, 높은 성장성은 기대하기 어려움.
+                        </p>
+                        <div style="flex:1; min-height:80px;">
+                            <svg style="width:100%;height:80px;" viewBox="0 0 200 60" preserveAspectRatio="none">
+                                <defs><linearGradient id="mg1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#FF5722" stop-opacity="0.3"/><stop offset="100%" stop-color="#FF5722" stop-opacity="0"/></linearGradient></defs>
+                                <!-- Data points for a declining trend: 100, 80, 60, 40, 20, 10 -->
+                                <polygon points="0,60 0,10 40,20 80,30 120,40 160,50 200,60" fill="url(#mg1)"/>
+                                <polyline points="0,10 40,20 80,30 120,40 160,50 200,55" fill="none" stroke="#FF5722" stroke-width="2"/>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- Card 2: 소비자 관심도 -->
+                    <div style="flex:1; padding:18px 20px; display:flex; flex-direction:column; gap:4px; border:1px solid rgba(255,255,255,0.1); border-radius:6px; overflow:hidden;">
+                        <h3 style="font-size:14px; opacity:0.65; margin:0 0 4px; font-weight:400;">소비자 관심도 (Demand Potential)</h3>
+                        <div class="big-number-value" style="font-size:48px; font-weight:900; line-height:1; margin:0 0 6px; color:var(--accent-color);">74,960<span style="font-size:24px; font-weight:400; opacity:0.7;">회</span></div>
+                        <p class="caption" style="line-height:1.5; opacity:0.75; margin:0 0 12px; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
+                            최근 급격한 검색량 하락은 우려되나, 2년 전 대비 여전히 높은 관심 수준 유지.
+                        </p>
+                        <div style="display:flex; align-items:flex-end; gap:10px; flex:1; padding-top:4px;">
+                            <!-- Min: 0 (index 0.0), Avg: ~267,714 (index 35.0), Max: ~764,898 (index 100.0) -->
+                            <!-- Max bar height = 50px -->
+                            <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;">
+                                <div style="font-size:9px; opacity:0.5;">최저</div>
+                                <div style="width:100%; background:var(--accent-color); opacity:0.35; height:0px; border-radius:2px 2px 0 0;"></div>
+                                <div style="font-size:10px; white-space:nowrap;">0회</div>
+                            </div>
+                            <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;">
+                                <div style="font-size:9px; opacity:0.5;">평균</div>
+                                <div style="width:100%; background:var(--accent-color); opacity:0.65; height:17.5px; border-radius:2px 2px 0 0;"></div>
+                                <div style="font-size:10px; white-space:nowrap;">26.7만회</div>
+                            </div>
+                            <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;">
+                                <div style="font-size:9px; opacity:0.5; color:var(--accent-color);">최고</div>
+                                <div style="width:100%; background:var(--accent-color); height:50px; border-radius:2px 2px 0 0;"></div>
+                                <div style="font-size:10px; white-space:nowrap; color:var(--accent-color);">76.4만회</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 3: 전체시장 규모 및 트렌드 -->
+                    <div style="flex:1; padding:18px 20px; display:flex; flex-direction:column; gap:4px; border:1px solid rgba(255,255,255,0.1); border-radius:6px; overflow:hidden;">
+                        <h3 style="font-size:14px; opacity:0.65; margin:0 0 4px; font-weight:400;">전체시장 규모 및 트렌드 (Market Size)</h3>
+                        <div class="big-number-value" style="font-size:48px; font-weight:900; line-height:1; margin:0 0 6px; color:var(--accent-color);">부재</div>
+                        <p class="caption" style="line-height:1.5; opacity:0.75; margin:0 0 12px; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
+                            정확한 통계 부재하나, 관련 뉴스 기반으로 잠재적 시장 규모는 존재.
+                        </p>
+                        <div style="display:flex; flex-direction:column; gap:5px; flex:1; overflow:hidden;">
+                            <div style="font-size:11px; line-height:1.4; padding:5px 8px;
+                               background:rgba(255,255,255,0.04); border-radius:3px; border-left:2px solid var(--accent-color);
+                               color:inherit; display:block;">
+                              공식적인 시장 규모 통계는 부재합니다.
+                            </div>
+                            <div style="font-size:11px; line-height:1.4; padding:5px 8px;
+                               background:rgba(255,255,255,0.04); border-radius:3px; border-left:2px solid var(--accent-color);
+                               color:inherit; display:block;">
+                              관련 뉴스 발췌 수치 혼재 (예: 8,121억원, 18조원).
+                            </div>
+                            <div style="font-size:11px; line-height:1.4; padding:5px 8px;
+                               background:rgba(255,255,255,0.04); border-radius:3px; border-left:2px solid var(--accent-color);
+                               color:inherit; display:block;">
+                              '알파CD' 건강기능식품 시장은 수백억~수천억원 규모 추정.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="insight-box" style="margin-top:12px;">
+                    <div class="insight-box-title">종합 인사이트</div>
+                    <div class="insight-box-content">
+                        정체/하락 국면, 높은 경쟁 강도, 규제 불확실성으로 인해 시장 기회는 제한적입니다. 전략적 접근이 필수적입니다.
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                출처: [1] 네이버 데이터랩, [2] 네이버 검색광고 키워드도구, [4] lawissue.co.kr
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 4: Line Chart -->
+    <div class="slide" id="slide-4">
+        <div class="slide-inner">
+            <div class="slide-header">
+                <h2>01 시장 현황 | 검색 트렌드 및 변동성 분석</h2>
+            </div>
+            <div class="slide-body" style="display:flex; flex-direction:column;">
+                <div style="flex:1; min-height:0; position:relative;">
+                    <canvas id="trendChart"></canvas>
+                </div>
+                <div style="display:flex; gap:12px; flex-shrink:0; margin-top:12px;">
+                    <div class="insight-box" style="flex:1; margin-top:0;">
+                        <div class="insight-box-title">급격한 상승 후 하락세</div>
+                        <div class="insight-box-content">
+                            2025년 7월 최고점(100.0) 이후 검색량이 크게 감소하며 시장 변동성이 증가하고 있습니다.
+                        </div>
+                    </div>
+                    <div class="insight-box" style="flex:1; margin-top:0;">
+                        <div class="insight-box-title">잠재적 관심 유지</div>
+                        <div class="insight-box-content">
+                            2년 전 대비 높은 관심 수준은 유지되나, 새로운 모멘텀 없이는 초기 성장세를 이어가기 어렵습니다.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                출처: [1] 네이버 데이터랩 검색어트렌드 (2024.04 ~ 2026.04)
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 5: Section Divider 02 -->
+    <div class="slide" id="slide-5">
+      <div class="slide-inner" style="background:var(--accent-color); display:flex; align-items:center; justify-content:center; flex-direction:column; text-align:center;">
+        <div style="font-size:13px; letter-spacing:0.2em; text-transform:uppercase; opacity:0.6; margin-bottom:16px; color:#fff;">CHAPTER 02</div>
+        <div class="section-divider-chapter-num" style="font-size:64px; font-weight:900; color:#fff; line-height:1;">02</div>
+        <div style="font-size:32px; font-weight:400; color:#fff; margin-top:16px; opacity:0.9;">경쟁사 분석</div>
+        <div style="width:60px; height:3px; background:#fff; margin-top:24px;"></div>
+      </div>
+    </div>
+
+    <!-- Slide 6: Card Grid -->
+    <div class="slide" id="slide-6">
+        <div class="slide-inner">
+            <div class="slide-header">
+                <h2>02 경쟁사 분석 | TOP 10 브랜드 현황</h2>
+            </div>
+            <div class="slide-body" style="display:flex; flex-direction:column;">
+                <div style="display:grid; grid-template-columns:repeat(5,1fr); gap:10px; flex:1; min-height:0;">
+                    <!-- Item 1 -->
+                    <div class="card-grid-item" style="padding:10px 12px; overflow:hidden; border:1px solid rgba(255,255,255,0.12); border-radius:6px; position:relative; display:flex; flex-direction:column;">
+                        <div style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">1위</div>
+                        <a href="https://search.shopping.naver.com/search/all?query=알파CD+알파CD" target="_blank" style="font-size:13px; font-weight:700; color:var(--accent-color); margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+                            알파CD
+                        </a>
+                        <span class="caption" style="font-size:12px; margin-bottom:3px; font-weight:400;">9,800원 (14포)</span>
+                        <span class="caption" style="font-size:11px; opacity:0.55; margin-bottom:5px;">제형: 분말스틱</span>
+                        <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
+                        <p class="caption" style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; flex:1;">
+                            '제로컷' 키워드로 체중 관리 강조. 고함량 알파시클로덱스트린 함유. 가성비 포지셔닝.
+                        </p>
+                    </div>
+                    <!-- Item 2 -->
+                    <div class="card-grid-item" style="padding:10px 12px; overflow:hidden; border:1px solid rgba(255,255,255,0.12); border-radius:6px; position:relative; display:flex; flex-direction:column;">
+                        <div style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">2위</div>
+                        <a href="https://search.shopping.naver.com/search/all?query=알파CD+헬스프랜드" target="_blank" style="font-size:13px; font-weight:700; color:var(--accent-color); margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+                            헬스프랜드
+                        </a>
+                        <span class="caption" style="font-size:12px; margin-bottom:3px; font-weight:400;">26,260원 (30포)</span>
+                        <span class="caption" style="font-size:11px; opacity:0.55; margin-bottom:5px;">제형: 분말스틱</span>
+                        <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
+                        <p class="caption" style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; flex:1;">
+                            '핏라인 부스트'로 체형 관리 및 활력 증진 강조. 중간 가격대 포지셔닝.
+                        </p>
+                    </div>
+                    <!-- Item 3 -->
+                    <div class="card-grid-item" style="padding:10px 12px; overflow:hidden; border:1px solid rgba(255,255,255,0.12); border-radius:6px; position:relative; display:flex; flex-direction:column;">
+                        <div style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">3위</div>
+                        <a href="https://search.shopping.naver.com/search/all?query=알파CD+어스빌" target="_blank" style="font-size:13px; font-weight:700; color:var(--accent-color); margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+                            어스빌
+                        </a>
+                        <span class="caption" style="font-size:12px; margin-bottom:3px; font-weight:400;">35,400원 (60캡슐)</span>
+                        <span class="caption" style="font-size:11px; opacity:0.55; margin-bottom:5px;">제형: 캡슐</span>
+                        <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
+                        <p class="caption" style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; flex:1;">
+                            포스콜린, 파비플로라 등 복합 성분 강조. 다중 효능 및 합리적 가격.
+                        </p>
+                    </div>
+                    <!-- Item 4 -->
+                    <div class="card-grid-item" style="padding:10px 12px; overflow:hidden; border:1px solid rgba(255,255,255,0.12); border-radius:6px; position:relative; display:flex; flex-direction:column;">
+                        <div style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">4위</div>
+                        <a href="https://search.shopping.naver.com/search/all?query=알파CD+락티브" target="_blank" style="font-size:13px; font-weight:700; color:var(--accent-color); margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+                            락티브
+                        </a>
+                        <span class="caption" style="font-size:12px; margin-bottom:3px; font-weight:400;">43,900원 (98일분)</span>
+                        <span class="caption" style="font-size:11px; opacity:0.55; margin-bottom:5px;">제형: 분말스틱</span>
+                        <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
+                        <p class="caption" style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; flex:1;">
+                            고함량 알파시클로덱스트린 강조. 장기 섭취를 위한 대용량 구성.
+                        </p>
+                    </div>
+                    <!-- Item 5 -->
+                    <div class="card-grid-item" style="padding:10px 12px; overflow:hidden; border:1px solid rgba(255,255,255,0.12); border-radius:6px; position:relative; display:flex; flex-direction:column;">
+                        <div style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">5위</div>
+                        <a href="https://search.shopping.naver.com/search/all?query=알파CD+골든허브" target="_blank" style="font-size:13px; font-weight:700; color:var(--accent-color); margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+                            골든허브
+                        </a>
+                        <span class="caption" style="font-size:12px; margin-bottom:3px; font-weight:400;">38,080원 (90포)</span>
+                        <span class="caption" style="font-size:11px; opacity:0.55; margin-bottom:5px;">제형: 분말스틱</span>
+                        <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
+                        <p class="caption" style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; flex:1;">
+                            대용량 구성에 비타민C 고함량. 원데이 섭취 편의성 강조.
+                        </p>
+                    </div>
+                    <!-- Item 6 -->
+                    <div class="card-grid-item" style="padding:10px 12px; overflow:hidden; border:1px solid rgba(255,255,255,0.12); border-radius:6px; position:relative; display:flex; flex-direction:column;">
+                        <div style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">6위</div>
+                        <a href="https://search.shopping.naver.com/search/all?query=알파CD+자주가게" target="_blank" style="font-size:13px; font-weight:700; color:var(--accent-color); margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+                            자주가게
+                        </a>
+                        <span class="caption" style="font-size:12px; margin-bottom:3px; font-weight:400;">29,800원 (14포 x 3개)</span>
+                        <span class="caption" style="font-size:11px; opacity:0.55; margin-bottom:5px;">제형: 분말스틱</span>
+                        <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
+                        <p class="caption" style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; flex:1;">
+                            '칼로이지' 키워드로 다이어트 보조 강조. 편리한 개별 포장.
+                        </p>
+                    </div>
+                    <!-- Item 7 -->
+                    <div class="card-grid-item" style="padding:10px 12px; overflow:hidden; border:1px solid rgba(255,255,255,0.12); border-radius:6px; position:relative; display:flex; flex-direction:column;">
+                        <div style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">7위</div>
+                        <a href="https://search.shopping.naver.com/search/all?query=알파CD+헬로바이오" target="_blank" style="font-size:13px; font-weight:700; color:var(--accent-color); margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+                            헬로바이오
+                        </a>
+                        <span class="caption" style="font-size:12px; margin-bottom:3px; font-weight:400;">19,900원 (14포 x 6개)</span>
+                        <span class="caption" style="font-size:11px; opacity:0.55; margin-bottom:5px;">제형: 분말스틱</span>
+                        <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
+                        <p class="caption" style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; flex:1;">
+                            '원데이핏'으로 하루 한 포 간편 섭취 강조. 난소화성말토덱스트린 함유.
+                        </p>
+                    </div>
+                    <!-- Item 8 -->
+                    <div class="card-grid-item" style="padding:10px 12px; overflow:hidden; border:1px solid rgba(255,255,255,0.12); border-radius:6px; position:relative; display:flex; flex-direction:column;">
+                        <div style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">8위</div>
+                        <a href="https://search.shopping.naver.com/search/all?query=알파CD+바디닥터스" target="_blank" style="font-size:13px; font-weight:700; color:var(--accent-color); margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+                            바디닥터스
+                        </a>
+                        <span class="caption" style="font-size:12px; margin-bottom:3px; font-weight:400;">26,140원 (14포 x 6개)</span>
+                        <span class="caption" style="font-size:11px; opacity:0.55; margin-bottom:5px;">제형: 분말스틱</span>
+                        <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
+                        <p class="caption" style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; flex:1;">
+                            '원데이 핏'으로 간편한 체중 관리 보조. 콜마비앤에이치 제조.
+                        </p>
+                    </div>
+                    <!-- Item 9 -->
+                    <div class="card-grid-item" style="padding:10px 12px; overflow:hidden; border:1px solid rgba(255,255,255,0.12); border-radius:6px; position:relative; display:flex; flex-direction:column;">
+                        <div style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">9위</div>
+                        <a href="https://search.shopping.naver.com/search/all?query=알파CD+한국제약" target="_blank" style="font-size:13px; font-weight:700; color:var(--accent-color); margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+                            알파CD (한국제약)
+                        </a>
+                        <span class="caption" style="font-size:12px; margin-bottom:3px; font-weight:400;">46,570원 (60정 x 4개)</span>
+                        <span class="caption" style="font-size:11px; opacity:0.55; margin-bottom:5px;">제형: 정제</span>
+                        <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
+                        <p class="caption" style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; flex:1;">
+                            2000 MAX 고함량 정제 형태. 간편한 섭취와 높은 함량 강조.
+                        </p>
+                    </div>
+                    <!-- Item 10 -->
+                    <div class="card-grid-item" style="padding:10px 12px; overflow:hidden; border:1px solid rgba(255,255,255,0.12); border-radius:6px; position:relative; display:flex; flex-direction:column;">
+                        <div style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">10위</div>
+                        <a href="https://search.shopping.naver.com/search/all?query=알파CD+뉴트리오닉" target="_blank" style="font-size:13px; font-weight:700; color:var(--accent-color); margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+                            뉴트리오닉
+                        </a>
+                        <span class="caption" style="font-size:12px; margin-bottom:3px; font-weight:400;">89,400원 (14포 x 3개)</span>
+                        <span class="caption" style="font-size:11px; opacity:0.55; margin-bottom:5px;">제형: 분말스틱</span>
+                        <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
+                        <p class="caption" style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; flex:1;">
+                            알파 CD 4500 고함량 제품. 높은 가격대로 프리미엄 포지셔닝.
+                        </p>
+                    </div>
+                </div>
+                <div class="insight-box" style="margin-top:12px;">
+                    <div class="insight-box-title">핵심 인사이트</div>
+                    <div class="insight-box-content">
+                        분말 스틱 제형이 시장을 주도하며, 다양한 중소 브랜드들이 가격 경쟁을 펼치는 경쟁 환경입니다.
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                출처: [3] 네이버 쇼핑 검색결과 (TOP 10 브랜드 기준)
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 7: Bubble Chart -->
+    <div class="slide" id="slide-7">
+        <div class="slide-inner">
+            <div class="slide-header">
+                <h2>02 경쟁사 분석 | 경쟁사 포지셔닝 맵</h2>
+            </div>
+            <div class="slide-body" style="display:flex; flex-direction:column;">
+                <div style="display:flex; align-items:center; gap:20px; flex:1; min-height:0;">
+                    <div style="position:relative; width:600px; height:480px; flex-shrink:0; align-self:center;
+                                 border-left:2px solid rgba(255,255,255,0.4); border-bottom:2px solid rgba(255,255,255,0.4);
+                                 overflow:visible;">
+                        <!-- Grid lines -->
+                        <div style="position:absolute; left:50%; top:0; height:100%; border-left:1px dashed rgba(255,255,255,0.2); pointer-events:none;"></div>
+                        <div style="position:absolute; top:50%; left:0; width:100%; border-top:1px dashed rgba(255,255,255,0.2); pointer-events:none;"></div>
+
+                        <!-- Y-axis labels (Brand Recognition) -->
+                        <div style="position:absolute; right:100%; margin-right:6px; bottom:0%; font-size:10px; opacity:0.5; transform:translateY(50%);">0%</div>
+                        <div style="position:absolute; right:100%; margin-right:6px; bottom:25%; font-size:10px; opacity:0.5; transform:translateY(50%);">25%</div>
+                        <div style="position:absolute; right:100%; margin-right:6px; bottom:50%; font-size:10px; opacity:0.5; transform:translateY(50%);">50%</div>
+                        <div style="position:absolute; right:100%; margin-right:6px; bottom:75%; font-size:10px; opacity:0.5; transform:translateY(50%);">75%</div>
+                        <div style="position:absolute; right:100%; margin-right:6px; bottom:100%; font-size:10px; opacity:0.5; transform:translateY(50%);">100%</div>
+                        <div style="position:absolute; right:100%; margin-right:40px; top:50%; writing-mode:vertical-rl; transform:translateY(-50%); font-size:11px; white-space:nowrap; text-align:center;">브랜드 인지도</div>
+
+                        <!-- X-axis labels (Monthly Price) -->
+                        <div style="position:absolute; top:100%; margin-top:6px; left:10%; transform:translateX(-50%); font-size:10px; opacity:0.5;">1만원</div>
+                        <div style="position:absolute; top:100%; margin-top:6px; left:35%; transform:translateX(-50%); font-size:10px; opacity:0.5;">2.5만원</div>
+                        <div style="position:absolute; top:100%; margin-top:6px; left:60%; transform:translateX(-50%); font-size:10px; opacity:0.5;">4만원</div>
+                        <div style="position:absolute; top:100%; margin-top:6px; left:85%; transform:translateX(-50%); font-size:10px; opacity:0.5;">6만원</div>
+                        <div style="position:absolute; top:100%; margin-top:28px; left:50%; transform:translateX(-50%); font-size:11px; text-align:center;">월 환산 가격 (원)</div>
+
+                        <!-- Bubble data (Brand, Monthly Price, Brand Recognition, Size(Rank), Color) -->
+                        <!-- Price range (5,820 ~ 63,840) -->
+                        <!-- Prices normalized to 0-100% for x, Recognition for y -->
+                        <!-- Bubble colors: #4361ee #f72585 #4cc9f0 #f8961e #43aa8b #90be6d #277da1 #e63946 #6a4c93 #ff6b6b -->
+                        <!-- x range 5%~88%, y range 5%~88% -->
+
+                        <!-- 1. 알파CD (1위): 21,000원 -> x: (21000-5820)/(63840-5820)*83+5 = 25.9% -->
+                        <div style="position:absolute; left:25.9%; bottom:80%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+                            <div class="bubble-chart-label" style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">알파CD</div>
+                            <div style="width:80px; height:80px; border-radius:50%; background:#4361ee; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">1</div>
+                        </div>
+                        <!-- 2. 헬스프랜드 (2위): 26,250원 -> x: (26250-5820)/(63840-5820)*83+5 = 33.7% -->
+                        <div style="position:absolute; left:33.7%; bottom:75%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+                            <div class="bubble-chart-label" style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">헬스프랜드</div>
+                            <div style="width:70px; height:70px; border-radius:50%; background:#f72585; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">2</div>
+                        </div>
+                        <!-- 3. 어스빌 (3위): 17,700원 -> x: (17700-5820)/(63840-5820)*83+5 = 20.8% -->
+                        <div style="position:absolute; left:20.8%; bottom:65%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+                            <div class="bubble-chart-label" style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">어스빌</div>
+                            <div style="width:65px; height:65px; border-radius:50%; background:#4cc9f0; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">3</div>
+                        </div>
+                        <!-- 4. 락티브 (4위): 13,440원 -> x: (13440-5820)/(63840-5820)*83+5 = 14.2% -->
+                        <div style="position:absolute; left:14.2%; bottom:50%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+                            <div class="bubble-chart-label" style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">락티브</div>
+                            <div style="width:60px; height:60px; border-radius:50%; background:#f8961e; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">4</div>
+                        </div>
+                        <!-- 5. 골든허브 (5위): 12,690원 -> x: (12690-5820)/(63840-5820)*83+5 = 13.1% -->
+                        <div style="position:absolute; left:13.1%; bottom:40%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+                            <div class="bubble-chart-label" style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">골든허브</div>
+                            <div style="width:55px; height:55px; border-radius:50%; background:#43aa8b; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">5</div>
+                        </div>
+                        <!-- 6. 자주가게 (6위): 21,270원 -> x: (21270-5820)/(63840-5820)*83+5 = 26.3% -->
+                        <div style="position:absolute; left:26.3%; bottom:30%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+                            <div class="bubble-chart-label" style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">자주가게</div>
+                            <div style="width:50px; height:50px; border-radius:50%; background:#90be6d; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">6</div>
+                        </div>
+                        <!-- 7. 헬로바이오 (7위): 7,080원 -> x: (7080-5820)/(63840-5820)*83+5 = 6.9% -->
+                        <div style="position:absolute; left:6.9%; bottom:20%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+                            <div class="bubble-chart-label" style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">헬로바이오</div>
+                            <div style="width:45px; height:45px; border-radius:50%; background:#277da1; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">7</div>
+                        </div>
+                        <!-- 8. 바디닥터스 (8위): 9,330원 -> x: (9330-5820)/(63840-5820)*83+5 = 10.4% -->
+                        <div style="position:absolute; left:10.4%; bottom:15%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+                            <div class="bubble-chart-label" style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">바디닥터스</div>
+                            <div style="width:40px; height:40px; border-radius:50%; background:#e63946; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">8</div>
+                        </div>
+                        <!-- 9. 알파CD (9위): 5,820원 -> x: (5820-5820)/(63840-5820)*83+5 = 5.0% -->
+                        <div style="position:absolute; left:5.0%; bottom:10%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+                            <div class="bubble-chart-label" style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">알파CD(정제)</div>
+                            <div style="width:35px; height:35px; border-radius:50%; background:#6a4c93; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">9</div>
+                        </div>
+                        <!-- 10. 뉴트리오닉 (10위): 63,840원 -> x: (63840-5820)/(63840-5820)*83+5 = 88.0% -->
+                        <div style="position:absolute; left:88.0%; bottom:25%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+                            <div class="bubble-chart-label" style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">뉴트리오닉</div>
+                            <div style="width:32px; height:32px; border-radius:50%; background:#ff6b6b; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">10</div>
+                        </div>
+
+                    </div>
+                    <div style="flex:1; display:flex; flex-direction:column; justify-content:center; gap:16px; overflow:hidden;">
+                        <div style="display:flex; flex-wrap:wrap; gap:4px 12px; flex-shrink:0;">
+                            <div style="display:flex; align-items:center; gap:4px;"><span style="width:10px; height:10px; border-radius:50%; background:#4361ee;"></span><span class="caption" style="font-size:12px;">알파CD(분말)</span></div>
+                            <div style="display:flex; align-items:center; gap:4px;"><span style="width:10px; height:10px; border-radius:50%; background:#f72585;"></span><span class="caption" style="font-size:12px;">헬스프랜드</span></div>
+                            <div style="display:flex; align-items:center; gap:4px;"><span style="width:10px; height:10px; border-radius:50%; background:#4cc9f0;"></span><span class="caption" style="font-size:12px;">어스빌</span></div>
+                            <div style="display:flex; align-items:center; gap:4px;"><span style="width:10px; height:10px; border-radius:50%; background:#f8961e;"></span><span class="caption" style="font-size:12px;">락티브</span></div>
+                            <div style="display:flex; align-items:center; gap:4px;"><span style="width:10px; height:10px; border-radius:50%; background:#43aa8b;"></span><span class="caption" style="font-size:12px;">골든허브</span></div>
+                            <div style="display:flex; align-items:center; gap:4px;"><span style="width:10px; height:10px; border-radius:50%; background:#90be6d;"></span><span class="caption" style="font-size:12px;">자주가게</span></div>
+                            <div style="display:flex; align-items:center; gap:4px;"><span style="width:10px; height:10px; border-radius:50%; background:#277da1;"></span><span class="caption" style="font-size:12px;">헬로바이오</span></div>
+                            <div style="display:flex; align-items:center; gap:4px;"><span style="width:10px; height:10px; border-radius:50%; background:#e63946;"></span><span class="caption" style="font-size:12px;">바디닥터스</span></div>
+                            <div style="display:flex; align-items:center; gap:4px;"><span style="width:10px; height:10px; border-radius:50%; background:#6a4c93;"></span><span class="caption" style="font-size:12px;">알파CD(정제)</span></div>
+                            <div style="display:flex; align-items:center; gap:4px;"><span style="width:10px; height:10px; border-radius:50%; background:#ff6b6b;"></span><span class="caption" style="font-size:12px;">뉴트리오닉</span></div>
+                        </div>
+                        <div class="insight-box" style="flex-shrink:0;">
+                            <div class="insight-box-title">핵심 인사이트 1</div>
+                            <div class="insight-box-content">
+                                분말 스틱 제형이 주를 이루며, 다양한 가격대와 브랜드가 혼재된 경쟁 심화 시장입니다. 저가형부터 고가형까지 폭넓게 분포합니다.
+                            </div>
+                        </div>
+                        <div class="insight-box" style="flex-shrink:0;">
+                            <div class="insight-box-title">핵심 인사이트 2</div>
+                            <div class="insight-box-content">
+                                일부 브랜드는 복합 기능성 성분으로 차별화를 시도하며, 가성비와 프리미엄 전략이 공존하는 양상을 보입니다.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                출처: [3] 네이버 쇼핑 검색결과 (TOP 10 브랜드 기준)
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 8: Section Divider 03 -->
+    <div class="slide" id="slide-8">
+      <div class="slide-inner" style="background:var(--accent-color); display:flex; align-items:center; justify-content:center; flex-direction:column; text-align:center;">
+        <div style="font-size:13px; letter-spacing:0.2em; text-transform:uppercase; opacity:0.6; margin-bottom:16px; color:#fff;">CHAPTER 03</div>
+        <div class="section-divider-chapter-num" style="font-size:64px; font-weight:900; color:#fff; line-height:1;">03</div>
+        <div style="font-size:32px; font-weight:400; color:#fff; margin-top:16px; opacity:0.9;">기회 & 전략</div>
+        <div style="width:60px; height:3px; background:#fff; margin-top:24px;"></div>
+      </div>
+    </div>
+
+    <!-- Slide 9: Pain Points -->
+    <div class="slide" id="slide-9">
+        <div class="slide-inner">
+            <div class="slide-header">
+                <h2>03 기회 & 전략 | 소비자 주요 불만 사항</h2>
+            </div>
+            <div class="slide-body" style="display:flex; flex-direction:column;">
+                <div style="display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:16px; flex:1; min-height:0;">
+                    <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden; min-height:0;">
+                        <h3 style="font-size:16px; font-weight:700; color:var(--accent-color); margin:0 0 10px; flex-shrink:0;">
+                            <strong>명확한 효능 신뢰도 부족</strong>
+                        </h3>
+                        <p class="text-small" style="line-height:1.7; flex:1; overflow:hidden; color:rgba(255,255,255,0.92);">
+                            '알파CD' 자체의 식약처 기능성 원료 미등록으로 인해 소비자들은 구체적인 효능에 대한 과학적 근거에 의문을 가질 수 있습니다. 이는 제품 신뢰도 하락으로 이어질 수 있습니다.
+                        </p>
+                    </div>
+                    <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden; min-height:0;">
+                        <h3 style="font-size:16px; font-weight:700; color:var(--accent-color); margin:0 0 10px; flex-shrink:0;">
+                            <strong>차별화된 섭취 경험 부재</strong>
+                        </h3>
+                        <p class="text-small" style="line-height:1.7; flex:1; overflow:hidden; color:rgba(255,255,255,0.92);">
+                            대부분의 제품이 분말 스틱 제형으로, 섭취 편의성은 높으나 기능성 및 섭취 경험 측면에서 차별화 포인트가 부족합니다. 소비자들은 새로운 경험을 원합니다.
+                        </p>
+                    </div>
+                    <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden; min-height:0;">
+                        <h3 style="font-size:16px; font-weight:700; color:var(--accent-color); margin:0 0 10px; flex-shrink:0;">
+                            <strong>규제 불확실성 리스크</strong>
+                        </h3>
+                        <p class="text-small" style="line-height:1.7; flex:1; overflow:hidden; color:rgba(255,255,255,0.92);">
+                            '알파CD'를 주원료로 건강기능식품으로 판매 시, 향후 규제 변화에 대한 잠재적 리스크가 존재합니다. 이는 사업의 안정성에 영향을 미칠 수 있습니다.
+                        </p>
+                    </div>
+                    <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden; min-height:0;">
+                        <h3 style="font-size:16px; font-weight:700; color:var(--accent-color); margin:0 0 10px; flex-shrink:0;">
+                            <strong>경쟁 심화 및 정보 혼란</strong>
+                        </h3>
+                        <p class="text-small" style="line-height:1.7; flex:1; overflow:hidden; color:rgba(255,255,255,0.92);">
+                            다수의 중소 브랜드와 유사 제품이 혼재하며, 성분명과 브랜드명이 혼용되어 소비자 정보 혼란을 가중시키고 시장 경쟁을 심화시킵니다.
+                        </p>
+                    </div>
+                </div>
+                <div class="insight-box" style="margin-top:12px;">
+                    <div class="insight-box-title">핵심 인사이트</div>
+                    <div class="insight-box-content">
+                        현재 시장은 효능 불확실성, 제형 동질성, 규제 리스크, 정보 혼란이라는 복합적인 문제에 직면해 있어, 명확한 차별화 전략이 요구됩니다.
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                출처: [4][5][7][8] 식품의약품안전처 공공데이터 (원료 현황), [3] 네이버 쇼핑 검색결과
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 10: White Space -->
+    <div class="slide" id="slide-10">
+        <div class="slide-inner">
+            <div class="slide-header">
+                <h2>03 기회 & 전략 | 차별화된 시장 기회 탐색</h2>
+            </div>
+            <div class="slide-body" style="display:flex; flex-direction:column;">
+                <div style="display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:16px; flex:1; min-height:0;">
+                    <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden;">
+                        <h3 style="font-size:14px; font-weight:700; color:var(--accent-color); margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em;">
+                            난소화성말토덱스트린 기반 기능성 강조
+                        </h3>
+                        <p style="font-size:15px; line-height:1.65; flex:1; color:rgba(255,255,255,0.92);">
+                            식약처 인정 기능성 원료인 '난소화성말토덱스트린'을 주원료로 명확히 표방하고, '알파CD'를 시너지 성분으로 포지셔닝하여 규제 리스크를 최소화하고 신뢰도를 확보합니다.
+                        </p>
+                    </div>
+                    <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden;">
+                        <h3 style="font-size:14px; font-weight:700; color:var(--accent-color); margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em;">
+                            차세대 식이섬유 컨셉 혁신 제형 개발
+                        </h3>
+                        <p style="font-size:15px; line-height:1.65; flex:1; color:rgba(255,255,255,0.92);">
+                            기존 분말 스틱의 불편함(흘림, 뭉침)을 개선한 '구미', '젤리', '맛있는 캡슐' 등 혁신적인 제형을 개발하여 섭취 편의성과 즐거움을 동시에 제공합니다.
+                        </p>
+                    </div>
+                    <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden;">
+                        <h3 style="font-size:14px; font-weight:700; color:var(--accent-color); margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em;">
+                            디톡스 &amp; 클렌징 프리미엄 브랜드 구축
+                        </h3>
+                        <p style="font-size:15px; line-height:1.65; flex:1; color:rgba(255,255,255,0.92);">
+                            '알파CD'의 잠재적 특성을 과학적 검증 기반으로 명확한 디톡스/클렌징 컨셉과 결합하여 프리미엄 시장을 공략합니다. 체내 노폐물 제거에 초점을 맞춥니다.
+                        </p>
+                    </div>
+                    <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden;">
+                        <h3 style="font-size:14px; font-weight:700; color:var(--accent-color); margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em;">
+                            개인 맞춤형 장 건강 솔루션 제공
+                        </h3>
+                        <p style="font-size:15px; line-height:1.65; flex:1; color:rgba(255,255,255,0.92);">
+                            '알파CD'와 함께 장 건강에 특화된 유산균, 프리바이오틱스 등을 결합하여 개인별 맞춤형 케어 솔루션으로 차별화합니다. 장 마이크로바이옴 개선에 집중합니다.
+                        </p>
+                    </div>
+                </div>
+                <div class="insight-box" style="margin-top:12px;">
+                    <div class="insight-box-title">핵심 인사이트</div>
+                    <div class="insight-box-content">
+                        규제 준수 기반의 명확한 효능 소구, 혁신적인 섭취 경험 제공, 그리고 프리미엄 컨셉으로의 포지셔닝이 시장 침투의 핵심입니다.
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                출처: [3] 네이버 쇼핑 검색결과, [4][5][7][8] 식품의약품안전처 공공데이터
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 11: Concept -->
+    <div class="slide" id="slide-11">
+        <div class="slide-inner">
+            <div class="slide-header">
+                <h2>03 기회 & 전략 | NPD 콘셉트 제안</h2>
+            </div>
+            <div class="slide-body" style="display:flex; flex-direction:column;">
+                <div style="display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:16px; flex:1; min-height:0;">
+                    <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden;">
+                        <h3 style="font-size:14px; font-weight:700; color:var(--accent-color); margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em;">
+                            제품명 (Product Name)
+                        </h3>
+                        <p style="font-size:15px; line-height:1.65; flex:1;">
+                            <strong>알파 클리어 밸런스 (Alpha Clear Balance)</strong><br>
+                            난소화성말토덱스트린과 알파CD의 시너지로 몸속 밸런스를 되찾는 클린 케어 솔루션
+                        </p>
+                    </div>
+                    <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden;">
+                        <h3 style="font-size:14px; font-weight:700; color:var(--accent-color); margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em;">
+                            USP (Unique Selling Proposition)
+                        </h3>
+                        <p style="font-size:15px; line-height:1.65; flex:1;">
+                            식약처 인정 난소화성말토덱스트린 주원료 + 독점 배합 알파CD. 장 건강과 콜레스테롤 개선, 배변 활동 원활에 도움을 주는 과학적인 설계.
+                        </p>
+                    </div>
+                    <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden;">
+                        <h3 style="font-size:14px; font-weight:700; color:var(--accent-color); margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em;">
+                            타겟 (Target Audience)
+                        </h3>
+                        <p style="font-size:15px; line-height:1.65; flex:1;">
+                            체중 관리와 장 건강에 관심이 많고, 간편하면서도 신뢰할 수 있는 건강기능식품을 찾는 20-40대 여성 및 건강한 라이프스타일을 추구하는 직장인.
+                        </p>
+                    </div>
+                    <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden;">
+                        <h3 style="font-size:14px; font-weight:700; color:var(--accent-color); margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em;">
+                            포지셔닝 메시지 (Positioning Message)
+                        </h3>
+                        <p style="font-size:15px; line-height:1.65; flex:1;">
+                            복잡한 일상 속, 당신의 몸을 가볍고 편안하게. '알파 클리어 밸런스'로 시작하는 스마트한 건강 습관!
+                        </p>
+                    </div>
+                </div>
+                <div class="insight-box" style="margin-top:12px;">
+                    <div class="insight-box-title">핵심 인사이트</div>
+                    <div class="insight-box-content">
+                        규제 준수와 과학적 근거를 바탕으로, 현대인의 핵심 니즈인 장 건강 및 체중 관리를 타겟팅한 차별화된 콘셉트입니다.
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                출처: NPD 자체 분석
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 12: Pricing -->
+    <div class="slide" id="slide-12">
+        <div class="slide-inner">
+            <div class="slide-header">
+                <h2>03 기회 & 전략 | 가격 전략</h2>
+            </div>
+            <div class="slide-body" style="display:flex; flex-direction:column;">
+                <table style="width:100%; border-collapse:collapse; margin-bottom:20px;">
+                    <thead>
+                        <tr style="background:rgba(255,255,255,0.08);">
+                            <th style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; font-weight:700;">제품명</th>
+                            <th style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; font-weight:700;">제형/용량</th>
+                            <th style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; font-weight:700;">판매가</th>
+                            <th style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; font-weight:700;">제조원가 (15%~20%)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid rgba(255,255,255,0.08);">알파 클리어 밸런스</td>
+                            <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid rgba(255,255,255,0.08);">젤리 스틱 / 14포</td>
+                            <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid rgba(255,255,255,0.08); color:var(--accent-color); font-weight:700;">18,900원</td>
+                            <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid rgba(255,255,255,0.08);">2,835원 ~ 3,780원</td>
+                        </tr>
+                        <tr>
+                            <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid rgba(255,255,255,0.08);">알파 클리어 밸런스</td>
+                            <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid rgba(255,255,255,0.08);">젤리 스틱 / 30포</td>
+                            <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid rgba(255,255,255,0.08); color:var(--accent-color); font-weight:700;">39,900원</td>
+                            <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid rgba(255,255,255,0.08);">5,985원 ~ 7,980원</td>
+                        </tr>
+                        <tr>
+                            <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid rgba(255,255,255,0.08);">알파 클리어 밸런스</td>
+                            <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid rgba(255,255,255,0.08);">정제 / 60정</td>
+                            <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid rgba(255,255,255,0.08); color:var(--accent-color); font-weight:700;">32,900원</td>
+                            <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid rgba(255,255,255,0.08);">4,935원 ~ 6,580원</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 style="font-size:18px; font-weight:700; margin:0 0 10px; color:var(--accent-color);">가격 전략 근거</h3>
+                <ul style="font-size:15px; line-height:1.65; padding-left:20px; margin:0 0 20px;">
+                    <li style="margin-bottom:8px;">
+                        <strong>경쟁사 대비 중간~프리미엄 가격대 설정:</strong> 식약처 인정 기능성 원료를 주원료로 하고 혁신 제형(젤리) 및 과학적 배합(알파CD)을 통해 제품의 가치를 높여 경쟁사 대비 합리적 프리미엄 가격을 책정합니다.
+                    </li>
+                    <li style="margin-bottom:8px;">
+                        <strong>용량별 가격 차등화:</strong> 소량(14포)은 진입 장벽을 낮추고, 대용량(30포)은 단위당 가격을 낮춰 재구매 및 충성 고객을 유도합니다.
+                    </li>
+                    <li style="margin-bottom:8px;">
+                        <strong>제형별 가격 유연성:</strong> 젤리 제형은 섭취 편의성과 만족도를 반영하여 분말 스틱 대비 다소 높은 가격을, 정제 제형은 대중성을 고려하여 합리적인 가격으로 포지셔닝합니다.
+                    </li>
+                </ul>
+
+                <div class="insight-box" style="margin-top:auto;">
+                    <div class="insight-box-title">핵심 인사이트</div>
+                    <div class="insight-box-content">
+                        규제 준수 및 혁신 제형으로 경쟁 우위를 확보하고, 용량/제형별 전략적 가격 설정을 통해 시장 침투 및 수익성을 동시에 추구합니다.
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                출처: NPD 자체 분석 (추정)
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 13: Risk -->
+    <div class="slide" id="slide-13">
+        <div class="slide-inner">
+            <div class="slide-header">
+                <h2>03 기회 & 전략 | 잠재적 리스크 및 대응 방안</h2>
+            </div>
+            <div class="slide-body" style="display:flex; flex-direction:column;">
+                <div style="display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:16px; flex:1; min-height:0;">
+                    <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden; min-height:0;">
+                        <h3 style="font-size:16px; font-weight:700; color:var(--accent-color); margin:0 0 10px; flex-shrink:0;">
+                            <strong>알파CD 기능성 원료 미등록 리스크</strong>
+                        </h3>
+                        <p class="text-small" style="line-height:1.7; flex:1; overflow:hidden; color:rgba(255,255,255,0.92);">
+                            '알파CD' 자체의 식약처 기능성 원료 미등록으로 건강기능식품 표기 및 마케팅에 제약이 발생할 수 있습니다.
+                        </p>
+                        <div style="border-top:1px solid rgba(255,255,255,0.1); margin-top:8px; padding-top:8px; font-size:12px; color:rgba(255,255,255,0.75); flex-shrink:0;">
+                            <strong>대응:</strong> '난소화성말토덱스트린'을 주원료로 하고, '알파CD'는 부원료로 강조. 지속적인 R&amp;D를 통해 '알파CD'의 기능성 원료 등록 추진.
+                        </div>
+                    </div>
+                    <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden; min-height:0;">
+                        <h3 style="font-size:16px; font-weight:700; color:var(--accent-color); margin:0 0 10px; flex-shrink:0;">
+                            <strong>급격한 시장 관심도 하락</strong>
+                        </h3>
+                        <p class="text-small" style="line-height:1.7; flex:1; overflow:hidden; color:rgba(255,255,255,0.92);">
+                            '알파CD' 검색 트렌드 급락세로 시장 성장 둔화 및 수요 감소 가능성이 존재합니다.
+                        </p>
+                        <div style="border-top:1px solid rgba(255,255,255,0.1); margin-top:8px; padding-top:8px; font-size:12px; color:rgba(255,255,255,0.75); flex-shrink:0;">
+                            <strong>대응:</strong> 타겟 세분화 및 차별화된 마케팅 메시지 개발. 연관 기능성 원료의 효능을 전면에 내세워 새로운 수요 창출.
+                        </div>
+                    </div>
+                    <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden; min-height:0;">
+                        <h3 style="font-size:16px; font-weight:700; color:var(--accent-color); margin:0 0 10px; flex-shrink:0;">
+                            <strong>높은 경쟁 강도 및 가격 경쟁</strong>
+                        </h3>
+                        <p class="text-small" style="line-height:1.7; flex:1; overflow:hidden; color:rgba(255,255,255,0.92);">
+                            다수의 중소 브랜드가 혼재하며 유사 제품 및 가격 경쟁이 심화될 우려가 있습니다.
+                        </p>
+                        <div style="border-top:1px solid rgba(255,255,255,0.1); margin-top:8px; padding-top:8px; font-size:12px; color:rgba(255,255,255,0.75); flex-shrink:0;">
+                            <strong>대응:</strong> 혁신 제형 및 차별화된 컨셉으로 프리미엄 포지셔닝. 브랜드 스토리텔링 강화 및 고객 경험 증대.
+                        </div>
+                    </div>
+                    <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden; min-height:0;">
+                        <h3 style="font-size:16px; font-weight:700; color:var(--accent-color); margin:0 0 10px; flex-shrink:0;">
+                            <strong>유사 성분과의 혼동</strong>
+                        </h3>
+                        <p class="text-small" style="line-height:1.7; flex:1; overflow:hidden; color:rgba(255,255,255,0.92);">
+                            '알파CD', '알파시클로덱스트린', '난소화성말토덱스트린' 등 유사 성분명으로 소비자 혼동 가능성이 있습니다.
+                        </p>
+                        <div style="border-top:1px solid rgba(255,255,255,0.1); margin-top:8px; padding-top:8px; font-size:12px; color:rgba(255,255,255,0.75); flex-shrink:0;">
+                            <strong>대응:</strong> 제품명 및 마케팅 메시지에서 핵심 기능성 원료를 명확히 제시하고, 각 성분의 역할 및 효능을 쉽게 설명.
+                        </div>
+                    </div>
+                </div>
+                <div class="insight-box" style="margin-top:12px;">
+                    <div class="insight-box-title">핵심 인사이트</div>
+                    <div class="insight-box-content">
+                        규제, 시장 트렌드, 경쟁 환경 등 복합적 리스크에 대한 선제적 대응과 명확한 포지셔닝 전략이 성공의 핵심입니다.
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                출처: NPD 자체 분석
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 14: Roadmap -->
+    <div class="slide" id="slide-14">
+        <div class="slide-inner">
+            <div class="slide-header">
+                <h2>03 기회 & 전략 | NPD 실행 로드맵</h2>
+            </div>
+            <div class="slide-body" style="display:flex; flex-direction:column;">
+                <div style="display:flex; flex-direction:row; align-items:flex-start; gap:0; flex:1; min-height:0;">
+                    <div style="flex:1; padding:24px 20px; border-top:3px solid var(--accent-color); display:flex; flex-direction:column; gap:8px;">
+                        <h3 style="font-size:18px; font-weight:700; margin:0;">Phase 1: 제품 개발 및 규제 준수</h3>
+                        <p class="caption" style="font-size:13px; color:rgba(255,255,255,0.55); margin:0;">(3-6개월)</p>
+                        <div style="height:1px; background:rgba(255,255,255,0.08); margin:4px 0;"></div>
+                        <ul style="font-size:14px; line-height:1.7; flex:1; padding-left:20px; margin:0;">
+                            <li style="margin-bottom:4px;">난소화성말토덱스트린 기반 제품 R&amp;D 완료</li>
+                            <li style="margin-bottom:4px;">식약처 기능성 원료 등록/표기 검토</li>
+                            <li style="margin-bottom:4px;">혁신 제형(젤리/구미) 개발 및 생산 파트너십 구축</li>
+                        </ul>
+                        <div style="font-size:12px; color:var(--accent-color); font-weight:700; margin-top:auto; padding-top:8px; border-top:1px solid rgba(255,255,255,0.08);">
+                            마일스톤: 제품 콘셉트 확정 및 시제품 개발
+                        </div>
+                    </div>
+                    <div style="flex:1; padding:24px 20px; border-top:3px solid var(--accent-color); display:flex; flex-direction:column; gap:8px; border-left:1px solid rgba(255,255,255,0.08);">
+                        <h3 style="font-size:18px; font-weight:700; margin:0;">Phase 2: 시장 진입 및 초기 확산</h3>
+                        <p class="caption" style="font-size:13px; color:rgba(255,255,255,0.55); margin:0;">(6-12개월)</p>
+                        <div style="height:1px; background:rgba(255,255,255,0.08); margin:4px 0;"></div>
+                        <ul style="font-size:14px; line-height:1.7; flex:1; padding-left:20px; margin:0;">
+                            <li style="margin-bottom:4px;">타겟 세분화 마케팅 전략 수립</li>
+                            <li style="margin-bottom:4px;">온라인/SNS 채널 중심 런칭 캠페인</li>
+                            <li style="margin-bottom:4px;">주요 이커머스 입점 및 프로모션, 소비자 피드백 수집</li>
+                        </ul>
+                        <div style="font-size:12px; color:var(--accent-color); font-weight:700; margin-top:auto; padding-top:8px; border-top:1px solid rgba(255,255,255,0.08);">
+                            마일스톤: 런칭 후 3개월 내 초기 판매 목표 달성
+                        </div>
+                    </div>
+                    <div style="flex:1; padding:24px 20px; border-top:3px solid var(--accent-color); display:flex; flex-direction:column; gap:8px; border-left:1px solid rgba(255,255,255,0.08);">
+                        <h3 style="font-size:18px; font-weight:700; margin:0;">Phase 3: 브랜드 확장 및 시장 리더십 강화</h3>
+                        <p class="caption" style="font-size:13px; color:rgba(255,255,255,0.55); margin:0;">(12개월 이후)</p>
+                        <div style="height:1px; background:rgba(255,255,255,0.08); margin:4px 0;"></div>
+                        <ul style="font-size:14px; line-height:1.7; flex:1; padding-left:20px; margin:0;">
+                            <li style="margin-bottom:4px;">제품 라인업 확장(추가 제형/기능)</li>
+                            <li style="margin-bottom:4px;">오프라인 채널 확장(드럭스토어 등)</li>
+                            <li style="margin-bottom:4px;">프리미엄 브랜드 이미지 강화 및 '알파CD' 기능성 원료 등록 연구</li>
+                        </ul>
+                        <div style="font-size:12px; color:var(--accent-color); font-weight:700; margin-top:auto; padding-top:8px; border-top:1px solid rgba(255,255,255,0.08);">
+                            마일스톤: 2년 내 시장 TOP 5 브랜드 진입
+                        </div>
+                    </div>
+                </div>
+                <div class="insight-box" style="margin-top:12px;">
+                    <div class="insight-box-title">핵심 인사이트</div>
+                    <div class="insight-box-content">
+                        명확한 단계별 목표 설정과 유연한 전략 조정을 통해 시장의 불확실성을 극복하고 지속 가능한 성장을 달성합니다.
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                출처: NPD 자체 분석
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 15: References -->
+    <div class="slide" id="slide-15">
+        <div class="slide-inner">
+            <div class="slide-header">
+                <h2>참고문헌 및 데이터 출처</h2>
+            </div>
+            <div class="slide-body" style="display:flex; flex-direction:column; overflow-y:auto; padding-bottom:8px;">
+                <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
+                    <span style="color:var(--accent-color); font-weight:700; flex-shrink:0; min-width:24px;">1</span>
+                    <span style="color:rgba(255,255,255,0.85);">네이버 데이터랩 검색어트렌드, 조회일: 2026-04-14, 키워드: 알파CD</span>
+                </div>
+                <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
+                    <span style="color:var(--accent-color); font-weight:700; flex-shrink:0; min-width:24px;">2</span>
+                    <span style="color:rgba(255,255,255,0.85);">네이버 검색광고 키워드도구, 조회일: 2026-04-14, 키워드: 알파CD</span>
+                </div>
+                <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
+                    <span style="color:var(--accent-color); font-weight:700; flex-shrink:0; min-width:24px;">3</span>
+                    <span style="color:rgba(255,255,255,0.85);">네이버 쇼핑 검색결과, 조회일: 2026-04-14, 키워드: 알파CD, 상위 20개 상품 기준</span>
+                </div>
+                <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
+                    <span style="color:var(--accent-color); font-weight:700; flex-shrink:0; min-width:24px;">4</span>
+                    <span style="color:rgba(255,255,255,0.85);">[생활경제 이슈] 위드온 뉴트리하루, 건강식품 3종 출시 外, lawissue.co.kr, Wed, 20 Aug 2025</span>
+                </div>
+                <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
+                    <span style="color:var(--accent-color); font-weight:700; flex-shrink:0; min-width:24px;">5</span>
+                    <span style="color:rgba(255,255,255,0.85);">[특징주 분석] 외국인 매수 집중 현상에… 이뮨온시아 면역항암제주 수..., topstarnews.net, Tue, 02 Dec 2025</span>
+                </div>
+                <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
+                    <span style="color:var(--accent-color); font-weight:700; flex-shrink:0; min-width:24px;">6</span>
+                    <span style="color:rgba(255,255,255,0.85);">휴온스그룹, 순복음강남교회에 3억 원 상당 의약품 기증 外, newsmp.com, Mon, 09 Jun 2025</span>
+                </div>
+                <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
+                    <span style="color:var(--accent-color); font-weight:700; flex-shrink:0; min-width:24px;">7</span>
+                    <span style="color:rgba(255,255,255,0.85);">식품안전나라 공공데이터포털, I0760(건강기능식품 원료분류), 조회일: 2026-04-14</span>
+                </div>
+                <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
+                    <span style="color:var(--accent-color); font-weight:700; flex-shrink:0; min-width:24px;">8</span>
+                    <span style="color:rgba(255,255,255,0.85);">식품안전나라 공공데이터포털, C002(일반식품 원재료), 조회일: 2026-04-14</span>
+                </div>
+                <div style="display:flex; gap:12px; padding:10px 0; font-size:14px; line-height:1.8; margin-top:20px;">
+                    <span style="color:rgba(255,255,255,0.85);">
+                        *추정: 표기된 원가 추정치 및 시장 규모 추정치는 제공된 데이터를 기반으로 NPD 디렉터가 분석·추정한 내용으로 공식 통계가 아닙니다.
+                    </span>
+                </div>
+            </div>
+            <div class="slide-footer">
+                출처: 상기 목록 참조
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // viewport scale
+        function scaleSlides() {
+          var s = Math.min(window.innerWidth/1600, window.innerHeight/800);
+          document.querySelectorAll('.slide-inner').forEach(function(el) {
+            el.style.transform = 'scale('+s+')';
+            el.style.transformOrigin = 'center center';
+          });
+        }
+        window.addEventListener('resize', scaleSlides);
+        scaleSlides();
+
+        // 전환
+        var slides = document.querySelectorAll('.slide');
+        var cur = 0, lock = false;
+        function show(n) {
+          slides[cur].classList.remove('active');
+          cur = (n + slides.length) % slides.length;
+          slides[cur].classList.add('active');
+          document.getElementById('slide-num').textContent = (cur+1)+' / '+slides.length;
+        }
+        document.addEventListener('keydown', function(e) {
+          if (e.key==='ArrowRight'||e.key===' '){e.preventDefault();show(cur+1);}
+          if (e.key==='ArrowLeft'){e.preventDefault();show(cur-1);}
+          if (e.key==='f'||e.key==='F'){document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen();}
+        });
+        document.addEventListener('wheel', function(e) {
+          e.preventDefault();
+          if (lock) return; lock=true;
+          show(e.deltaY>0?cur+1:cur-1);
+          setTimeout(function(){lock=false;},300);
+        },{passive:false});
+        show(0);
+
+        // Line Chart JS (Specific to slide-4)
+        (function() {
+          var ACCENT = '#FF5722';
+          var pts = [
+            {l:'2024.04', v:0.0}, {l:'2024.12', v:3.7}, {l:'2025.03', v:30.0},
+            {l:'2025.06', v:80.0}, {l:'2025.07', v:100.0}, {l:'2025.09', v:80.0},
+            {l:'2025.12', v:40.0}, {l:'2026.04', v:9.8}
+          ];
+          function draw() {
+            var cv = document.getElementById('trendChart');
+            if (!cv) return;
+            var par = cv.parentElement;
+            var W = par.clientWidth || 1300, H = par.clientHeight || 350;
+            cv.width = W; cv.height = H;
+            var ctx = cv.getContext('2d');
+            var PL=60, PR=20, PT=20, PB=45;
+            var cW=W-PL-PR, cH=H-PT-PB;
+            var maxV=100;
+            function xp(i){return PL + i/(pts.length-1)*cW;}
+            function yp(v){return PT + cH - v/maxV*cH;}
+            // 그리드 + Y축 레이블
+            ctx.font='11px "Noto Sans KR", sans-serif'; ctx.textAlign='right'; ctx.fillStyle='rgba(255,255,255,0.4)';
+            [0,25,50,75,100].forEach(function(v){
+              var y=yp(v);
+              ctx.strokeStyle='rgba(255,255,255,0.07)'; ctx.lineWidth=1;
+              ctx.beginPath(); ctx.moveTo(PL,y); ctx.lineTo(PL+cW,y); ctx.stroke();
+              ctx.fillText(v,PL-6,y+4);
+            });
+            // 면적 그라디언트
+            var gr=ctx.createLinearGradient(0,PT,0,PT+cH);
+            gr.addColorStop(0,ACCENT+'55'); gr.addColorStop(1,ACCENT+'05');
+            ctx.beginPath();
+            ctx.moveTo(xp(0),yp(0));
+            pts.forEach(function(d,i){ctx.lineTo(xp(i),yp(d.v));});
+            ctx.lineTo(xp(pts.length-1),yp(0)); ctx.closePath();
+            ctx.fillStyle=gr; ctx.fill();
+            // 선
+            ctx.beginPath(); ctx.strokeStyle=ACCENT; ctx.lineWidth=2.5; ctx.lineJoin='round';
+            pts.forEach(function(d,i){i?ctx.lineTo(xp(i),yp(d.v)):ctx.moveTo(xp(i),yp(d.v));});
+            ctx.stroke();
+            // 점 + 값 레이블 + X축 레이블
+            ctx.fillStyle=ACCENT; ctx.textAlign='center'; ctx.font='11px "Noto Sans KR", sans-serif';
+            pts.forEach(function(d,i){
+              ctx.beginPath(); ctx.arc(xp(i),yp(d.v),4,0,2*Math.PI); ctx.fill();
+              ctx.fillStyle='rgba(255,255,255,0.7)';
+              ctx.fillText(d.v, xp(i), yp(d.v)-10);
+              ctx.fillStyle='rgba(255,255,255,0.4)';
+              ctx.fillText(d.l, xp(i), H-8);
+              ctx.fillStyle=ACCENT;
+            });
+          }
+          if(document.fonts) document.fonts.ready.then(draw); else window.addEventListener('load',draw);
+          window.addEventListener('resize',draw);
+        })();
+    </script>
+<script>
+(function() {
+  var contentScales = {};
+
+  function measureAll() {
+    document.querySelectorAll('.slide').forEach(function(slide, i) {
+      var hidden = !slide.classList.contains('active');
+      if (hidden) {
+        slide.style.visibility = 'hidden';
+        slide.style.display    = 'flex';
+      }
+      var inner = slide.querySelector('.slide-inner');
+      if (inner) {
+        contentScales[i] = inner.scrollHeight > 800
+          ? (790 / inner.scrollHeight)
+          : 1;
+      }
+      if (hidden) {
+        slide.style.display    = '';
+        slide.style.visibility = '';
+      }
+    });
+  }
+
+  function applyScales() {
+    var vScale = Math.min(window.innerWidth / 1600, window.innerHeight / 800);
+    document.querySelectorAll('.slide').forEach(function(slide, i) {
+      var inner = slide.querySelector('.slide-inner');
+      if (!inner) return;
+      var cScale   = (contentScales[i] != null) ? contentScales[i] : 1;
+      var combined = vScale * cScale;
+      inner.style.transform       = 'scale(' + combined + ')';
+      inner.style.transformOrigin = 'center center';
+    });
+  }
+
+  window.scaleSlides = applyScales;
+  window.addEventListener('resize', applyScales);
+
+  (document.fonts ? document.fonts.ready : Promise.resolve()).then(function() {
+    measureAll();
+    applyScales();
+  });
+})();
+</script>
+</body>
+</html>
