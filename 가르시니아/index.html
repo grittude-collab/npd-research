@@ -1,0 +1,1171 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>가르시니아 시장 진입 전략 보고서</title>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Noto+Sans+KR:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        /* Global CSS Variables */
+        :root {
+            --bg-color: #1a1a1a;
+            --main-text-color: #fff;
+            --accent-color: #FF5722;
+            --accent-color-rgb: 255, 87, 34; /* For rgba() usage */
+            --dim-text-color: rgba(255, 255, 255, 0.7);
+            --light-text-color: rgba(255, 255, 255, 0.5);
+            --border-color: rgba(255, 255, 255, 0.12);
+            --divider-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Basic Reset & Global Styles */
+        html, body {
+            margin: 0; padding: 0; overflow: hidden;
+            background: #111; width: 100%; height: 100%;
+            font-family: 'Noto Sans KR', sans-serif;
+            color: var(--main-text-color);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Slide Container CSS */
+        .slide {
+            position: fixed; top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            display: none;
+            align-items: center; justify-content: center;
+            overflow: hidden;
+        }
+        .slide.active { display: flex; }
+        .slide-inner {
+            width: 1600px; height: 800px;
+            position: relative; overflow: hidden;
+            box-sizing: border-box;
+            background: var(--bg-color); /* Apply 60% background color */
+        }
+        .slide-header {
+            position: absolute; top: 0; left: 0; right: 0;
+            height: 100px; padding: 0 80px;
+            display: flex; align-items: flex-end; padding-bottom: 16px;
+            box-sizing: border-box;
+        }
+        .slide-body {
+            position: absolute; top: 100px; left: 0; right: 0;
+            bottom: 50px; padding: 20px 80px 0;
+            overflow: hidden; /* Crucial for content height limits */
+            box-sizing: border-box;
+        }
+        .slide-footer {
+            position: absolute; bottom: 0; left: 0; right: 0;
+            height: 50px; padding: 0 80px;
+            display: flex; align-items: center; justify-content: flex-end;
+            font-size: 12px; opacity: 0.5;
+            box-sizing: border-box;
+        }
+
+        /* Typography */
+        h1 { font-size: 44px; font-weight: 900; font-family: 'Archivo Black', sans-serif; margin: 0; line-height: 1.2; }
+        h2 { font-size: 24px; font-weight: 600; margin: 0; line-height: 1.3; }
+        p, div { font-size: 18px; font-weight: 400; margin: 0; }
+        .caption { font-size: 13px; font-weight: 300; color: var(--light-text-color); }
+
+        /* Links */
+        a {
+            color: var(--main-text-color);
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Common Insight Box */
+        .insight-box {
+            border-left: 3px solid var(--accent-color);
+            padding: 10px 16px;
+            background: rgba(var(--accent-color-rgb), 0.07);
+            margin-bottom: 0;
+            flex-shrink: 0; /* Important for flex containers */
+            margin-top: auto; /* Pushes to bottom */
+        }
+        .insight-box-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin: 0 0 3px;
+        }
+        .insight-box-content {
+            font-size: 13px;
+            line-height: 1.5;
+            margin: 0;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+
+        /* Navigation UI */
+        .nav-button {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 24px;
+            border-radius: 4px;
+            opacity: 0.7;
+            transition: opacity 0.2s ease;
+        }
+        .nav-button:hover {
+            opacity: 1;
+        }
+        #nav-prev { left: 16px; }
+        #nav-next { right: 16px; }
+        #slide-num-display {
+            position: fixed;
+            bottom: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+            color: #fff;
+            font-size: 16px;
+            background: rgba(0,0,0,0.5);
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+        #fullscreen-button {
+            position: fixed;
+            top: 16px;
+            right: 16px;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border: none;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 14px;
+            border-radius: 4px;
+            opacity: 0.7;
+            transition: opacity 0.2s ease;
+        }
+        #fullscreen-button:hover {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation UI -->
+    <button id="nav-prev" class="nav-button">&#10094;</button>
+    <button id="nav-next" class="nav-button">&#10095;</button>
+    <div id="slide-num-display"><span id="slide-num">1 / 15</span></div>
+    <button id="fullscreen-button">전체화면 (F)</button>
+
+    <!-- Slide 1: Cover -->
+    <div class="slide active" id="slide-1">
+        <div class="slide-inner" style="background: linear-gradient(135deg, #1a1a1a 0%, #000 100%); display:flex; align-items:center; justify-content:center; flex-direction:column; text-align:center; padding: 0 160px;">
+            <h1 style="font-size: 64px; color: var(--accent-color); margin-bottom: 20px;">가르시니아 시장 진입 전략 보고서</h1>
+            <h2 style="font-size: 32px; font-weight: 400; margin-bottom: 10px;">NPD 시장 분석</h2>
+            <p class="caption" style="margin-bottom: 40px; font-size: 16px;">작성일: 2026년 4월 10일</p>
+            <div style="width: 100px; height: 4px; background: var(--main-text-color); margin-bottom: 30px;"></div>
+            <p style="font-size: 20px; font-weight: 300; line-height: 1.5; opacity: 0.8;">시장 하락세 속, 차별화된 전략으로 새로운 기회를 모색합니다.</p>
+        </div>
+    </div>
+
+    <!-- Slide 2: Section Divider 01 -->
+    <div class="slide" id="slide-2">
+        <div class="slide-inner" style="background:var(--accent-color); display:flex; align-items:center; justify-content:center; flex-direction:column; text-align:center;">
+            <div style="font-size:13px; letter-spacing:0.2em; text-transform:uppercase; opacity:0.6; margin-bottom:16px; color:#fff;">CHAPTER 01</div>
+            <div style="font-size:64px; font-weight:900; color:#fff; line-height:1;">01</div>
+            <div style="font-size:32px; font-weight:400; color:#fff; margin-top:16px; opacity:0.9;">시장 현황</div>
+            <div style="width:60px; height:3px; background:#fff; margin-top:24px;"></div>
+        </div>
+    </div>
+
+    <!-- Slide 3: Big Number -->
+    <div class="slide" id="slide-3">
+        <div class="slide-inner">
+            <div class="slide-header">
+                <h2 style="color:var(--main-text-color);">01 시장현황 | Market Opportunity Scorecard</h2>
+            </div>
+            <div class="slide-body" style="display:flex; flex-direction:column; gap:16px;">
+                <div style="display:flex; gap:16px; align-items:stretch; flex:1; min-height:0;">
+                    <!-- Card 1: 시장 성장성 -->
+                    <div style="flex:1; padding:18px 20px; display:flex; flex-direction:column; gap:4px; border:1px solid var(--border-color); border-radius:6px; overflow:hidden;">
+                        <h3 style="font-size:14px; opacity:0.65; margin:0 0 4px; font-weight:400;">시장 성장성</h3>
+                        <div style="font-size:48px; font-weight:900; line-height:1; margin:0 0 6px; color:var(--accent-color);">1점</div>
+                        <p style="font-size:12px; line-height:1.5; opacity:0.75; margin:0 0 12px; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
+                            검색 트렌드 급락 (-87.6%) 및 2년 하락세 추세¹
+                        </p>
+                        <div style="flex:1; min-height:80px;">
+                            <svg style="width:100%;height:80px;" viewBox="0 0 200 60" preserveAspectRatio="none">
+                                <defs><linearGradient id="mg1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="var(--accent-color)" stop-opacity="0.3"/><stop offset="100%" stop-color="var(--accent-color)" stop-opacity="0"/></linearGradient></defs>
+                                <polygon points="0,60 0,0.12 28.57,9 57.14,21 85.71,30 114.28,36 142.85,45 171.42,51 200,54.72 200,60" fill="url(#mg1)"/>
+                                <polyline points="0,0.12 28.57,9 57.14,21 85.71,30 114.28,36 142.85,45 171.42,51 200,54.72" fill="none" stroke="var(--accent-color)" stroke-width="2"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <!-- Card 2: 소비자 관심도 -->
+                    <div style="flex:1; padding:18px 20px; display:flex; flex-direction:column; gap:4px; border:1px solid var(--border-color); border-radius:6px; overflow:hidden;">
+                        <h3 style="font-size:14px; opacity:0.65; margin:0 0 4px; font-weight:400;">소비자 관심도</h3>
+                        <div style="font-size:48px; font-weight:900; line-height:1; margin:0 0 6px; color:var(--accent-color);">1점</div>
+                        <p style="font-size:12px; line-height:1.5; opacity:0.75; margin:0 0 12px; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
+                            월간 총 검색량 13,260회로 낮은 수준, 감소 추세 뚜렷¹&#178;
+                        </p>
+                        <div style="display:flex; align-items:flex-end; gap:10px; flex:1; padding-top:4px;">
+                            <!-- Data: min=13260, avg=67815, max=150490 -->
+                            <!-- max_h=50px, min_h=50*13260/150490=4.4px, avg_h=50*67815/150490=22.5px -->
+                            <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;">
+                                <div style="font-size:9px; opacity:0.5;">최저</div>
+                                <div style="width:100%; background:var(--accent-color); opacity:0.35; height:4.4px; border-radius:2px 2px 0 0;"></div>
+                                <div style="font-size:10px; white-space:nowrap;">13,260회</div>
+                            </div>
+                            <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;">
+                                <div style="font-size:9px; opacity:0.5;">평균</div>
+                                <div style="width:100%; background:var(--accent-color); opacity:0.65; height:22.5px; border-radius:2px 2px 0 0;"></div>
+                                <div style="font-size:10px; white-space:nowrap;">67,815회</div>
+                            </div>
+                            <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;">
+                                <div style="font-size:9px; opacity:0.5; color:var(--accent-color);">최고</div>
+                                <div style="width:100%; background:var(--accent-color); height:50px; border-radius:2px 2px 0 0;"></div>
+                                <div style="font-size:10px; white-space:nowrap; color:var(--accent-color);">150,490회</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card 3: 전체시장 규모 및 트렌드 -->
+                    <div style="flex:1; padding:18px 20px; display:flex; flex-direction:column; gap:4px; border:1px solid var(--border-color); border-radius:6px; overflow:hidden;">
+                        <h3 style="font-size:14px; opacity:0.65; margin:0 0 4px; font-weight:400;">전체시장 규모 및 트렌드</h3>
+                        <div style="font-size:48px; font-weight:900; line-height:1; margin:0 0 6px; color:var(--accent-color);">3점</div>
+                        <p style="font-size:12px; line-height:1.5; opacity:0.75; margin:0 0 12px; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
+                            '다이어트 보조제' 시장 자체는 수조원 규모로 추정되나, 단일 성분 규모는 불명확&#8308;&#8309;&#8310;&#8311;
+                        </p>
+                        <div style="display:flex; flex-direction:column; gap:5px; flex:1; overflow:hidden;">
+                            <div style="font-size:11px; line-height:1.4; padding:5px 8px;
+                               background:rgba(255,255,255,0.04); border-radius:3px; border-left:2px solid var(--accent-color);
+                               color:inherit; display:block;
+                               overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+                              "다이어트 보조제 시장, 4조원 규모 추정"
+                            </div>
+                            <div style="font-size:11px; line-height:1.4; padding:5px 8px;
+                               background:rgba(255,255,255,0.04); border-radius:3px; border-left:2px solid var(--accent-color);
+                               color:inherit; display:block;
+                               overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+                              "국내 건기식 시장 8조 2912억 규모 성장 전망"
+                            </div>
+                            <div style="font-size:11px; line-height:1.4; padding:5px 8px;
+                               background:rgba(255,255,255,0.04); border-radius:3px; border-left:2px solid var(--accent-color);
+                               color:inherit; display:block;
+                               overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+                              "다이어트 보조제 시장, 1.6조원(12억 달러) 규모"
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="insight-box">
+                    <h3 class="insight-box-title">핵심 인사이트</h3>
+                    <p class="insight-box-content">
+                        '가르시니아' 단일 성분에 대한 소비자 관심도는 급락했으나, '다이어트 보조제' 시장 자체는 여전히 수조원 규모로 큰 잠재력을 가집니다.
+                        차별화된 전략으로 새로운 기회를 창출해야 합니다.
+                    </p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                출처: ¹네이버 데이터랩, &#178;네이버 검색광고 키워드도구, &#8308;g-enews.com, &#8309;dream.kotra.or.kr, &#8310;isplus.com, &#8311;view.asiae.co.kr
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 4: Line Chart -->
+    <div class="slide" id="slide-4">
+        <div class="slide-inner">
+            <div class="slide-header">
+                <h2 style="color:var(--main-text-color);">01 시장현황 | 24개월 검색 트렌드</h2>
+            </div>
+            <div class="slide-body" style="display:flex; flex-direction:column;">
+                <div style="flex:1; min-height:0; position:relative;">
+                    <canvas id="trendChart"></canvas>
+                </div>
+                <div style="display:flex; gap:12px; flex-shrink:0; margin-top:12px;">
+                    <div class="insight-box" style="flex:1; margin-top:0;">
+                        <h3 class="insight-box-title">급격한 관심도 하락</h3>
+                        <p class="insight-box-content">
+                            '가르시니아' 키워드 검색량은 2024년 4월 최고치 대비 87.6% 급락하며, 단일 성분으로서의 시장 매력이 크게 감소했습니다.
+                        </p>
+                    </div>
+                    <div class="insight-box" style="flex:1; margin-top:0;">
+                        <h3 class="insight-box-title">새로운 접근 방식 필요</h3>
+                        <p class="insight-box-content">
+                            하락 추세는 '가르시니아' 단독으로는 더 이상 소비자 수요를 견인하기 어렵다는 것을 시사하며, 복합 기능성 또는 라이프스타일 솔루션으로의 전환이 필수적입니다.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                출처: 네이버 데이터랩 검색어트렌드¹
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 5: Section Divider 02 -->
+    <div class="slide" id="slide-5">
+        <div class="slide-inner" style="background:var(--accent-color); display:flex; align-items:center; justify-content:center; flex-direction:column; text-align:center;">
+            <div style="font-size:13px; letter-spacing:0.2em; text-transform:uppercase; opacity:0.6; margin-bottom:16px; color:#fff;">CHAPTER 02</div>
+            <div style="font-size:64px; font-weight:900; color:#fff; line-height:1;">02</div>
+            <div style="font-size:32px; font-weight:400; color:#fff; margin-top:16px; opacity:0.9;">경쟁사 분석</div>
+            <div style="width:60px; height:3px; background:#fff; margin-top:24px;"></div>
+        </div>
+    </div>
+
+    <!-- Slide 6: Card Grid -->
+    <div class="slide" id="slide-6">
+        <div class="slide-inner">
+            <div class="slide-header">
+                <h2 style="color:var(--main-text-color);">02 경쟁사 분석 | TOP 10 브랜드 현황</h2>
+            </div>
+            <div class="slide-body" style="display:flex; flex-direction:column;">
+                <div style="display:grid; grid-template-columns:repeat(5,1fr); gap:10px; flex:1; min-height:0;">
+                    <!-- Card 1 -->
+                    <div style="padding:10px 12px; overflow:hidden; border:1px solid var(--border-color); border-radius:6px; position:relative;">
+                        <div style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">1위</div>
+                        <a href="https://search.shopping.naver.com/search/all?query=가르시니아+뉴트리디데이" target="_blank"
+                           style="font-size:13px; font-weight:700; color:var(--accent-color); margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+                            뉴트리디데이
+                        </a>
+                        <div style="font-size:12px; margin-bottom:3px; display:block;">12,600원</div>
+                        <div style="font-size:11px; opacity:0.55; margin-bottom:5px; display:block;">정제</div>
+                        <div style="height:1px; background:var(--divider-color); margin-bottom:5px;"></div>
+                        <div style="font-size:11px; line-height:1.4; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
+                            1000mg 고함량, 대용량으로 가성비 강조. 유유헬스케어 제조.
+                        </div>
+                    </div>
+                    <!-- Card 2 -->
+                    <div style="padding:10px 12px; overflow:hidden; border:1px solid var(--border-color); border-radius:6px; position:relative;">
+                        <div style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">2위</div>
+                        <a href="https://search.shopping.naver.com/search/all?query=가르시니아+포뉴" target="_blank"
+                           style="font-size:13px; font-weight:700; color:var(--accent-color); margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+                            포뉴
+                        </a>
+                        <div style="font-size:12px; margin-bottom:3px; display:block;">27,000원</div>
+                        <div style="font-size:11px; opacity:0.55; margin-bottom:5px; display:block;">분말스틱</div>
+                        <div style="height:1px; background:var(--divider-color); margin-bottom:5px;"></div>
+                        <div style="font-size:11px; line-height:1.4; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
+                            'CAF', '카제로템' 등 복합 기능성 강조. 수용성 가르시니아.
+                        </div>
+                    </div>
+                    <!-- Card 3 -->
+                    <div style="padding:10px 12px; overflow:hidden; border:1px solid var(--border-color); border-radius:6px; position:relative;">
+                        <div style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">3위</div>
+                        <a href="https://search.shopping.naver.com/search/all?query=가르시니아+에코테라피" target="_blank"
+                           style="font-size:13px; font-weight:700; color:var(--accent-color); margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+                            에코테라피
+                        </a>
+                        <div style="font-size:12px; margin-bottom:3px; display:block;">15,900원</div>
+                        <div style="font-size:11px; opacity:0.55; margin-bottom:5px; display:block;">확인필요</div>
+                        <div style="height:1px; background:var(--divider-color); margin-bottom:5px;"></div>
+                        <div style="font-size:11px; line-height:1.4; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
+                            고함량, 2개월분, 남녀 타겟. 체지방&탄수화물 감소 효과.
+                        </div>
+                    </div>
+                    <!-- Card 4 -->
+                    <div style="padding:10px 12px; overflow:hidden; border:1px solid var(--border-color); border-radius:6px; position:relative;">
+                        <div style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">4위</div>
+                        <a href="https://search.shopping.naver.com/search/all?query=가르시니아+루체" target="_blank"
+                           style="font-size:13px; font-weight:700; color:var(--accent-color); margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+                            루체
+                        </a>
+                        <div style="font-size:12px; margin-bottom:3px; display:block;">24,820원</div>
+                        <div style="font-size:11px; opacity:0.55; margin-bottom:5px; display:block;">분말스틱</div>
+                        <div style="height:1px; background:var(--divider-color); margin-bottom:5px;"></div>
+                        <div style="font-size:11px; line-height:1.4; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
+                            다이어트 커피 보조제. 그린 커피빈 함유로 체지방 컷팅 강조.
+                        </div>
+                    </div>
+                    <!-- Card 5 -->
+                    <div style="padding:10px 12px; overflow:hidden; border:1px solid var(--border-color); border-radius:6px; position:relative;">
+                        <div style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">5위</div>
+                        <a href="https://search.shopping.naver.com/search/all?query=가르시니아+루비에" target="_blank"
+                           style="font-size:13px; font-weight:700; color:var(--accent-color); margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+                            루비에
+                        </a>
+                        <div style="font-size:12px; margin-bottom:3px; display:block;">36,500원</div>
+                        <div style="font-size:11px; opacity:0.55; margin-bottom:5px; display:block;">확인필요</div>
+                        <div style="height:1px; background:var(--divider-color); margin-bottom:5px;"></div>
+                        <div style="font-size:11px; line-height:1.4; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
+                            슬림츄 복숭아맛. 씹어먹는 제형으로 섭취 편의성 강조.
+                        </div>
+                    </div>
+                    <!-- Card 6 -->
+                    <div style="padding:10px 12px; overflow:hidden; border:1px solid var(--border-color); border-radius:6px; position:relative;">
+                        <div style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">6위</div>
+                        <a href="https://search.shopping.naver.com/search/all?query=가르시니아+그린몬스터" target="_blank"
+                           style="font-size:13px; font-weight:700; color:var(--accent-color); margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+                            그린몬스터
+                        </a>
+                        <div style="font-size:12px; margin-bottom:3px; display:block;">25,100원</div>
+                        <div style="font-size:11px; opacity:0.55; margin-bottom:5px; display:block;">정제</div>
+                        <div style="height:1px; background:var(--divider-color); margin-bottom:5px;"></div>
+                        <div style="font-size:11px; line-height:1.4; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
+                            다이어트 스페셜2. 900mg 고함량 가르시니아로 집중 관리.
+                        </div>
+                    </div>
+                    <!-- Card 7 -->
+                    <div style="padding:10px 12px; overflow:hidden; border:1px solid var(--border-color); border-radius:6px; position:relative;">
+                        <div style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">7위</div>
+                        <a href="https://search.shopping.naver.com/search/all?query=가르시니아+그리밀" target="_blank"
+                           style="font-size:13px; font-weight:700; color:var(--accent-color); margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+                            그리밀
+                        </a>
+                        <div style="font-size:12px; margin-bottom:3px; display:block;">24,250원</div>
+                        <div style="font-size:11px; opacity:0.55; margin-bottom:5px; display:block;">정제</div>
+                        <div style="height:1px; background:var(--divider-color); margin-bottom:5px;"></div>
+                        <div style="font-size:11px; line-height:1.4; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
+                            1000mg 고함량 가르시니아. 꾸준한 섭취를 위한 대용량.
+                        </div>
+                    </div>
+                    <!-- Card 8 -->
+                    <div style="padding:10px 12px; overflow:hidden; border:1px solid var(--border-color); border-radius:6px; position:relative;">
+                        <div style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">8위</div>
+                        <a href="https://search.shopping.naver.com/search/all?query=가르시니아+리서쳐스" target="_blank"
+                           style="font-size:13px; font-weight:700; color:var(--accent-color); margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+                            리서쳐스
+                        </a>
+                        <div style="font-size:12px; margin-bottom:3px; display:block;">25,200원</div>
+                        <div style="font-size:11px; opacity:0.55; margin-bottom:5px; display:block;">정제</div>
+                        <div style="height:1px; background:var(--divider-color); margin-bottom:5px;"></div>
+                        <div style="font-size:11px; line-height:1.4; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
+                            2BCUT 투비컷. 체지방 관리를 위한 알약 형태 보조제.
+                        </div>
+                    </div>
+                    <!-- Card 9 -->
+                    <div style="padding:10px 12px; overflow:hidden; border:1px solid var(--border-color); border-radius:6px; position:relative;">
+                        <div style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">9위</div>
+                        <a href="https://search.shopping.naver.com/search/all?query=가르시니아+스마일렌" target="_blank"
+                           style="font-size:13px; font-weight:700; color:var(--accent-color); margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+                            스마일렌
+                        </a>
+                        <div style="font-size:12px; margin-bottom:3px; display:block;">6,280원</div>
+                        <div style="font-size:11px; opacity:0.55; margin-bottom:5px; display:block;">정제</div>
+                        <div style="height:1px; background:var(--divider-color); margin-bottom:5px;"></div>
+                        <div style="font-size:11px; line-height:1.4; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
+                            800mg 가르시니아. 합리적인 가격으로 접근성 높임.
+                        </div>
+                    </div>
+                    <!-- Card 10 -->
+                    <div style="padding:10px 12px; overflow:hidden; border:1px solid var(--border-color); border-radius:6px; position:relative;">
+                        <div style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">10위</div>
+                        <a href="https://search.shopping.naver.com/search/all?query=가르시니아+위드바이오" target="_blank"
+                           style="font-size:13px; font-weight:700; color:var(--accent-color); margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+                            위드바이오
+                        </a>
+                        <div style="font-size:12px; margin-bottom:3px; display:block;">9,900원</div>
+                        <div style="font-size:11px; opacity:0.55; margin-bottom:5px; display:block;">정제</div>
+                        <div style="height:1px; background:var(--divider-color); margin-bottom:5px;"></div>
+                        <div style="font-size:11px; line-height:1.4; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
+                            1000mg 가르시니아. 체지방 감소에 초점 맞춘 제품.
+                        </div>
+                    </div>
+                </div>
+                <div class="insight-box">
+                    <h3 class="insight-box-title">핵심 인사이트</h3>
+                    <p class="insight-box-content">
+                        TOP 10 브랜드들은 주로 가격 경쟁력과 고함량을 강조하며, 제형은 정제와 분말스틱이 주를 이룹니다.
+                        명확한 차별화 포인트가 부족하여 시장 내 경쟁이 치열합니다.
+                    </p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                출처: 네이버 쇼핑 검색결과³
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 7: Bubble Chart -->
+    <div class="slide" id="slide-7">
+        <div class="slide-inner">
+            <div class="slide-header">
+                <h2 style="color:var(--main-text-color);">02 경쟁사 분석 | 경쟁사 포지셔닝 (TOP 10)</h2>
+            </div>
+            <div class="slide-body" style="display:flex; flex-direction:column;">
+                <div style="display:flex; align-items:center; gap:20px; flex:1; min-height:0;">
+                    <div style="position:relative; width:600px; height:480px; flex-shrink:0; align-self:center;
+                                border-left:2px solid rgba(255,255,255,0.4); border-bottom:2px solid rgba(255,255,255,0.4);
+                                overflow:visible;">
+                        <!-- Quadrant Lines -->
+                        <div style="position:absolute; left:50%; top:0; height:100%; border-left:1px dashed rgba(255,255,255,0.2); pointer-events:none;"></div>
+                        <div style="position:absolute; top:50%; left:0; width:100%; border-top:1px dashed rgba(255,255,255,0.2); pointer-events:none;"></div>
+
+                        <!-- Y-axis Ticks -->
+                        <div style="position:absolute; right:100%; margin-right:6px; font-size:10px; opacity:0.5; bottom:0%; transform:translateY(50%);">0%</div>
+                        <div style="position:absolute; right:100%; margin-right:6px; font-size:10px; opacity:0.5; bottom:25%; transform:translateY(50%);">25%</div>
+                        <div style="position:absolute; right:100%; margin-right:6px; font-size:10px; opacity:0.5; bottom:50%; transform:translateY(50%);">50%</div>
+                        <div style="position:absolute; right:100%; margin-right:6px; font-size:10px; opacity:0.5; bottom:75%; transform:translateY(50%);">75%</div>
+                        <div style="position:absolute; right:100%; margin-right:6px; font-size:10px; opacity:0.5; bottom:100%; transform:translateY(50%);">100%</div>
+                        
+                        <!-- X-axis Ticks -->
+                        <div style="position:absolute; top:100%; margin-top:6px; font-size:10px; opacity:0.5; left:12.5%; transform:translateX(-50%);">1만</div>
+                        <div style="position:absolute; top:100%; margin-top:6px; font-size:10px; opacity:0.5; left:37.5%; transform:translateX(-50%);">3만</div>
+                        <div style="position:absolute; top:100%; margin-top:6px; font-size:10px; opacity:0.5; left:62.5%; transform:translateX(-50%);">5만</div>
+                        <div style="position:absolute; top:100%; margin-top:6px; font-size:10px; opacity:0.5; left:87.5%; transform:translateX(-50%);">7만</div>
+
+                        <!-- Y-axis Label -->
+                        <div style="position:absolute; right:100%; margin-right:40px; top:50%; writing-mode:vertical-rl; transform:translateY(-50%); font-size:11px; white-space:nowrap; opacity:0.7;">브랜드 인지도</div>
+                        <!-- X-axis Label -->
+                        <div style="position:absolute; top:100%; margin-top:28px; left:50%; transform:translateX(-50%); font-size:11px; white-space:nowrap; opacity:0.7;">월 환산 가격 (원)</div>
+
+                        <!-- Bubble Data -->
+                        <!-- Prices: 7950, 6280, 9900, 12600, 12550, 24820, 24250, 25200, 27000, 78214 -->
+                        <!-- Min price: 6280, Max price: 78214. Range: 71934 -->
+                        <!-- X range: 5% to 88%. Total width 83%. -->
+                        <!-- Y range: 5% to 88%. Total height 83%. -->
+                        <!-- Recognition: 90, 80, 70, 60, 50, 45, 40, 35, 30, 25 -->
+                        <!-- Bubble sizes: 80, 72, 65, 58, 52, 48, 44, 40, 36, 32 -->
+                        <!-- Colors: #4361ee #f72585 #4cc9f0 #f8961e #43aa8b #90be6d #277da1 #e63946 #6a4c93 #ff6b6b -->
+                        
+                        <!-- Helper function for positioning: 
+                        function getPos(value, minVal, maxVal, minCoord, maxCoord) {
+                            return minCoord + (value - minVal) / (maxVal - minVal) * (maxCoord - minCoord);
+                        }
+                        x = getPos(price, 6280, 78214, 5, 88)
+                        y = getPos(recognition, 25, 90, 5, 88)
+                        -->
+
+                        <!-- 1. 뉴트리디데이 (12600원, 90%, 80px) -->
+                        <div style="position:absolute; left:12.9%; bottom:88%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+                            <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">뉴트리디데이</div>
+                            <div style="width:80px; height:80px; border-radius:50%; background:#4361ee; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">1</div>
+                        </div>
+                        <!-- 2. 포뉴 (27000원, 80%, 72px) -->
+                        <div style="position:absolute; left:31.2%; bottom:75.3%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+                            <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">포뉴</div>
+                            <div style="width:72px; height:72px; border-radius:50%; background:#f72585; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">2</div>
+                        </div>
+                        <!-- 3. 에코테라피 (7950원, 70%, 65px) -->
+                        <div style="position:absolute; left:6.3%; bottom:62.6%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+                            <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">에코테라피</div>
+                            <div style="width:65px; height:65px; border-radius:50%; background:#4cc9f0; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">3</div>
+                        </div>
+                        <!-- 4. 루체 (24820원, 60%, 58px) -->
+                        <div style="position:absolute; left:28.4%; bottom:55.3%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+                            <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">루체</div>
+                            <div style="width:58px; height:58px; border-radius:50%; background:#f8961e; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">4</div>
+                        </div>
+                        <!-- 5. 루비에 (78214원, 50%, 52px) -->
+                        <div style="position:absolute; left:87.5%; bottom:47.6%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+                            <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">루비에</div>
+                            <div style="width:52px; height:52px; border-radius:50%; background:#43aa8b; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">5</div>
+                        </div>
+                        <!-- 6. 그린몬스터 (12550원, 45%, 48px) -->
+                        <div style="position:absolute; left:12.8%; bottom:40.4%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+                            <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">그린몬스터</div>
+                            <div style="width:48px; height:48px; border-radius:50%; background:#90be6d; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">6</div>
+                        </div>
+                        <!-- 7. 그리밀 (24250원, 40%, 44px) -->
+                        <div style="position:absolute; left:27.7%; bottom:36.6%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+                            <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">그리밀</div>
+                            <div style="width:44px; height:44px; border-radius:50%; background:#277da1; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">7</div>
+                        </div>
+                        <!-- 8. 리서쳐스 (25200원, 35%, 40px) -->
+                        <div style="position:absolute; left:28.9%; bottom:32.8%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+                            <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">리서쳐스</div>
+                            <div style="width:40px; height:40px; border-radius:50%; background:#e63946; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">8</div>
+                        </div>
+                        <!-- 9. 스마일렌 (6280원, 30%, 36px) -->
+                        <div style="position:absolute; left:5%; bottom:29%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+                            <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">스마일렌</div>
+                            <div style="width:36px; height:36px; border-radius:50%; background:#6a4c93; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">9</div>
+                        </div>
+                        <!-- 10. 위드바이오 (9900원, 25%, 32px) -->
+                        <div style="position:absolute; left:9.6%; bottom:25.2%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+                            <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">위드바이오</div>
+                            <div style="width:32px; height:32px; border-radius:50%; background:#ff6b6b; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">10</div>
+                        </div>
+                    </div>
+
+                    <div style="flex:1; display:flex; flex-direction:column; justify-content:center; gap:16px; overflow:hidden;">
+                        <div style="font-size:18px; font-weight:600; margin-bottom:8px;">경쟁사 포지셔닝</div>
+                        <div style="display:flex; flex-wrap:wrap; gap:4px 12px; flex-shrink:0;">
+                            <span style="font-size:12px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#4361ee; margin-right:5px;"></span>뉴트리디데이</span>
+                            <span style="font-size:12px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#f72585; margin-right:5px;"></span>포뉴</span>
+                            <span style="font-size:12px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#4cc9f0; margin-right:5px;"></span>에코테라피</span>
+                            <span style="font-size:12px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#f8961e; margin-right:5px;"></span>루체</span>
+                            <span style="font-size:12px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#43aa8b; margin-right:5px;"></span>루비에</span>
+                            <span style="font-size:12px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#90be6d; margin-right:5px;"></span>그린몬스터</span>
+                            <span style="font-size:12px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#277da1; margin-right:5px;"></span>그리밀</span>
+                            <span style="font-size:12px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#e63946; margin-right:5px;"></span>리서쳐스</span>
+                            <span style="font-size:12px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#6a4c93; margin-right:5px;"></span>스마일렌</span>
+                            <span style="font-size:12px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#ff6b6b; margin-right:5px;"></span>위드바이오</span>
+                        </div>
+                        <div class="insight-box" style="margin-top:0;">
+                            <h3 class="insight-box-title">저가 &amp; 중저가 경쟁 심화</h3>
+                            <p class="insight-box-content">
+                                대부분의 브랜드가 낮은 가격대와 중간 인지도 영역에 집중되어 있으며, 고가격-고인지도 영역의 경쟁은 상대적으로 적습니다.
+                            </p>
+                        </div>
+                        <div class="insight-box" style="margin-top:0;">
+                            <h3 class="insight-box-title">프리미엄 기회 포착</h3>
+                            <p class="insight-box-content">
+                                '루비에'와 같이 고가 제품도 존재하지만 인지도가 낮아, 프리미엄 포지셔닝을 통한 차별화 전략 기회가 있습니다.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                출처: 네이버 쇼핑 검색결과³, NPD 디렉터 추정
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 8: Section Divider 03 -->
+    <div class="slide" id="slide-8">
+        <div class="slide-inner" style="background:var(--accent-color); display:flex; align-items:center; justify-content:center; flex-direction:column; text-align:center;">
+            <div style="font-size:13px; letter-spacing:0.2em; text-transform:uppercase; opacity:0.6; margin-bottom:16px; color:#fff;">CHAPTER 03</div>
+            <div style="font-size:64px; font-weight:900; color:#fff; line-height:1;">03</div>
+            <div style="font-size:32px; font-weight:400; color:#fff; margin-top:16px; opacity:0.9;">기회 &amp; 전략</div>
+            <div style="width:60px; height:3px; background:#fff; margin-top:24px;"></div>
+        </div>
+    </div>
+
+    <!-- Slide 9: Pain Points -->
+    <div class="slide" id="slide-9">
+        <div class="slide-inner">
+            <div class="slide-header">
+                <h2 style="color:var(--main-text-color);">03 기회 &amp; 전략 | 소비자 불만 (Pain Points)</h2>
+            </div>
+            <div class="slide-body" style="display:flex; flex-direction:column;">
+                <div style="display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:16px; flex:1; min-height:0;">
+                    <div style="padding:20px 24px; border:1px solid var(--border-color); border-radius:6px; display:flex; flex-direction:column; overflow:hidden; min-height:0;">
+                        <h3 style="font-size:16px; font-weight:700; color:var(--accent-color); margin:0 0 10px; flex-shrink:0;">낮은 효과 체감 및 의구심</h3>
+                        <p style="font-size:14px; line-height:1.7; flex:1; overflow:hidden; color:rgba(255,255,255,0.92);">
+                            '가르시니아' 단일 성분에 대한 기대감이 낮아지고 있으며, 실제 체감 효과에 대한 의구심이 존재합니다.
+                            이는 검색량 급감으로도 이어져, 더 이상 단독 성분으로 큰 수요를 견인하기 어렵습니다.
+                        </p>
+                    </div>
+                    <div style="padding:20px 24px; border:1px solid var(--border-color); border-radius:6px; display:flex; flex-direction:column; overflow:hidden; min-height:0;">
+                        <h3 style="font-size:16px; font-weight:700; color:var(--accent-color); margin:0 0 10px; flex-shrink:0;">차별화된 가치 부족</h3>
+                        <p style="font-size:14px; line-height:1.7; flex:1; overflow:hidden; color:rgba(255,255,255,0.92);">
+                            대부분의 경쟁사 제품들이 '체지방 감소', '탄수화물 컷팅' 등 일반적인 효능을 강조하며 명확한 USP가 부재합니다.
+                            소비자는 더 이상 단순한 다이어트 효능만으로는 제품을 선택하지 않습니다.
+                        </p>
+                    </div>
+                    <div style="padding:20px 24px; border:1px solid var(--border-color); border-radius:6px; display:flex; flex-direction:column; overflow:hidden; min-height:0;">
+                        <h3 style="font-size:16px; font-weight:700; color:var(--accent-color); margin:0 0 10px; flex-shrink:0;">지루하고 맛없는 섭취 경험</h3>
+                        <p style="font-size:14px; line-height:1.7; flex:1; overflow:hidden; color:rgba(255,255,255,0.92);">
+                            정제 또는 분말스틱 형태의 제품이 많아 섭취가 지루하거나 맛이 없어 꾸준히 섭취하기 어렵다는 불만이 있습니다.
+                            물 없이 간편하게 섭취하거나 긍정적인 경험을 제공하는 제품에 대한 니즈가 높습니다.
+                        </p>
+                    </div>
+                    <div style="padding:20px 24px; border:1px solid var(--border-color); border-radius:6px; display:flex; flex-direction:column; overflow:hidden; min-height:0;">
+                        <h3 style="font-size:16px; font-weight:700; color:var(--accent-color); margin:0 0 10px; flex-shrink:0;">구체적인 목표 달성 지원 부족</h3>
+                        <p style="font-size:14px; line-height:1.7; flex:1; overflow:hidden; color:rgba(255,255,255,0.92);">
+                            소비자들은 바디 프로필, 출산 후 관리, 특정 부위 집중 등 구체적인 라이프스타일 변화나 목표 달성에 초점을 맞춘 제품을 찾습니다.
+                            단순 '체중 감량'을 넘어선 솔루션이 필요합니다.
+                        </p>
+                    </div>
+                </div>
+                <div class="insight-box">
+                    <h3 class="insight-box-title">핵심 인사이트</h3>
+                    <p class="insight-box-content">
+                        소비자들은 단순한 다이어트 효능을 넘어, 긍정적인 섭취 경험과 구체적인 목표 달성을 돕는 차별화된 솔루션을 갈망하고 있습니다.
+                    </p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                출처: NPD 디렉터 분석
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 10: White Space -->
+    <div class="slide" id="slide-10">
+        <div class="slide-inner">
+            <div class="slide-header">
+                <h2 style="color:var(--main-text-color);">03 기회 &amp; 전략 | 차별화 기회 (White Space)</h2>
+            </div>
+            <div class="slide-body" style="display:flex; flex-direction:column;">
+                <div style="display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:16px; flex:1; min-height:0;">
+                    <div style="padding:20px 24px; border:1px solid var(--border-color); border-radius:6px; display:flex; flex-direction:column; overflow:hidden;">
+                        <h3 style="font-size:14px; font-weight:700; color:var(--accent-color); margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em;">운동 시너지 강조</h3>
+                        <p style="font-size:15px; line-height:1.65; flex:1; color:rgba(255,255,255,0.92);">
+                            가르시니아의 체지방 감소 기능과 함께 운동 효율 증진, 에너지 부스팅 효과를 강조하여 액티브한 라이프스타일을 지원합니다.
+                            '운동 파트너'로서의 포지셔닝을 통해 소비자의 능동적인 다이어트를 돕습니다.
+                        </p>
+                    </div>
+                    <div style="padding:20px 24px; border:1px solid var(--border-color); border-radius:6px; display:flex; flex-direction:column; overflow:hidden;">
+                        <h3 style="font-size:14px; font-weight:700; color:var(--accent-color); margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em;">맛과 편의성을 위한 제형 혁신</h3>
+                        <p style="font-size:15px; line-height:1.65; flex:1; color:rgba(255,255,255,0.92);">
+                            기존 정제/분말에서 벗어나, 젤리, 츄어블, 액상 스틱 등 맛과 휴대성을 극대화한 제형으로 섭취 경험을 긍정적으로 전환합니다.
+                            물 없이 언제 어디서든 간편하게 섭취할 수 있는 편의성을 제공합니다.
+                        </p>
+                    </div>
+                    <div style="padding:20px 24px; border:1px solid var(--border-color); border-radius:6px; display:flex; flex-direction:column; overflow:hidden;">
+                        <h3 style="font-size:14px; font-weight:700; color:var(--accent-color); margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em;">건강한 습관 형성 라이프스타일 솔루션</h3>
+                        <p style="font-size:15px; line-height:1.65; flex:1; color:rgba(255,255,255,0.92);">
+                            단순 체중 감량 결과보다 건강한 식습관, 규칙적인 생활 등 긍정적인 습관 형성을 돕는 파트너 역할을 강조합니다.
+                            식단 관리 팁, 홈트 가이드 등 통합적인 웰니스 콘텐츠를 제공합니다.
+                        </p>
+                    </div>
+                    <div style="padding:20px 24px; border:1px solid var(--border-color); border-radius:6px; display:flex; flex-direction:column; overflow:hidden;">
+                        <h3 style="font-size:14px; font-weight:700; color:var(--accent-color); margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em;">특정 목표/부위 집중 케어</h3>
+                        <p style="font-size:15px; line-height:1.65; flex:1; color:rgba(255,255,255,0.92);">
+                            바디 프로필, 출산 후 다이어트, 뱃살 집중 관리 등 소비자의 구체적인 라이프스타일 목표에 초점을 맞춘 제품을 개발합니다.
+                            타겟 니즈에 특화된 메시지로 공감대를 형성합니다.
+                        </p>
+                    </div>
+                </div>
+                <div class="insight-box">
+                    <h3 class="insight-box-title">핵심 인사이트</h3>
+                    <p class="insight-box-content">
+                        '가르시니아' 시장의 새로운 기회는 제형 혁신과 함께 구체적인 라이프스타일 목표 달성을 돕는 통합 솔루션 제공에 있습니다.
+                    </p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                출처: NPD 디렉터 분석
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 11: Concept -->
+    <div class="slide" id="slide-11">
+        <div class="slide-inner">
+            <div class="slide-header">
+                <h2 style="color:var(--main-text-color);">03 기회 &amp; 전략 | NPD 콘셉트</h2>
+            </div>
+            <div class="slide-body" style="display:flex; flex-direction:column;">
+                <div style="display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:16px; flex:1; min-height:0;">
+                    <div style="padding:20px 24px; border:1px solid var(--border-color); border-radius:6px; display:flex; flex-direction:column; overflow:hidden;">
+                        <h3 style="font-size:14px; font-weight:700; color:var(--accent-color); margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em;">제품명</h3>
+                        <p style="font-size:15px; line-height:1.65; flex:1;">
+                            <strong style="font-size:18px; color:var(--accent-color);">핏 시너지 G-번 (Fit Synergy G-Burn)</strong><br>
+                            운동과 시너지를 내어 체지방을 효과적으로 태우는 제품임을 직관적으로 전달합니다.
+                        </p>
+                    </div>
+                    <div style="padding:20px 24px; border:1px solid var(--border-color); border-radius:6px; display:flex; flex-direction:column; overflow:hidden;">
+                        <h3 style="font-size:14px; font-weight:700; color:var(--accent-color); margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em;">핵심 USP</h3>
+                        <p style="font-size:15px; line-height:1.65; flex:1;">
+                            <strong style="font-size:18px;">"운동 효율 증진 &amp; 맛있고 간편한 체지방 집중 케어"</strong><br>
+                            가르시니아와 시너지를 내는 부원료로 운동 효과를 높이고, 혁신 제형으로 섭취 경험을 개선합니다.
+                        </p>
+                    </div>
+                    <div style="padding:20px 24px; border:1px solid var(--border-color); border-radius:6px; display:flex; flex-direction:column; overflow:hidden;">
+                        <h3 style="font-size:14px; font-weight:700; color:var(--accent-color); margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em;">타겟</h3>
+                        <p style="font-size:15px; line-height:1.65; flex:1;">
+                            <strong style="font-size:18px;">"액티브 라이프스타일을 추구하는 2030 운동 병행 다이어터"</strong><br>
+                            건강한 활동과 함께 체지방 관리를 원하는 젊은 층을 주 타겟으로 설정합니다.
+                        </p>
+                    </div>
+                    <div style="padding:20px 24px; border:1px solid var(--border-color); border-radius:6px; display:flex; flex-direction:column; overflow:hidden;">
+                        <h3 style="font-size:14px; font-weight:700; color:var(--accent-color); margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em;">포지셔닝 메시지</h3>
+                        <p style="font-size:15px; line-height:1.65; flex:1;">
+                            <strong style="font-size:18px;">"지루한 다이어트는 이제 그만! 맛있게 즐기는 운동 파트너로 건강한 변화를 시작하세요."</strong><br>
+                            결과뿐 아니라 과정의 즐거움과 건강한 라이프스타일을 제안합니다.
+                        </p>
+                    </div>
+                </div>
+                <div class="insight-box">
+                    <h3 class="insight-box-title">핵심 인사이트</h3>
+                    <p class="insight-box-content">
+                        '핏 시너지 G-번'은 운동과 시너지를 내는 혁신적인 제형의 제품으로, 2030 액티브 다이어터에게 새로운 가치를 제공합니다.
+                    </p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                출처: NPD 디렉터 제안
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 12: Pricing -->
+    <div class="slide" id="slide-12">
+        <div class="slide-inner">
+            <div class="slide-header">
+                <h2 style="color:var(--main-text-color);">03 기회 &amp; 전략 | 가격 전략</h2>
+            </div>
+            <div class="slide-body" style="display:flex; flex-direction:column;">
+                <table style="width:100%; border-collapse:collapse; margin-bottom:20px;">
+                    <thead>
+                        <tr>
+                            <th style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; background:rgba(255,255,255,0.05); border:1px solid var(--border-color);">제품 타입</th>
+                            <th style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; background:rgba(255,255,255,0.05); border:1px solid var(--border-color);">월간 타겟 가격 (소비자가)</th>
+                            <th style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; background:rgba(255,255,255,0.05); border:1px solid var(--border-color);">타겟 원가율</th>
+                            <th style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; background:rgba(255,255,255,0.05); border:1px solid var(--border-color);">월간 타겟 제조단가</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid var(--border-color);">엔트리 레벨 정제</td>
+                            <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid var(--border-color);">6,000 ~ 10,000원</td>
+                            <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid var(--border-color);">15 ~ 20%</td>
+                            <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid var(--border-color);">900 ~ 2,000원</td>
+                        </tr>
+                        <tr>
+                            <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid var(--border-color);">스탠다드 정제</td>
+                            <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid var(--border-color);">15,000 ~ 20,000원</td>
+                            <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid var(--border-color);">15 ~ 20%</td>
+                            <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid var(--border-color);">2,250 ~ 4,000원</td>
+                        </tr>
+                        <tr>
+                            <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid var(--border-color);">스탠다드 분말/젤리</td>
+                            <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid var(--border-color);">20,000 ~ 25,000원</td>
+                            <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid var(--border-color);">15 ~ 20%</td>
+                            <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid var(--border-color);">3,000 ~ 5,000원</td>
+                        </tr>
+                        <tr>
+                            <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid var(--border-color);">프리미엄 젤리/액상</td>
+                            <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid var(--border-color);">30,000 ~ 35,000원</td>
+                            <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid var(--border-color);">15 ~ 20%</td>
+                            <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid var(--border-color);">4,500 ~ 7,000원</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div style="font-size:15px; line-height:1.7; flex:1;">
+                    <strong style="font-size:18px;">가격 전략 근거:</strong><br>
+                    경쟁사 분석 결과, 2만원대 후반~3만원대 초반의 중간 가격대가 주를 이루고 있습니다. 우리는 제형 혁신과 차별화된 USP를 통해 프리미엄 포지셔닝이 가능하다고 판단합니다.
+                    특히 젤리/액상 형태의 경우, 높은 제조 단가를 반영하여 3만원대 중반까지 설정할 수 있습니다. 엔트리 레벨 정제는 시장 진입 장벽을 낮추는 역할을 합니다.
+                    타겟 원가율 15~20%는 건강기능식품 시장의 일반적인 마진율을 고려하여 설정되었습니다.
+                </div>
+                <div class="insight-box">
+                    <h3 class="insight-box-title">핵심 인사이트</h3>
+                    <p class="insight-box-content">
+                        경쟁 시장의 가격대를 고려하되, 혁신적인 제형과 USP를 통해 프리미엄 가격 전략을 구축하여 수익성을 확보합니다.
+                    </p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                출처: 네이버 쇼핑 검색결과³, NPD 디렉터 추정
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 13: Risk -->
+    <div class="slide" id="slide-13">
+        <div class="slide-inner">
+            <div class="slide-header">
+                <h2 style="color:var(--main-text-color);">03 기회 &amp; 전략 | 리스크 분석</h2>
+            </div>
+            <div class="slide-body" style="display:flex; flex-direction:column;">
+                <div style="display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:16px; flex:1; min-height:0;">
+                    <div style="padding:20px 24px; border:1px solid var(--border-color); border-radius:6px; display:flex; flex-direction:column; overflow:hidden; min-height:0;">
+                        <h3 style="font-size:16px; font-weight:700; color:var(--accent-color); margin:0 0 10px; flex-shrink:0;">시장 관심도 지속 하락</h3>
+                        <p style="font-size:14px; line-height:1.7; flex:1; overflow:hidden; color:rgba(255,255,255,0.92);">
+                            '가르시니아' 키워드에 대한 소비자 검색량과 관심도가 계속해서 감소할 경우, 신제품 출시 효과가 미미할 수 있습니다.
+                            단일 성분에 대한 부정적 인식이 확산될 위험도 존재합니다.
+                        </p>
+                        <div style="border-top:1px solid rgba(255,255,255,0.1); margin-top:8px; padding-top:8px; font-size:12px; color:rgba(255,255,255,0.75); flex-shrink:0;">
+                            <strong>대응 방안:</strong> 복합 기능성 강조 및 라이프스타일 솔루션으로 포지셔닝 전환, '가르시니아' 외 핵심 효능 소구.
+                        </div>
+                    </div>
+                    <div style="padding:20px 24px; border:1px solid var(--border-color); border-radius:6px; display:flex; flex-direction:column; overflow:hidden; min-height:0;">
+                        <h3 style="font-size:16px; font-weight:700; color:var(--accent-color); margin:0 0 10px; flex-shrink:0;">경쟁 심화 및 차별성 부족</h3>
+                        <p style="font-size:14px; line-height:1.7; flex:1; overflow:hidden; color:rgba(255,255,255,0.92);">
+                            이미 많은 경쟁 제품들이 유사한 효능을 강조하며 시장에 존재합니다.
+                            명확한 차별화 포인트를 찾지 못하면, 가격 경쟁에 휘말려 수익성 악화로 이어질 수 있습니다.
+                        </p>
+                        <div style="border-top:1px solid rgba(255,255,255,0.1); margin-top:8px; padding-top:8px; font-size:12px; color:rgba(255,255,255,0.75); flex-shrink:0;">
+                            <strong>대응 방안:</strong> 제형 혁신, 특정 니즈(운동 병행 등) 타겟 USP 개발 및 소규모 테스트 마케팅으로 검증.
+                        </div>
+                    </div>
+                    <div style="padding:20px 24px; border:1px solid var(--border-color); border-radius:6px; display:flex; flex-direction:column; overflow:hidden; min-height:0;">
+                        <h3 style="font-size:16px; font-weight:700; color:var(--accent-color); margin:0 0 10px; flex-shrink:0;">원료 효능에 대한 회의적 시선</h3>
+                        <p style="font-size:14px; line-height:1.7; flex:1; overflow:hidden; color:rgba(255,255,255,0.92);">
+                            일부 소비자들은 가르시니아의 실제 다이어트 효과에 대해 회의적인 시각을 가지고 있습니다.
+                            과학적 근거가 부족하다는 인식이 확산되면 제품 신뢰도에 타격을 줄 수 있습니다.
+                        </p>
+                        <div style="border-top:1px solid rgba(255,255,255,0.1); margin-top:8px; padding-top:8px; font-size:12px; color:rgba(255,255,255,0.75); flex-shrink:0;">
+                            <strong>대응 방안:</strong> 식약처 인증 원료 및 과학적 연구 결과 강조, 전문가 의견 활용, 투명한 정보 제공.
+                        </div>
+                    </div>
+                    <div style="padding:20px 24px; border:1px solid var(--border-color); border-radius:6px; display:flex; flex-direction:column; overflow:hidden; min-height:0;">
+                        <h3 style="font-size:16px; font-weight:700; color:var(--accent-color); margin:0 0 10px; flex-shrink:0;">건강기능식품 규제 변화</h3>
+                        <p style="font-size:14px; line-height:1.7; flex:1; overflow:hidden; color:rgba(255,255,255,0.92);">
+                            건강기능식품 시장이 성장함에 따라 식약처 등 규제 기관의 관리 감독이 강화될 가능성이 있습니다.
+                            이는 원료 사용, 광고 문구 등에 영향을 미쳐 제품 개발 및 마케팅에 제약을 줄 수 있습니다.
+                        </p>
+                        <div style="border-top:1px solid rgba(255,255,255,0.1); margin-top:8px; padding-top:8px; font-size:12px; color:rgba(255,255,255,0.75); flex-shrink:0;">
+                            <strong>대응 방안:</strong> 최신 규제 동향 상시 모니터링, 법규 준수 철저, 선제적 대응 체계 구축.
+                        </div>
+                    </div>
+                </div>
+                <div class="insight-box">
+                    <h3 class="insight-box-title">핵심 인사이트</h3>
+                    <p class="insight-box-content">
+                        시장 관심도 하락과 경쟁 심화는 주요 리스크지만, 차별화된 제품 개발과 적극적인 커뮤니케이션으로 극복 가능합니다.
+                    </p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                출처: NPD 디렉터 분석
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 14: Roadmap -->
+    <div class="slide" id="slide-14">
+        <div class="slide-inner">
+            <div class="slide-header">
+                <h2 style="color:var(--main-text-color);">03 기회 &amp; 전략 | 실행 로드맵</h2>
+            </div>
+            <div class="slide-body" style="display:flex; flex-direction:column;">
+                <div style="display:flex; flex-direction:row; align-items:stretch; gap:20px; flex:1; min-height:0;">
+                    <!-- Phase 1 -->
+                    <div style="flex:1; padding:24px 20px; border-top:3px solid var(--accent-color); display:flex; flex-direction:column; gap:8px; background:rgba(255,255,255,0.03); border-radius:6px;">
+                        <h3 style="font-size:18px; font-weight:700; margin:0;">Phase 1: 시장 &amp; 고객 심층 분석</h3>
+                        <p style="font-size:13px; color:var(--light-text-color); margin:0;">기간: 1-2개월</p>
+                        <div style="height:1px; background:var(--divider-color); margin:4px 0;"></div>
+                        <ul style="list-style:none; padding:0; margin:0; font-size:14px; line-height:1.7; flex:1;">
+                            <li>&#8227; 소비자 심층 조사 (FGI, 설문)</li>
+                            <li>&#8227; 타겟 그룹 세분화 및 니즈 도출</li>
+                            <li>&#8227; 경쟁사 벤치마킹 심화</li>
+                        </ul>
+                        <div style="font-size:12px; color:var(--accent-color); font-weight:700; margin-top:auto; padding-top:8px; border-top:1px solid var(--divider-color);">
+                            마일스톤: 핵심 타겟 페르소나 및 니즈 정의
+                        </div>
+                    </div>
+                    <!-- Phase 2 -->
+                    <div style="flex:1; padding:24px 20px; border-top:3px solid var(--accent-color); display:flex; flex-direction:column; gap:8px; background:rgba(255,255,255,0.03); border-radius:6px;">
+                        <h3 style="font-size:18px; font-weight:700; margin:0;">Phase 2: 제품 콘셉트 &amp; 제형 개발</h3>
+                        <p style="font-size:13px; color:var(--light-text-color); margin:0;">기간: 2-4개월</p>
+                        <div style="height:1px; background:var(--divider-color); margin:4px 0;"></div>
+                        <ul style="list-style:none; padding:0; margin:0; font-size:14px; line-height:1.7; flex:1;">
+                            <li>&#8227; 혁신 제형 (젤리, 츄어블 등) 구체화</li>
+                            <li>&#8227; 명확한 USP 개발 및 검증</li>
+                            <li>&#8227; 기능성 원료 소싱 및 배합 확정</li>
+                        </ul>
+                        <div style="font-size:12px; color:var(--accent-color); font-weight:700; margin-top:auto; padding-top:8px; border-top:1px solid var(--divider-color);">
+                            마일스톤: NPD 콘셉트 및 시제품 완성
+                        </div>
+                    </div>
+                    <!-- Phase 3 -->
+                    <div style="flex:1; padding:24px 20px; border-top:3px solid var(--accent-color); display:flex; flex-direction:column; gap:8px; background:rgba(255,255,255,0.03); border-radius:6px;">
+                        <h3 style="font-size:18px; font-weight:700; margin:0;">Phase 3: 마케팅 전략 수립 &amp; 실행</h3>
+                        <p style="font-size:13px; color:var(--light-text-color); margin:0;">기간: 4-6개월</p>
+                        <div style="height:1px; background:var(--divider-color); margin:4px 0;"></div>
+                        <ul style="list-style:none; padding:0; margin:0; font-size:14px; line-height:1.7; flex:1;">
+                            <li>&#8227; 콘텐츠 마케팅 전략 수립 및 실행</li>
+                            <li>&#8227; 타겟 커뮤니티 구축 및 활성화</li>
+                            <li>&#8227; 초기 런칭 캠페인 기획 및 실행</li>
+                        </ul>
+                        <div style="font-size:12px; color:var(--accent-color); font-weight:700; margin-top:auto; padding-top:8px; border-top:1px solid var(--divider-color);">
+                            마일스톤: 성공적인 시장 런칭 및 초기 고객 확보
+                        </div>
+                    </div>
+                </div>
+                <div class="insight-box">
+                    <h3 class="insight-box-title">핵심 인사이트</h3>
+                    <p class="insight-box-content">
+                        심층적인 시장 및 고객 분석을 바탕으로 차별화된 제품을 개발하고, 전략적인 마케팅으로 시장에 성공적으로 진입합니다.
+                    </p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                출처: NPD 디렉터 제안
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 15: References -->
+    <div class="slide" id="slide-15">
+        <div class="slide-inner">
+            <div class="slide-header">
+                <h2 style="color:var(--main-text-color);">참고문헌 및 데이터 출처</h2>
+            </div>
+            <div class="slide-body" style="display:flex; flex-direction:column; overflow-y:auto; padding-bottom:8px;">
+                <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
+                    <span style="color:var(--accent-color); font-weight:700; flex-shrink:0; min-width:24px;">[1]</span>
+                    <span style="color:rgba(255,255,255,0.85);">네이버 데이터랩 검색어트렌드, 조회일: 2026-04-10, 키워드: 가르시니아</span>
+                </div>
+                <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
+                    <span style="color:var(--accent-color); font-weight:700; flex-shrink:0; min-width:24px;">[2]</span>
+                    <span style="color:rgba(255,255,255,0.85);">네이버 검색광고 키워드도구, 조회일: 2026-04-10, 키워드: 가르시니아 — 월간 PC/모바일 검색수</span>
+                </div>
+                <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
+                    <span style="color:var(--accent-color); font-weight:700; flex-shrink:0; min-width:24px;">[3]</span>
+                    <span style="color:rgba(255,255,255,0.85);">네이버 쇼핑 검색결과, 조회일: 2026-04-10, 키워드: 가르시니아, 상위 20개 상품 기준</span>
+                </div>
+                <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
+                    <span style="color:var(--accent-color); font-weight:700; flex-shrink:0; min-width:24px;">[4]</span>
+                    <span style="color:rgba(255,255,255,0.85);">g-enews.com, "한국 젤리 스틱의 역습… 브라운대 수재들이 美 4조 숙취 시장 흔든 비...", Sat, 07 Feb 2026</span>
+                </div>
+                <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
+                    <span style="color:var(--accent-color); font-weight:700; flex-shrink:0; min-width:24px;">[5]</span>
+                    <span style="color:rgba(255,255,255,0.85);">dream.kotra.or.kr, " '미리미리' 건강 관리하는 케냐 건강기능식품 시장", Thu, 18 Dec 2025</span>
+                </div>
+                <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
+                    <span style="color:var(--accent-color); font-weight:700; flex-shrink:0; min-width:24px;">[6]</span>
+                    <span style="color:rgba(255,255,255,0.85);">isplus.com, "&quot;언제까지 바르기만 할거니?&quot; K뷰티 업계 레티놀, 시카까지 먹고, 마시고", Fri, 28 Nov 2025</span>
+                </div>
+                <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
+                    <span style="color:var(--accent-color); font-weight:700; flex-shrink:0; min-width:24px;">[7]</span>
+                    <span style="color:rgba(255,255,255,0.85);">dream.kotra.or.kr, "중국 소비의 정서적 전환, K-웰니스 기회로 부상", Thu, 27 Nov 2025</span>
+                </div>
+                <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
+                    <span style="color:var(--accent-color); font-weight:700; flex-shrink:0; min-width:24px;">[8]</span>
+                    <span style="color:rgba(255,255,255,0.85);">view.asiae.co.kr, "&quot;보이는 대로 쓸어 담자&quot; 다이소 난리더니…결국 시장 판도 바뀌었다", Tue, 25 Feb 2025</span>
+                </div>
+                <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
+                    <span style="color:var(--accent-color); font-weight:700; flex-shrink:0; min-width:24px;">[식약처]</span>
+                    <span style="color:rgba(255,255,255,0.85);">식품안전나라 공공데이터포털, I0760(건강기능식품 원료분류), 조회일: 2026-04-10</span>
+                </div>
+                <div style="font-size:12px; color:rgba(255,255,255,0.55); margin-top:20px;">
+                    *(추정) 표시는 제공된 데이터를 기반으로 NPD 디렉터가 분석·추정한 내용으로 공식 통계가 아님*
+                </div>
+            </div>
+            <div class="slide-footer">
+                출처: 보고서 원문 참조
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // viewport scale
+        function scaleSlides() {
+          var s = Math.min(window.innerWidth/1600, window.innerHeight/800);
+          document.querySelectorAll('.slide-inner').forEach(function(el) {
+            el.style.transform = 'scale('+s+')';
+            el.style.transformOrigin = 'center center';
+          });
+        }
+        window.addEventListener('resize', scaleSlides);
+        scaleSlides();
+
+        // 전환
+        var slides = document.querySelectorAll('.slide');
+        var cur = 0, lock = false;
+        function show(n) {
+          slides[cur].classList.remove('active');
+          cur = (n + slides.length) % slides.length;
+          slides[cur].classList.add('active');
+          document.getElementById('slide-num').textContent = (cur+1)+' / '+slides.length;
+        }
+        document.addEventListener('keydown', function(e) {
+          if (e.key==='ArrowRight'||e.key===' '){e.preventDefault();show(cur+1);}
+          if (e.key==='ArrowLeft'){e.preventDefault();show(cur-1);}
+          if (e.key==='f'||e.key==='F'){document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen();}
+        });
+        document.addEventListener('wheel', function(e) {
+          e.preventDefault();
+          if (lock) return; lock=true;
+          show(e.deltaY>0?cur+1:cur-1);
+          setTimeout(function(){lock=false;},300);
+        },{passive:false});
+        show(0);
+
+        // Line Chart JS (from blueprint)
+        (function() {
+          var ACCENT_COLOR_HEX = '#FF5722'; // Fallback hex value
+
+          var pts = [
+            {l:'2024.04', v:99.8}, {l:'2024.07', v:85.0}, {l:'2024.10', v:65.0},
+            {l:'2025.01', v:50.0}, {l:'2025.04', v:40.0}, {l:'2025.07', v:25.0},
+            {l:'2025.10', v:15.0}, {l:'2026.04', v:8.8}
+          ];
+          function draw() {
+            var cv = document.getElementById('trendChart');
+            if (!cv) return;
+            var par = cv.parentElement;
+            var W = par.clientWidth || 1300, H = par.clientHeight || 350;
+            cv.width = W; cv.height = H;
+            var ctx = cv.getContext('2d');
+            var PL=60, PR=20, PT=20, PB=45;
+            var cW=W-PL-PR, cH=H-PT-PB;
+            var maxV=100;
+            function xp(i){return PL + i/(pts.length-1)*cW;}
+            function yp(v){return PT + cH - v/maxV*cH;}
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, W, H);
+
+            // Grid + Y-axis Labels
+            ctx.font='11px "Noto Sans KR", sans-serif'; ctx.textAlign='right'; ctx.fillStyle='rgba(255,255,255,0.4)';
+            [0,25,50,75,100].forEach(function(v){
+              var y=yp(v);
+              ctx.strokeStyle='rgba(255,255,255,0.07)'; ctx.lineWidth=1;
+              ctx.beginPath(); ctx.moveTo(PL,y); ctx.lineTo(PL+cW,y); ctx.stroke();
+              ctx.fillText(v,PL-6,y+4);
+            });
+            
+            // Get accent color from CSS variable for canvas
+            var accentColor = getComputedStyle(document.documentElement).getPropertyValue('--accent-color').trim();
+            if (!accentColor) accentColor = ACCENT_COLOR_HEX; // Fallback
+
+            // Area Gradient
+            var gr=ctx.createLinearGradient(0,PT,0,PT+cH);
+            gr.addColorStop(0,accentColor+'55'); gr.addColorStop(1,accentColor+'05');
+            ctx.beginPath();
+            ctx.moveTo(xp(0),yp(0));
+            pts.forEach(function(d,i){ctx.lineTo(xp(i),yp(d.v));});
+            ctx.lineTo(xp(pts.length-1),yp(0)); ctx.closePath();
+            ctx.fillStyle=gr; ctx.fill();
+            
+            // Line
+            ctx.beginPath(); ctx.strokeStyle=accentColor; ctx.lineWidth=2.5; ctx.lineJoin='round';
+            pts.forEach(function(d,i){i?ctx.lineTo(xp(i),yp(d.v)):ctx.moveTo(xp(i),yp(d.v));});
+            ctx.stroke();
+            
+            // Points + Value Labels + X-axis Labels
+            ctx.fillStyle=accentColor; ctx.textAlign='center'; ctx.font='11px "Noto Sans KR", sans-serif';
+            pts.forEach(function(d,i){
+              ctx.beginPath(); ctx.arc(xp(i),yp(d.v),4,0,2*Math.PI); ctx.fill();
+              ctx.fillStyle='rgba(255,255,255,0.7)';
+              ctx.fillText(d.v, xp(i), yp(d.v)-10);
+              ctx.fillStyle='rgba(255,255,255,0.4)';
+              ctx.fillText(d.l, xp(i), H-8);
+              ctx.fillStyle=accentColor;
+            });
+          }
+          if(document.fonts) document.fonts.ready.then(draw); else window.addEventListener('load',draw);
+          window.addEventListener('resize',draw);
+        })();
+    </script>
+<script>
+(function() {
+  var contentScales = {};
+
+  function measureAll() {
+    document.querySelectorAll('.slide').forEach(function(slide, i) {
+      var hidden = !slide.classList.contains('active');
+      if (hidden) {
+        slide.style.visibility = 'hidden';
+        slide.style.display    = 'flex';
+      }
+      var inner = slide.querySelector('.slide-inner');
+      if (inner) {
+        contentScales[i] = inner.scrollHeight > 800
+          ? (790 / inner.scrollHeight)
+          : 1;
+      }
+      if (hidden) {
+        slide.style.display    = '';
+        slide.style.visibility = '';
+      }
+    });
+  }
+
+  function applyScales() {
+    var vScale = Math.min(window.innerWidth / 1600, window.innerHeight / 800);
+    document.querySelectorAll('.slide').forEach(function(slide, i) {
+      var inner = slide.querySelector('.slide-inner');
+      if (!inner) return;
+      var cScale   = (contentScales[i] != null) ? contentScales[i] : 1;
+      var combined = vScale * cScale;
+      inner.style.transform       = 'scale(' + combined + ')';
+      inner.style.transformOrigin = 'center center';
+    });
+  }
+
+  window.scaleSlides = applyScales;
+  window.addEventListener('resize', applyScales);
+
+  (document.fonts ? document.fonts.ready : Promise.resolve()).then(function() {
+    measureAll();
+    applyScales();
+  });
+})();
+</script>
+</body>
+</html>
