@@ -1,0 +1,1538 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>뉴메드(Newmed) 시장 진입 전략 보고서</title>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        /* Global Styles & Design System */
+        :root {
+            --bg-color: #1a1a1a;
+            --primary-color: #fff; /* Text, cards, dividers */
+            --accent-color: #FF5722;
+            --text-opacity-60: rgba(255, 255, 255, 0.6);
+            --text-opacity-75: rgba(255, 255, 255, 0.75);
+            --text-opacity-85: rgba(255, 255, 255, 0.85);
+            --text-opacity-92: rgba(255, 255, 255, 0.92);
+            --border-color: rgba(255, 255, 255, 0.12);
+            --border-light: rgba(255, 255, 255, 0.08);
+            --border-lighter: rgba(255, 255, 255, 0.06);
+            --header-height: 100px;
+            --footer-height: 50px;
+            --body-height: 650px;
+            --margin-horizontal: 80px;
+        }
+
+        html, body {
+            margin: 0; padding: 0; overflow: hidden;
+            background: #111; width: 100%; height: 100%;
+            font-family: 'Noto Sans KR', sans-serif;
+            color: var(--primary-color);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .slide {
+            position: fixed; top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            display: none;
+            align-items: center; justify-content: center;
+            overflow: hidden;
+        }
+        .slide.active { display: flex; }
+        .slide-inner {
+            width: 1600px; height: 800px;
+            position: relative; overflow: hidden;
+            box-sizing: border-box;
+            background-color: var(--bg-color);
+        }
+        .slide-header {
+            position: absolute; top: 0; left: 0; right: 0;
+            height: var(--header-height); padding: 0 var(--margin-horizontal);
+            display: flex; align-items: flex-end; padding-bottom: 16px;
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 24px;
+            font-weight: 900;
+            color: var(--primary-color);
+        }
+        .slide-body {
+            position: absolute; top: var(--header-height); left: 0; right: 0;
+            bottom: var(--footer-height); padding: 20px var(--margin-horizontal) 0;
+            overflow: hidden;
+            box-sizing: border-box;
+            height: var(--body-height); /* Explicitly set height for overflow:hidden */
+        }
+        .slide-footer {
+            position: absolute; bottom: 0; left: 0; right: 0;
+            height: var(--footer-height); padding: 0 var(--margin-horizontal);
+            display: flex; align-items: center; justify-content: flex-end;
+            font-size: 12px; opacity: 0.5;
+            box-sizing: border-box;
+        }
+
+        /* Typography */
+        h1 { font-size: 44px; font-weight: 900; margin: 0; line-height: 1.2; font-family: 'Archivo Black', sans-serif;}
+        h2 { font-size: 24px; font-weight: 500; margin: 0; line-height: 1.3; } /* Semi-bold for Noto Sans KR */
+        h3 { font-size: 18px; font-weight: 500; margin: 0; line-height: 1.4; }
+        p { font-size: 18px; font-weight: 400; margin: 0; line-height: 1.6; }
+        caption, .caption { font-size: 13px; font-weight: 300; margin: 0; line-height: 1.5; opacity: 0.7; }
+
+        strong { font-weight: 700; }
+        a { color: var(--accent-color); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        /* Common components */
+        .insight-box {
+            border-left: 3px solid var(--accent-color);
+            padding: 10px 16px;
+            background: rgba(255, 87, 34, 0.07); /* Using accent color with 0.07 opacity */
+            margin-bottom: 0;
+            flex-shrink: 0; /* Important for flex containers */
+            margin-top: auto; /* Pushes to bottom in flex-direction:column */
+        }
+        .insight-box h3 {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin: 0 0 3px;
+            text-transform: uppercase;
+        }
+        .insight-box p {
+            font-size: 13px;
+            line-height: 1.5;
+            margin: 0;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            color: var(--text-opacity-85);
+        }
+
+        /* Navigation UI */
+        .nav-button {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.15);
+            border: none;
+            color: var(--primary-color);
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 20px;
+            line-height: 1;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+        .nav-button:hover {
+            opacity: 1;
+            background: rgba(255, 255, 255, 0.25);
+        }
+        #prev-slide { left: 16px; }
+        #next-slide { right: 16px; }
+
+        #slide-num-display {
+            position: fixed;
+            bottom: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+            color: var(--primary-color);
+            font-size: 14px;
+            opacity: 0.8;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+
+        #fullscreen-btn {
+            position: fixed;
+            top: 16px;
+            right: 16px;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.15);
+            border: none;
+            color: var(--primary-color);
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+        #fullscreen-btn:hover {
+            opacity: 1;
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        /* Specific slide styles */
+        .slide-cover .slide-inner {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 var(--margin-horizontal);
+        }
+        .slide-cover h1 {
+            color: var(--accent-color);
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+        .slide-cover h2 {
+            font-size: 32px;
+            font-weight: 400;
+            margin-bottom: 15px;
+            opacity: 0.9;
+        }
+        .slide-cover p {
+            font-size: 20px;
+            font-weight: 300;
+            opacity: 0.7;
+            margin-top: 10px;
+        }
+        .slide-cover .date {
+            font-size: 16px;
+            opacity: 0.5;
+            margin-top: 40px;
+            letter-spacing: 0.1em;
+        }
+
+        /* Section Divider */
+        .slide-divider .slide-inner {
+            background: var(--accent-color); /* Accent color for divider background */
+            display: flex; align-items: center; justify-content: center; flex-direction:column; text-align:center;
+        }
+        .slide-divider .slide-inner div {
+            color: #fff; /* White text for contrast */
+        }
+        .slide-divider .chapter-num-label {
+            font-size:13px; letter-spacing:0.2em; text-transform:uppercase; opacity:0.6; margin-bottom:16px;
+        }
+        .slide-divider .chapter-num-big {
+            font-size:64px; font-weight:900; line-height:1;
+        }
+        .slide-divider .chapter-title {
+            font-size:32px; font-weight:400; margin-top:16px; opacity:0.9;
+        }
+        .slide-divider .divider-line {
+            width:60px; height:3px; background:#fff; margin-top:24px; /* White line for contrast */
+        }
+
+        /* Big Number Slide */
+        .slide-big-number .slide-body {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+        .slide-big-number .metrics-row {
+            display: flex;
+            gap: 16px;
+            align-items: stretch;
+            flex: 1;
+            min-height: 0;
+        }
+        .slide-big-number .metric-block {
+            flex: 1;
+            padding: 18px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        .slide-big-number .metric-title {
+            font-size: 14px;
+            opacity: 0.65;
+            margin: 0 0 4px;
+            color: var(--primary-color);
+        }
+        .slide-big-number .metric-value {
+            font-size: 48px;
+            font-weight: 900;
+            line-height: 1;
+            margin: 0 0 6px;
+            color: var(--accent-color);
+        }
+        .slide-big-number .metric-subtext {
+            font-size: 12px;
+            line-height: 1.5;
+            opacity: 0.75;
+            margin: 0 0 12px;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            color: var(--primary-color);
+        }
+        .slide-big-number .mini-viz-area {
+            flex: 1;
+            min-height: 80px;
+        }
+        .slide-big-number .news-link {
+            font-size: 11px;
+            line-height: 1.4;
+            padding: 5px 8px;
+            background: rgba(255,255,255,0.04);
+            border-radius: 3px;
+            border-left: 2px solid var(--accent-color);
+            color: inherit;
+            text-decoration: none;
+            display: block;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .slide-big-number .bar-chart-container {
+            display: flex;
+            align-items: flex-end;
+            gap: 10px;
+            flex: 1;
+            padding-top: 4px;
+        }
+        .slide-big-number .bar-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+        }
+        .slide-big-number .bar-label-top {
+            font-size: 9px;
+            opacity: 0.5;
+        }
+        .slide-big-number .bar-viz {
+            width: 100%;
+            background: var(--accent-color);
+            border-radius: 2px 2px 0 0;
+        }
+        .slide-big-number .bar-label-bottom {
+            font-size: 10px;
+            white-space: nowrap;
+        }
+        .slide-big-number .bar-viz.min { opacity: 0.35; }
+        .slide-big-number .bar-viz.avg { opacity: 0.65; }
+        .slide-big-number .bar-item.max .bar-label-top, .slide-big-number .bar-item.max .bar-label-bottom { color: var(--accent-color); }
+
+
+        /* Line Chart Slide */
+        .slide-line-chart .slide-body {
+            display: flex;
+            flex-direction: column;
+        }
+        .slide-line-chart .chart-container {
+            flex: 1;
+            min-height: 0;
+            position: relative;
+        }
+        .slide-line-chart .insight-boxes-row {
+            display: flex;
+            gap: 12px;
+            flex-shrink: 0;
+            margin-top: 12px;
+        }
+        .slide-line-chart .insight-boxes-row .insight-box {
+            flex: 1;
+            margin-top: 0; /* Override auto margin */
+        }
+
+        /* Card Grid Slide */
+        .slide-card-grid .slide-body {
+            display: flex;
+            flex-direction: column;
+        }
+        .slide-card-grid .grid-container {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            flex: 1;
+            min-height: 0;
+        }
+        .slide-card-grid .card-item {
+            padding: 10px 12px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+        .slide-card-grid .card-rank-badge {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            font-size: 10px;
+            opacity: 0.4;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        .slide-card-grid .card-brand-name {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-bottom: 5px;
+            padding-right: 24px;
+            display: block;
+            text-decoration: none;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            line-height: 1.3;
+        }
+        .slide-card-grid .card-price {
+            font-size: 12px;
+            margin-bottom: 3px;
+            color: var(--primary-color);
+        }
+        .slide-card-grid .card-form {
+            font-size: 11px;
+            opacity: 0.55;
+            margin-bottom: 5px;
+            color: var(--primary-color);
+        }
+        .slide-card-grid .card-divider {
+            height: 1px;
+            background: rgba(255,255,255,0.1);
+            margin-bottom: 5px;
+        }
+        .slide-card-grid .card-usp {
+            font-size: 11px;
+            line-height: 1.4;
+            color: inherit;
+            opacity: 0.85;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            flex: 1;
+        }
+
+        /* Bubble Chart Slide */
+        .slide-bubble-chart .slide-body {
+            display: flex;
+            flex-direction: column;
+        }
+        .slide-bubble-chart .main-row {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex: 1;
+            min-height: 0;
+        }
+        .slide-bubble-chart .chart-area {
+            position: relative;
+            width: 600px;
+            height: 480px;
+            flex-shrink: 0;
+            align-self: center;
+            border-left: 2px solid rgba(255,255,255,0.4);
+            border-bottom: 2px solid rgba(255,255,255,0.4);
+            overflow: visible;
+        }
+        .slide-bubble-chart .quadrant-line-v {
+            position: absolute; left: 50%; top: 0; height: 100%; border-left: 1px dashed rgba(255,255,255,0.2); pointer-events: none;
+        }
+        .slide-bubble-chart .quadrant-line-h {
+            position: absolute; top: 50%; left: 0; width: 100%; border-top: 1px dashed rgba(255,255,255,0.2); pointer-events: none;
+        }
+        .slide-bubble-chart .y-axis-tick {
+            position: absolute; right: 100%; margin-right: 6px; font-size: 10px; opacity: 0.5; transform: translateY(50%);
+        }
+        .slide-bubble-chart .x-axis-tick {
+            position: absolute; top: 100%; margin-top: 6px; font-size: 10px; opacity: 0.5; transform: translateX(-50%);
+        }
+        .slide-bubble-chart .y-axis-label {
+            position: absolute; right: 100%; margin-right: 40px; top: 50%; writing-mode: vertical-rl; transform: translateY(-50%); font-size: 11px; white-space: nowrap;
+        }
+        .slide-bubble-chart .x-axis-label {
+            position: absolute; top: 100%; margin-top: 28px; left: 50%; transform: translateX(-50%); font-size: 11px; white-space: nowrap;
+        }
+        .slide-bubble-chart .bubble-wrapper {
+            position: absolute;
+            transform: translate(-50%,50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .slide-bubble-chart .bubble-label {
+            text-align: center; font-size: 10px; white-space: nowrap; margin-bottom: 3px; color: rgba(255,255,255,0.9);
+        }
+        .slide-bubble-chart .bubble-circle {
+            border-radius: 50%; background: #4361ee; opacity: 0.85; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: #fff;
+        }
+        .slide-bubble-chart .right-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Align to center vertically */
+            gap: 16px;
+            overflow: hidden;
+        }
+        .slide-bubble-chart .legend {
+            display: flex; flex-wrap: wrap; gap: 4px 12px; flex-shrink: 0;
+        }
+        .slide-bubble-chart .legend-item {
+            display: flex; align-items: center; gap: 6px; font-size: 12px;
+        }
+        .slide-bubble-chart .legend-color-box {
+            width: 10px; height: 10px; border-radius: 2px;
+        }
+        .slide-bubble-chart .right-panel .insight-box {
+            margin-top: 0; /* Override auto margin for these specific insight boxes */
+        }
+
+        /* Pricing Table Slide */
+        .slide-pricing .slide-body {
+            display: flex;
+            flex-direction: column;
+        }
+        .slide-pricing table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            flex: 1;
+        }
+        .slide-pricing th, .slide-pricing td {
+            padding: 10px 14px;
+            text-align: center;
+            vertical-align: middle;
+            font-size: 14px;
+            white-space: nowrap;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .slide-pricing th {
+            background: rgba(255,255,255,0.05);
+            font-weight: 700;
+            color: var(--accent-color);
+        }
+        .slide-pricing td {
+            color: var(--primary-color);
+        }
+
+        /* Pain Points / Risk / White Space / Concept (2x2 Grid) */
+        .slide-grid-2x2 .slide-body {
+            display: flex;
+            flex-direction: column;
+        }
+        .slide-grid-2x2 .grid-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 16px;
+            flex: 1;
+            min-height: 0;
+        }
+        .slide-grid-2x2 .grid-cell {
+            padding: 20px 24px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            min-height: 0;
+        }
+        .slide-grid-2x2 .cell-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin: 0 0 10px;
+            flex-shrink: 0;
+            line-height: 1.3;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .slide-grid-2x2 .cell-content {
+            font-size: 14px;
+            line-height: 1.7;
+            flex: 1;
+            overflow: hidden;
+            color: var(--text-opacity-92);
+        }
+        .slide-grid-2x2.slide-risk .cell-content {
+            font-size: 14px;
+            line-height: 1.7;
+            flex: 1;
+            overflow: hidden;
+            color: var(--text-opacity-92);
+        }
+        .slide-grid-2x2.slide-risk .cell-response {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            margin-top: 8px;
+            padding-top: 8px;
+            font-size: 12px;
+            color: rgba(255,255,255,0.75);
+            flex-shrink: 0;
+            line-height: 1.5;
+        }
+        .slide-grid-2x2.slide-white-space .cell-title,
+        .slide-grid-2x2.slide-concept .cell-title {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .slide-grid-2x2.slide-white-space .cell-content,
+        .slide-grid-2x2.slide-concept .cell-content {
+            font-size: 15px;
+            line-height: 1.65;
+        }
+
+        /* Roadmap Slide */
+        .slide-roadmap .slide-body {
+            display: flex;
+            flex-direction: column;
+        }
+        .slide-roadmap .roadmap-row {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            gap: 0;
+            flex: 1;
+            min-height: 0;
+        }
+        .slide-roadmap .roadmap-stage {
+            flex: 1;
+            padding: 24px 20px;
+            border-top: 3px solid var(--accent-color);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            color: var(--primary-color);
+        }
+        .slide-roadmap .roadmap-stage:not(:last-child) {
+            border-right: 1px solid rgba(255,255,255,0.1); /* Separator between stages */
+        }
+        .slide-roadmap .stage-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin: 0;
+            line-height: 1.3;
+        }
+        .slide-roadmap .stage-period {
+            font-size: 13px;
+            color: rgba(255,255,255,0.55);
+            margin: 0;
+            line-height: 1.3;
+        }
+        .slide-roadmap .stage-divider {
+            height: 1px;
+            background: rgba(255,255,255,0.08);
+            margin: 4px 0;
+        }
+        .slide-roadmap .stage-activities {
+            font-size: 14px;
+            line-height: 1.7;
+            flex: 1;
+            list-style: disc;
+            padding-left: 18px;
+            margin: 0;
+        }
+        .slide-roadmap .stage-activities li {
+            margin-bottom: 4px;
+        }
+        .slide-roadmap .stage-milestone {
+            font-size: 12px;
+            color: var(--accent-color);
+            font-weight: 700;
+            margin-top: auto;
+            padding-top: 8px;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            line-height: 1.3;
+        }
+
+        /* References Slide */
+        .slide-references .slide-body {
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            padding-bottom: 8px;
+        }
+        .slide-references .ref-item {
+            display: flex;
+            gap: 12px;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border-lighter);
+            font-size: 14px;
+            line-height: 1.8;
+            color: var(--text-opacity-85);
+        }
+        .slide-references .ref-number {
+            color: var(--accent-color);
+            font-weight: 700;
+            flex-shrink: 0;
+            min-width: 24px;
+            text-align: right;
+        }
+        .slide-references .ref-text a {
+            color: inherit;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation UI -->
+    <button id="prev-slide" class="nav-button">&#10094;</button>
+    <button id="next-slide" class="nav-button">&#10095;</button>
+    <div id="slide-num-display"><span id="slide-num">1 / 15</span></div>
+    <button id="fullscreen-btn">전체 화면 (F)</button>
+
+    <!-- Slide 1: Cover -->
+    <div class="slide slide-cover" id="slide-1">
+        <div class="slide-inner">
+            <h1>NEWMED</h1>
+            <h2>시장 진입 전략 보고서</h2>
+            <p class="date">기준일: 2026년 4월 14일</p>
+            <p style="margin-top: 50px; font-size: 24px; font-weight: 500; opacity: 0.8; color: var(--primary-color);">
+                급변하는 키 성장 건강기능식품 시장, <br>뉴메드의 차별화된 기회와 전략을 모색합니다.
+            </p>
+        </div>
+    </div>
+
+    <!-- Slide 2: Section Divider 01 -->
+    <div class="slide slide-divider" id="slide-2">
+        <div class="slide-inner">
+            <div class="chapter-num-label">CHAPTER 01</div>
+            <div class="chapter-num-big">01</div>
+            <div class="chapter-title">시장 현황</div>
+            <div class="divider-line" style="background:var(--primary-color);"></div>
+        </div>
+    </div>
+
+    <!-- Slide 3: Big Number -->
+    <div class="slide slide-big-number" id="slide-3">
+        <div class="slide-header">01 시장 현황 | Market Opportunity Scorecard</div>
+        <div class="slide-body">
+            <div class="metrics-row">
+                <div class="metric-block">
+                    <h3 class="metric-title">시장 성장성 (트렌드)</h3>
+                    <div class="metric-value">-65.3%<sup style="font-size:16px;vertical-align:super;opacity:0.7;">1</sup></div>
+                    <p class="metric-subtext">
+                        2026년 4월 '뉴메드' 키워드 검색량 급감. 전년 동기 대비 큰 폭으로 하락하며 시장 변동성 심화.
+                    </p>
+                    <div class="mini-viz-area">
+                        <!-- SVG for falling trend -->
+                        <svg style="width:100%;height:80px;" viewBox="0 0 200 60" preserveAspectRatio="none">
+                            <defs>
+                                <linearGradient id="mg1" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0%" stop-color="var(--accent-color)" stop-opacity="0.3"/>
+                                    <stop offset="100%" stop-color="var(--accent-color)" stop-opacity="0"/>
+                                </linearGradient>
+                            </defs>
+                            <polygon points="0,60 0,45 40,40 80,35 120,25 160,15 200,5 200,60" fill="url(#mg1)"/>
+                            <polyline points="0,45 40,40 80,35 120,25 160,15 200,5" fill="none" stroke="var(--accent-color)" stroke-width="2"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="metric-block">
+                    <h3 class="metric-title">소비자 관심도 (월간 검색수)</h3>
+                    <div class="metric-value">2,475회<sup style="font-size:16px;vertical-align:super;opacity:0.7;">2</sup></div>
+                    <p class="metric-subtext">
+                        최고점 기준 월간 총 검색수 (PC 350회, 모바일 390회 합산 740회 기준 역산). 꾸준한 잠재 수요 존재.
+                    </p>
+                    <div class="mini-viz-area bar-chart-container">
+                        <div class="bar-item">
+                            <div class="bar-label-top">최저</div>
+                            <div class="bar-viz min" style="height:28px;"></div>
+                            <div class="bar-label-bottom">866회</div>
+                        </div>
+                        <div class="bar-item">
+                            <div class="bar-label-top">평균</div>
+                            <div class="bar-viz avg" style="height:55px;"></div>
+                            <div class="bar-label-bottom">1,732회</div>
+                        </div>
+                        <div class="bar-item max">
+                            <div class="bar-label-top" style="color:var(--accent-color);">최고</div>
+                            <div class="bar-viz" style="background:var(--accent-color); height:79px;"></div>
+                            <div class="bar-label-bottom" style="color:var(--accent-color);">2,475회</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="metric-block">
+                    <h3 class="metric-title">전체시장 규모 및 트렌드</h3>
+                    <div class="metric-value">53조원<sup style="font-size:16px;vertical-align:super;opacity:0.7;">7</sup></div>
+                    <p class="metric-subtext">
+                        천연물 의약품 시장 2026년 전망치. 건기식 시장 25조원 규모 등 '뉴메드' 연관 시장 잠재력 상당.
+                    </p>
+                    <div style="display:flex; flex-direction:column; gap:5px; flex:1; overflow:hidden;">
+                        <div class="news-link">"2030년 25조원 규모의 건기식 시장 내 '뉴메드' 언급" — enewstoday.co.kr</div>
+                        <div class="news-link">"천연물 의약품 시장 2026년 53조원 규모 전망" — it.chosun.com</div>
+                        <div class="news-link">"2019년 40조 3300억원 규모 천연물 의약품 시장" — it.chosun.com</div>
+                        <div class="news-link">"국내 관련 시장 규모 500억원 내외" — viva100.com</div>
+                        <div class="news-link">"7조 4740억원~10조 4234억원 성장 예상 시장" — smedaily.co.kr</div>
+                    </div>
+                </div>
+            </div>
+            <div class="insight-box">
+                <h3>핵심 인사이트</h3>
+                <p>
+                    '뉴메드' 연관 시장은 거대한 잠재력을 가지고 있으나, 최근 검색량 급감은 시장의 변동성을 시사합니다.
+                    명확한 시장 정의와 규제 준수, 그리고 경쟁 심화 속 차별화 전략 마련이 시급합니다.
+                </p>
+            </div>
+        </div>
+        <div class="slide-footer">출처: 1) 네이버 데이터랩, 2) 네이버 검색광고, 7) it.chosun.com</div>
+    </div>
+
+    <!-- Slide 4: Line Chart -->
+    <div class="slide slide-line-chart" id="slide-4">
+        <div class="slide-header">01 시장 현황 | '뉴메드' 키워드 검색 트렌드 (24개월)</div>
+        <div class="slide-body">
+            <div class="chart-container">
+                <canvas id="trendChart"></canvas>
+            </div>
+            <div class="insight-boxes-row">
+                <div class="insight-box">
+                    <h3>최근 검색량 급감</h3>
+                    <p>
+                        2025년 7월 최고치(100.0) 이후 2026년 4월 29.9로 급락하며, 시장의 관심이 빠르게 식고 있음을 보여줍니다.
+                    </p>
+                </div>
+                <div class="insight-box">
+                    <h3>변동성 심화 구간 진입</h3>
+                    <p>
+                        이전의 보합세와 고조기를 지나, 시장이 활황기를 벗어나 급격한 변동성 구간에 진입했음을 시사합니다.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="slide-footer">출처: 1) 네이버 데이터랩 검색어트렌드 (2026.04.14 기준)</div>
+    </div>
+
+    <!-- Slide 5: Section Divider 02 -->
+    <div class="slide slide-divider" id="slide-5">
+        <div class="slide-inner">
+            <div class="chapter-num-label">CHAPTER 02</div>
+            <div class="chapter-num-big">02</div>
+            <div class="chapter-title">경쟁사 분석</div>
+            <div class="divider-line" style="background:var(--primary-color);"></div>
+        </div>
+    </div>
+
+    <!-- Slide 6: Card Grid -->
+    <div class="slide slide-card-grid" id="slide-6">
+        <div class="slide-header">02 경쟁사 분석 | TOP 10 경쟁 상품 분석</div>
+        <div class="slide-body">
+            <div class="grid-container">
+                <div class="card-item">
+                    <span class="card-rank-badge">1위</span>
+                    <a href="https://search.shopping.naver.com/search/all?query=뉴메드+키클래오" target="_blank" class="card-brand-name">키클래오</a>
+                    <p class="card-price">649,000원 (8주분)</p>
+                    <p class="card-form">확인필요 (액상 추정)</p>
+                    <div class="card-divider"></div>
+                    <p class="card-usp">HT042 성분으로 뼈 성장 속도 촉진 강조. 초등학생, 청소년 타겟.</p>
+                </div>
+                <div class="card-item">
+                    <span class="card-rank-badge">2위</span>
+                    <a href="https://search.shopping.naver.com/search/all?query=뉴메드+키클래오" target="_blank" class="card-brand-name">키클래오</a>
+                    <p class="card-price">897,000원 (12주분)</p>
+                    <p class="card-form">확인필요 (액상 추정)</p>
+                    <div class="card-divider"></div>
+                    <p class="card-usp">장기 섭취를 위한 대용량 패키지. 성장기 자녀의 지속적인 성장 케어.</p>
+                </div>
+                <div class="card-item">
+                    <span class="card-rank-badge">3위</span>
+                    <a href="https://search.shopping.naver.com/search/all?query=뉴메드+키클래오" target="_blank" class="card-brand-name">키클래오</a>
+                    <p class="card-price">179,000원 (2주분)</p>
+                    <p class="card-form">확인필요 (액상 추정)</p>
+                    <div class="card-divider"></div>
+                    <p class="card-usp">단기 체험 또는 소량 구매를 위한 옵션. 부담 없는 시작.</p>
+                </div>
+                <div class="card-item">
+                    <span class="card-rank-badge">4위</span>
+                    <a href="https://search.shopping.naver.com/search/all?query=뉴메드+키클래오" target="_blank" class="card-brand-name">키클래오</a>
+                    <p class="card-price">2,350,000원 (48주분)</p>
+                    <p class="card-form">확인필요 (액상 추정)</p>
+                    <div class="card-divider"></div>
+                    <p class="card-usp">초장기 플랜을 위한 최대 용량. 유아, 어린이, 청소년 전 연령 커버.</p>
+                </div>
+                <div class="card-item">
+                    <span class="card-rank-badge">5위</span>
+                    <a href="https://search.shopping.naver.com/search/all?query=뉴메드+키클래오" target="_blank" class="card-brand-name">키클래오</a>
+                    <p class="card-price">350,000원 (4주분)</p>
+                    <p class="card-form">확인필요 (액상 추정)</p>
+                    <div class="card-divider"></div>
+                    <p class="card-usp">합리적인 4주분 구성. 꾸준한 섭취를 위한 표준 패키지.</p>
+                </div>
+                <div class="card-item">
+                    <span class="card-rank-badge">6위</span>
+                    <a href="https://search.shopping.naver.com/search/all?query=뉴메드+키클래오" target="_blank" class="card-brand-name">키클래오</a>
+                    <p class="card-price">55,000원 (1주분)</p>
+                    <p class="card-form">확인필요 (액상 추정)</p>
+                    <div class="card-divider"></div>
+                    <p class="card-usp">체험팩 구성. 부담 없이 제품을 경험할 수 있는 스타터 패키지.</p>
+                </div>
+                <div class="card-item">
+                    <span class="card-rank-badge">7위</span>
+                    <a href="https://search.shopping.naver.com/search/all?query=뉴메드+키클래오" target="_blank" class="card-brand-name">키클래오</a>
+                    <p class="card-price">218,000원 (1박스)</p>
+                    <p class="card-form">분말</p>
+                    <div class="card-divider"></div>
+                    <p class="card-usp">초코바나나 맛 분말 제형. 섭취 편의성 강조, 어린이 선호도 높음.</p>
+                </div>
+                <div class="card-item">
+                    <span class="card-rank-badge">8위</span>
+                    <a href="https://search.shopping.naver.com/search/all?query=뉴메드+키클래오" target="_blank" class="card-brand-name">키클래오</a>
+                    <p class="card-price">409,000원 (2박스)</p>
+                    <p class="card-form">분말</p>
+                    <div class="card-divider"></div>
+                    <p class="card-usp">분말 제형 대용량. 키 성장과 영양을 한 번에 케어하는 복합 기능.</p>
+                </div>
+                <div class="card-item">
+                    <span class="card-rank-badge">9위</span>
+                    <a href="https://search.shopping.naver.com/search/all?query=뉴메드+키클래오" target="_blank" class="card-brand-name">키클래오</a>
+                    <p class="card-price">249,000원</p>
+                    <p class="card-form">확인필요</p>
+                    <div class="card-divider"></div>
+                    <p class="card-usp">키 성장과 면역력 증진을 함께 강조. 성장기 자녀의 전반적인 건강 관리.</p>
+                </div>
+                <div class="card-item">
+                    <span class="card-rank-badge">10위</span>
+                    <a href="https://search.shopping.naver.com/search/all?query=뉴메드+키클래오" target="_blank" class="card-brand-name">키클래오</a>
+                    <p class="card-price">218,000원</p>
+                    <p class="card-form">확인필요</p>
+                    <div class="card-divider"></div>
+                    <p class="card-usp">키 성장 집중 케어. HT042 성분을 활용한 성장기 최적화 제품.</p>
+                </div>
+            </div>
+            <div class="insight-box">
+                <h3>핵심 인사이트</h3>
+                <p>
+                    '키클래오' 브랜드가 시장을 압도적으로 선점하고 있으며, 다양한 용량과 제형으로 소비자 니즈에 대응하고 있습니다.
+                    '뉴메드'는 '키클래오'와 차별화되는 포지셔닝 전략이 필수적입니다.
+                </p>
+            </div>
+        </div>
+        <div class="slide-footer">출처: 3) 네이버 쇼핑 검색결과 (2026.04.14 기준)</div>
+    </div>
+
+    <!-- Slide 7: Bubble Chart -->
+    <div class="slide slide-bubble-chart" id="slide-7">
+        <div class="slide-header">02 경쟁사 분석 | TOP 10 브랜드 포지셔닝</div>
+        <div class="slide-body">
+            <div class="main-row">
+                <div class="chart-area">
+                    <div class="quadrant-line-v"></div>
+                    <div class="quadrant-line-h"></div>
+                    <div class="y-axis-tick" style="bottom:0%;">낮음 (0%)</div>
+                    <div class="y-axis-tick" style="bottom:25%;">25%</div>
+                    <div class="y-axis-tick" style="bottom:50%;">50%</div>
+                    <div class="y-axis-tick" style="bottom:75%;">75%</div>
+                    <div class="y-axis-tick" style="bottom:100%;">높음 (100%)</div>
+
+                    <div class="x-axis-tick" style="left:10%;">5만원</div>
+                    <div class="x-axis-tick" style="left:30%;">15만원</div>
+                    <div class="x-axis-tick" style="left:50%;">25만원</div>
+                    <div class="x-axis-tick" style="left:70%;">35만원</div>
+                    <div class="x-axis-tick" style="left:90%;">45만원</div>
+
+                    <div class="y-axis-label">브랜드 인지도</div>
+                    <div class="x-axis-label">월 환산 가격 (만원)</div>
+
+                    <!-- Bubbles (Brand, Monthly Price, Awareness, Size by Rank) -->
+                    <!-- Color Palette: #4361ee #f72585 #4cc9f0 #f8961e #43aa8b #90be6d #277da1 #e63946 #6a4c93 #ff6b6b -->
+                    <!-- Bubble 1: 키클래오 (8주) -->
+                    <div class="bubble-wrapper" style="left:70%; bottom:90%;">
+                        <div class="bubble-label">키클래오 (8주)</div>
+                        <div class="bubble-circle" style="width:80px;height:80px; background:#4361ee;">1</div>
+                    </div>
+                    <!-- Bubble 2: 키클래오 (12주) -->
+                    <div class="bubble-wrapper" style="left:60%; bottom:80%;">
+                        <div class="bubble-label">키클래오 (12주)</div>
+                        <div class="bubble-circle" style="width:75px;height:75px; background:#f72585;">2</div>
+                    </div>
+                    <!-- Bubble 3: 키클래오 (2주) -->
+                    <div class="bubble-wrapper" style="left:75%; bottom:70%;">
+                        <div class="bubble-label">키클래오 (2주)</div>
+                        <div class="bubble-circle" style="width:70px;height:70px; background:#4cc9f0;">3</div>
+                    </div>
+                    <!-- Bubble 4: 키클래오 (48주) -->
+                    <div class="bubble-wrapper" style="left:40%; bottom:75%;">
+                        <div class="bubble-label">키클래오 (48주)</div>
+                        <div class="bubble-circle" style="width:65px;height:65px; background:#f8961e;">4</div>
+                    </div>
+                    <!-- Bubble 5: 키클래오 (4주) -->
+                    <div class="bubble-wrapper" style="left:68%; bottom:60%;">
+                        <div class="bubble-label">키클래오 (4주)</div>
+                        <div class="bubble-circle" style="width:60px;height:60px; background:#43aa8b;">5</div>
+                    </div>
+                    <!-- Bubble 6: 키클래오 (1주) -->
+                    <div class="bubble-wrapper" style="left:45%; bottom:50%;">
+                        <div class="bubble-label">키클래오 (1주)</div>
+                        <div class="bubble-circle" style="width:55px;height:55px; background:#90be6d;">6</div>
+                    </div>
+                    <!-- Bubble 7: 키클래오 그로우 (분말) -->
+                    <div class="bubble-wrapper" style="left:43%; bottom:40%;">
+                        <div class="bubble-label">키클래오 그로우 (분말)</div>
+                        <div class="bubble-circle" style="width:50px;height:50px; background:#277da1;">7</div>
+                    </div>
+                    <!-- Bubble 8: 하프클럽-뉴메드 (12주) -->
+                    <div class="bubble-wrapper" style="left:50%; bottom:20%;">
+                        <div class="bubble-label">하프클럽-뉴메드 (12주)</div>
+                        <div class="bubble-circle" style="width:45px;height:45px; background:#e63946;">8</div>
+                    </div>
+                    <!-- Bubble 9: 롯데ON-뉴메드 (4주) -->
+                    <div class="bubble-wrapper" style="left:65%; bottom:15%;">
+                        <div class="bubble-label">롯데ON-뉴메드 (4주)</div>
+                        <div class="bubble-circle" style="width:40px;height:40px; background:#6a4c93;">9</div>
+                    </div>
+                    <!-- Bubble 10: 뉴메드 (2주) -->
+                    <div class="bubble-wrapper" style="left:80%; bottom:10%;">
+                        <div class="bubble-label">뉴메드 (2주)</div>
+                        <div class="bubble-circle" style="width:35px;height:35px; background:#ff6b6b;">10</div>
+                    </div>
+
+                </div>
+                <div class="right-panel">
+                    <div class="legend">
+                        <div class="legend-item"><div class="legend-color-box" style="background:#4361ee;"></div>키클래오 (8주)</div>
+                        <div class="legend-item"><div class="legend-color-box" style="background:#f72585;"></div>키클래오 (12주)</div>
+                        <div class="legend-item"><div class="legend-color-box" style="background:#4cc9f0;"></div>키클래오 (2주)</div>
+                        <div class="legend-item"><div class="legend-color-box" style="background:#f8961e;"></div>키클래오 (48주)</div>
+                        <div class="legend-item"><div class="legend-color-box" style="background:#43aa8b;"></div>키클래오 (4주)</div>
+                        <div class="legend-item"><div class="legend-color-box" style="background:#90be6d;"></div>키클래오 (1주)</div>
+                        <div class="legend-item"><div class="legend-color-box" style="background:#277da1;"></div>키클래오 그로우</div>
+                        <div class="legend-item"><div class="legend-color-box" style="background:#e63946;"></div>하프클럽-뉴메드</div>
+                        <div class="legend-item"><div class="legend-color-box" style="background:#6a4c93;"></div>롯데ON-뉴메드</div>
+                        <div class="legend-item"><div class="legend-color-box" style="background:#ff6b6b;"></div>뉴메드 (자체)</div>
+                    </div>
+                    <div class="insight-box">
+                        <h3>시장 선두 주자 '키클래오'</h3>
+                        <p>
+                            '키클래오'는 높은 인지도와 다양한 가격대의 제품으로 시장을 지배하고 있으며,
+                            특히 고가 &amp; 고인지도 포지셔닝에 집중하고 있습니다.
+                        </p>
+                    </div>
+                    <div class="insight-box">
+                        <h3>뉴메드의 포지셔닝 기회</h3>
+                        <p>
+                            '뉴메드' 자체 브랜드는 상대적으로 높은 가격대와 낮은 인지도를 보입니다.
+                            경쟁사 대비 합리적인 가격과 차별화된 효능으로 인지도를 높일 전략이 필요합니다.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slide-footer">출처: 3) 네이버 쇼핑 검색결과 (2026.04.14 기준), NPD 분석</div>
+    </div>
+
+    <!-- Slide 8: Section Divider 03 -->
+    <div class="slide slide-divider" id="slide-8">
+        <div class="slide-inner">
+            <div class="chapter-num-label">CHAPTER 03</div>
+            <div class="chapter-num-big">03</div>
+            <div class="chapter-title">기회 &amp; 전략</div>
+            <div class="divider-line" style="background:var(--primary-color);"></div>
+        </div>
+    </div>
+
+    <!-- Slide 9: Pain Points -->
+    <div class="slide slide-grid-2x2 slide-pain-points" id="slide-9">
+        <div class="slide-header">03 기회 &amp; 전략 | 소비자 주요 불만 (Pain Points)</div>
+        <div class="slide-body">
+            <div class="grid-container">
+                <div class="grid-cell">
+                    <h3 class="cell-title">높은 가격 부담</h3>
+                    <p class="cell-content">
+                        경쟁사 제품들이 대부분 고가로 형성되어 있어, 장기 섭취에 대한 경제적 부담이 큽니다.
+                        합리적인 가격대의 대안을 원하는 소비자가 많습니다.
+                    </p>
+                </div>
+                <div class="grid-cell">
+                    <h3 class="cell-title">불확실한 효능 체감</h3>
+                    <p class="cell-content">
+                        막연한 '키 성장' 소구보다는 과학적 근거에 기반한 명확한 효능(예: 뼈 성장 속도)을 기대하지만,
+                        이를 명확히 전달하는 제품이 부족하다고 느낍니다.
+                    </p>
+                </div>
+                <div class="grid-cell">
+                    <h3 class="cell-title">성분 안전성 및 신뢰도 우려</h3>
+                    <p class="cell-content">
+                        아이들이 섭취하는 제품인 만큼, 사용된 원료의 안전성과 식약처 인증 여부에 대한 높은 관심과 우려가 있습니다.
+                        미등록 원료에 대한 불안감이 존재합니다.
+                    </p>
+                </div>
+                <div class="grid-cell">
+                    <h3 class="cell-title">종합적인 성장 케어 부족</h3>
+                    <p class="cell-content">
+                        단순히 키 성장만을 넘어, 성장기 필수 영양소나 면역력 증진 등 종합적인 건강 관리를
+                        동시에 제공하는 제품에 대한 니즈가 높습니다.
+                    </p>
+                </div>
+            </div>
+            <div class="insight-box">
+                <h3>핵심 인사이트</h3>
+                <p>
+                    소비자들은 높은 가격, 불확실한 효능, 성분 안전성, 그리고 종합적 케어 부족에 대한 불만을 가지고 있습니다.
+                    이러한 페인 포인트를 해결하는 것이 뉴메드의 성공적인 시장 진입 열쇠입니다.
+                </p>
+            </div>
+        </div>
+        <div class="slide-footer">출처: NPD 소비자 분석</div>
+    </div>
+
+    <!-- Slide 10: White Space -->
+    <div class="slide slide-grid-2x2 slide-white-space" id="slide-10">
+        <div class="slide-header">03 기회 &amp; 전략 | 차별화 기회 (White Space)</div>
+        <div class="slide-body">
+            <div class="grid-container">
+                <div class="grid-cell">
+                    <h3 class="cell-title">합리적 가격 포지셔닝</h3>
+                    <p class="cell-content">
+                        고가 위주의 시장에서 과학적 효능은 유지하면서도 대중적인 가격대로 접근하여
+                        더 많은 소비자들이 프리미엄 키 성장 제품을 경험할 기회를 제공합니다.
+                    </p>
+                </div>
+                <div class="grid-cell">
+                    <h3 class="cell-title">명확한 효능 소구 강화</h3>
+                    <p class="cell-content">
+                        독자적인 천연물 배합 기술을 통해 차별화된 연구 결과나 임상 데이터를 제시하여,
+                        소비자가 체감할 수 있는 '차세대' 성장 촉진 효능을 명확히 소구합니다.
+                    </p>
+                </div>
+                <div class="grid-cell">
+                    <h3 class="cell-title">식약처 인정 원료 기반 신뢰</h3>
+                    <p class="cell-content">
+                        식약처에서 인정받은 안전하고 검증된 원료를 사용하여 소비자의 신뢰도를 높이고,
+                        안심하고 선택할 수 있는 '클린 성장' 이미지를 구축합니다.
+                    </p>
+                </div>
+                <div class="grid-cell">
+                    <h3 class="cell-title">종합적 성장 케어 솔루션</h3>
+                    <p class="cell-content">
+                        키 성장뿐만 아니라, 성장기 필수 영양소와 면역력 증진까지 동시에 케어할 수 있는
+                        복합적인 기능성 제품으로 포지셔닝하여 차별화를 꾀합니다.
+                    </p>
+                </div>
+            </div>
+            <div class="insight-box">
+                <h3>핵심 인사이트</h3>
+                <p>
+                    합리적 가격, 명확한 효능, 신뢰할 수 있는 원료, 그리고 종합적 케어는 현재 시장에서 충분히 충족되지 않는
+                    소비자 니즈이자 뉴메드가 공략할 수 있는 핵심적인 차별화 기회입니다.
+                </p>
+            </div>
+        </div>
+        <div class="slide-footer">출처: NPD 시장 분석</div>
+    </div>
+
+    <!-- Slide 11: Concept -->
+    <div class="slide slide-grid-2x2 slide-concept" id="slide-11">
+        <div class="slide-header">03 기회 &amp; 전략 | NPD 콘셉트: 뉴메드 키즈 그로우</div>
+        <div class="slide-body">
+            <div class="grid-container">
+                <div class="grid-cell">
+                    <h3 class="cell-title">제품명</h3>
+                    <p class="cell-content">
+                        <strong>뉴메드 키즈 그로우 (Newmed Kids Grow)</strong> <br>
+                        아이들의 건강한 성장을 돕는 뉴메드의 프리미엄 키 성장 솔루션
+                    </p>
+                </div>
+                <div class="grid-cell">
+                    <h3 class="cell-title">핵심 USP</h3>
+                    <p class="cell-content">
+                        <strong>과학적 천연물 배합 기술 기반의 '차세대' 성장 촉진 효능</strong><br>
+                        식약처 인정 원료와 뉴메드만의 독자적인 배합 기술로 입증된 안전하고 효과적인 키 성장 솔루션.
+                    </p>
+                </div>
+                <div class="grid-cell">
+                    <h3 class="cell-title">타겟</h3>
+                    <p class="cell-content">
+                        <strong>성장기 자녀의 키 성장에 대한 고민을 가진 부모</strong><br>
+                        특히, 안전하고 검증된 성분, 합리적인 가격, 그리고 눈에 띄는 효능을 기대하는 학부모층.
+                    </p>
+                </div>
+                <div class="grid-cell">
+                    <h3 class="cell-title">포지셔닝 메시지</h3>
+                    <p class="cell-content">
+                        <strong>"우리아이의 건강한 성장을 위한 현명한 선택, 뉴메드 키즈 그로우"</strong><br>
+                        신뢰할 수 있는 성분과 과학적 효능으로, 아이의 잠재된 키를 깨워줍니다.
+                    </p>
+                </div>
+            </div>
+            <div class="insight-box">
+                <h3>핵심 인사이트</h3>
+                <p>
+                    '뉴메드 키즈 그로우'는 과학적 근거와 안전성을 기반으로, 합리적인 가격에 차별화된 성장 효능을 제공하여
+                    기존 시장의 니즈와 페인 포인트를 동시에 공략하는 콘셉트입니다.
+                </p>
+            </div>
+        </div>
+        <div class="slide-footer">출처: NPD 전략 수립</div>
+    </div>
+
+    <!-- Slide 12: Pricing -->
+    <div class="slide slide-pricing" id="slide-12">
+        <div class="slide-header">03 기회 &amp; 전략 | 가격 전략</div>
+        <div class="slide-body">
+            <table>
+                <thead>
+                    <tr>
+                        <th>제품명</th>
+                        <th>용량</th>
+                        <th>경쟁사 유사 제품 가격 (월 환산)</th>
+                        <th>뉴메드 타겟 가격 (월 환산)</th>
+                        <th>목표 제조 단가 (15~20% 원가율)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>뉴메드 키즈 그로우 (체험팩)</td>
+                        <td>1주분 (7병)</td>
+                        <td>55,000원 (1주)</td>
+                        <td style="color:var(--accent-color); font-weight:700;">49,000원</td>
+                        <td>7,350원 ~ 9,800원</td>
+                    </tr>
+                    <tr>
+                        <td>뉴메드 키즈 그로우 (소용량)</td>
+                        <td>2주분 (14병)</td>
+                        <td>179,000원 ~ 210,000원</td>
+                        <td style="color:var(--accent-color); font-weight:700;">169,000원</td>
+                        <td>25,350원 ~ 33,800원</td>
+                    </tr>
+                    <tr>
+                        <td>뉴메드 키즈 그로우 (중용량)</td>
+                        <td>4주분 (28병)</td>
+                        <td>316,350원 ~ 350,000원</td>
+                        <td style="color:var(--accent-color); font-weight:700;">299,000원</td>
+                        <td>44,850원 ~ 59,800원</td>
+                    </tr>
+                    <tr>
+                        <td>뉴메드 키즈 그로우 (대용량)</td>
+                        <td>8주분 (56병)</td>
+                        <td>649,000원 ~ 675,450원</td>
+                        <td style="color:var(--accent-color); font-weight:700;">599,000원</td>
+                        <td>89,850원 ~ 119,800원</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="insight-box">
+                <h3>가격 전략 근거: '고품질-합리적 가격' 포지셔닝</h3>
+                <p>
+                    경쟁사 대비 약 10~15% 낮은 가격으로 시장에 진입하여 가격 민감도가 높은 소비층을 공략하고,
+                    초기 시장 점유율을 확보합니다. 체험팩을 통해 진입 장벽을 낮추고, 대용량 할인으로 장기 구매를 유도합니다.
+                </p>
+            </div>
+        </div>
+        <div class="slide-footer">출처: NPD 가격 전략 분석</div>
+    </div>
+
+    <!-- Slide 13: Risk -->
+    <div class="slide slide-grid-2x2 slide-risk" id="slide-13">
+        <div class="slide-header">03 기회 &amp; 전략 | 주요 리스크 및 대응 방안</div>
+        <div class="slide-body">
+            <div class="grid-container">
+                <div class="grid-cell">
+                    <h3 class="cell-title">원료 규제 및 인허가 리스크</h3>
+                    <p class="cell-content">
+                        '뉴메드' 핵심 성분(HT042 등)의 식약처 건강기능식품 원료 미등록 상태는 판매 및 마케팅에 제약을 초래합니다.
+                    </p>
+                    <div class="cell-response">
+                        <strong>대응 방안:</strong> 신속한 원료 등록 검토 또는 대체 인정 원료 확보, 장기적 개별 인정 추진.
+                    </div>
+                </div>
+                <div class="grid-cell">
+                    <h3 class="cell-title">강력한 경쟁사 선점 효과</h3>
+                    <p class="cell-content">
+                        '키클래오'가 시장을 압도적으로 선점하고 있어, 후발 주자로서 브랜드 인지도 및 시장 점유율 확보가 어렵습니다.
+                    </p>
+                    <div class="cell-response">
+                        <strong>대응 방안:</strong> 차별화된 USP (가격, 효능, 제형) 강조 및 공격적인 초기 마케팅 전략 실행.
+                    </div>
+                </div>
+                <div class="grid-cell">
+                    <h3 class="cell-title">소비자 가격 저항 및 인식</h3>
+                    <p class="cell-content">
+                        키 성장 제품은 고가라는 인식이 강하며, '뉴메드' 자체 브랜드의 가격이 상대적으로 높아 저항에 부딪힐 수 있습니다.
+                    </p>
+                    <div class="cell-response">
+                        <strong>대응 방안:</strong> '고품질-합리적 가격' 포지셔닝으로 가치 전달, 체험팩 및 프로모션 활용.
+                    </div>
+                </div>
+                <div class="grid-cell">
+                    <h3 class="cell-title">시장 수요 변동성 증가</h3>
+                    <p class="cell-content">
+                        최근 '뉴메드' 키워드 검색량 급감은 시장 수요의 불안정성을 보여주며, 예측 불가능한 변동이 발생할 수 있습니다.
+                    </p>
+                    <div class="cell-response">
+                        <strong>대응 방안:</strong> 시장 트렌드 모니터링 강화, 유연한 생산 및 마케팅 전략 수립, 다각적인 수요 창출.
+                    </div>
+                </div>
+            </div>
+            <div class="insight-box">
+                <h3>핵심 인사이트</h3>
+                <p>
+                    원료 규제 준수, 경쟁 우위 확보, 가격 저항 극복, 그리고 시장 변동성 관리는 뉴메드 시장 진입의 핵심 과제입니다.
+                    선제적이고 유연한 대응 전략을 통해 리스크를 최소화해야 합니다.
+                </p>
+            </div>
+        </div>
+        <div class="slide-footer">출처: NPD 리스크 분석</div>
+    </div>
+
+    <!-- Slide 14: Roadmap -->
+    <div class="slide slide-roadmap" id="slide-14">
+        <div class="slide-header">03 기회 &amp; 전략 | 실행 로드맵 (2026년 ~ 2027년)</div>
+        <div class="slide-body">
+            <div class="roadmap-row">
+                <div class="roadmap-stage">
+                    <h3 class="stage-title">Phase 1: 기반 구축 및 규제 준수</h3>
+                    <p class="stage-period">2026년 상반기 (Q2-Q3)</p>
+                    <div class="stage-divider"></div>
+                    <ul class="stage-activities">
+                        <li>식약처 건강기능식품 원료 등록 가능성 검토 및 추진</li>
+                        <li>생산 파트너십 확정 및 초기 생산량 계획 수립</li>
+                        <li>브랜드 아이덴티티 및 제품 패키징 디자인 완료</li>
+                    </ul>
+                    <p class="stage-milestone"><strong>마일스톤:</strong> 핵심 원료 규제 준수 방안 확정 및 제품 출시 준비 완료</p>
+                </div>
+                <div class="roadmap-stage">
+                    <h3 class="stage-title">Phase 2: 시장 진입 및 초기 확산</h3>
+                    <p class="stage-period">2026년 하반기 (Q3-Q4)</p>
+                    <div class="stage-divider"></div>
+                    <ul class="stage-activities">
+                        <li>주요 온라인 채널(네이버, 쿠팡 등) 입점 및 판매 시작</li>
+                        <li>'고품질-합리적 가격' 강조 초기 마케팅 캠페인 집중</li>
+                        <li>체험팩 및 런칭 프로모션으로 신규 고객 유치</li>
+                    </ul>
+                    <p class="stage-milestone"><strong>마일스톤:</strong> 주요 온라인 채널 판매량 확보 및 브랜드 인지도 제고</p>
+                </div>
+                <div class="roadmap-stage">
+                    <h3 class="stage-title">Phase 3: 성장 가속화 및 차별화 강화</h3>
+                    <p class="stage-period">2027년 상반기 (Q1-Q2)</p>
+                    <div class="stage-divider"></div>
+                    <ul class="stage-activities">
+                        <li>'뉴메드' 독자 기술 및 성분 배합 연구 결과 구체화</li>
+                        <li>과학적 근거 기반 콘텐츠 제작 및 확산 (블로그, SNS, 학술지)</li>
+                        <li>오프라인 채널 확장 검토 (약국, H&amp;B 스토어 등)</li>
+                    </ul>
+                    <p class="stage-milestone"><strong>마일스톤:</strong> '뉴메드' 차별화된 효능 및 기술력 시장 인식 확립</p>
+                </div>
+            </div>
+            <div class="insight-box">
+                <h3>핵심 인사이트</h3>
+                <p>
+                    로드맵은 규제 준수를 통한 안정적인 기반 마련 후, 공격적인 시장 진입과 차별화된 가치 전달을 목표로 합니다.
+                    단계별 마일스톤 달성을 통해 지속적인 성장을 이끌어낼 것입니다.
+                </p>
+            </div>
+        </div>
+        <div class="slide-footer">출처: NPD 실행 전략</div>
+    </div>
+
+    <!-- Slide 15: References -->
+    <div class="slide slide-references" id="slide-15">
+        <div class="slide-header">참고문헌 및 데이터 출처</div>
+        <div class="slide-body">
+            <div class="ref-item">
+                <span class="ref-number">1</span>
+                <span class="ref-text">네이버 데이터랩 검색어트렌드, 조회일: 2026-04-14, 키워드: 뉴메드</span>
+            </div>
+            <div class="ref-item">
+                <span class="ref-number">2</span>
+                <span class="ref-text">네이버 검색광고 키워드도구, 조회일: 2026-04-14, 키워드: 뉴메드</span>
+            </div>
+            <div class="ref-item">
+                <span class="ref-number">3</span>
+                <span class="ref-text">네이버 쇼핑 검색결과, 조회일: 2026-04-14, 키워드: 뉴메드, 상위 20개 상품 기준</span>
+            </div>
+            <div class="ref-item">
+                <span class="ref-number">4</span>
+                <span class="ref-text"><a href="https://www.enewstoday.co.kr/news/articleView.html?idxno=1692131" target="_blank">enewstoday.co.kr, "제약 "사업 확장" vs 건기식 "활로 모색"···선 넘나드는 '파이 경쟁'", 2023-11-02</a></span>
+            </div>
+            <div class="ref-item">
+                <span class="ref-number">5</span>
+                <span class="ref-text"><a href="https://it.chosun.com/site/data/html_dir/2023/09/10/2023091000672.html" target="_blank">it.chosun.com, "천연물 의약품 개발박차 K바이오…53조 시장 공략 본격화", 2023-09-10</a></span>
+            </div>
+            <div class="ref-item">
+                <span class="ref-number">6</span>
+                <span class="ref-text"><a href="https://www.viva100.com/main/view.php?key=20230718010005720" target="_blank">viva100.com, "[18일 제약·바이오 소식] 광동제약, 수해 지역에 식수 대용 차음료 긴급...", 2023-07-18</a></span>
+            </div>
+            <div class="ref-item">
+                <span class="ref-number">7</span>
+                <span class="ref-text"><a href="https://it.chosun.com/site/data/html_dir/2023/09/10/2023091000672.html" target="_blank">it.chosun.com, "천연물 의약품 개발박차 K바이오…53조 시장 공략 본격화", 2023-09-10 (2026년 413억 5000만 달러 전망치 포함)</a></span>
+            </div>
+            <div class="ref-item">
+                <span class="ref-number">8</span>
+                <span class="ref-text"><a href="https://it.chosun.com/site/data/html_dir/2023/09/10/2023091000672.html" target="_blank">it.chosun.com, "천연물 의약품 개발박차 K바이오…53조 시장 공략 본격화", 2023-09-10 (2019년 314억 4000만 달러, 약 40조 3300억원 언급)</a></span>
+            </div>
+            <div class="ref-item">
+                <span class="ref-number">9</span>
+                <span class="ref-text"><a href="https://www.viva100.com/main/view.php?key=20230718010005720" target="_blank">viva100.com, "[18일 제약·바이오 소식] 광동제약, 수해 지역에 식수 대용 차음료 긴급...", 2023-07-18 (국내 관련 시장 규모 500억원 내외 언급)</a></span>
+            </div>
+            <div class="ref-item">
+                <span class="ref-number">10</span>
+                <span class="ref-text"><a href="https://www.smedaily.co.kr/news/articleView.html?idxno=242250" target="_blank">smedaily.co.kr, "동남아 시장에 'K-제약기술' 알린다 동국제약 등 'CPHI SEA 2023' 출격", 2023-07-07 (2000억바트~2790억바트 언급)</a></span>
+            </div>
+            <div class="ref-item">
+                <span class="ref-number">11</span>
+                <span class="ref-text"><a href="https://www.getnews.co.kr/news/articleView.html?idxno=600010" target="_blank">getnews.co.kr, "SCI급 연구 논문"키 성장 푸는 열쇠, HT042가 핵심 '뼈 성장 속도' 촉진"...", 2022-10-29</a></span>
+            </div>
+            <div class="ref-item">
+                <span class="ref-number">식약처</span>
+                <span class="ref-text">식품안전나라 공공데이터포털, I0760(건강기능식품 원료분류), 조회일: 2026-04-14</span>
+            </div>
+            <div class="ref-item">
+                <span class="ref-number">식약처</span>
+                <span class="ref-text">식품안전나라 공공데이터포털, C002(일반식품 원재료), 조회일: 2026-04-14</span>
+            </div>
+            <div class="ref-item" style="border-bottom:none;">
+                <span class="ref-number"></span>
+                <span class="ref-text">*(추정) 표기된 항목은 제공된 데이터를 기반으로 NPD 디렉터가 분석·추정한 내용으로 공식 통계가 아님*</span>
+            </div>
+        </div>
+        <div class="slide-footer">출처: NPD 보고서 원문</div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // viewport scale
+        function scaleSlides() {
+            var s = Math.min(window.innerWidth/1600, window.innerHeight/800);
+            document.querySelectorAll('.slide-inner').forEach(function(el) {
+                el.style.transform = 'scale('+s+')';
+                el.style.transformOrigin = 'center center';
+            });
+        }
+        window.addEventListener('resize', scaleSlides);
+        scaleSlides();
+
+        // 전환
+        var slides = document.querySelectorAll('.slide');
+        var cur = 0, lock = false;
+        function show(n) {
+            slides[cur].classList.remove('active');
+            cur = (n + slides.length) % slides.length;
+            slides[cur].classList.add('active');
+            document.getElementById('slide-num').textContent = (cur+1)+' / '+slides.length;
+        }
+        document.addEventListener('keydown', function(e) {
+            if (e.key==='ArrowRight'||e.key===' '){e.preventDefault();show(cur+1);}
+            if (e.key==='ArrowLeft'){e.preventDefault();show(cur-1);}
+            if (e.key==='f'||e.key==='F'){document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen();}
+        });
+        document.addEventListener('wheel', function(e) {
+            e.preventDefault();
+            if (lock) return; lock=true;
+            show(e.deltaY>0?cur+1:cur-1);
+            setTimeout(function(){lock=false;},300);
+        },{passive:false});
+
+        // Navigation UI event listeners
+        document.getElementById('prev-slide').addEventListener('click', function() { show(cur - 1); });
+        document.getElementById('next-slide').addEventListener('click', function() { show(cur + 1); });
+        document.getElementById('fullscreen-btn').addEventListener('click', function() {
+            document.documentElement.requestFullscreen && document.documentElement.requestFullscreen();
+        });
+
+        // Line Chart JS (Slide 4)
+        (function() {
+            var ACCENT = '#FF5722'; // Use the defined accent color
+            var pts = [
+                {l:'2024.04', v:40.0}, {l:'2024.07', v:50.0}, {l:'2024.10', v:60.0},
+                {l:'2025.01', v:80.0}, {l:'2025.04', v:90.0}, {l:'2025.07', v:100.0},
+                {l:'2025.10', v:85.0}, {l:'2026.01', v:80.0}, {l:'2026.04', v:29.9}
+            ];
+            function draw() {
+                var cv = document.getElementById('trendChart');
+                if (!cv) return;
+                var par = cv.parentElement;
+                var W = par.clientWidth || 1300, H = par.clientHeight || 350;
+                cv.width = W; cv.height = H;
+                var ctx = cv.getContext('2d');
+                var PL=60, PR=20, PT=20, PB=45;
+                var cW=W-PL-PR, cH=H-PT-PB;
+                var maxV=100;
+                function xp(i){return PL + i/(pts.length-1)*cW;}
+                function yp(v){return PT + cH - v/maxV*cH;}
+                // Clear canvas
+                ctx.clearRect(0, 0, W, H);
+                // 그리드 + Y축 레이블
+                ctx.font='11px "Noto Sans KR", sans-serif'; ctx.textAlign='right'; ctx.fillStyle='rgba(255,255,255,0.4)';
+                [0,25,50,75,100].forEach(function(v){
+                    var y=yp(v);
+                    ctx.strokeStyle='rgba(255,255,255,0.07)'; ctx.lineWidth=1;
+                    ctx.beginPath(); ctx.moveTo(PL,y); ctx.lineTo(PL+cW,y); ctx.stroke();
+                    ctx.fillText(v,PL-6,y+4);
+                });
+                // 면적 그라디언트
+                var gr=ctx.createLinearGradient(0,PT,0,PT+cH);
+                gr.addColorStop(0,ACCENT+'55'); gr.addColorStop(1,ACCENT+'05');
+                ctx.beginPath();
+                ctx.moveTo(xp(0),yp(0));
+                pts.forEach(function(d,i){ctx.lineTo(xp(i),yp(d.v));});
+                ctx.lineTo(xp(pts.length-1),yp(0)); ctx.closePath();
+                ctx.fillStyle=gr; ctx.fill();
+                // 선
+                ctx.beginPath(); ctx.strokeStyle=ACCENT; ctx.lineWidth=2.5; ctx.lineJoin='round';
+                pts.forEach(function(d,i){i?ctx.lineTo(xp(i),yp(d.v)):ctx.moveTo(xp(i),yp(d.v));});
+                ctx.stroke();
+                // 점 + 값 레이블 + X축 레이블
+                ctx.fillStyle=ACCENT; ctx.textAlign='center'; ctx.font='11px "Noto Sans KR", sans-serif';
+                pts.forEach(function(d,i){
+                    ctx.beginPath(); ctx.arc(xp(i),yp(d.v),4,0,2*Math.PI); ctx.fill();
+                    ctx.fillStyle='rgba(255,255,255,0.7)';
+                    ctx.fillText(d.v, xp(i), yp(d.v)-10);
+                    ctx.fillStyle='rgba(255,255,255,0.4)';
+                    ctx.fillText(d.l, xp(i), H-8);
+                    ctx.fillStyle=ACCENT;
+                });
+            }
+            if(document.fonts) document.fonts.ready.then(draw); else window.addEventListener('load',draw);
+            window.addEventListener('resize',draw);
+        })();
+
+        // Initial slide display
+        show(0);
+    </script>
+<script>
+(function() {
+  var contentScales = {};
+
+  function measureAll() {
+    document.querySelectorAll('.slide').forEach(function(slide, i) {
+      var hidden = !slide.classList.contains('active');
+      if (hidden) {
+        slide.style.visibility = 'hidden';
+        slide.style.display    = 'flex';
+      }
+      var inner = slide.querySelector('.slide-inner');
+      if (inner) {
+        contentScales[i] = inner.scrollHeight > 800
+          ? (790 / inner.scrollHeight)
+          : 1;
+      }
+      if (hidden) {
+        slide.style.display    = '';
+        slide.style.visibility = '';
+      }
+    });
+  }
+
+  function applyScales() {
+    var vScale = Math.min(window.innerWidth / 1600, window.innerHeight / 800);
+    document.querySelectorAll('.slide').forEach(function(slide, i) {
+      var inner = slide.querySelector('.slide-inner');
+      if (!inner) return;
+      var cScale   = (contentScales[i] != null) ? contentScales[i] : 1;
+      var combined = vScale * cScale;
+      inner.style.transform       = 'scale(' + combined + ')';
+      inner.style.transformOrigin = 'center center';
+    });
+  }
+
+  window.scaleSlides = applyScales;
+  window.addEventListener('resize', applyScales);
+
+  (document.fonts ? document.fonts.ready : Promise.resolve()).then(function() {
+    measureAll();
+    applyScales();
+  });
+})();
+</script>
+</body>
+</html>
