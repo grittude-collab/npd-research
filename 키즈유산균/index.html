@@ -1,0 +1,1519 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NPD 시장 분석: 키즈유산균 시장 진입 전략</title>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Noto+Sans+KR:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <style>
+        /* Global Styles */
+        :root {
+            --bg-color: #1a1a1a;
+            --accent-color: #FF5722;
+            --text-color-primary: #ffffff;
+            --text-color-secondary: rgba(255, 255, 255, 0.7);
+            --text-color-light: rgba(255, 255, 255, 0.5);
+            --border-color: rgba(255, 255, 255, 0.12);
+        }
+
+        html, body {
+            margin: 0; padding: 0; overflow: hidden;
+            background: var(--bg-color); width: 100%; height: 100%;
+            font-family: 'Noto Sans KR', sans-serif;
+            color: var(--text-color-primary);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            font-size: 18px; /* 본문: 18px Regular */
+            font-weight: 400;
+            line-height: 1.5;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 { margin: 0; padding: 0; }
+
+        .slide-header h2 {
+            font-size: 24px; /* 소제목: 24px Semi-bold */
+            font-weight: 600;
+        }
+        .slide-header .chapter-title {
+            font-size: 13px; /* 캡션: 13px Light */
+            font-weight: 300;
+            opacity: 0.7;
+            margin-right: 12px;
+        }
+
+        .slide-title-large {
+            font-size: 44px; /* 대제목: 44px Bold */
+            font-weight: 700;
+            font-family: 'Archivo Black', sans-serif;
+            line-height: 1.2;
+        }
+        .slide-subtitle {
+            font-size: 24px; /* 소제목: 24px Semi-bold */
+            font-weight: 600;
+            line-height: 1.4;
+        }
+        .slide-text-regular {
+            font-size: 18px; /* 본문: 18px Regular */
+            font-weight: 400;
+        }
+        .slide-text-small {
+            font-size: 13px; /* 캡션: 13px Light */
+            font-weight: 300;
+            opacity: 0.8;
+        }
+        .slide-text-caption {
+            font-size: 13px;
+            font-weight: 300;
+            opacity: 0.6;
+        }
+        strong { font-weight: 700; }
+
+        /* Slide Container CSS (from Tech Spec) */
+        .slide {
+            position: fixed; top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            display: none;
+            align-items: center; justify-content: center;
+            overflow: hidden;
+            background: var(--bg-color);
+        }
+        .slide.active { display: flex; }
+        .slide-inner {
+            width: 1600px; height: 800px;
+            position: relative; overflow: hidden;
+            box-sizing: border-box;
+        }
+        .slide-header {
+            position: absolute; top: 0; left: 0; right: 0;
+            height: 100px; padding: 0 80px;
+            display: flex; align-items: flex-end; padding-bottom: 16px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+        .slide-body {
+            position: absolute; top: 100px; left: 0; right: 0;
+            bottom: 50px; padding: 20px 80px 0;
+            overflow: hidden; /* Rule 7 */
+            display: flex; /* For insight box to stick to bottom */
+            flex-direction: column; /* For insight box to stick to bottom */
+        }
+        .slide-footer {
+            position: absolute; bottom: 0; left: 0; right: 0;
+            height: 50px; padding: 0 80px;
+            display: flex; align-items: center; justify-content: flex-end;
+            font-size: 12px; opacity: 0.5;
+            border-top: 1px solid rgba(255,255,255,0.08);
+        }
+
+        /* Navigation UI */
+        .nav-button {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-color-primary);
+            border: none;
+            padding: 12px 18px;
+            cursor: pointer;
+            font-size: 20px;
+            border-radius: 6px;
+            transition: background 0.2s;
+            line-height: 1;
+        }
+        .nav-button:hover { background: rgba(255, 255, 255, 0.2); }
+        #nav-prev { left: 16px; }
+        #nav-next { right: 16px; }
+
+        #slide-num-display {
+            position: fixed;
+            bottom: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+            color: var(--text-color-primary);
+            font-size: 14px;
+            opacity: 0.7;
+        }
+
+        #fullscreen-button {
+            position: fixed;
+            top: 16px;
+            right: 16px;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-color-primary);
+            border: none;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 14px;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+        #fullscreen-button:hover { background: rgba(255, 255, 255, 0.2); }
+
+        /* Common Insight Box Style */
+        .insight-box {
+            border-left: 3px solid var(--accent-color);
+            padding: 10px 16px;
+            background: rgba(255, 87, 34, 0.07); /* accent-color with 0.07 opacity */
+            margin-bottom: 0;
+            flex-shrink: 0;
+            margin-top: auto; /* Pushes to bottom */
+        }
+        .insight-box-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin: 0 0 3px;
+        }
+        .insight-box-content {
+            font-size: 13px;
+            line-height: 1.5;
+            margin: 0;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            color: var(--text-color-primary);
+        }
+
+        /* Specific slide styles */
+        .cover-slide-text {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .cover-slide-text h1 {
+            font-size: 64px;
+            font-weight: 900;
+            font-family: 'Archivo Black', sans-serif;
+            margin-bottom: 20px;
+            line-height: 1.1;
+        }
+        .cover-slide-text h3 {
+            font-size: 32px;
+            font-weight: 400;
+            margin-bottom: 10px;
+        }
+        .cover-slide-text p {
+            font-size: 18px;
+            opacity: 0.8;
+            margin-bottom: 30px;
+        }
+        .cover-slide-text .date {
+            font-size: 14px;
+            opacity: 0.6;
+        }
+
+        .divider-slide-chapter-num {
+            font-size: 64px;
+            font-weight: 900;
+            color: #fff;
+            line-height: 1;
+            font-family: 'Archivo Black', sans-serif;
+        }
+        .divider-slide-chapter-title {
+            font-size: 32px;
+            font-weight: 400;
+            color: #fff;
+            margin-top: 16px;
+            opacity: 0.9;
+        }
+
+        /* Big Number Slide */
+        .big-number-grid {
+            display: flex;
+            gap: 16px;
+            align-items: stretch;
+            flex: 1;
+            min-height: 0;
+            margin-bottom: 12px;
+        }
+        .big-number-card {
+            flex: 1;
+            padding: 18px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        .big-number-card-title {
+            font-size: 14px;
+            opacity: 0.65;
+            margin: 0 0 4px;
+        }
+        .big-number-card-value {
+            font-size: 48px;
+            font-weight: 900;
+            line-height: 1;
+            margin: 0 0 6px;
+            color: var(--accent-color);
+            font-family: 'Archivo Black', sans-serif;
+        }
+        .big-number-card-text {
+            font-size: 12px;
+            line-height: 1.5;
+            opacity: 0.75;
+            margin: 0 0 12px;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+        .big-number-card-viz {
+            flex: 1;
+            min-height: 80px;
+        }
+        .news-link {
+            font-size: 11px;
+            line-height: 1.4;
+            padding: 5px 8px;
+            background: rgba(255,255,255,0.04);
+            border-radius: 3px;
+            border-left: 2px solid var(--accent-color);
+            color: inherit;
+            text-decoration: none;
+            display: block;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .news-text { /* For when no URL is available */
+            font-size: 11px;
+            line-height: 1.4;
+            padding: 5px 8px;
+            background: rgba(255,255,255,0.04);
+            border-radius: 3px;
+            border-left: 2px solid var(--accent-color);
+            color: inherit;
+            display: block;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        /* Card Grid Slide */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            flex: 1; /* Allow grid to fill space */
+            align-content: start; /* Align content to start in case of fewer rows */
+            padding-bottom: 12px; /* Space for insight box */
+        }
+        .card-item {
+            padding: 10px 12px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            position: relative;
+            background: rgba(255,255,255,0.02);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .card-item-rank {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            font-size: 10px;
+            opacity: 0.4;
+            font-weight: 700;
+        }
+        .card-item-brand {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-bottom: 5px;
+            padding-right: 24px;
+            display: block;
+            text-decoration: none;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .card-item-price {
+            font-size: 12px;
+            margin-bottom: 3px;
+            opacity: 0.9;
+        }
+        .card-item-form {
+            font-size: 11px;
+            opacity: 0.55;
+            margin-bottom: 5px;
+        }
+        .card-item-divider {
+            height: 1px;
+            background: rgba(255,255,255,0.1);
+            margin-bottom: 5px;
+        }
+        .card-item-usp {
+            font-size: 11px;
+            line-height: 1.4;
+            color: inherit;
+            opacity: 0.85;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+
+        /* Bubble Chart Slide */
+        .bubble-chart-main {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex: 1;
+            min-height: 0;
+        }
+        .bubble-chart-area {
+            position: relative;
+            width: 600px;
+            height: 480px;
+            flex-shrink: 0;
+            align-self: center;
+            border-left: 2px solid rgba(255,255,255,0.4);
+            border-bottom: 2px solid rgba(255,255,255,0.4);
+            overflow: visible;
+        }
+        .bubble-chart-quadrant-line-v {
+            position: absolute; left: 50%; top: 0; height: 100%; border-left: 1px dashed rgba(255,255,255,0.2); pointer-events: none;
+        }
+        .bubble-chart-quadrant-line-h {
+            position: absolute; top: 50%; left: 0; width: 100%; border-top: 1px dashed rgba(255,255,255,0.2); pointer-events: none;
+        }
+        .bubble-chart-y-tick {
+            position: absolute; right: 100%; margin-right: 6px; font-size: 10px; opacity: 0.5; transform: translateY(50%);
+        }
+        .bubble-chart-x-tick {
+            position: absolute; top: 100%; margin-top: 6px; font-size: 10px; opacity: 0.5; transform: translateX(-50%);
+        }
+        .bubble-chart-y-label {
+            position: absolute; right: 100%; margin-right: 40px; top: 50%; writing-mode: vertical-rl; transform: translateY(-50%); font-size: 11px; white-space: nowrap;
+        }
+        .bubble-chart-x-label {
+            position: absolute; top: 100%; margin-top: 28px; left: 50%; transform: translateX(-50%); font-size: 11px; white-space: nowrap;
+        }
+        .bubble-item {
+            position: absolute;
+            transform: translate(-50%, 50%); /* Centering bubble on its coordinates */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .bubble-item-label {
+            text-align: center; font-size: 10px; white-space: nowrap; margin-bottom: 3px; color: rgba(255,255,255,0.9);
+        }
+        .bubble-item-circle {
+            border-radius: 50%; background: var(--bubble-color); opacity: 0.85; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: #fff;
+        }
+        .bubble-chart-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Align content vertically in center */
+            gap: 16px;
+            overflow: hidden;
+        }
+        .bubble-chart-legend {
+            display: flex; flex-wrap: wrap; gap: 4px 12px; flex-shrink: 0;
+        }
+        .bubble-chart-legend-item {
+            display: flex; align-items: center; gap: 6px; font-size: 12px;
+        }
+        .bubble-chart-legend-color {
+            width: 10px; height: 10px; border-radius: 50%;
+        }
+
+        /* Pricing Table Slide */
+        .pricing-table-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            padding-bottom: 20px; /* Space above insight box */
+        }
+        .pricing-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        .pricing-table th, .pricing-table td {
+            padding: 10px 14px;
+            text-align: center;
+            vertical-align: middle;
+            font-size: 14px;
+            white-space: nowrap;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .pricing-table th {
+            background: rgba(255,255,255,0.05);
+            font-weight: 700;
+            color: var(--accent-color);
+        }
+        .pricing-table td {
+            color: rgba(255,255,255,0.85);
+        }
+        .pricing-rationale {
+            font-size: 15px;
+            line-height: 1.6;
+            color: rgba(255,255,255,0.8);
+        }
+
+        /* 2x2 Grid Slides (Pain Points, White Space, Risk, Concept) */
+        .grid-2x2-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 16px;
+            flex: 1;
+            min-height: 0;
+            padding-bottom: 12px; /* Space for insight box */
+        }
+        .grid-2x2-cell {
+            padding: 20px 24px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            min-height: 0;
+            background: rgba(255,255,255,0.02);
+        }
+        .grid-2x2-cell-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin: 0 0 10px;
+            flex-shrink: 0;
+        }
+        .grid-2x2-cell-body {
+            font-size: 14px;
+            line-height: 1.7;
+            flex: 1;
+            overflow: hidden;
+            color: rgba(255,255,255,0.92);
+        }
+        .risk-mitigation {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            margin-top: 8px;
+            padding-top: 8px;
+            font-size: 12px;
+            color: rgba(255,255,255,0.75);
+            flex-shrink: 0;
+        }
+
+        /* Concept Slide Specific */
+        .concept-cell-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin: 0 0 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            flex-shrink: 0;
+        }
+        .concept-cell-body {
+            font-size: 15px;
+            line-height: 1.65;
+            flex: 1;
+            color: rgba(255,255,255,0.92);
+        }
+
+        /* Roadmap Slide */
+        .roadmap-row {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            gap: 0;
+            flex: 1;
+            min-height: 0;
+            padding-bottom: 12px; /* Space for insight box */
+        }
+        .roadmap-stage {
+            flex: 1;
+            padding: 24px 20px;
+            border-top: 3px solid var(--accent-color);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            background: rgba(255,255,255,0.02);
+            border-radius: 6px;
+            margin: 0 8px; /* Add some margin between stages for visual separation */
+        }
+        .roadmap-stage:first-child { margin-left: 0; }
+        .roadmap-stage:last-child { margin-right: 0; }
+        .roadmap-stage-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin: 0;
+            color: var(--text-color-primary);
+        }
+        .roadmap-stage-period {
+            font-size: 13px;
+            color: rgba(255,255,255,0.55);
+            margin: 0;
+        }
+        .roadmap-divider {
+            height: 1px;
+            background: rgba(255,255,255,0.08);
+            margin: 4px 0;
+        }
+        .roadmap-activities {
+            font-size: 14px;
+            line-height: 1.7;
+            flex: 1;
+            color: rgba(255,255,255,0.85);
+            list-style: disc;
+            padding-left: 20px;
+            margin: 0;
+        }
+        .roadmap-milestone {
+            font-size: 12px;
+            color: var(--accent-color);
+            font-weight: 700;
+            margin-top: auto;
+            padding-top: 8px;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            flex-shrink: 0;
+        }
+
+        /* References Slide */
+        .references-list {
+            flex: 1;
+            overflow-y: auto;
+            padding-bottom: 8px;
+            padding-right: 20px; /* For scrollbar */
+            list-style: none; /* Remove default list style */
+            margin: 0;
+            padding-left: 0;
+        }
+        .references-list-item {
+            display: flex;
+            gap: 12px;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            font-size: 14px;
+            line-height: 1.8;
+        }
+        .references-list-item:last-child {
+            border-bottom: none;
+        }
+        .references-list-item-num {
+            color: var(--accent-color);
+            font-weight: 700;
+            flex-shrink: 0;
+            min-width: 24px;
+            text-align: right;
+        }
+        .references-list-item-text {
+            color: rgba(255,255,255,0.85);
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Navigation UI -->
+    <button id="nav-prev" class="nav-button">&#8592;</button>
+    <button id="nav-next" class="nav-button">&#8594;</button>
+    <div id="slide-num-display">1 / 15</div>
+    <button id="fullscreen-button">전체화면</button>
+
+    <!-- Slide 1: Cover -->
+    <div class="slide active" id="slide-1">
+        <div class="slide-inner" style="background: var(--bg-color); display: flex; align-items: center; justify-content: center;">
+            <div class="cover-slide-text">
+                <h1>KIDS PROBIOTICS</h1>
+                <h3 style="color: var(--accent-color);">NPD 시장 분석: 키즈유산균 시장 진입 전략</h3>
+                <p>하락세 시장 속, 차별화된 전략으로 키즈유산균 시장의 새로운 기회를 모색합니다.</p>
+                <div style="width: 80px; height: 3px; background: var(--accent-color); margin: 30px auto;"></div>
+                <p class="date">2026년 4월 14일</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 2: Section Divider 01 -->
+    <div class="slide" id="slide-2">
+      <div class="slide-inner" style="background:var(--accent-color); display:flex; align-items:center; justify-content:center; flex-direction:column; text-align:center;">
+        <div style="font-size:13px; letter-spacing:0.2em; text-transform:uppercase; opacity:0.6; margin-bottom:16px; color:#fff;">CHAPTER 01</div>
+        <div class="divider-slide-chapter-num">01</div>
+        <div class="divider-slide-chapter-title">시장 현황</div>
+        <div style="width:60px; height:3px; background:#fff; margin-top:24px;"></div>
+      </div>
+    </div>
+
+    <!-- Slide 3: Big Number -->
+    <div class="slide" id="slide-3">
+        <div class="slide-inner">
+            <div class="slide-header">
+                <span class="chapter-title">01 시장 현황</span>
+                <h2>Market Opportunity Scorecard</h2>
+            </div>
+            <div class="slide-body">
+                <div class="big-number-grid">
+                    <div class="big-number-card">
+                        <h3 class="big-number-card-title">시장 성장 잠재력</h3>
+                        <div class="big-number-card-value">2 <span style="font-size:24px;">/ 5</span></div>
+                        <p class="big-number-card-text">검색 트렌드 전반적인 하락세와 전년 동기 대비 큰 폭의 감소세 [1].</p>
+                        <div class="big-number-card-viz">
+                            <svg style="width:100%;height:80px;" viewBox="0 0 200 60" preserveAspectRatio="none">
+                                <defs><linearGradient id="mg1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="var(--accent-color)" stop-opacity="0.3"/><stop offset="100%" stop-color="var(--accent-color)" stop-opacity="0"/></linearGradient></defs>
+                                <polygon points="0,60 0,10.1 28.57,17.5 57.14,27.5 85.71,35 114.28,40 142.85,47.5 171.42,52.5 200,55.6 200,60" fill="url(#mg1)"/>
+                                <polyline points="0,10.1 28.57,17.5 57.14,27.5 85.71,35 114.28,40 142.85,47.5 171.42,52.5 200,55.6" fill="none" stroke="var(--accent-color)" stroke-width="2"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="big-number-card">
+                        <h3 class="big-number-card-title">소비자 관심도</h3>
+                        <div class="big-number-card-value">8,150<span style="font-size:24px;">회</span></div>
+                        <p class="big-number-card-text">월간 총 검색수 (PC 960회, 모바일 7,190회)는 시장의 폭발적인 성장을 기대하기 어려운 수준 [2].</p>
+                        <div class="big-number-card-viz" style="display:flex; align-items:flex-end; gap:10px; flex:1; padding-top:4px;">
+                            <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;">
+                                <div style="font-size:9px; opacity:0.5;">최저</div>
+                                <div style="width:100%; background:var(--accent-color); opacity:0.35; height:4.4px; border-radius:2px 2px 0 0;"></div>
+                                <div style="font-size:10px; white-space:nowrap;">3,383회</div>
+                            </div>
+                            <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;">
+                                <div style="font-size:9px; opacity:0.5;">평균</div>
+                                <div style="width:100%; background:var(--accent-color); opacity:0.65; height:24.3px; border-radius:2px 2px 0 0;"></div>
+                                <div style="font-size:10px; white-space:nowrap;">18,675회</div>
+                            </div>
+                            <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;">
+                                <div style="font-size:9px; opacity:0.5; color:var(--accent-color);">최고</div>
+                                <div style="width:100%; background:var(--accent-color); height:50px; border-radius:2px 2px 0 0;"></div>
+                                <div style="font-size:10px; white-space:nowrap; color:var(--accent-color);">38,443회</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="big-number-card">
+                        <h3 class="big-number-card-title">전체시장 규모 및 트렌드</h3>
+                        <div class="big-number-card-value">3 <span style="font-size:24px;">/ 5</span></div>
+                        <p class="big-number-card-text">'키즈유산균' 시장 공식 통계 부재. 건강기능식품 시장 내 간접 추정 필요 [4].</p>
+                        <div class="big-number-card-viz" style="display:flex; flex-direction:column; gap:5px; flex:1; overflow:hidden;">
+                            <div class="news-text" style="border-left:2px solid var(--accent-color);">"키즈유산균 시장 규모 500억원 언급"</div>
+                            <div class="news-text" style="border-left:2px solid var(--accent-color);">"키즈유산균 시장 규모 5,500억원 언급"</div>
+                            <div class="news-text" style="border-left:2px solid var(--accent-color);">"건강기능식품 시장 전체 규모 5조원 이상"</div>
+                            <div class="news-text" style="opacity:0.6; border-left:2px solid var(--accent-color);"> (키워드 포함 기사 부재로 관련 수치 표시)</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="insight-box">
+                    <h4 class="insight-box-title">핵심 인사이트</h4>
+                    <p class="insight-box-content">
+                        '키즈유산균' 시장은 검색 트렌드 하락세와 공식 통계 부재로 인해 <strong>보수적 접근이 필요</strong>합니다.
+                        다만, 경쟁 강도와 틈새 시장 가능성은 중간 수준으로, 차별화된 전략을 통해 기회를 모색할 수 있습니다.
+                    </p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                출처: [1] 네이버 데이터랩 (2026-04-14), [2] 네이버 검색광고 키워드도구 (2026-04-14), [4] 네이버 뉴스 검색 결과
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 4: Line Chart -->
+    <div class="slide" id="slide-4">
+        <div class="slide-inner">
+            <div class="slide-header">
+                <span class="chapter-title">01 시장 현황</span>
+                <h2>키즈유산균 검색 트렌드 (24개월)</h2>
+            </div>
+            <div class="slide-body">
+                <div style="flex:1; min-height:0; position:relative;"><canvas id="trendChart"></canvas></div>
+                <div style="display:flex; gap:12px; flex-shrink:0; margin-top:12px;">
+                    <div class="insight-box" style="flex:1; margin-top:0;">
+                        <h4 class="insight-box-title">전반적인 하락세 지속</h4>
+                        <p class="insight-box-content">
+                            지난 2년간 '키즈유산균' 검색 관심도가 지속적으로 감소하며 시장의 활력이 저하되고 있음을 시사합니다.
+                            이는 소비자의 관심이 다른 키워드로 이동했거나, 시장의 성숙도가 높아졌을 가능성을 내포합니다.
+                        </p>
+                    </div>
+                    <div class="insight-box" style="flex:1; margin-top:0;">
+                        <h4 class="insight-box-title">전년 대비 55.4% 감소</h4>
+                        <p class="insight-box-content">
+                            2026년 4월 기준 검색 지수 21.2는 전년 동기 (2025년 4월 40.0) 대비 55.4% 감소한 수치입니다.
+                            이는 시장의 급격한 위축을 나타내며, 신중하고 차별화된 시장 진입 전략이 필수적임을 강조합니다.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                출처: [1] 네이버 데이터랩 검색어트렌드 (2026-04-14)
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 5: Section Divider 02 -->
+    <div class="slide" id="slide-5">
+      <div class="slide-inner" style="background:var(--accent-color); display:flex; align-items:center; justify-content:center; flex-direction:column; text-align:center;">
+        <div style="font-size:13px; letter-spacing:0.2em; text-transform:uppercase; opacity:0.6; margin-bottom:16px; color:#fff;">CHAPTER 02</div>
+        <div class="divider-slide-chapter-num">02</div>
+        <div class="divider-slide-chapter-title">경쟁사 분석</div>
+        <div style="width:60px; height:3px; background:#fff; margin-top:24px;"></div>
+      </div>
+    </div>
+
+    <!-- Slide 6: Card Grid -->
+    <div class="slide" id="slide-6">
+        <div class="slide-inner">
+            <div class="slide-header">
+                <span class="chapter-title">02 경쟁사 분석</span>
+                <h2>TOP 10 키즈유산균 브랜드 현황</h2>
+            </div>
+            <div class="slide-body">
+                <div class="card-grid">
+                    <div class="card-item">
+                        <span class="card-item-rank">1위</span>
+                        <a href="https://search.shopping.naver.com/search/all?query=키즈유산균+바료랑" target="_blank" class="card-item-brand">바료랑</a>
+                        <span class="card-item-price">52,900원 (3개)</span>
+                        <span class="card-item-form">분말스틱</span>
+                        <div class="card-item-divider"></div>
+                        <p class="card-item-usp">어린이 면역, 프로바이오틱스, 아기유산균 키워드 강조.</p>
+                    </div>
+                    <div class="card-item">
+                        <span class="card-item-rank">2위</span>
+                        <a href="https://search.shopping.naver.com/search/all?query=키즈유산균+베베" target="_blank" class="card-item-brand">베베</a>
+                        <span class="card-item-price">33,000원 (1개)</span>
+                        <span class="card-item-form">분말스틱</span>
+                        <div class="card-item-divider"></div>
+                        <p class="card-item-usp">돌, 키즈, 유아, 초등학생 등 연령대 구체화, 100억 CFU 강조.</p>
+                    </div>
+                    <div class="card-item">
+                        <span class="card-item-rank">3위</span>
+                        <a href="https://search.shopping.naver.com/search/all?query=키즈유산균+피에이치365" target="_blank" class="card-item-brand">피에이치365</a>
+                        <span class="card-item-price">49,000원</span>
+                        <span class="card-item-form">확인필요</span>
+                        <div class="card-item-divider"></div>
+                        <p class="card-item-usp">키즈, 프로바이오틱스, 어린이 등 폭넓은 타겟층 공략.</p>
+                    </div>
+                    <div class="card-item">
+                        <span class="card-item-rank">4위</span>
+                        <a href="https://search.shopping.naver.com/search/all?query=키즈유산균+피에이치365" target="_blank" class="card-item-brand">피에이치365</a>
+                        <span class="card-item-price">39,000원</span>
+                        <span class="card-item-form">확인필요</span>
+                        <div class="card-item-divider"></div>
+                        <p class="card-item-usp">아기유산균, 베이비, 돌 유아 아이 키워드 사용.</p>
+                    </div>
+                    <div class="card-item">
+                        <span class="card-item-rank">5위</span>
+                        <a href="https://search.shopping.naver.com/search/all?query=키즈유산균+바료랑" target="_blank" class="card-item-brand">바료랑</a>
+                        <span class="card-item-price">33,000원 (1개)</span>
+                        <span class="card-item-form">분말스틱</span>
+                        <div class="card-item-divider"></div>
+                        <p class="card-item-usp">베베 앤 키즈 100 유산균, 1.6g 소용량 스틱.</p>
+                    </div>
+                    <div class="card-item">
+                        <span class="card-item-rank">6위</span>
+                        <a href="https://search.shopping.naver.com/search/all?query=키즈유산균+하루웰빙" target="_blank" class="card-item-brand">하루웰빙</a>
+                        <span class="card-item-price">24,500원</span>
+                        <span class="card-item-form">확인필요</span>
+                        <div class="card-item-divider"></div>
+                        <p class="card-item-usp">락토리얼 프로바이오틱스, 모유 생유산균, 신바이오틱스.</p>
+                    </div>
+                    <div class="card-item">
+                        <span class="card-item-rank">7위</span>
+                        <a href="https://search.shopping.naver.com/search/all?query=키즈유산균+마미큐어" target="_blank" class="card-item-brand">마미큐어</a>
+                        <span class="card-item-price">41,900원</span>
+                        <span class="card-item-form">확인필요</span>
+                        <div class="card-item-divider"></div>
+                        <p class="card-item-usp">GOD 올인원 아기유산균, 비타민D 아연 함유.</p>
+                    </div>
+                    <div class="card-item">
+                        <span class="card-item-rank">8위</span>
+                        <a href="https://search.shopping.naver.com/search/all?query=키즈유산균+배배쓰담" target="_blank" class="card-item-brand">배배쓰담</a>
+                        <span class="card-item-price">34,000원 (1개)</span>
+                        <span class="card-item-form">분말스틱</span>
+                        <div class="card-item-divider"></div>
+                        <p class="card-item-usp">아기유산균, 돌 면역 장 유아, 딸기맛 비타민D 아연.</p>
+                    </div>
+                    <div class="card-item">
+                        <span class="card-item-rank">9위</span>
+                        <a href="https://search.shopping.naver.com/search/all?query=키즈유산균+포베라" target="_blank" class="card-item-brand">포베라</a>
+                        <span class="card-item-price">44,900원 (1개)</span>
+                        <span class="card-item-form">분말스틱</span>
+                        <div class="card-item-divider"></div>
+                        <p class="card-item-usp">키즈 어린이 유산균, 비타민D 아연, 초등학생 프로바이오틱스.</p>
+                    </div>
+                    <div class="card-item">
+                        <span class="card-item-rank">10위</span>
+                        <a href="https://search.shopping.naver.com/search/all?query=키즈유산균+DAYLIFE" target="_blank" class="card-item-brand">DAYLIFE</a>
+                        <span class="card-item-price">15,900원 (1개)</span>
+                        <span class="card-item-form">분말스틱</span>
+                        <div class="card-item-divider"></div>
+                        <p class="card-item-usp">아이 바이오 베이비 키즈 생 유산균, 2g x 33포.</p>
+                    </div>
+                </div>
+                <div class="insight-box">
+                    <h4 class="insight-box-title">핵심 인사이트</h4>
+                    <p class="insight-box-content">
+                        '키즈유산균' 시장은 분말 스틱 형태가 주류를 이루며, 3~5만원대 가격대가 가장 많습니다.
+                        다수의 브랜드가 유사한 컨셉으로 경쟁하며, 제조원 미표기 제품도 상당수 존재하여 정보 투명성 확보가 중요합니다.
+                    </p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                출처: [3] 네이버 쇼핑 검색 결과 (2026-04-14)
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 7: Bubble Chart -->
+    <div class="slide" id="slide-7">
+        <div class="slide-inner">
+            <div class="slide-header">
+                <span class="chapter-title">02 경쟁사 분석</span>
+                <h2>경쟁사 포지셔닝 (TOP 10)</h2>
+            </div>
+            <div class="slide-body">
+                <div class="bubble-chart-main">
+                    <div class="bubble-chart-area">
+                        <div class="bubble-chart-quadrant-line-v"></div>
+                        <div class="bubble-chart-quadrant-line-h"></div>
+                        <!-- Y-axis Ticks -->
+                        <div class="bubble-chart-y-tick" style="bottom: 0%;">0%</div>
+                        <div class="bubble-chart-y-tick" style="bottom: 25%;">25%</div>
+                        <div class="bubble-chart-y-tick" style="bottom: 50%;">50%</div>
+                        <div class="bubble-chart-y-tick" style="bottom: 75%;">75%</div>
+                        <div class="bubble-chart-y-tick" style="bottom: 100%;">100%</div>
+                        <!-- X-axis Ticks (based on price range 15,900 - 49,000) -->
+                        <div class="bubble-chart-x-tick" style="left: 10%;">1만원</div>
+                        <div class="bubble-chart-x-tick" style="left: 35%;">2.5만원</div>
+                        <div class="bubble-chart-x-tick" style="left: 60%;">4만원</div>
+                        <div class="bubble-chart-x-tick" style="left: 85%;">5만원</div>
+                        <!-- Y-axis Label -->
+                        <div class="bubble-chart-y-label">브랜드 인지도</div>
+                        <!-- X-axis Label -->
+                        <div class="bubble-chart-x-label">월 환산 가격 (원)</div>
+
+                        <!-- Bubbles (x:price, y:recognition, size:rank, color:palette) -->
+                        <!-- Prices: 17633, 33000, 49000, 39000, 33000, 24500, 41900, 34000, 44900, 15900. -->
+                        <!-- Recognition: 85, 80, 65, 60, 82, 30, 40, 35, 45, 25. -->
+                        <!-- Rank (size): 10, 9, 8, 7, 6, 5, 4, 3, 2, 1. -->
+                        <!-- Normalize X (price) to 5-88%: (price - min_p) / (max_p - min_p) * 83 + 5 -->
+                        <!-- min_p=15900, max_p=49000 -->
+                        <!-- Normalize Y (recognition) to 5-88%: (rec - min_r) / (max_r - min_r) * 83 + 5 -->
+                        <!-- min_r=25, max_r=85 -->
+                        <!-- Normalize Size (rank) to 32-80px: (size_rank - 1) / 9 * 48 + 32 -->
+                        <div class="bubble-item" style="left:calc(5% + (17633 - 15900)/(49000-15900)*83%); bottom:calc(5% + (85 - 25)/(85-25)*83%);">
+                            <div class="bubble-item-label">바료랑</div>
+                            <div class="bubble-item-circle" style="width:80px; height:80px; background:#4361ee;">1</div>
+                        </div>
+                        <div class="bubble-item" style="left:calc(5% + (33000 - 15900)/(49000-15900)*83%); bottom:calc(5% + (80 - 25)/(85-25)*83%);">
+                            <div class="bubble-item-label">베베</div>
+                            <div class="bubble-item-circle" style="width:75px; height:75px; background:#f72585;">2</div>
+                        </div>
+                        <div class="bubble-item" style="left:calc(5% + (49000 - 15900)/(49000-15900)*83%); bottom:calc(5% + (65 - 25)/(85-25)*83%);">
+                            <div class="bubble-item-label">피에이치365</div>
+                            <div class="bubble-item-circle" style="width:70px; height:70px; background:#4cc9f0;">3</div>
+                        </div>
+                        <div class="bubble-item" style="left:calc(5% + (39000 - 15900)/(49000-15900)*83%); bottom:calc(5% + (60 - 25)/(85-25)*83%);">
+                            <div class="bubble-item-label">피에이치365</div>
+                            <div class="bubble-item-circle" style="width:65px; height:65px; background:#f8961e;">4</div>
+                        </div>
+                        <div class="bubble-item" style="left:calc(5% + (33000 - 15900)/(49000-15900)*83%); bottom:calc(5% + (82 - 25)/(85-25)*83%);">
+                            <div class="bubble-item-label">바료랑 (베베&키즈)</div>
+                            <div class="bubble-item-circle" style="width:60px; height:60px; background:#43aa8b;">5</div>
+                        </div>
+                        <div class="bubble-item" style="left:calc(5% + (24500 - 15900)/(49000-15900)*83%); bottom:calc(5% + (30 - 25)/(85-25)*83%);">
+                            <div class="bubble-item-label">하루웰빙</div>
+                            <div class="bubble-item-circle" style="width:55px; height:55px; background:#90be6d;">6</div>
+                        </div>
+                        <div class="bubble-item" style="left:calc(5% + (41900 - 15900)/(49000-15900)*83%); bottom:calc(5% + (40 - 25)/(85-25)*83%);">
+                            <div class="bubble-item-label">마미큐어</div>
+                            <div class="bubble-item-circle" style="width:50px; height:50px; background:#277da1;">7</div>
+                        </div>
+                        <div class="bubble-item" style="left:calc(5% + (34000 - 15900)/(49000-15900)*83%); bottom:calc(5% + (35 - 25)/(85-25)*83%);">
+                            <div class="bubble-item-label">배배쓰담</div>
+                            <div class="bubble-item-circle" style="width:45px; height:45px; background:#e63946;">8</div>
+                        </div>
+                        <div class="bubble-item" style="left:calc(5% + (44900 - 15900)/(49000-15900)*83%); bottom:calc(5% + (45 - 25)/(85-25)*83%);">
+                            <div class="bubble-item-label">포베라</div>
+                            <div class="bubble-item-circle" style="width:40px; height:40px; background:#6a4c93;">9</div>
+                        </div>
+                        <div class="bubble-item" style="left:calc(5% + (15900 - 15900)/(49000-15900)*83%); bottom:calc(5% + (25 - 25)/(85-25)*83%);">
+                            <div class="bubble-item-label">DAYLIFE</div>
+                            <div class="bubble-item-circle" style="width:32px; height:32px; background:#ff6b6b;">10</div>
+                        </div>
+
+                    </div>
+                    <div class="bubble-chart-panel">
+                        <div class="bubble-chart-legend">
+                            <div class="bubble-chart-legend-item"><span class="bubble-chart-legend-color" style="background:#4361ee;"></span>바료랑</div>
+                            <div class="bubble-chart-legend-item"><span class="bubble-chart-legend-color" style="background:#f72585;"></span>베베</div>
+                            <div class="bubble-chart-legend-item"><span class="bubble-chart-legend-color" style="background:#4cc9f0;"></span>피에이치365</div>
+                            <div class="bubble-chart-legend-item"><span class="bubble-chart-legend-color" style="background:#f8961e;"></span>피에이치365</div>
+                            <div class="bubble-chart-legend-item"><span class="bubble-chart-legend-color" style="background:#43aa8b;"></span>바료랑 (베베&키즈)</div>
+                            <div class="bubble-chart-legend-item"><span class="bubble-chart-legend-color" style="background:#90be6d;"></span>하루웰빙</div>
+                            <div class="bubble-chart-legend-item"><span class="bubble-chart-legend-color" style="background:#277da1;"></span>마미큐어</div>
+                            <div class="bubble-chart-legend-item"><span class="bubble-chart-legend-color" style="background:#e63946;"></span>배배쓰담</div>
+                            <div class="bubble-chart-legend-item"><span class="bubble-chart-legend-color" style="background:#6a4c93;"></span>포베라</div>
+                            <div class="bubble-chart-legend-item"><span class="bubble-chart-legend-color" style="background:#ff6b6b;"></span>DAYLIFE</div>
+                        </div>
+                        <div class="insight-box">
+                            <h4 class="insight-box-title">경쟁 포지셔닝 분석</h4>
+                            <p class="insight-box-content">
+                                상위권 브랜드는 중간 가격대에서 높은 인지도를 확보하고 있습니다.
+                                저가 시장에는 DAYLIFE 같은 가성비 브랜드가 존재하며, 고가/고인지도 포지션은 아직 명확한 강자가 없습니다.
+                            </p>
+                        </div>
+                        <div class="insight-box">
+                            <h4 class="insight-box-title">시장 내 기회 영역</h4>
+                            <p class="insight-box-content">
+                                높은 브랜드 인지도를 가지면서도 합리적인 가격대를 유지하는 전략,
+                                또는 프리미엄 가격대에서 차별화된 가치로 높은 인지도를 구축하는 전략을 고려할 수 있습니다.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                출처: [3] 네이버 쇼핑 검색 결과 (2026-04-14)
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 8: Section Divider 03 -->
+    <div class="slide" id="slide-8">
+      <div class="slide-inner" style="background:var(--accent-color); display:flex; align-items:center; justify-content:center; flex-direction:column; text-align:center;">
+        <div style="font-size:13px; letter-spacing:0.2em; text-transform:uppercase; opacity:0.6; margin-bottom:16px; color:#fff;">CHAPTER 03</div>
+        <div class="divider-slide-chapter-num">03</div>
+        <div class="divider-slide-chapter-title">기회 & 전략</div>
+        <div style="width:60px; height:3px; background:#fff; margin-top:24px;"></div>
+      </div>
+    </div>
+
+    <!-- Slide 9: Pain Points -->
+    <div class="slide" id="slide-9">
+        <div class="slide-inner">
+            <div class="slide-header">
+                <span class="chapter-title">03 기회 & 전략</span>
+                <h2>소비자 Pain Points</h2>
+            </div>
+            <div class="slide-body">
+                <div class="grid-2x2-container">
+                    <div class="grid-2x2-cell">
+                        <h3 class="grid-2x2-cell-title">장 건강 관리의 어려움</h3>
+                        <p class="grid-2x2-cell-body">
+                            아이들의 소화 불량, 변비, 설사 등 잦은 장 관련 불편함에 대한 근본적인 해결책을 찾기 어렵습니다.
+                            부모들은 장 건강 개선에 대한 명확한 효능을 기대합니다.
+                        </p>
+                    </div>
+                    <div class="grid-2x2-cell">
+                        <h3 class="grid-2x2-cell-title">면역력 강화에 대한 불안감</h3>
+                        <p class="grid-2x2-cell-body">
+                            잦은 감기나 외부 유해 환경으로부터 아이를 보호하고 면역력을 효과적으로 높여줄 제품에 대한 불확실성이 존재합니다.
+                            강화된 면역력에 대한 기대를 충족시키고 싶어합니다.
+                        </p>
+                    </div>
+                    <div class="grid-2x2-cell">
+                        <h3 class="grid-2x2-cell-title">안전성 및 신뢰성 부족</h3>
+                        <p class="grid-2x2-cell-body">
+                            아이에게 먹일 제품이므로 안전한 성분, 믿을 수 있는 제조원, 투명한 정보 공개에 대한 요구가 높습니다.
+                            하지만 시장 내 미표기 제조원이 많아 신뢰도 확보에 어려움을 겪습니다 [3].
+                        </p>
+                    </div>
+                    <div class="grid-2x2-cell">
+                        <h3 class="grid-2x2-cell-title">섭취 편의성 및 즐거움 결여</h3>
+                        <p class="grid-2x2-cell-body">
+                            분말 스틱 위주의 단조로운 제형과 맛으로 인해 아이들이 유산균 섭취를 거부하거나 즐거움을 느끼지 못하는 문제가 있습니다.
+                            즐겁게 먹을 수 있는 제품을 선호합니다.
+                        </p>
+                    </div>
+                </div>
+                <div class="insight-box">
+                    <h4 class="insight-box-title">핵심 인사이트</h4>
+                    <p class="insight-box-content">
+                        소비자는 아이의 장 건강과 면역력 강화에 대한 확실한 효능, 안전성과 투명한 정보, 그리고 즐거운 섭취 경험을 기대합니다.
+                        이러한 Pain Points를 해결하는 것이 시장 진입의 핵심 기회입니다.
+                    </p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                출처: 보고서 내용 분석, [3] 네이버 쇼핑 검색 결과
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 10: White Space -->
+    <div class="slide" id="slide-10">
+        <div class="slide-inner">
+            <div class="slide-header">
+                <span class="chapter-title">03 기회 & 전략</span>
+                <h2>차별화 기회 (White Space)</h2>
+            </div>
+            <div class="slide-body">
+                <div class="grid-2x2-container">
+                    <div class="grid-2x2-cell">
+                        <h3 class="concept-cell-title">성장 단계별 맞춤 설계</h3>
+                        <p class="concept-cell-body">
+                            영아기(0-2세), 유아기(3-6세), 초등기(7-12세) 등 성장 단계별 아이들의 장 건강 및 면역 발달 특성에 맞춰 최적화된 프로바이오틱스 균주 조합을 제공합니다.
+                        </p>
+                    </div>
+                    <div class="grid-2x2-cell">
+                        <h3 class="concept-cell-title">혁신적인 섭취 경험</h3>
+                        <p class="concept-cell-body">
+                            아이들이 거부감 없이 섭취할 수 있도록, 인공적이지 않은 자연 유래 맛과 씹는 재미를 더한 츄어블 제형 또는 시럽 제형을 개발하여 즐거움을 제공합니다.
+                        </p>
+                    </div>
+                    <div class="grid-2x2-cell">
+                        <h3 class="concept-cell-title">과학적 임상 데이터 기반</h3>
+                        <p class="concept-cell-body">
+                            핵심 프로바이오틱스 균주의 효능에 대한 자체 또는 공신력 있는 기관의 임상 연구 결과를 바탕으로, '면역력 증진', '장 건강 개선' 등의 효능을 과학적으로 입증하고 투명하게 제시합니다.
+                        </p>
+                    </div>
+                    <div class="grid-2x2-cell">
+                        <h3 class="concept-cell-title">프리미엄 신뢰도 구축</h3>
+                        <p class="concept-cell-body">
+                            투명한 원료 정보 공개, GMP/HACCP 등 품질 인증을 통해 제품의 안전성과 신뢰도를 높여, 프리미엄 제품을 선호하는 소비자층의 니즈를 충족시킵니다 [4].
+                        </p>
+                    </div>
+                </div>
+                <div class="insight-box">
+                    <h4 class="insight-box-title">핵심 인사이트</h4>
+                    <p class="insight-box-content">
+                        현재 시장의 경쟁 공백은 명확한 연령별 맞춤 설계, 혁신적인 섭취 경험, 과학적 근거 기반의 신뢰도 구축에 있습니다.
+                        이러한 차별화 포인트를 통해 새로운 시장 기회를 창출할 수 있습니다.
+                    </p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                출처: 보고서 내용 분석, [4] 네이버 뉴스 검색 결과
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 11: Concept -->
+    <div class="slide" id="slide-11">
+        <div class="slide-inner">
+            <div class="slide-header">
+                <span class="chapter-title">03 기회 & 전략</span>
+                <h2>NPD 콘셉트: 우리 아이 맞춤 유산균</h2>
+            </div>
+            <div class="slide-body">
+                <div class="grid-2x2-container">
+                    <div class="grid-2x2-cell">
+                        <h3 class="concept-cell-title">제품명</h3>
+                        <p class="concept-cell-body">
+                            <strong>아이생생 듀오 액티브 유산균</strong><br>
+                            (iSaengSaeng Duo Active Probiotics)
+                        </p>
+                    </div>
+                    <div class="grid-2x2-cell">
+                        <h3 class="concept-cell-title">Unique Selling Proposition (USP)</h3>
+                        <p class="concept-cell-body">
+                            성장 단계별 맞춤 설계와 즐거운 섭취 경험으로 아이의 장 건강과 면역력을 동시에!
+                        </p>
+                    </div>
+                    <div class="grid-2x2-cell">
+                        <h3 class="concept-cell-title">타겟 고객</h3>
+                        <p class="concept-cell-body">
+                            장 건강과 면역력 강화를 동시에 원하는 0-12세 자녀를 둔 부모 (특히 3-7세 유아 부모)
+                        </p>
+                    </div>
+                    <div class="grid-2x2-cell">
+                        <h3 class="concept-cell-title">포지셔닝 메시지</h3>
+                        <p class="concept-cell-body">
+                            과학적 임상으로 증명된 맞춤형 유산균, 우리 아이의 건강한 성장을 위한 최고의 선택.
+                        </p>
+                    </div>
+                </div>
+                <div class="insight-box">
+                    <h4 class="insight-box-title">핵심 인사이트</h4>
+                    <p class="insight-box-content">
+                        아이생생 듀오 액티브 유산균은 성장 단계별 맞춤 기능성과 즐거운 섭취 경험을 통해
+                        부모와 아이 모두에게 최적의 가치를 제공하며 시장의 새로운 표준을 제시합니다.
+                    </p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                출처: NPD 디렉터 (추정)
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 12: Pricing -->
+    <div class="slide" id="slide-12">
+        <div class="slide-inner">
+            <div class="slide-header">
+                <span class="chapter-title">03 기회 & 전략</span>
+                <h2>가격 전략</h2>
+            </div>
+            <div class="slide-body">
+                <div class="pricing-table-container">
+                    <table class="pricing-table">
+                        <thead>
+                            <tr>
+                                <th>제품 타입</th>
+                                <th>월 환산 가격 (30포 기준)</th>
+                                <th>목표 원가율</th>
+                                <th>전략</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>스탠다드</strong></td>
+                                <td>33,000원</td>
+                                <td>15-20%</td>
+                                <td>주요 경쟁사 중간 가격대 포지셔닝으로 대중적 접근</td>
+                            </tr>
+                            <tr>
+                                <td><strong>프리미엄 (임상 강화)</strong></td>
+                                <td>49,000원</td>
+                                <td>15-20%</td>
+                                <td>차별화된 기능성, 임상 데이터 기반 고가 시장 공략</td>
+                            </tr>
+                            <tr>
+                                <td><strong>가성비 (대용량)</strong></td>
+                                <td>24,500원</td>
+                                <td>15-20%</td>
+                                <td>대량 구매, 장기 섭취 고객을 위한 가성비 옵션 제공</td>
+                            </tr>
+                            <tr>
+                                <td><strong>선물 세트</strong></td>
+                                <td>52,900원</td>
+                                <td>15-20%</td>
+                                <td>프리미엄 선물 시장 타겟, 고급 패키징 및 구성</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="pricing-rationale">
+                        <p>
+                            <strong>가격 전략 근거:</strong>
+                            네이버 쇼핑 TOP3 제품의 평균 최저가(약 44,600원)와 목표 원가율 15~20%를 고려하여,
+                            타겟 제조단가는 약 6,700원 ~ 8,900원으로 추정됩니다.
+                            시장의 넓은 가격대 분포와 프리미엄 제품 선호 경향 [4]을 반영하여,
+                            경쟁력 있는 가격과 차별화된 가치를 동시에 제공하는 다각화된 전략이 필요합니다.
+                        </p>
+                    </div>
+                </div>
+                <div class="insight-box">
+                    <h4 class="insight-box-title">핵심 인사이트</h4>
+                    <p class="insight-box-content">
+                        경쟁사 가격 및 소비자 선호도를 고려한 다각적인 가격 전략을 통해 시장 점유율을 확보하고,
+                        특히 프리미엄 시장에서의 가치 제안을 강화하여 수익성을 극대화할 수 있습니다.
+                    </p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                출처: [3] 네이버 쇼핑 검색 결과, [4] 네이버 뉴스 검색 결과, NPD 디렉터 (추정)
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 13: Risk -->
+    <div class="slide" id="slide-13">
+        <div class="slide-inner">
+            <div class="slide-header">
+                <span class="chapter-title">03 기회 & 전략</span>
+                <h2>주요 리스크 및 대응 방안</h2>
+            </div>
+            <div class="slide-body">
+                <div class="grid-2x2-container">
+                    <div class="grid-2x2-cell">
+                        <h3 class="grid-2x2-cell-title">시장 관심도 하락 지속</h3>
+                        <p class="grid-2x2-cell-body">
+                            '키즈유산균' 검색 트렌드 하락세가 뚜렷하며, 시장 전반의 관심도 감소가 지속될 위험이 있습니다 [1].
+                            <div class="risk-mitigation">
+                                <strong>대응 방안:</strong> 타겟 고객 세분화 및 니즈 기반의 UTP 강화, 새로운 기능성 소구로 시장 활력 재점화.
+                            </div>
+                        </p>
+                    </div>
+                    <div class="grid-2x2-cell">
+                        <h3 class="grid-2x2-cell-title">경쟁 심화 및 레드오션화</h3>
+                        <p class="grid-2x2-cell-body">
+                            다수의 브랜드가 유사한 컨셉과 제형으로 경쟁 중이며, 락토핏 등 기존 강자들의 시장 지배력이 높습니다 [3].
+                            <div class="risk-mitigation">
+                                <strong>대응 방안:</strong> 혁신적인 제형/맛 개발, 과학적 임상 데이터 기반의 명확한 차별화로 경쟁 우위 확보.
+                            </div>
+                        </p>
+                    </div>
+                    <div class="grid-2x2-cell">
+                        <h3 class="grid-2x2-cell-title">명확한 시장 규모 부재</h3>
+                        <p class="grid-2x2-cell-body">
+                            '키즈유산균' 시장의 공식적인 통계 부재로, 잠재 시장 규모 예측 및 투자 결정의 불확실성이 존재합니다 [4].
+                            <div class="risk-mitigation">
+                                <strong>대응 방안:</strong> 관련 시장 데이터를 활용한 간접 추정 및 FGI를 통한 잠재 고객 니즈 심층 분석.
+                            </div>
+                        </p>
+                    </div>
+                    <div class="grid-2x2-cell">
+                        <h3 class="grid-2x2-cell-title">소비자 신뢰도 확보 어려움</h3>
+                        <p class="grid-2x2-cell-body">
+                            미표기 제조원 등 정보 불투명성으로 인한 소비자 불신, 제품 안전성에 대한 우려가 있을 수 있습니다 [3].
+                            <div class="risk-mitigation">
+                                <strong>대응 방안:</strong> GMP/HACCP 인증, 원료 출처 투명 공개, 공신력 있는 기관 임상 결과 제시로 신뢰도 구축.
+                            </div>
+                        </p>
+                    </div>
+                </div>
+                <div class="insight-box">
+                    <h4 class="insight-box-title">핵심 인사이트</h4>
+                    <p class="insight-box-content">
+                        시장 하락세와 경쟁 심화는 주요 리스크지만, 명확한 차별화 전략과 투명한 정보 제공을 통해
+                        소비자 신뢰를 얻고 시장 내 기회를 창출할 수 있습니다.
+                    </p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                출처: [1] 네이버 데이터랩, [3] 네이버 쇼핑 검색 결과, [4] 네이버 뉴스 검색 결과
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 14: Roadmap -->
+    <div class="slide" id="slide-14">
+        <div class="slide-inner">
+            <div class="slide-header">
+                <span class="chapter-title">03 기회 & 전략</span>
+                <h2>시장 진입 로드맵</h2>
+            </div>
+            <div class="slide-body">
+                <div class="roadmap-row">
+                    <div class="roadmap-stage">
+                        <h3 class="roadmap-stage-title">1단계: 제품 기획 및 R&D</h3>
+                        <p class="roadmap-stage-period">1-3개월</p>
+                        <div class="roadmap-divider"></div>
+                        <ul class="roadmap-activities">
+                            <li>타겟 고객 세분화 및 UTP 구체화</li>
+                            <li>균주 조합 및 기능성 원료 확정</li>
+                            <li>제형 및 맛 프로토타입 개발</li>
+                        </ul>
+                        <div class="roadmap-milestone">
+                            &check; 제품 컨셉 최종 확정 및 시제품 1차 개발
+                        </div>
+                    </div>
+                    <div class="roadmap-stage">
+                        <h3 class="roadmap-stage-title">2단계: 생산 및 인증</h3>
+                        <p class="roadmap-stage-period">4-6개월</p>
+                        <div class="roadmap-divider"></div>
+                        <ul class="roadmap-activities">
+                            <li>제조사 선정 및 계약 체결</li>
+                            <li>GMP/HACCP 등 품질 인증 진행</li>
+                            <li>식약처 품목 허가 및 등록</li>
+                        </ul>
+                        <div class="roadmap-milestone">
+                            &check; 생산 공정 확립 및 품목 허가 완료
+                        </div>
+                    </div>
+                    <div class="roadmap-stage">
+                        <h3 class="roadmap-stage-title">3단계: 마케팅 및 런칭</h3>
+                        <p class="roadmap-stage-period">7-9개월</p>
+                        <div class="roadmap-divider"></div>
+                        <ul class="roadmap-activities">
+                            <li>브랜드 캠페인 기획 및 실행</li>
+                            <li>온라인/오프라인 채널 입점</li>
+                            <li>초기 고객 대상 프로모션 진행</li>
+                        </ul>
+                        <div class="roadmap-milestone">
+                            &check; 공식 런칭 및 시장 초기 반응 분석
+                        </div>
+                    </div>
+                </div>
+                <div class="insight-box">
+                    <h4 class="insight-box-title">핵심 인사이트</h4>
+                    <p class="insight-box-content">
+                        기획부터 런칭까지 체계적인 3단계 로드맵을 통해 제품의 완성도를 높이고,
+                        각 단계별 마일스톤 달성을 통해 성공적인 시장 진입을 위한 기반을 마련합니다.
+                    </p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                출처: NPD 디렉터 (추정)
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 15: References -->
+    <div class="slide" id="slide-15">
+        <div class="slide-inner">
+            <div class="slide-header">
+                <h2>References</h2>
+            </div>
+            <div class="slide-body" style="overflow-y:auto; padding-bottom:8px;">
+                <ul class="references-list">
+                    <li class="references-list-item">
+                        <span class="references-list-item-num">1</span>
+                        <span class="references-list-item-text">네이버 데이터랩 검색어트렌드, 조회일: 2026-04-14, 키워드: 키즈유산균</span>
+                    </li>
+                    <li class="references-list-item">
+                        <span class="references-list-item-num">2</span>
+                        <span class="references-list-item-text">네이버 검색광고 키워드도구, 조회일: 2026-04-14, 키워드: 키즈유산균 &mdash; 월간 PC/모바일 검색수 (8,150회)</span>
+                    </li>
+                    <li class="references-list-item">
+                        <span class="references-list-item-num">3</span>
+                        <span class="references-list-item-text">네이버 쇼핑 검색결과, 조회일: 2026-04-14, 키워드: 키즈유산균, 상위 20개 상품 기준</span>
+                    </li>
+                    <li class="references-list-item">
+                        <span class="references-list-item-num">4</span>
+                        <span class="references-list-item-text">네이버 뉴스 검색 결과: [news2day.co.kr, Fri, 28 Nov 2025] "저가로 넓히고 프리미엄으로 굳힌다...건기식 소비 '투트랙' 전략 확산 | 특히 키즈, 선물 시장에서는 프리미엄 제품 선호가 뚜렷하다. 기능성 원료, 임상..." (보고서의 키워드 필터링 규칙에 따라 '키즈유산균' 직접 포함 기사 부재로 관련성 높은 기사 발췌)</span>
+                    </li>
+                    <li class="references-list-item">
+                        <span class="references-list-item-num">5</span>
+                        <span class="references-list-item-text">식품안전나라 공공데이터포털, I0760(건강기능식품 원료분류), 조회일: 2026-04-14</span>
+                    </li>
+                    <li class="references-list-item">
+                        <span class="references-list-item-num">6</span>
+                        <span class="references-list-item-text">식품안전나라 공공데이터포털, C002(일반식품 원재료), 조회일: 2026-04-14</span>
+                    </li>
+                    <li class="references-list-item">
+                        <span class="references-list-item-num">(추정)</span>
+                        <span class="references-list-item-text">표시 항목은 제공된 데이터를 기반으로 NPD 디렉터가 분석·추정한 내용으로 공식 통계가 아님</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="slide-footer">
+                출처: 상단 목록 참조
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        // viewport scale
+        function scaleSlides() {
+            var s = Math.min(window.innerWidth/1600, window.innerHeight/800);
+            document.querySelectorAll('.slide-inner').forEach(function(el) {
+                el.style.transform = 'scale('+s+')';
+                el.style.transformOrigin = 'center center';
+            });
+        }
+        window.addEventListener('resize', scaleSlides);
+        scaleSlides();
+
+        // 전환
+        var slides = document.querySelectorAll('.slide');
+        var cur = 0, lock = false;
+        function show(n) {
+            slides[cur].classList.remove('active');
+            cur = (n + slides.length) % slides.length;
+            slides[cur].classList.add('active');
+            document.getElementById('slide-num-display').textContent = (cur+1)+' / '+slides.length;
+        }
+        document.addEventListener('keydown', function(e) {
+            if (e.key==='ArrowRight'||e.key===' '){e.preventDefault();show(cur+1);}
+            if (e.key==='ArrowLeft'){e.preventDefault();show(cur-1);}
+            if (e.key==='f'||e.key==='F'){document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen();}
+        });
+        document.addEventListener('wheel', function(e) {
+            e.preventDefault();
+            if (lock) return; lock=true;
+            show(e.deltaY>0?cur+1:cur-1);
+            setTimeout(function(){lock=false;},300);
+        },{passive:false});
+
+        document.getElementById('nav-prev').addEventListener('click', function() { show(cur - 1); });
+        document.getElementById('nav-next').addEventListener('click', function() { show(cur + 1); });
+        document.getElementById('fullscreen-button').addEventListener('click', function() {
+            if (document.documentElement.requestFullscreen) {
+                document.documentElement.requestFullscreen();
+            }
+        });
+
+        show(0);
+
+        // Line Chart JS
+        (function() {
+            var ACCENT = '#FF5722'; // Use the accent color directly
+            var pts = [
+                {l:'2024.04', v:99.8}, {l:'2024.07', v:85.0}, {l:'2024.10', v:65.0},
+                {l:'2025.01', v:50.0}, {l:'2025.04', v:40.0}, {l:'2025.07', v:25.0},
+                {l:'2025.10', v:15.0}, {l:'2026.04', v:8.8}
+            ];
+            function draw() {
+                var cv = document.getElementById('trendChart');
+                if (!cv) return;
+                var par = cv.parentElement;
+                var W = par.clientWidth || 1300, H = par.clientHeight || 350;
+                cv.width = W; cv.height = H;
+                var ctx = cv.getContext('2d');
+                var PL=60, PR=20, PT=20, PB=45;
+                var cW=W-PL-PR, cH=H-PT-PB;
+                var maxV=100;
+                function xp(i){return PL + i/(pts.length-1)*cW;}
+                function yp(v){return PT + cH - v/maxV*cH;}
+                // Grid + Y-axis labels
+                ctx.font='11px "Noto Sans KR", sans-serif'; ctx.textAlign='right'; ctx.fillStyle='rgba(255,255,255,0.4)';
+                [0,25,50,75,100].forEach(function(v){
+                    var y=yp(v);
+                    ctx.strokeStyle='rgba(255,255,255,0.07)'; ctx.lineWidth=1;
+                    ctx.beginPath(); ctx.moveTo(PL,y); ctx.lineTo(PL+cW,y); ctx.stroke();
+                    ctx.fillText(v,PL-6,y+4);
+                });
+                // Area gradient
+                var gr=ctx.createLinearGradient(0,PT,0,PT+cH);
+                gr.addColorStop(0,ACCENT+'55'); gr.addColorStop(1,ACCENT+'05');
+                ctx.beginPath();
+                ctx.moveTo(xp(0),yp(0));
+                pts.forEach(function(d,i){ctx.lineTo(xp(i),yp(d.v));});
+                ctx.lineTo(xp(pts.length-1),yp(0)); ctx.closePath();
+                ctx.fillStyle=gr; ctx.fill();
+                // Line
+                ctx.beginPath(); ctx.strokeStyle=ACCENT; ctx.lineWidth=2.5; ctx.lineJoin='round';
+                pts.forEach(function(d,i){i?ctx.lineTo(xp(i),yp(d.v)):ctx.moveTo(xp(i),yp(d.v));});
+                ctx.stroke();
+                // Points + Value labels + X-axis labels
+                ctx.fillStyle=ACCENT; ctx.textAlign='center'; ctx.font='11px "Noto Sans KR", sans-serif';
+                pts.forEach(function(d,i){
+                    ctx.beginPath(); ctx.arc(xp(i),yp(d.v),4,0,2*Math.PI); ctx.fill();
+                    ctx.fillStyle='rgba(255,255,255,0.7)';
+                    ctx.fillText(d.v, xp(i), yp(d.v)-10);
+                    ctx.fillStyle='rgba(255,255,255,0.4)';
+                    ctx.fillText(d.l, xp(i), H-8);
+                    ctx.fillStyle=ACCENT;
+                });
+            }
+            if(document.fonts) document.fonts.ready.then(draw); else window.addEventListener('load',draw);
+            window.addEventListener('resize',draw);
+        })();
+    </script>
+<script>
+(function() {
+  var contentScales = {};
+
+  function measureAll() {
+    document.querySelectorAll('.slide').forEach(function(slide, i) {
+      var hidden = !slide.classList.contains('active');
+      if (hidden) {
+        slide.style.visibility = 'hidden';
+        slide.style.display    = 'flex';
+      }
+      var inner = slide.querySelector('.slide-inner');
+      if (inner) {
+        contentScales[i] = inner.scrollHeight > 800
+          ? (790 / inner.scrollHeight)
+          : 1;
+      }
+      if (hidden) {
+        slide.style.display    = '';
+        slide.style.visibility = '';
+      }
+    });
+  }
+
+  function applyScales() {
+    var vScale = Math.min(window.innerWidth / 1600, window.innerHeight / 800);
+    document.querySelectorAll('.slide').forEach(function(slide, i) {
+      var inner = slide.querySelector('.slide-inner');
+      if (!inner) return;
+      var cScale   = (contentScales[i] != null) ? contentScales[i] : 1;
+      var combined = vScale * cScale;
+      inner.style.transform       = 'scale(' + combined + ')';
+      inner.style.transformOrigin = 'center center';
+    });
+  }
+
+  window.scaleSlides = applyScales;
+  window.addEventListener('resize', applyScales);
+
+  (document.fonts ? document.fonts.ready : Promise.resolve()).then(function() {
+    measureAll();
+    applyScales();
+  });
+})();
+</script>
+</body>
+</html>
