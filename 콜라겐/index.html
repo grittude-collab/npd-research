@@ -1,0 +1,1571 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>콜라겐 시장 진입 전략 NPD 보고서</title>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Noto+Sans+KR:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <style>
+        /* BASE STYLES */
+        html, body {
+            margin: 0; padding: 0; overflow: hidden;
+            background: #1a1a1a; /* Preset A: Bold Signal bg */
+            width: 100%; height: 100%;
+            font-family: 'Noto Sans KR', sans-serif;
+            color: #ffffff;
+            font-size: 18px; /* 본문: 18px Regular */
+            line-height: 1.5;
+        }
+        strong { font-weight: 700; }
+
+        /* SLIDE CONTAINER CSS - EXACTLY AS PROVIDED */
+        .slide {
+            position: fixed; top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            display: none;
+            align-items: center; justify-content: center;
+            overflow: hidden;
+        }
+        .slide.active { display: flex; }
+        .slide-inner {
+            width: 1600px; height: 800px;
+            position: relative; overflow: hidden;
+            box-sizing: border-box;
+            background: #1a1a1a; /* Ensure background consistency */
+        }
+        .slide-header {
+            position: absolute; top: 0; left: 0; right: 0;
+            height: 100px; padding: 0 80px;
+            display: flex; align-items: flex-end; padding-bottom: 16px;
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 24px; /* 소제목 */
+            font-weight: 700;
+        }
+        .slide-body {
+            position: absolute; top: 100px; left: 0; right: 0;
+            bottom: 50px; padding: 20px 80px 0;
+            overflow: hidden; /* Crucial for 650px limit */
+            height: 650px; /* Explicitly set height for safety */
+            box-sizing: border-box; /* Include padding in height calculation */
+        }
+        .slide-footer {
+            position: absolute; bottom: 0; left: 0; right: 0;
+            height: 50px; padding: 0 80px;
+            display: flex; align-items: center; justify-content: flex-end;
+            font-size: 13px; /* 캡션: 13px Light */
+            font-weight: 300;
+            opacity: 0.5;
+            color: #ffffff;
+        }
+
+        /* TYPOGRAPHY */
+        .title-large {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 44px;
+            font-weight: 900;
+            line-height: 1.2;
+        }
+        .title-small {
+            font-size: 24px;
+            font-weight: 600; /* Semi-bold */
+        }
+        .text-body {
+            font-size: 18px;
+            font-weight: 400; /* Regular */
+        }
+        .text-caption {
+            font-size: 13px;
+            font-weight: 300; /* Light */
+        }
+
+        /* ACCENT COLOR */
+        .accent-color { color: #FF5722; }
+        .accent-bg { background-color: #FF5722; }
+        .accent-border-left { border-left-color: #FF5722; }
+
+        /* COMMON INSIGHT BOX */
+        .insight-box {
+            border-left: 3px solid #FF5722;
+            padding: 10px 16px;
+            background: rgba(255, 87, 34, 0.07); /* Accent color with 0.07 opacity */
+            margin-bottom: 0;
+            flex-shrink: 0; /* Important for flex containers */
+            margin-top: auto; /* Pushes box to bottom */
+        }
+        .insight-box-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: #FF5722;
+            margin: 0 0 3px;
+        }
+        .insight-box-content {
+            font-size: 13px;
+            line-height: 1.5;
+            margin: 0;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            color: #ffffff; /* Ensure text visibility */
+        }
+
+        /* NAVIGATION BUTTONS */
+        .nav-button {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 20px;
+            border-radius: 4px;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+        .nav-button:hover {
+            opacity: 1;
+        }
+        #nav-prev { left: 16px; }
+        #nav-next { right: 16px; }
+        #slide-num-display {
+            position: fixed;
+            bottom: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+            color: #ffffff;
+            font-size: 14px;
+            opacity: 0.7;
+        }
+        #fullscreen-button {
+            position: fixed;
+            top: 16px;
+            right: 16px;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            border: none;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 14px;
+            border-radius: 4px;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+        #fullscreen-button:hover {
+            opacity: 1;
+        }
+
+        /* SPECIFIC SLIDE STYLES */
+        /* Section Divider specific override */
+        .slide-divider .slide-inner {
+            background: #1a1a1a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+        }
+        .slide-divider .chapter-num-small {
+            font-size: 13px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            opacity: 0.6;
+            margin-bottom: 16px;
+            color: #fff;
+        }
+        .slide-divider .chapter-num-large {
+            font-size: 64px;
+            font-weight: 900;
+            color: #fff;
+            line-height: 1;
+        }
+        .slide-divider .chapter-title {
+            font-size: 32px;
+            font-weight: 400;
+            color: #fff;
+            margin-top: 16px;
+            opacity: 0.9;
+        }
+        .slide-divider .divider-line {
+            width: 60px;
+            height: 3px;
+            background: #FF5722; /* Accent color */
+            margin-top: 24px;
+        }
+
+        /* Big Number Slide */
+        .big-number-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            height: 100%; /* Occupy full slide-body height */
+        }
+        .big-number-metrics-row {
+            display: flex;
+            gap: 16px;
+            align-items: stretch;
+            flex: 1;
+            min-height: 0;
+            margin-bottom: 16px; /* Space between metrics and insight */
+        }
+        .metric-block {
+            flex: 1;
+            padding: 18px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 6px;
+            overflow: hidden;
+            background-color: rgba(255,255,255,0.03); /* Subtle background for cards */
+        }
+        .metric-title {
+            font-size: 14px;
+            opacity: 0.65;
+            margin: 0 0 4px;
+            color: #ffffff;
+        }
+        .metric-value {
+            font-size: 48px;
+            font-weight: 900;
+            line-height: 1;
+            margin: 0 0 6px;
+            color: #FF5722; /* Accent color */
+        }
+        .metric-subtext {
+            font-size: 12px;
+            line-height: 1.5;
+            opacity: 0.75;
+            margin: 0 0 12px;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            color: #ffffff;
+        }
+        .mini-viz-area {
+            flex: 1;
+            min-height: 80px;
+            display: flex;
+            align-items: flex-end; /* For bar chart */
+        }
+        .news-link {
+            font-size: 11px;
+            line-height: 1.4;
+            padding: 5px 8px;
+            background: rgba(255,255,255,0.04);
+            border-radius: 3px;
+            border-left: 2px solid #FF5722; /* Accent color */
+            color: inherit;
+            text-decoration: none;
+            display: block;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            margin-bottom: 5px; /* Spacing between news items */
+        }
+        .news-item-text { /* For market size text if no news */
+            font-size: 12px;
+            line-height: 1.6;
+            padding: 5px 8px;
+            background: rgba(255,255,255,0.04);
+            border-radius: 3px;
+            border-left: 2px solid rgba(255,255,255,0.1); /* Subtle border for text */
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 5px;
+        }
+
+        /* Line Chart Slide */
+        .chart-container {
+            flex: 1;
+            min-height: 0;
+            position: relative;
+        }
+        .line-chart-insights {
+            display: flex;
+            gap: 12px;
+            flex-shrink: 0;
+            margin-top: 12px;
+        }
+        .line-chart-insight-box {
+            flex: 1;
+            /* Inherits insight-box styles */
+        }
+
+        /* Card Grid Slide */
+        .card-grid-container {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            flex: 1; /* Occupy available space */
+            align-content: start; /* Align content to top if not enough rows */
+        }
+        .card-item {
+            padding: 10px 12px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 6px;
+            position: relative;
+            background-color: rgba(255,255,255,0.03); /* Subtle background for cards */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* Distribute content */
+            min-height: 120px; /* Ensure cards have some height */
+        }
+        .card-rank-badge {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            font-size: 10px;
+            opacity: 0.4;
+            font-weight: 700;
+            color: #ffffff;
+        }
+        .card-brand-link {
+            font-size: 13px;
+            font-weight: 700;
+            color: #FF5722; /* Accent color */
+            margin-bottom: 5px;
+            padding-right: 24px;
+            display: block;
+            text-decoration: none;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .card-price {
+            font-size: 12px;
+            margin-bottom: 3px;
+            color: rgba(255,255,255,0.9);
+        }
+        .card-type {
+            font-size: 11px;
+            opacity: 0.55;
+            margin-bottom: 5px;
+            color: #ffffff;
+        }
+        .card-separator {
+            height: 1px;
+            background: rgba(255,255,255,0.1);
+            margin-bottom: 5px;
+        }
+        .card-usp {
+            font-size: 11px;
+            line-height: 1.4;
+            color: inherit;
+            opacity: 0.85;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            flex-grow: 1; /* Allow USP to take available space */
+        }
+
+        /* Bubble Chart Slide */
+        .bubble-chart-main-row {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex: 1;
+            min-height: 0;
+        }
+        .bubble-chart-area {
+            position: relative;
+            width: 600px;
+            height: 480px;
+            flex-shrink: 0;
+            align-self: center;
+            border-left: 2px solid rgba(255,255,255,0.4);
+            border-bottom: 2px solid rgba(255,255,255,0.4);
+            overflow: visible; /* Important for bubbles not to be cut */
+        }
+        .quadrant-line-v {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            height: 100%;
+            border-left: 1px dashed rgba(255,255,255,0.2);
+            pointer-events: none;
+        }
+        .quadrant-line-h {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            border-top: 1px dashed rgba(255,255,255,0.2);
+            pointer-events: none;
+        }
+        .axis-tick-y {
+            position: absolute;
+            right: 100%;
+            margin-right: 6px;
+            font-size: 10px;
+            opacity: 0.5;
+            transform: translateY(50%);
+            color: #ffffff;
+        }
+        .axis-tick-x {
+            position: absolute;
+            top: 100%;
+            margin-top: 6px;
+            font-size: 10px;
+            opacity: 0.5;
+            transform: translateX(-50%);
+            color: #ffffff;
+        }
+        .axis-label-y {
+            position: absolute;
+            right: 100%;
+            margin-right: 40px;
+            top: 50%;
+            writing-mode: vertical-rl;
+            transform: translateY(-50%);
+            font-size: 11px;
+            white-space: nowrap;
+            color: #ffffff;
+        }
+        .axis-label-x {
+            position: absolute;
+            top: 100%;
+            margin-top: 28px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 11px;
+            color: #ffffff;
+        }
+        .bubble-wrapper {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .bubble-label {
+            text-align: center;
+            font-size: 10px;
+            white-space: nowrap;
+            margin-bottom: 3px;
+            color: rgba(255,255,255,0.9);
+        }
+        .bubble-circle {
+            border-radius: 50%;
+            opacity: 0.85;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 700;
+            color: #fff;
+        }
+        .bubble-chart-right-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 16px;
+            overflow: hidden;
+            align-self: stretch; /* Ensure it stretches to align with chart height */
+        }
+        .legend-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px 12px;
+            flex-shrink: 0;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            font-size: 12px;
+            color: #ffffff;
+        }
+        .legend-color-circle {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 5px;
+            flex-shrink: 0;
+        }
+
+        /* Pain Points / Risk / White Space / Concept Grid */
+        .grid-2x2-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 16px;
+            flex: 1; /* Occupy full height */
+            min-height: 0; /* Allow flex item to shrink if needed */
+        }
+        .grid-cell {
+            padding: 20px 24px;
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 6px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            min-height: 0;
+            background-color: rgba(255,255,255,0.03); /* Subtle background for cards */
+        }
+        .grid-cell-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #FF5722; /* Accent color */
+            margin: 0 0 10px;
+            flex-shrink: 0;
+        }
+        .grid-cell-body {
+            font-size: 14px;
+            line-height: 1.7;
+            flex: 1;
+            overflow: hidden;
+            color: rgba(255,255,255,0.92);
+        }
+        .risk-response {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            margin-top: 8px;
+            padding-top: 8px;
+            font-size: 12px;
+            color: rgba(255,255,255,0.75);
+            flex-shrink: 0;
+        }
+
+        /* Concept / White Space specific card styles */
+        .concept-card-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #FF5722; /* Accent color */
+            margin: 0 0 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .concept-card-content {
+            font-size: 15px;
+            line-height: 1.65;
+            flex: 1;
+            color: rgba(255,255,255,0.92);
+        }
+
+        /* Pricing Table Slide */
+        .pricing-table-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Center table vertically */
+            gap: 20px;
+        }
+        .pricing-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: rgba(255,255,255,0.03); /* Subtle background */
+        }
+        .pricing-table th, .pricing-table td {
+            padding: 10px 14px;
+            text-align: center;
+            vertical-align: middle;
+            font-size: 14px;
+            white-space: nowrap;
+            border: 1px solid rgba(255,255,255,0.08);
+            color: #ffffff;
+        }
+        .pricing-table th {
+            background-color: rgba(255,255,255,0.08);
+            font-weight: 700;
+            color: #FF5722; /* Accent color */
+        }
+        .pricing-strategy-explanation {
+            font-size: 15px;
+            line-height: 1.6;
+            color: rgba(255,255,255,0.9);
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 6px;
+            background-color: rgba(255,255,255,0.05);
+        }
+
+
+        /* Roadmap Slide */
+        .roadmap-row {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            gap: 0; /* No gap between phases */
+            flex: 1;
+            min-height: 0;
+        }
+        .roadmap-phase {
+            flex: 1;
+            padding: 24px 20px;
+            border-top: 3px solid #FF5722; /* Accent color */
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            background-color: rgba(255,255,255,0.03); /* Subtle background */
+            margin-right: 16px; /* Gap between phases */
+        }
+        .roadmap-phase:last-child {
+            margin-right: 0; /* No margin on last phase */
+        }
+        .roadmap-phase-name {
+            font-size: 18px;
+            font-weight: 700;
+            margin: 0;
+            color: #FF5722; /* Accent color */
+        }
+        .roadmap-phase-period {
+            font-size: 13px;
+            color: rgba(255,255,255,0.55);
+            margin: 0;
+        }
+        .roadmap-separator {
+            height: 1px;
+            background: rgba(255,255,255,0.08);
+            margin: 4px 0;
+        }
+        .roadmap-activities {
+            font-size: 14px;
+            line-height: 1.7;
+            flex: 1;
+            list-style: disc; /* Use bullet points */
+            padding-left: 20px; /* Indent for bullets */
+            margin: 0;
+            color: rgba(255,255,255,0.9);
+        }
+        .roadmap-milestone {
+            font-size: 12px;
+            color: #FF5722; /* Accent color */
+            font-weight: 700;
+            margin-top: auto;
+            padding-top: 8px;
+            border-top: 1px solid rgba(255,255,255,0.08);
+        }
+
+        /* References Slide */
+        .references-list {
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            padding-bottom: 8px;
+            height: 100%; /* Occupy full slide-body height for scrolling */
+        }
+        .reference-item {
+            display: flex;
+            gap: 12px;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            font-size: 14px;
+            line-height: 1.8;
+        }
+        .reference-number {
+            color: #FF5722; /* Accent color */
+            font-weight: 700;
+            flex-shrink: 0;
+            min-width: 24px;
+        }
+        .reference-text {
+            color: rgba(255,255,255,0.85);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation UI -->
+    <button id="nav-prev" class="nav-button">&#8592; 이전</button>
+    <button id="nav-next" class="nav-button">다음 &#8594;</button>
+    <div id="slide-num-display">1 / 15</div>
+    <button id="fullscreen-button">전체화면</button>
+
+    <!-- Slide 1: Cover -->
+    <div class="slide active" id="slide-1">
+        <div class="slide-inner" style="padding: 0 160px; text-align: center; display: flex; flex-direction: column; justify-content: center;">
+            <h1 class="title-large accent-color" style="margin-bottom: 20px;">콜라겐 시장 진입 전략</h1>
+            <h2 class="title-small" style="margin-bottom: 10px; opacity: 0.8;">NPD 시장 분석 보고서</h2>
+            <p class="text-body" style="margin-bottom: 30px; opacity: 0.7;">작성일: 2026년 4월 14일</p>
+            <p class="text-body" style="font-weight: 700; line-height: 1.6; max-width: 800px; margin: 0 auto; padding: 20px; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; background: rgba(255,255,255,0.05);">
+                하락세 시장 속 숨겨진 기회 발굴 &#8594; 차별화된 효능과 타겟팅으로 성공적인 시장 진입 전략을 모색합니다.
+            </p>
+        </div>
+    </div>
+
+    <!-- Slide 2: Section Divider 01 -->
+    <div class="slide slide-divider" id="slide-2">
+        <div class="slide-inner">
+            <div class="chapter-num-small">CHAPTER 01</div>
+            <div class="chapter-num-large">01</div>
+            <div class="chapter-title">시장 현황</div>
+            <div class="divider-line"></div>
+        </div>
+    </div>
+
+    <!-- Slide 3: Big Number -->
+    <div class="slide" id="slide-3">
+        <div class="slide-inner">
+            <div class="slide-header">
+                <span style="opacity: 0.6;">01 시장 현황 | </span>&nbsp;핵심 지표로 본 시장 기회 스코어카드
+            </div>
+            <div class="slide-body big-number-grid">
+                <div class="big-number-metrics-row">
+                    <div class="metric-block">
+                        <h3 class="metric-title">시장 성장 잠재력</h3>
+                        <p class="metric-value">★★☆☆☆</p>
+                        <p class="metric-subtext">네이버 검색 트렌드상 뚜렷한 하락세, 그러나 관련 시장 규모 자체는 여전히 크고 성장 가능성 존재합니다. (퍼스널케어, 건강기능식품)</p>
+                        <div class="mini-viz-area">
+                            <svg style="width:100%;height:80px;" viewBox="0 0 200 60" preserveAspectRatio="none">
+                                <defs><linearGradient id="mg1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#FF5722" stop-opacity="0.3"/><stop offset="100%" stop-color="#FF5722" stop-opacity="0"/></linearGradient></defs>
+                                <polygon points="0,60 0,1.0 28.57,7.5 57.14,17.5 85.71,25.0 114.28,30.0 142.85,37.5 171.42,42.5 200,45.6 200,60" fill="url(#mg1)"/>
+                                <polyline points="0,1.0 28.57,7.5 57.14,17.5 85.71,25.0 114.28,30.0 142.85,37.5 171.42,42.5 200,45.6" fill="none" stroke="#FF5722" stroke-width="2"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="metric-block">
+                        <h3 class="metric-title">소비자 관심도 (월간 검색수)</h3>
+                        <p class="metric-value">76,300회</p>
+                        <p class="metric-subtext">월간 76,300회 검색량은 상당한 규모의 잠재 수요를 나타내지만, 하락 추세가 명확합니다. (PC 18,500회, 모바일 57,800회)¹</p>
+                        <div class="mini-viz-area" style="padding-top:4px;">
+                            <div style="display:flex; align-items:flex-end; gap:10px; flex:1; padding-top:4px;">
+                                <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;">
+                                    <div style="font-size:9px; opacity:0.5;">최저</div>
+                                    <div style="width:100%; background:#FF5722; opacity:0.35; height:4.4px; border-radius:2px 2px 0 0;"></div>
+                                    <div style="font-size:10px; white-space:nowrap;">76,300회</div>
+                                </div>
+                                <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;">
+                                    <div style="font-size:9px; opacity:0.5;">평균</div>
+                                    <div style="width:100%; background:#FF5722; opacity:0.65; height:24.3px; border-radius:2px 2px 0 0;"></div>
+                                    <div style="font-size:10px; white-space:nowrap;">421,251회</div>
+                                </div>
+                                <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;">
+                                    <div style="font-size:9px; opacity:0.5; color:#FF5722;">최고</div>
+                                    <div style="width:100%; background:#FF5722; height:50px; border-radius:2px 2px 0 0;"></div>
+                                    <div style="font-size:10px; white-space:nowrap; color:#FF5722;">865,325회</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="metric-block">
+                        <h3 class="metric-title">전체시장 규모 및 트렌드</h3>
+                        <p class="metric-value">340억 달러 전망</p>
+                        <p class="metric-subtext">퍼스널케어 시장은 2028년 340억 달러 규모로 성장 전망되며, 콜라겐 관련 제품이 포함될 것으로 추정됩니다.⁷</p>
+                        <div style="display:flex; flex-direction:column; gap:5px; flex:1; overflow:hidden;">
+                            <a href="https://www.catchnews.kr/news/articleView.html?idxno=147772" target="_blank" class="news-link">
+                                "자몽맛 콜라겐·비타민 한번에" 동국제약 '엘리나C 핑크로제' 출시 — catchnews.kr
+                            </a>
+                            <div class="news-item-text">
+                                퍼스널케어 시장 규모: 2024년 280억 달러, 2028년 340억 달러로 성장 전망⁷
+                            </div>
+                            <div class="news-item-text">
+                                관절 건강 원료 DEM 시장: 2024년 3,880만 달러 &#8594; 2033년 9,111만 달러 성장 전망⁹
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="insight-box">
+                    <h4 class="insight-box-title">인사이트</h4>
+                    <p class="insight-box-content">
+                        콜라겐 시장은 전반적인 관심도 하락 추세이나, 여전히 큰 잠재 수요가 존재하며 관련 기능성 시장은 성장세입니다.
+                        명확한 니즈 파악과 차별화된 접근으로 틈새시장 공략이 필요합니다.
+                    </p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                출처: 네이버 데이터랩¹, 네이버 검색광고 키워드도구², 네이버 쇼핑³, seoulwire.com⁷, nongup.net⁹, catchnews.kr¹³
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 4: Line Chart -->
+    <div class="slide" id="slide-4">
+        <div class="slide-inner">
+            <div class="slide-header">
+                <span style="opacity: 0.6;">01 시장 현황 | </span>&nbsp;콜라겐 검색 트렌드 (24개월)
+            </div>
+            <div class="slide-body" style="display:flex; flex-direction:column;">
+                <div class="chart-container">
+                    <canvas id="trendChart"></canvas>
+                </div>
+                <div class="line-chart-insights">
+                    <div class="insight-box line-chart-insight-box">
+                        <h4 class="insight-box-title">트렌드 분석</h4>
+                        <p class="insight-box-content">
+                            2024년 12월 최고점 이후 콜라겐 키워드 검색량은 뚜렷한 하락세를 보이며 시장 관심도가 점차 감소하고 있습니다.
+                        </p>
+                    </div>
+                    <div class="insight-box line-chart-insight-box">
+                        <h4 class="insight-box-title">시사점</h4>
+                        <p class="insight-box-content">
+                            시장의 성숙기 진입 또는 경쟁 포화로 인한 관심도 감소로 해석되며, 신규 진입 시 혁신적인 차별화 전략이 필수적입니다.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                출처: 네이버 데이터랩 검색어트렌드¹
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 5: Section Divider 02 -->
+    <div class="slide slide-divider" id="slide-5">
+        <div class="slide-inner">
+            <div class="chapter-num-small">CHAPTER 02</div>
+            <div class="chapter-num-large">02</div>
+            <div class="chapter-title">경쟁사 분석</div>
+            <div class="divider-line"></div>
+        </div>
+    </div>
+
+    <!-- Slide 6: Card Grid -->
+    <div class="slide" id="slide-6">
+        <div class="slide-inner">
+            <div class="slide-header">
+                <span style="opacity: 0.6;">02 경쟁사 분석 | </span>&nbsp;TOP 10 브랜드 분석
+            </div>
+            <div class="slide-body" style="display:flex; flex-direction:column;">
+                <div class="card-grid-container">
+                    <!-- TOP 10 Brands from the report -->
+                    <div class="card-item">
+                        <span class="card-rank-badge">1위</span>
+                        <a href="https://search.shopping.naver.com/search/all?query=콜라겐+지웨이" target="_blank" class="card-brand-link">지웨이</a>
+                        <p class="card-price">15,800원</p>
+                        <p class="card-type">분말</p>
+                        <div class="card-separator"></div>
+                        <p class="card-usp">300달톤 저분자 피쉬콜라겐 펩타이드, 합리적인 가격대</p>
+                    </div>
+                    <div class="card-item">
+                        <span class="card-rank-badge">2위</span>
+                        <a href="https://search.shopping.naver.com/search/all?query=콜라겐+비비랩" target="_blank" class="card-brand-link">비비랩</a>
+                        <p class="card-price">38,610원 (3개)</p>
+                        <p class="card-type">분말스틱</p>
+                        <div class="card-separator"></div>
+                        <p class="card-usp">저분자 콜라겐 S, 1개월 환산 시 저렴한 가격대</p>
+                    </div>
+                    <div class="card-item">
+                        <span class="card-rank-badge">3위</span>
+                        <a href="https://search.shopping.naver.com/search/all?query=콜라겐+순수식품" target="_blank" class="card-brand-link">순수식품</a>
+                        <p class="card-price">25,750원 (4개)</p>
+                        <p class="card-type">분말스틱</p>
+                        <div class="card-separator"></div>
+                        <p class="card-usp">진짜 석류, 어린 저분자 피쉬 콜라겐 강조, 공격적인 가격 정책</p>
+                    </div>
+                    <div class="card-item">
+                        <span class="card-rank-badge">4위</span>
+                        <a href="https://search.shopping.naver.com/search/all?query=콜라겐+닥터올로지" target="_blank" class="card-brand-link">닥터올로지</a>
+                        <p class="card-price">59,900원 (4개)</p>
+                        <p class="card-type">분말스틱</p>
+                        <div class="card-separator"></div>
+                        <p class="card-usp">올인원 저분자 피쉬 콜라겐 펩타이드, 고함량 제품</p>
+                    </div>
+                    <div class="card-item">
+                        <span class="card-rank-badge">5위</span>
+                        <a href="https://search.shopping.naver.com/search/all?query=콜라겐+뉴네이처" target="_blank" class="card-brand-link">뉴네이처</a>
+                        <p class="card-price">16,800원</p>
+                        <p class="card-type">분말스틱</p>
+                        <div class="card-separator"></div>
+                        <p class="card-usp">300달톤 저분자 어린 피쉬콜라겐 엘라스틴 함유</p>
+                    </div>
+                    <div class="card-item">
+                        <span class="card-rank-badge">6위</span>
+                        <a href="https://search.shopping.naver.com/search/all?query=콜라겐+골든허브" target="_blank" class="card-brand-link">골든허브</a>
+                        <p class="card-price">45,950원</p>
+                        <p class="card-type">분말스틱</p>
+                        <div class="card-separator"></div>
+                        <p class="card-usp">200달톤 초저분자, 비오틴, 글루타치온, 엘라스틴 복합</p>
+                    </div>
+                    <div class="card-item">
+                        <span class="card-rank-badge">7위</span>
+                        <a href="https://search.shopping.naver.com/search/all?query=콜라겐+캐나다" target="_blank" class="card-brand-link">캐나다</a>
+                        <p class="card-price">39,000원</p>
+                        <p class="card-type">정제</p>
+                        <div class="card-separator"></div>
+                        <p class="card-usp">저분자 피쉬 300달톤 고함량 엘라스틴, 정제형</p>
+                    </div>
+                    <div class="card-item">
+                        <span class="card-rank-badge">8위</span>
+                        <a href="https://search.shopping.naver.com/search/all?query=콜라겐+닥터올로지" target="_blank" class="card-brand-link">닥터올로지</a>
+                        <p class="card-price">16,900원</p>
+                        <p class="card-type">분말스틱</p>
+                        <div class="card-separator"></div>
+                        <p class="card-usp">올인원 저분자 피쉬 콜라겐 펩타이드 (15g x 14포)</p>
+                    </div>
+                    <div class="card-item">
+                        <span class="card-rank-badge">9위</span>
+                        <a href="https://search.shopping.naver.com/search/all?query=콜라겐+바이티브" target="_blank" class="card-brand-link">바이티브</a>
+                        <p class="card-price">99,900원 (4개)</p>
+                        <p class="card-type">분말스틱</p>
+                        <div class="card-separator"></div>
+                        <p class="card-usp">식물성 저분자 콜라겐, 프리미엄 이너뷰티 강조</p>
+                    </div>
+                    <div class="card-item">
+                        <span class="card-rank-badge">10위</span>
+                        <a href="https://search.shopping.naver.com/search/all?query=콜라겐+주영엔에스" target="_blank" class="card-brand-link">주영엔에스</a>
+                        <p class="card-price">28,890원</p>
+                        <p class="card-type">액상</p>
+                        <div class="card-separator"></div>
+                        <p class="card-usp">모발 콜라겐 3270, 액상 제형으로 흡수율 강조</p>
+                    </div>
+                </div>
+                <div class="insight-box">
+                    <h4 class="insight-box-title">인사이트</h4>
+                    <p class="insight-box-content">
+                        경쟁 시장은 분말스틱 제형이 주를 이루며, '저분자', '피쉬 콜라겐' 등의 키워드로 기능성을 강조합니다.
+                        가격대는 1만원대부터 10만원대까지 다양하며, 상위권 브랜드는 가성비 및 원료 차별화로 경쟁력을 확보하고 있습니다.
+                    </p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                출처: 네이버 쇼핑 검색결과³
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 7: Bubble Chart -->
+    <div class="slide" id="slide-7">
+        <div class="slide-inner">
+            <div class="slide-header">
+                <span style="opacity: 0.6;">02 경쟁사 분석 | </span>&nbsp;경쟁사 포지셔닝 (TOP 10)
+            </div>
+            <div class="slide-body" style="display:flex; flex-direction:column;">
+                <div class="bubble-chart-main-row">
+                    <div class="bubble-chart-area">
+                        <div class="quadrant-line-v"></div>
+                        <div class="quadrant-line-h"></div>
+                        <div class="axis-tick-y" style="bottom:0%; transform:translateY(50%);">0%</div>
+                        <div class="axis-tick-y" style="bottom:25%; transform:translateY(50%);">25%</div>
+                        <div class="axis-tick-y" style="bottom:50%; transform:translateY(50%);">50%</div>
+                        <div class="axis-tick-y" style="bottom:75%; transform:translateY(50%);">75%</div>
+                        <div class="axis-tick-y" style="bottom:100%; transform:translateY(50%);">100%</div>
+
+                        <div class="axis-tick-x" style="left:10%; transform:translateX(-50%);">1만원</div>
+                        <div class="axis-tick-x" style="left:30%; transform:translateX(-50%);">3만원</div>
+                        <div class="axis-tick-x" style="left:50%; transform:translateX(-50%);">5만원</div>
+                        <div class="axis-tick-x" style="left:70%; transform:translateX(-50%);">7만원</div>
+                        <div class="axis-tick-x" style="left:90%; transform:translateX(-50%);">9만원</div>
+
+                        <div class="axis-label-y">브랜드 인지도</div>
+                        <div class="axis-label-x">월 환산 가격 (원)</div>
+
+                        <!-- 1. 지웨이 (15800, Rank 1) -->
+                        <div class="bubble-wrapper" style="left:12%; bottom:90%;">
+                            <div class="bubble-label">지웨이</div>
+                            <div class="bubble-circle" style="width:80px; height:80px; background:#4361ee;">1</div>
+                        </div>
+                        <!-- 2. 비비랩 (12870, Rank 2) -->
+                        <div class="bubble-wrapper" style="left:9%; bottom:80%;">
+                            <div class="bubble-label">비비랩</div>
+                            <div class="bubble-circle" style="width:75px; height:75px; background:#f72585;">2</div>
+                        </div>
+                        <!-- 3. 순수식품 (3433, Rank 3) -->
+                        <div class="bubble-wrapper" style="left:5%; bottom:70%;">
+                            <div class="bubble-label">순수식품</div>
+                            <div class="bubble-circle" style="width:70px; height:70px; background:#4cc9f0;">3</div>
+                        </div>
+                        <!-- 4. 닥터올로지 (59900, Rank 4) -->
+                        <div class="bubble-wrapper" style="left:58%; bottom:60%;">
+                            <div class="bubble-label">닥터올로지</div>
+                            <div class="bubble-circle" style="width:65px; height:65px; background:#f8961e;">4</div>
+                        </div>
+                        <!-- 5. 뉴네이처 (16800, Rank 5) -->
+                        <div class="bubble-wrapper" style="left:13%; bottom:50%;">
+                            <div class="bubble-label">뉴네이처</div>
+                            <div class="bubble-circle" style="width:60px; height:60px; background:#43aa8b;">5</div>
+                        </div>
+                        <!-- 6. 골든허브 (45950, Rank 6) -->
+                        <div class="bubble-wrapper" style="left:45%; bottom:40%;">
+                            <div class="bubble-label">골든허브</div>
+                            <div class="bubble-circle" style="width:55px; height:55px; background:#90be6d;">6</div>
+                        </div>
+                        <!-- 7. 캐나다 (39000, Rank 7) -->
+                        <div class="bubble-wrapper" style="left:38%; bottom:30%;">
+                            <div class="bubble-label">캐나다</div>
+                            <div class="bubble-circle" style="width:50px; height:50px; background:#277da1;">7</div>
+                        </div>
+                        <!-- 8. 바이티브 (99900, Rank 9, using first entry from report) -->
+                        <div class="bubble-wrapper" style="left:90%; bottom:20%;">
+                            <div class="bubble-label">바이티브</div>
+                            <div class="bubble-circle" style="width:45px; height:45px; background:#e63946;">9</div>
+                        </div>
+                        <!-- 9. 주영엔에스 (28890, Rank 10) -->
+                        <div class="bubble-wrapper" style="left:25%; bottom:10%;">
+                            <div class="bubble-label">주영엔에스</div>
+                            <div class="bubble-circle" style="width:40px; height:40px; background:#6a4c93;">10</div>
+                        </div>
+                        <!-- 10. 라이필 (77060, Rank 11 in report, using to fill TOP10) -->
+                        <div class="bubble-wrapper" style="left:75%; bottom:5%;">
+                            <div class="bubble-label">라이필</div>
+                            <div class="bubble-circle" style="width:35px; height:35px; background:#ff6b6b;">11</div>
+                        </div>
+                    </div>
+                    <div class="bubble-chart-right-panel">
+                        <div class="legend-container">
+                            <div class="legend-item"><span class="legend-color-circle" style="background:#4361ee;"></span>지웨이</div>
+                            <div class="legend-item"><span class="legend-color-circle" style="background:#f72585;"></span>비비랩</div>
+                            <div class="legend-item"><span class="legend-color-circle" style="background:#4cc9f0;"></span>순수식품</div>
+                            <div class="legend-item"><span class="legend-color-circle" style="background:#f8961e;"></span>닥터올로지</div>
+                            <div class="legend-item"><span class="legend-color-circle" style="background:#43aa8b;"></span>뉴네이처</div>
+                            <div class="legend-item"><span class="legend-color-circle" style="background:#90be6d;"></span>골든허브</div>
+                            <div class="legend-item"><span class="legend-color-circle" style="background:#277da1;"></span>캐나다</div>
+                            <div class="legend-item"><span class="legend-color-circle" style="background:#e63946;"></span>바이티브</div>
+                            <div class="legend-item"><span class="legend-color-circle" style="background:#6a4c93;"></span>주영엔에스</div>
+                            <div class="legend-item"><span class="legend-color-circle" style="background:#ff6b6b;"></span>라이필</div>
+                        </div>
+                        <div class="insight-box">
+                            <h4 class="insight-box-title">경쟁 포지셔닝 분석</h4>
+                            <p class="insight-box-content">
+                                현재 시장은 저가형부터 고가형까지 다양한 가격대에 제품이 포진해 있으며, 상위권 브랜드는 저가 고인지도 또는 중고가 고품질 포지셔닝을 시도하고 있습니다.
+                            </p>
+                        </div>
+                        <div class="insight-box">
+                            <h4 class="insight-box-title">기회 영역</h4>
+                            <p class="insight-box-content">
+                                고품질/고기능성 콜라겐을 합리적인 가격에 제공하거나, 특정 기능성을 강화한 프리미엄 포지셔닝으로 차별화할 수 있는 기회가 존재합니다.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                출처: 네이버 쇼핑 검색결과³, NPD 자체 분석
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 8: Section Divider 03 -->
+    <div class="slide slide-divider" id="slide-8">
+        <div class="slide-inner">
+            <div class="chapter-num-small">CHAPTER 03</div>
+            <div class="chapter-num-large">03</div>
+            <div class="chapter-title">기회 & 전략</div>
+            <div class="divider-line"></div>
+        </div>
+    </div>
+
+    <!-- Slide 9: Pain Points -->
+    <div class="slide" id="slide-9">
+        <div class="slide-inner">
+            <div class="slide-header">
+                <span style="opacity: 0.6;">03 기회 & 전략 | </span>&nbsp;소비자 주요 불만 (Pain Points)
+            </div>
+            <div class="slide-body" style="display:flex; flex-direction:column;">
+                <div class="grid-2x2-container">
+                    <div class="grid-cell">
+                        <h3 class="grid-cell-title">명확한 효능 체감 부족</h3>
+                        <p class="grid-cell-body">
+                            대부분의 콜라겐 제품이 '피부 미용'이라는 포괄적인 효능을 내세우지만, 소비자들이 실제로 피부 개선 효과를 명확히 체감하기 어렵다는 불만이 많습니다. 과학적 근거가 부족한 경우가 많습니다.
+                        </p>
+                    </div>
+                    <div class="grid-cell">
+                        <h3 class="grid-cell-title">흡수율 및 기술력 불신</h3>
+                        <p class="grid-cell-body">
+                            '저분자 콜라겐'이라는 표현이 일반화되면서, 단순한 저분자화 이상의 흡수율 증진 기술이나 특정 효능 발현을 극대화하는 기술에 대한 소비자들의 불신이 존재합니다.
+                        </p>
+                    </div>
+                    <div class="grid-cell">
+                        <h3 class="grid-cell-title">제품 선택의 어려움</h3>
+                        <p class="grid-cell-body">
+                            다수의 브랜드와 다양한 제형, 가격대가 존재하여 어떤 제품이 자신에게 맞는지, 어떤 성분이 효과적인지 소비자들이 판단하기 어렵습니다. 맞춤형 솔루션이 부재합니다.
+                        </p>
+                    </div>
+                    <div class="grid-cell">
+                        <h3 class="grid-cell-title">꾸준한 섭취의 부담</h3>
+                        <p class="grid-cell-body">
+                            콜라겐은 꾸준한 섭취가 중요하지만, 맛이나 섭취 편의성, 그리고 가격적인 부담으로 인해 장기적인 섭취를 유지하기 어렵다는 피드백이 있습니다.
+                        </p>
+                    </div>
+                </div>
+                <div class="insight-box">
+                    <h4 class="insight-box-title">인사이트</h4>
+                    <p class="insight-box-content">
+                        소비자들은 단순한 콜라겐 섭취를 넘어, 명확하고 과학적으로 입증된 효능, 뛰어난 흡수율, 그리고 자신에게 맞는 맞춤형 제품을 갈망하고 있습니다.
+                    </p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                출처: NPD 자체 분석
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 10: White Space -->
+    <div class="slide" id="slide-10">
+        <div class="slide-inner">
+            <div class="slide-header">
+                <span style="opacity: 0.6;">03 기회 & 전략 | </span>&nbsp;차별화 기회 (White Space)
+            </div>
+            <div class="slide-body" style="display:flex; flex-direction:column;">
+                <div class="grid-2x2-container">
+                    <div class="grid-cell">
+                        <h3 class="concept-card-title">과학적 효능 검증</h3>
+                        <p class="concept-card-content">
+                            식약처 개별인정형 원료를 활용하거나 인체 적용 시험을 통해 '피부 장벽 강화', '보습 개선' 등 특정 효능을 명확히 입증하여 차별화된 가치를 제공합니다.
+                        </p>
+                    </div>
+                    <div class="grid-cell">
+                        <h3 class="concept-card-title">흡수율 극대화 기술</h3>
+                        <p class="concept-card-content">
+                            단순 저분자를 넘어, 킬레이트 공법이나 효소 가수분해 등 2중 흡수 촉진 기술을 적용하여 효능 발현을 극대화하고 기술력을 강조할 기회가 있습니다.
+                        </p>
+                    </div>
+                    <div class="grid-cell">
+                        <h3 class="concept-card-title">개인 맞춤형 솔루션</h3>
+                        <p class="concept-card-content">
+                            소비자의 연령, 피부 고민, 건강 목표에 따라 추가 성분을 선택하거나 'DIY 팩' 형태로 제공하여 개인의 니즈에 부합하는 맞춤형 경험을 제공합니다.
+                        </p>
+                    </div>
+                    <div class="grid-cell">
+                        <h3 class="concept-card-title">복합 기능성 원료 조합</h3>
+                        <p class="concept-card-content">
+                            히알루론산, 비타민C, 엘라스틴 등 시너지를 낼 수 있는 복합 원료를 조합하여 단순 콜라겐을 넘어선 다기능성 제품으로 시장의 빈틈을 공략합니다.
+                        </p>
+                    </div>
+                </div>
+                <div class="insight-box">
+                    <h4 class="insight-box-title">인사이트</h4>
+                    <p class="insight-box-content">
+                        경쟁 포화 시장에서 성공적인 진입을 위해서는 과학적 근거 기반의 명확한 효능, 혁신적인 흡수 기술, 그리고 개인화된 솔루션으로 차별화된 가치를 제공해야 합니다.
+                    </p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                출처: NPD 자체 분석
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 11: Concept -->
+    <div class="slide" id="slide-11">
+        <div class="slide-inner">
+            <div class="slide-header">
+                <span style="opacity: 0.6;">03 기회 & 전략 | </span>&nbsp;NPD 콘셉트: '더블 펩타이드 부스팅 콜라겐'
+            </div>
+            <div class="slide-body" style="display:flex; flex-direction:column;">
+                <div class="grid-2x2-container">
+                    <div class="grid-cell">
+                        <h3 class="concept-card-title">제품명</h3>
+                        <p class="concept-card-content">
+                            <strong>더블 펩타이드 부스팅 콜라겐</strong><br>
+                            (Double Peptide Boosting Collagen)
+                        </p>
+                    </div>
+                    <div class="grid-cell">
+                        <h3 class="concept-card-title">USP (핵심 차별점)</h3>
+                        <p class="concept-card-content">
+                            식약처 개별인정형 콜라겐 펩타이드와 흡수율을 높인 저분자 피쉬 콜라겐의 2중 시너지 효과로 피부 장벽 강화 및 보습 개선을 과학적으로 입증한 제품.
+                        </p>
+                    </div>
+                    <div class="grid-cell">
+                        <h3 class="concept-card-title">타겟</h3>
+                        <p class="concept-card-content">
+                            피부 건조함과 탄력 저하를 느끼며, 과학적인 근거 기반의 확실한 효과를 원하는 30~50대 여성 (이너뷰티에 적극적인 소비자).
+                        </p>
+                    </div>
+                    <div class="grid-cell">
+                        <h3 class="concept-card-title">포지셔닝 메시지</h3>
+                        <p class="concept-card-content">
+                            "과학이 증명한 피부 변화, 이젠 속부터 채우세요! 더블 펩타이드 부스팅 콜라겐으로 매일매일 탄탄하고 촉촉한 피부를 경험하세요."
+                        </p>
+                    </div>
+                </div>
+                <div class="insight-box">
+                    <h4 class="insight-box-title">인사이트</h4>
+                    <p class="insight-box-content">
+                        명확한 효능과 기술력을 강조하여 경쟁사와의 차별점을 부각하고, 과학적 근거를 중시하는 소비자층을 공략하여 시장 내 입지를 확보합니다.
+                    </p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                출처: NPD 자체 콘셉트 개발
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 12: Pricing -->
+    <div class="slide" id="slide-12">
+        <div class="slide-inner">
+            <div class="slide-header">
+                <span style="opacity: 0.6;">03 기회 & 전략 | </span>&nbsp;가격 전략 및 타겟 제조단가
+            </div>
+            <div class="slide-body" style="display:flex; flex-direction:column;">
+                <div class="pricing-table-container">
+                    <table class="pricing-table">
+                        <thead>
+                            <tr>
+                                <th>제품 제형</th>
+                                <th>목표 소비자 가격 (1개월분)</th>
+                                <th>목표 원가율 (15~20%)</th>
+                                <th>타겟 제조단가 (추정)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>분말스틱 (2g x 30포)</td>
+                                <td>38,000원 ~ 45,000원</td>
+                                <td>15~20%</td>
+                                <td>5,700원 ~ 9,000원</td>
+                            </tr>
+                            <tr>
+                                <td>정제 (800mg x 84정)</td>
+                                <td>45,000원 ~ 55,000원</td>
+                                <td>15~20%</td>
+                                <td>6,750원 ~ 11,000원</td>
+                            </tr>
+                            <tr>
+                                <td>액상 (20ml x 28포)</td>
+                                <td>55,000원 ~ 65,000원</td>
+                                <td>15~20%</td>
+                                <td>8,250원 ~ 13,000원</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="pricing-strategy-explanation">
+                        <h4 class="title-small" style="font-size:18px; margin-bottom: 8px; color:#FF5722;">가격 전략 근거</h4>
+                        <p class="text-body" style="font-size:15px; line-height:1.6;">
+                            경쟁사 TOP 10의 가격대와 목표 원가율(15~20%)을 고려하여 책정되었습니다.
+                            '더블 펩타이드 부스팅 콜라겐'의 차별화된 효능과 과학적 근거를 바탕으로,
+                            일반적인 저가형 제품보다는 높은, 그러나 프리미엄 제품보다는 합리적인 중고가 포지셔닝을 통해
+                            제품의 가치를 전달하고 시장 경쟁력을 확보하고자 합니다.
+                            특히, 초기 시장 진입 시 마케팅 비용을 고려한 유연한 가격 정책이 필요할 수 있습니다.
+                        </p>
+                    </div>
+                </div>
+                <div class="insight-box">
+                    <h4 class="insight-box-title">인사이트</h4>
+                    <p class="insight-box-content">
+                        차별화된 콘셉트에 맞는 가격 전략으로 경쟁 우위를 확보하고, 제조단가 관리를 통해 수익성을 확보하는 것이 중요합니다.
+                    </p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                출처: 네이버 쇼핑 검색결과³, NPD 자체 분석[F]
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 13: Risk -->
+    <div class="slide" id="slide-13">
+        <div class="slide-inner">
+            <div class="slide-header">
+                <span style="opacity: 0.6;">03 기회 & 전략 | </span>&nbsp;예상 리스크 및 대응 방안
+            </div>
+            <div class="slide-body" style="display:flex; flex-direction:column;">
+                <div class="grid-2x2-container">
+                    <div class="grid-cell">
+                        <h3 class="grid-cell-title">시장 관심도 지속 하락</h3>
+                        <p class="grid-cell-body">
+                            '콜라겐' 키워드 검색량의 지속적인 하락 추세는 시장의 전반적인 관심도 감소로 이어질 수 있습니다. 이는 신규 제품의 초기 인지도 확보에 큰 장애물이 될 수 있습니다.
+                        </p>
+                        <div class="risk-response">
+                            <strong>대응 방안:</strong> '콜라겐' 자체보다는 '피부 장벽', '보습', '탄력' 등 구체적인 기능성 키워드와 연계한 마케팅 집중.
+                        </div>
+                    </div>
+                    <div class="grid-cell">
+                        <h3 class="grid-cell-title">높은 경쟁 강도</h3>
+                        <p class="grid-cell-body">
+                            이미 수많은 콜라겐 제품이 시장에 진입해 있으며, TOP 브랜드들의 입지가 견고합니다. 신규 브랜드가 차별점을 부각하고 시장 점유율을 확보하기 어렵습니다.
+                        </p>
+                        <div class="risk-response">
+                            <strong>대응 방안:</strong> 명확한 UTP(과학적 효능, 흡수 기술)를 통한 니치 마켓 공략 및 타겟 고객 맞춤형 커뮤니케이션.
+                        </div>
+                    </div>
+                    <div class="grid-cell">
+                        <h3 class="grid-cell-title">식약처 규제 및 원료 제약</h3>
+                        <p class="grid-cell-body">
+                            콜라겐 건강기능식품은 개별인정형 원료만 가능하여, 일반적인 콜라겐 원료로는 기능성 표방이 어렵습니다. 원료 수급 및 개발에 시간과 비용이 소요됩니다.
+                        </p>
+                        <div class="risk-response">
+                            <strong>대응 방안:</strong> 개별인정형 원료 확보 또는 자체 개발, 일반 식품으로 출시 시 마케팅 전략 재수립.
+                        </div>
+                    </div>
+                    <div class="grid-cell">
+                        <h3 class="grid-cell-title">소비자 피로도 및 불신</h3>
+                        <p class="grid-cell-body">
+                            과도한 광고와 검증되지 않은 효능 주장으로 인해 콜라겐 제품 전반에 대한 소비자들의 피로도와 불신이 누적되어 있습니다.
+                        </p>
+                        <div class="risk-response">
+                            <strong>대응 방안:</strong> 투명한 정보 공개, 인체 적용 시험 결과 등 객관적인 데이터 기반의 소통, 진정성 있는 브랜드 스토리텔링.
+                        </div>
+                    </div>
+                </div>
+                <div class="insight-box">
+                    <h4 class="insight-box-title">인사이트</h4>
+                    <p class="insight-box-content">
+                        시장 하락세와 높은 경쟁 속에서 신규 진입은 도전적이지만, 명확한 차별화 전략과 과학적 근거, 투명한 소통으로 리스크를 관리하고 기회를 창출할 수 있습니다.
+                    </p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                출처: NPD 자체 분석
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 14: Roadmap -->
+    <div class="slide" id="slide-14">
+        <div class="slide-inner">
+            <div class="slide-header">
+                <span style="opacity: 0.6;">03 기회 & 전략 | </span>&nbsp;실행 로드맵 (3단계)
+            </div>
+            <div class="slide-body" style="display:flex; flex-direction:column;">
+                <div class="roadmap-row">
+                    <div class="roadmap-phase">
+                        <h3 class="roadmap-phase-name">1단계: 컨셉 & 원료 개발</h3>
+                        <p class="roadmap-phase-period">2026년 2분기 ~ 3분기</p>
+                        <div class="roadmap-separator"></div>
+                        <ul class="roadmap-activities">
+                            <li>UTP 기반 핵심 효능 검증 및 컨셉 확정</li>
+                            <li>식약처 등록 원료사 선정 및 협력</li>
+                            <li>OEM/ODM 파트너십 구축 및 시제품 개발</li>
+                        </ul>
+                        <p class="roadmap-milestone">마일스톤: 제품 컨셉 및 핵심 원료 확정</p>
+                    </div>
+                    <div class="roadmap-phase">
+                        <h3 class="roadmap-phase-name">2단계: 제품 생산 & 브랜딩</h3>
+                        <p class="roadmap-phase-period">2026년 4분기 ~ 2027년 1분기</p>
+                        <div class="roadmap-separator"></div>
+                        <ul class="roadmap-activities">
+                            <li>시제품 소비자 테스트 및 피드백 반영</li>
+                            <li>제품 패키징 디자인 및 브랜딩 전략 수립</li>
+                            <li>생산 공정 최적화 및 초도 생산 진행</li>
+                        </ul>
+                        <p class="roadmap-milestone">마일스톤: 제품 생산 완료 및 브랜딩 가이드라인 확정</p>
+                    </div>
+                    <div class="roadmap-phase">
+                        <h3 class="roadmap-phase-name">3단계: 시장 출시 & 마케팅</h3>
+                        <p class="roadmap-phase-period">2027년 2분기 이후</p>
+                        <div class="roadmap-separator"></div>
+                        <ul class="roadmap-activities">
+                            <li>온라인/오프라인 채널 입점 및 유통망 확보</li>
+                            <li>타겟 고객 맞춤형 콘텐츠 마케팅 실행</li>
+                            <li>초기 판매 데이터 분석 및 피드백 기반 개선</li>
+                        </ul>
+                        <p class="roadmap-milestone">마일스톤: 공식 제품 출시 및 시장 반응 확인</p>
+                    </div>
+                </div>
+                <div class="insight-box">
+                    <h4 class="insight-box-title">인사이트</h4>
+                    <p class="insight-box-content">
+                        체계적인 3단계 로드맵을 통해 제품의 완성도를 높이고, 시장 출시 전후의 전략적 활동으로 성공적인 시장 안착을 목표합니다.
+                    </p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                출처: NPD 자체 로드맵 수립
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 15: References -->
+    <div class="slide" id="slide-15">
+        <div class="slide-inner">
+            <div class="slide-header">
+                <span style="opacity: 0.6;">참고문헌 | </span>&nbsp;데이터 출처 목록
+            </div>
+            <div class="slide-body references-list">
+                <div class="reference-item">
+                    <span class="reference-number">1</span>
+                    <span class="reference-text">네이버 데이터랩 검색어트렌드, 조회일: 2026-04-14, 키워드: 콜라겐</span>
+                </div>
+                <div class="reference-item">
+                    <span class="reference-number">2</span>
+                    <span class="reference-text">네이버 검색광고 키워드도구, 조회일: 2026-04-14, 키워드: 콜라겐 — 월간 PC/모바일 검색수</span>
+                </div>
+                <div class="reference-item">
+                    <span class="reference-number">3</span>
+                    <span class="reference-text">네이버 쇼핑 검색결과, 조회일: 2026-04-14, 키워드: 콜라겐, 상위 20개 상품 기준</span>
+                </div>
+                <div class="reference-item">
+                    <span class="reference-number">4</span>
+                    <span class="reference-text">yeongnam.com, "[경북 동해안, 다시 뛰는 ‘K-수산물’ ⑥] 바다를 육지로 끌어올린 ‘...", Thu, 09 Apr 2026</span>
+                </div>
+                <div class="reference-item">
+                    <span class="reference-number">5</span>
+                    <span class="reference-text">opinionnews.co.kr, "에이피알, 美 성공 유럽·인도까지 잇는다...시장 기대감 '고조'", Thu, 09 Apr 2026</span>
+                </div>
+                <div class="reference-item">
+                    <span class="reference-number">6</span>
+                    <span class="reference-text">sisaon.co.kr, "선케어시장 고도화… '자외선 차단' 넘어 '다기능 경쟁' 후끈", Mon, 06 Apr 2026</span>
+                </div>
+                <div class="reference-item">
+                    <span class="reference-number">7</span>
+                    <span class="reference-text">seoulwire.com, "미국 홀린 K뷰티, 다음 깃발 '14억 인구' 인도에 꽂는다", Mon, 06 Apr 2026</span>
+                </div>
+                <div class="reference-item">
+                    <span class="reference-number">8</span>
+                    <span class="reference-text">nongup.net, "모르고 먹으면 손해… 해외에서 갈아탄 관절 원료 DEM", Sat, 04 Apr 2026</span>
+                </div>
+                <div class="reference-item">
+                    <span class="reference-number">9</span>
+                    <span class="reference-text">greened.kr, "[유통가 레이더] &quot;예능형 팝업은 처음이지?&quot;... CJ온스타일, 이지혜와 '...", Wed, 18 Jun 2025</span>
+                </div>
+                <div class="reference-item">
+                    <span class="reference-number">10</span>
+                    <span class="reference-text">newsprime.co.kr, "[오늘의 장바구니] CU·아모레퍼시픽·씰리침대·쿠팡 외", Wed, 05 Mar 2025</span>
+                </div>
+                <div class="reference-item">
+                    <span class="reference-number">11</span>
+                    <span class="reference-text">epnc.co.kr, "K-뷰티, AI 도움 받아 일본 이어 미국에서도 1위…'이너뷰티'로 성장세 ...", Thu, 13 Feb 2025</span>
+                </div>
+                <div class="reference-item">
+                    <span class="reference-number">12</span>
+                    <span class="reference-text">biztribune.co.kr, "[브리프]한미약품 동국제약 셀트리온 휴메딕스 동화약품 오스템임플란...", Mon, 12 Jan 2026</span>
+                </div>
+                <div class="reference-item">
+                    <span class="reference-number">13</span>
+                    <span class="reference-text">catchnews.kr, "&quot;자몽맛 콜라겐·비타민 한번에&quot; 동국제약 '엘리나C 핑크로제' 출시", Mon, 12 Jan 2026</span>
+                </div>
+                <div class="reference-item">
+                    <span class="reference-number">14</span>
+                    <span class="reference-text">greened.kr, "[유통가 레이더] SPC그룹, &quot;응원 댓글 달아 독립운동가 후손 함께 도와요...", Wed, 13 Aug 2025</span>
+                </div>
+                <div class="reference-item">
+                    <span class="reference-number">F</span>
+                    <span class="reference-text">네이버 쇼핑 TOP 3 제품 딥다이브 정보, 조회일: 2026-04-14. (추정) 표시는 제공된 데이터를 기반으로 NPD 디렉터가 분석·추정한 내용으로 공식 통계가 아님.</span>
+                </div>
+                <div class="reference-item">
+                    <span class="reference-number">식약처</span>
+                    <span class="reference-text">식품안전나라 공공데이터포털, I0760(건강기능식품 원료분류) 및 C002(일반식품 원재료), 조회일: 2026-04-14</span>
+                </div>
+            </div>
+            <div class="slide-footer">
+                출처: 상단 목록 참조
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript - EXACTLY AS PROVIDED -->
+    <script>
+        // viewport scale
+        function scaleSlides() {
+            var s = Math.min(window.innerWidth/1600, window.innerHeight/800);
+            document.querySelectorAll('.slide-inner').forEach(function(el) {
+                el.style.transform = 'scale('+s+')';
+                el.style.transformOrigin = 'center center';
+            });
+        }
+        window.addEventListener('resize', scaleSlides);
+        scaleSlides();
+
+        // 전환
+        var slides = document.querySelectorAll('.slide');
+        var cur = 0, lock = false;
+        function show(n) {
+            slides[cur].classList.remove('active');
+            cur = (n + slides.length) % slides.length;
+            slides[cur].classList.add('active');
+            document.getElementById('slide-num-display').textContent = (cur+1)+' / '+slides.length;
+        }
+        document.addEventListener('keydown', function(e) {
+            if (e.key==='ArrowRight'||e.key===' '){e.preventDefault();show(cur+1);}
+            if (e.key==='ArrowLeft'){e.preventDefault();show(cur-1);}
+            if (e.key==='f'||e.key==='F'){document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen();}
+        });
+        document.addEventListener('wheel', function(e) {
+            e.preventDefault();
+            if (lock) return; lock=true;
+            show(e.deltaY>0?cur+1:cur-1);
+            setTimeout(function(){lock=false;},300);
+        },{passive:false});
+        show(0);
+
+        // Line Chart JS (from Tech Spec)
+        (function() {
+            var ACCENT = '#FF5722'; // Accent color HEX
+            var pts = [
+                {l:'2024.04', v:99.8}, {l:'2024.07', v:85.0}, {l:'2024.10', v:65.0},
+                {l:'2025.01', v:50.0}, {l:'2025.04', v:40.0}, {l:'2025.07', v:25.0},
+                {l:'2025.10', v:15.0}, {l:'2026.04', v:8.8}
+            ];
+            function draw() {
+                var cv = document.getElementById('trendChart');
+                if (!cv) return;
+                var par = cv.parentElement;
+                var W = par.clientWidth || 1300, H = par.clientHeight || 350;
+                cv.width = W; cv.height = H;
+                var ctx = cv.getContext('2d');
+                var PL=60, PR=20, PT=20, PB=45;
+                var cW=W-PL-PR, cH=H-PT-PB;
+                var maxV=100;
+                function xp(i){return PL + i/(pts.length-1)*cW;}
+                function yp(v){return PT + cH - v/maxV*cH;}
+                // 그리드 + Y축 레이블
+                ctx.font='11px "Noto Sans KR", sans-serif'; ctx.textAlign='right'; ctx.fillStyle='rgba(255,255,255,0.4)';
+                [0,25,50,75,100].forEach(function(v){
+                    var y=yp(v);
+                    ctx.strokeStyle='rgba(255,255,255,0.07)'; ctx.lineWidth=1;
+                    ctx.beginPath(); ctx.moveTo(PL,y); ctx.lineTo(PL+cW,y); ctx.stroke();
+                    ctx.fillText(v,PL-6,y+4);
+                });
+                // 면적 그라디언트
+                var gr=ctx.createLinearGradient(0,PT,0,PT+cH);
+                gr.addColorStop(0,ACCENT+'55'); gr.addColorStop(1,ACCENT+'05');
+                ctx.beginPath();
+                ctx.moveTo(xp(0),yp(0));
+                pts.forEach(function(d,i){ctx.lineTo(xp(i),yp(d.v));});
+                ctx.lineTo(xp(pts.length-1),yp(0)); ctx.closePath();
+                ctx.fillStyle=gr; ctx.fill();
+                // 선
+                ctx.beginPath(); ctx.strokeStyle=ACCENT; ctx.lineWidth=2.5; ctx.lineJoin='round';
+                pts.forEach(function(d,i){i?ctx.lineTo(xp(i),yp(d.v)):ctx.moveTo(xp(i),yp(d.v));});
+                ctx.stroke();
+                // 점 + 값 레이블 + X축 레이블
+                ctx.fillStyle=ACCENT; ctx.textAlign='center'; ctx.font='11px "Noto Sans KR", sans-serif';
+                pts.forEach(function(d,i){
+                    ctx.beginPath(); ctx.arc(xp(i),yp(d.v),4,0,2*Math.PI); ctx.fill();
+                    ctx.fillStyle='rgba(255,255,255,0.7)';
+                    ctx.fillText(d.v, xp(i), yp(d.v)-10);
+                    ctx.fillStyle='rgba(255,255,255,0.4)';
+                    ctx.fillText(d.l, xp(i), H-8);
+                    ctx.fillStyle=ACCENT;
+                });
+            }
+            // Ensure fonts are loaded before drawing. Fallback to window load.
+            if(document.fonts) document.fonts.ready.then(draw); else window.addEventListener('load',draw);
+            window.addEventListener('resize',draw);
+        })();
+    </script>
+<script>
+(function() {
+  var contentScales = {};
+
+  function measureAll() {
+    document.querySelectorAll('.slide').forEach(function(slide, i) {
+      var hidden = !slide.classList.contains('active');
+      if (hidden) {
+        slide.style.visibility = 'hidden';
+        slide.style.display    = 'flex';
+      }
+      var inner = slide.querySelector('.slide-inner');
+      if (inner) {
+        contentScales[i] = inner.scrollHeight > 800
+          ? (790 / inner.scrollHeight)
+          : 1;
+      }
+      if (hidden) {
+        slide.style.display    = '';
+        slide.style.visibility = '';
+      }
+    });
+  }
+
+  function applyScales() {
+    var vScale = Math.min(window.innerWidth / 1600, window.innerHeight / 800);
+    document.querySelectorAll('.slide').forEach(function(slide, i) {
+      var inner = slide.querySelector('.slide-inner');
+      if (!inner) return;
+      var cScale   = (contentScales[i] != null) ? contentScales[i] : 1;
+      var combined = vScale * cScale;
+      inner.style.transform       = 'scale(' + combined + ')';
+      inner.style.transformOrigin = 'center center';
+    });
+  }
+
+  window.scaleSlides = applyScales;
+  window.addEventListener('resize', applyScales);
+
+  (document.fonts ? document.fonts.ready : Promise.resolve()).then(function() {
+    measureAll();
+    applyScales();
+  });
+})();
+</script>
+</body>
+</html>
