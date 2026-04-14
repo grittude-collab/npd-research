@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>알부민 시장 진입 전략 보고서</title>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #1a1a1a;
+            --primary-text-color: rgba(255, 255, 255, 0.85);
+            --secondary-text-color: rgba(255, 255, 255, 0.6);
+            --accent-color: #FF5722;
+            --border-color: rgba(255, 255, 255, 0.12);
+            --font-archivo: 'Archivo Black', sans-serif;
+            --font-noto: 'Noto Sans KR', sans-serif;
+        }
+
+        html, body {
+            margin: 0; padding: 0; overflow: hidden;
+            background: #111; width: 100%; height: 100%;
+            font-family: var(--font-noto);
+            color: var(--primary-text-color);
+            font-size: 18px;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .slide {
+            position: fixed; top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            display: none;
+            align-items: center; justify-content: center;
+            overflow: hidden;
+        }
+        .slide.active { display: flex; }
+        .slide-inner {
+            width: 1600px; height: 800px;
+            position: relative; overflow: hidden;
+            box-sizing: border-box;
+            background: var(--bg-color);
+        }
+        .slide-header {
+            position: absolute; top: 0; left: 0; right: 0;
+            height: 100px; padding: 0 80px;
+            display: flex; align-items: flex-end; padding-bottom: 16px;
+            font-family: var(--font-archivo);
+            font-size: 24px;
+            font-weight: 500;
+            color: var(--primary-text-color);
+        }
+        .slide-body {
+            position: absolute; top: 100px; left: 0; right: 0;
+            bottom: 50px; padding: 20px 80px 0;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        .slide-footer {
+            position: absolute; bottom: 0; left: 0; right: 0;
+            height: 50px; padding: 0 80px;
+            display: flex; align-items: center; justify-content: flex-end;
+            font-size: 12px; opacity: 0.5;
+            color: var(--secondary-text-color);
+        }
+
+        /* Typography */
+        h1 { font-size: 44px; font-weight: 900; margin: 0; font-family: var(--font-archivo); color: var(--primary-text-color); }
+        h2 { font-size: 24px; font-weight: 500; margin: 0; font-family: var(--font-noto); color: var(--primary-text-color); }
+        h3 { font-size: 20px; font-weight: 500; margin: 0; font-family: var(--font-noto); color: var(--primary-text-color); }
+        p { font-size: 18px; font-weight: 400; margin: 0; }
+        small { font-size: 13px; font-weight: 300; color: var(--secondary-text-color); }
+
+        /* Common Insight Box */
+        .insight-box {
+            border-left: 3px solid var(--accent-color);
+            padding: 10px 16px;
+            background: rgba(255, 87, 34, 0.07); /* var(--accent-color) with opacity */
+            margin-top: auto; /* Pushes to bottom */
+            margin-bottom: 0;
+            flex-shrink: 0;
+        }
+        .insight-box-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin: 0 0 3px;
+        }
+        .insight-box-content {
+            font-size: 13px;
+            line-height: 1.5;
+            margin: 0;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+
+        /* Navigation UI */
+        .nav-button {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 24px;
+            border-radius: 4px;
+            user-select: none;
+            transition: background 0.2s, color 0.2s;
+        }
+        .nav-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.9);
+        }
+        #nav-prev { left: 16px; }
+        #nav-next { right: 16px; }
+
+        #slide-num-display {
+            position: fixed;
+            bottom: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 14px;
+        }
+        #fullscreen-btn {
+            position: fixed;
+            top: 16px;
+            right: 16px;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+            border: none;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 14px;
+            border-radius: 4px;
+            user-select: none;
+            transition: background 0.2s, color 0.2s;
+        }
+        #fullscreen-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.9);
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navigation UI -->
+<button id="nav-prev" class="nav-button" onclick="show(cur-1)">&#8592;</button>
+<button id="nav-next" class="nav-button" onclick="show(cur+1)">&#8594;</button>
+<div id="slide-num-display"><span id="slide-num">1 / 15</span></div>
+<button id="fullscreen-btn" onclick="document.documentElement.requestFullscreen()">전체화면</button>
+
+<!-- Slide 1: Cover -->
+<div class="slide" id="slide-1">
+    <div class="slide-inner" style="background:var(--bg-color); display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:0 120px;">
+        <h1 style="font-size:64px; margin-bottom:20px; color:var(--accent-color); letter-spacing:0.05em;">ALBUMIN MARKET</h1>
+        <h1 style="font-size:64px; margin-bottom:20px;">NPD 시장 분석</h1>
+        <p style="font-size:28px; color:var(--secondary-text-color); font-weight:300; margin-bottom:40px;">기준일: 2026년 4월 14일</p>
+        <div style="width:100px; height:4px; background:var(--accent-color); margin-bottom:40px;"></div>
+        <p style="font-size:28px; line-height:1.4; font-weight:500; color:var(--primary-text-color);">
+            알부민 시장은 높은 소비자 관심과 성장 잠재력을 보이나,<br>차별화된 전략이 필요한 'Conditional Go' 시장입니다.
+        </p>
+    </div>
+</div>
+
+<!-- Slide 2: Section Divider 01 -->
+<div class="slide" id="slide-2">
+    <div class="slide-inner" style="background:var(--accent-color); display:flex; align-items:center; justify-content:center; flex-direction:column; text-align:center;">
+        <div style="font-size:13px; letter-spacing:0.2em; text-transform:uppercase; opacity:0.6; margin-bottom:16px; color:#fff;">CHAPTER 01</div>
+        <div style="font-size:64px; font-weight:900; color:#fff; line-height:1;">01</div>
+        <div style="font-size:32px; font-weight:400; color:#fff; margin-top:16px; opacity:0.9;">시장 현황</div>
+        <div style="width:60px; height:3px; background:#fff; margin-top:24px;"></div>
+    </div>
+</div>
+
+<!-- Slide 3: Big Number -->
+<div class="slide" id="slide-3">
+    <div class="slide-inner">
+        <div class="slide-header">
+            01 시장 현황 | Market Opportunity Scorecard
+        </div>
+        <div class="slide-body" style="display:flex; flex-direction:column; gap:0;">
+            <div style="display:flex; gap:16px; align-items:stretch; flex:1; min-height:0; margin-bottom:16px;">
+                <!-- 카드 1: 시장 성장성/트렌드 -->
+                <div style="flex:1; padding:18px 20px; display:flex; flex-direction:column; gap:4px; border:1px solid var(--border-color); border-radius:6px; overflow:hidden;">
+                    <h3 style="font-size:14px; opacity:0.65; margin:0 0 4px; font-weight:400;">시장 성장성 (검색 트렌드)</h3>
+                    <div style="font-size:48px; font-weight:900; line-height:1; margin:0 0 6px; color:var(--accent-color);">Conditional Go</div>
+                    <p style="font-size:12px; line-height:1.5; opacity:0.75; margin:0 0 12px; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
+                        2026년 1월 최고점 기록 후 급격한 하락 추세이나, 여전히 높은 잠재 수요를 보유하고 있습니다.
+                    </p>
+                    <div style="flex:1; min-height:80px;">
+                        <svg style="width:100%;height:80px;" viewBox="0 0 200 60" preserveAspectRatio="none">
+                            <defs>
+                                <linearGradient id="mg1" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0%" stop-color="var(--accent-color)" stop-opacity="0.3"/>
+                                    <stop offset="100%" stop-color="var(--accent-color)" stop-opacity="0"/>
+                                </linearGradient>
+                            </defs>
+                            <polygon points="0,45 40,27.5 80,10 120,10 160,30 200,30 200,60 0,60" fill="url(#mg1)"/>
+                            <polyline points="0,45 40,27.5 80,10 120,10 160,30 200,30" fill="none" stroke="var(--accent-color)" stroke-width="2"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- 카드 2: 소비자 관심도 -->
+                <div style="flex:1; padding:18px 20px; display:flex; flex-direction:column; gap:4px; border:1px solid var(--border-color); border-radius:6px; overflow:hidden;">
+                    <h3 style="font-size:14px; opacity:0.65; margin:0 0 4px; font-weight:400;">소비자 관심도 (월간 총 검색수)</h3>
+                    <div style="font-size:48px; font-weight:900; line-height:1; margin:0 0 6px; color:var(--accent-color);">235,200<small>회</small></div>
+                    <p style="font-size:12px; line-height:1.5; opacity:0.75; margin:0 0 12px; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
+                        2026년 1월 최고점 기준 월간 총 검색량으로, PC 36,700회, 모바일 198,500회에 달했습니다.
+                    </p>
+                    <div style="display:flex; align-items:flex-end; gap:10px; flex:1; padding-top:4px;">
+                        <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;">
+                            <div style="font-size:9px; opacity:0.5;">최저</div>
+                            <div style="width:100%; background:var(--accent-color); opacity:0.35; height:10px; border-radius:2px 2px 0 0;"></div>
+                            <div style="font-size:10px; white-space:nowrap;">47,040회</div>
+                        </div>
+                        <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;">
+                            <div style="font-size:9px; opacity:0.5;">평균</div>
+                            <div style="width:100%; background:var(--accent-color); opacity:0.65; height:25px; border-radius:2px 2px 0 0;"></div>
+                            <div style="font-size:10px; white-space:nowrap;">117,600회</div>
+                        </div>
+                        <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;">
+                            <div style="font-size:9px; opacity:0.5; color:var(--accent-color);">최고</div>
+                            <div style="width:100%; background:var(--accent-color); height:50px; border-radius:2px 2px 0 0;"></div>
+                            <div style="font-size:10px; white-space:nowrap; color:var(--accent-color);">235,200회</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 카드 3: 전체시장 규모 및 트렌드 -->
+                <div style="flex:1; padding:18px 20px; display:flex; flex-direction:column; gap:4px; border:1px solid var(--border-color); border-radius:6px; overflow:hidden;">
+                    <h3 style="font-size:14px; opacity:0.65; margin:0 0 4px; font-weight:400;">전체시장 규모 및 트렌드</h3>
+                    <div style="font-size:48px; font-weight:900; line-height:1; margin:0 0 6px; color:var(--accent-color);">성장 잠재력</div>
+                    <p style="font-size:12px; line-height:1.5; opacity:0.75; margin:0 0 12px; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
+                        직접적인 알부민 시장 통계는 부재하나, 관련 바이오 및 치료제 시장의 성장세가 두드러집니다.
+                    </p>
+                    <div style="display:flex; flex-direction:column; gap:5px; flex:1; overflow:hidden;">
+                        <div style="font-size:11px; line-height:1.4; padding:5px 8px; background:rgba(255,255,255,0.04); border-radius:3px; border-left:2px solid var(--accent-color); color:inherit; display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+                            "K-바이오 신약 개발 시장: 18조원 규모" &#8212; etoday.co.kr
+                        </div>
+                        <div style="font-size:11px; line-height:1.4; padding:5px 8px; background:rgba(255,255,255,0.04); border-radius:3px; border-left:2px solid var(--accent-color); color:inherit; display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+                            "SK플라즈마 혈액제제 기술 수출: 1,100억 원 및 400억 원 규모" &#8212; ebn.co.kr
+                        </div>
+                        <div style="font-size:11px; line-height:1.4; padding:5px 8px; background:rgba(255,255,255,0.04); border-radius:3px; border-left:2px solid var(--accent-color); color:inherit; display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+                            "신장병 치료제 시장: 2024년 389억 달러 &rarr; 2035년 674억 달러 전망" &#8212; yakup.com
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="insight-box">
+                <div class="insight-box-title">핵심 인사이트</div>
+                <div class="insight-box-content">
+                    알부민 시장은 높은 소비자 관심과 관련 산업의 성장 잠재력을 지녔으나, 최근 검색량 조정과 직접적인 건기식 시장 규모 통계 부재가 특징입니다.
+                </div>
+            </div>
+        </div>
+        <div class="slide-footer">
+            출처: 네이버 데이터랩, 네이버 검색광고 키워드도구, 언론 기사 [1,2,4,7,8,9]
+        </div>
+    </div>
+</div>
+
+<!-- Slide 4: Line Chart -->
+<div class="slide" id="slide-4">
+    <div class="slide-inner">
+        <div class="slide-header">
+            01 시장 현황 | 알부민 검색 트렌드 (24개월)
+        </div>
+        <div class="slide-body">
+            <h2 style="font-size:24px; margin-bottom:16px;">월별 '알부민' 검색량 지수 변화 (2024.04 &#8594; 2026.04)</h2>
+            <div style="flex:1; min-height:0; position:relative; margin-bottom:20px;">
+                <canvas id="trendChart"></canvas>
+            </div>
+            <div style="display:flex; gap:12px; flex-shrink:0;">
+                <div class="insight-box" style="margin-top:0; flex:1;">
+                    <div class="insight-box-title">소비자 관심의 급증과 조정</div>
+                    <div class="insight-box-content">
+                        2025년 하반기부터 2026년 1월까지 알부민 검색량이 폭발적으로 증가했으나, 2026년 4월 현재 급격한 조정 국면에 진입했습니다.
+                    </div>
+                </div>
+                <div class="insight-box" style="margin-top:0; flex:1;">
+                    <div class="insight-box-title">시장 잠재력의 지속적 확인</div>
+                    <div class="insight-box-content">
+                        최근의 하락세에도 불구하고, 2026년 1월 최고점 당시의 압도적인 검색량은 알부민 시장의 강력한 잠재적 수요를 시사합니다.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slide-footer">
+            출처: 네이버 데이터랩 검색어트렌드 [1]
+        </div>
+    </div>
+</div>
+
+<!-- Slide 5: Section Divider 02 -->
+<div class="slide" id="slide-5">
+    <div class="slide-inner" style="background:var(--accent-color); display:flex; align-items:center; justify-content:center; flex-direction:column; text-align:center;">
+        <div style="font-size:13px; letter-spacing:0.2em; text-transform:uppercase; opacity:0.6; margin-bottom:16px; color:#fff;">CHAPTER 02</div>
+        <div style="font-size:64px; font-weight:900; color:#fff; line-height:1;">02</div>
+        <div style="font-size:32px; font-weight:400; color:#fff; margin-top:16px; opacity:0.9;">경쟁사 분석</div>
+        <div style="width:60px; height:3px; background:#fff; margin-top:24px;"></div>
+    </div>
+</div>
+
+<!-- Slide 6: Card Grid -->
+<div class="slide" id="slide-6">
+    <div class="slide-inner">
+        <div class="slide-header">
+            02 경쟁사 분석 | TOP 10 알부민 브랜드 현황
+        </div>
+        <div class="slide-body">
+            <h2 style="font-size:24px; margin-bottom:20px;">네이버 쇼핑 기준 상위 10개 브랜드 분석</h2>
+            <div style="display:grid; grid-template-columns:repeat(5,1fr); gap:16px; flex:1; min-height:0;">
+                <!-- Card 1 -->
+                <div style="padding:10px 12px; overflow:hidden; border:1px solid var(--border-color); border-radius:6px; position:relative;">
+                    <div style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">1위</div>
+                    <a href="https://search.shopping.naver.com/search/all?query=알부민+뉴트리케이" target="_blank" style="font-size:13px; font-weight:700; color:var(--accent-color); margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+                        뉴트리케이
+                    </a>
+                    <div style="font-size:12px; margin-bottom:3px;">34,900원</div>
+                    <div style="font-size:11px; opacity:0.55; margin-bottom:5px;">제형: 액상 (30ml)</div>
+                    <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
+                    <div style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
+                        프리미엄 알부민 맥스 골드, 액상형으로 간편한 섭취 강조.
+                    </div>
+                </div>
+                <!-- Card 2 -->
+                <div style="padding:10px 12px; overflow:hidden; border:1px solid var(--border-color); border-radius:6px; position:relative;">
+                    <div style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">2위</div>
+                    <a href="https://search.shopping.naver.com/search/all?query=알부민+광동" target="_blank" style="font-size:13px; font-weight:700; color:var(--accent-color); margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+                        광동
+                    </a>
+                    <div style="font-size:12px; margin-bottom:3px;">88,000원</div>
+                    <div style="font-size:11px; opacity:0.55; margin-bottom:5px;">제형: 액상 (20ml)</div>
+                    <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
+                    <div style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
+                        광동 알부민 플러스 골드, 브랜드 인지도를 기반으로 한 프리미엄 제품.
+                    </div>
+                </div>
+                <!-- Card 3 -->
+                <div style="padding:10px 12px; overflow:hidden; border:1px solid var(--border-color); border-radius:6px; position:relative;">
+                    <div style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">3위</div>
+                    <a href="https://search.shopping.naver.com/search/all?query=알부민+알부민골드맥스벨기에산" target="_blank" style="font-size:13px; font-weight:700; color:var(--accent-color); margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+                        알부민 (벨기에산)
+                    </a>
+                    <div style="font-size:12px; margin-bottom:3px;">44,800원</div>
+                    <div style="font-size:11px; opacity:0.55; margin-bottom:5px;">제형: 정제 (120정)</div>
+                    <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
+                    <div style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
+                        벨기에산 원료 강조, 단백질 효능 및 함량 소구.
+                    </div>
+                </div>
+                <!-- Card 4 -->
+                <div style="padding:10px 12px; overflow:hidden; border:1px solid var(--border-color); border-radius:6px; position:relative;">
+                    <div style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">4위</div>
+                    <a href="https://search.shopping.naver.com/search/all?query=알부민+센티랩" target="_blank" style="font-size:13px; font-weight:700; color:var(--accent-color); margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+                        센티랩
+                    </a>
+                    <div style="font-size:12px; margin-bottom:3px;">42,280원</div>
+                    <div style="font-size:11px; opacity:0.55; margin-bottom:5px;">제형: 정제 (600mg)</div>
+                    <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
+                    <div style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
+                        센티랩 알부민 프리미엄 플러스, 정제 형태로 휴대성 강조.
+                    </div>
+                </div>
+                <!-- Card 5 -->
+                <div style="padding:10px 12px; overflow:hidden; border:1px solid var(--border-color); border-radius:6px; position:relative;">
+                    <div style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">5위</div>
+                    <a href="https://search.shopping.naver.com/search/all?query=알부민+랩온랩" target="_blank" style="font-size:13px; font-weight:700; color:var(--accent-color); margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+                        랩온랩
+                    </a>
+                    <div style="font-size:12px; margin-bottom:3px;">15,800원</div>
+                    <div style="font-size:11px; opacity:0.55; margin-bottom:5px;">제형: 정제 (600mg)</div>
+                    <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
+                    <div style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
+                        알부민 해마 골드 맥스 50000, 가성비 좋은 대용량 정제 제품.
+                    </div>
+                </div>
+                <!-- Card 6 -->
+                <div style="padding:10px 12px; overflow:hidden; border:1px solid var(--border-color); border-radius:6px; position:relative;">
+                    <div style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">6위</div>
+                    <a href="https://search.shopping.naver.com/search/all?query=알부민+RAWEL" target="_blank" style="font-size:13px; font-weight:700; color:var(--accent-color); margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+                        RAWEL
+                    </a>
+                    <div style="font-size:12px; margin-bottom:3px;">18,110원</div>
+                    <div style="font-size:11px; opacity:0.55; margin-bottom:5px;">제형: 분말스틱 (20g)</div>
+                    <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
+                    <div style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
+                        프리미엄 마시는 알부민 골드, 분말스틱으로 휴대 및 섭취 용이.
+                    </div>
+                </div>
+                <!-- Card 7 -->
+                <div style="padding:10px 12px; overflow:hidden; border:1px solid var(--border-color); border-radius:6px; position:relative;">
+                    <div style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">7위</div>
+                    <a href="https://search.shopping.naver.com/search/all?query=알부민+자주가게" target="_blank" style="font-size:13px; font-weight:700; color:var(--accent-color); margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+                        자주가게
+                    </a>
+                    <div style="font-size:12px; margin-bottom:3px;">29,400원</div>
+                    <div style="font-size:11px; opacity:0.55; margin-bottom:5px;">제형: 액상 (20g)</div>
+                    <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
+                    <div style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
+                        마시는 알부민 알부젠 부스터, 드링크 맛으로 섭취 부담 감소.
+                    </div>
+                </div>
+                <!-- Card 8 -->
+                <div style="padding:10px 12px; overflow:hidden; border:1px solid var(--border-color); border-radius:6px; position:relative;">
+                    <div style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">8위</div>
+                    <a href="https://search.shopping.naver.com/search/all?query=알부민+에이치엘비제약" target="_blank" style="font-size:13px; font-weight:700; color:var(--accent-color); margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+                        에이치엘비제약
+                    </a>
+                    <div style="font-size:12px; margin-bottom:3px;">119,150원</div>
+                    <div style="font-size:11px; opacity:0.55; margin-bottom:5px;">제형: 분말스틱 (30포)</div>
+                    <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
+                    <div style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
+                        HLB제약 알부민 인텐시브 골드, 높은 가격대의 프리미엄 분말스틱.
+                    </div>
+                </div>
+                <!-- Card 9 -->
+                <div style="padding:10px 12px; overflow:hidden; border:1px solid var(--border-color); border-radius:6px; position:relative;">
+                    <div style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">9위</div>
+                    <a href="https://search.shopping.naver.com/search/all?query=알부민+헬스프랜드" target="_blank" style="font-size:13px; font-weight:700; color:var(--accent-color); margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+                        헬스프랜드
+                    </a>
+                    <div style="font-size:12px; margin-bottom:3px;">11,900원</div>
+                    <div style="font-size:11px; opacity:0.55; margin-bottom:5px;">제형: 분말스틱 (20g)</div>
+                    <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
+                    <div style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
+                        마시는 알부민 프리미엄, 합리적인 가격의 분말스틱 제품.
+                    </div>
+                </div>
+                <!-- Card 10 -->
+                <div style="padding:10px 12px; overflow:hidden; border:1px solid var(--border-color); border-radius:6px; position:relative;">
+                    <div style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">10위</div>
+                    <a href="https://search.shopping.naver.com/search/all?query=알부민+팔레오" target="_blank" style="font-size:13px; font-weight:700; color:var(--accent-color); margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+                        팔레오
+                    </a>
+                    <div style="font-size:12px; margin-bottom:3px;">8,440원</div>
+                    <div style="font-size:11px; opacity:0.55; margin-bottom:5px;">제형: 분말스틱 (20g)</div>
+                    <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
+                    <div style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
+                        생생 활력 마시는 알부민, 가장 저렴한 가격대의 분말스틱.
+                    </div>
+                </div>
+            </div>
+            <div class="insight-box">
+                <div class="insight-box-title">핵심 인사이트</div>
+                <div class="insight-box-content">
+                    알부민 시장은 액상 및 분말스틱 제형이 주를 이루며, 넓은 가격 스펙트럼과 유사한 효능 강조 네이밍이 특징입니다. 브랜드 집중도는 낮습니다.
+                </div>
+            </div>
+        </div>
+        <div class="slide-footer">
+            출처: 네이버 쇼핑 검색 결과 [3]
+        </div>
+    </div>
+</div>
+
+<!-- Slide 7: Bubble Chart -->
+<div class="slide" id="slide-7">
+    <div class="slide-inner">
+        <div class="slide-header">
+            02 경쟁사 분석 | 경쟁 포지셔닝 (TOP 10)
+        </div>
+        <div class="slide-body">
+            <h2 style="font-size:24px; margin-bottom:20px;">알부민 제품별 가격 및 브랜드 인지도 포지셔닝</h2>
+            <div style="display:flex; align-items:center; gap:20px; flex:1; min-height:0;">
+                <div style="position:relative; width:600px; height:480px; flex-shrink:0; align-self:center; border-left:2px solid rgba(255,255,255,0.4); border-bottom:2px solid rgba(255,255,255,0.4); overflow:visible;">
+                    <!-- 4사분면 라인 -->
+                    <div style="position:absolute; left:50%; top:0; height:100%; border-left:1px dashed rgba(255,255,255,0.2); pointer-events:none;"></div>
+                    <div style="position:absolute; top:50%; left:0; width:100%; border-top:1px dashed rgba(255,255,255,0.2); pointer-events:none;"></div>
+
+                    <!-- Y축 눈금 -->
+                    <div style="position:absolute; right:100%; margin-right:6px; font-size:10px; opacity:0.5; transform:translateY(50%); bottom:0%;">0%</div>
+                    <div style="position:absolute; right:100%; margin-right:6px; font-size:10px; opacity:0.5; transform:translateY(50%); bottom:25%;">25%</div>
+                    <div style="position:absolute; right:100%; margin-right:6px; font-size:10px; opacity:0.5; transform:translateY(50%); bottom:50%;">50%</div>
+                    <div style="position:absolute; right:100%; margin-right:6px; font-size:10px; opacity:0.5; transform:translateY(50%); bottom:75%;">75%</div>
+                    <div style="position:absolute; right:100%; margin-right:6px; font-size:10px; opacity:0.5; transform:translateY(50%); bottom:100%;">100%</div>
+
+                    <!-- X축 눈금 (TOP10 가격 범위: 8,440 ~ 119,150) -->
+                    <div style="position:absolute; top:100%; margin-top:6px; font-size:10px; opacity:0.5; transform:translateX(-50%); left:0%;">0원</div>
+                    <div style="position:absolute; top:100%; margin-top:6px; font-size:10px; opacity:0.5; transform:translateX(-50%); left:25%;">30,000원</div>
+                    <div style="position:absolute; top:100%; margin-top:6px; font-size:10px; opacity:0.5; transform:translateX(-50%); left:50%;">60,000원</div>
+                    <div style="position:absolute; top:100%; margin-top:6px; font-size:10px; opacity:0.5; transform:translateX(-50%); left:75%;">90,000원</div>
+                    <div style="position:absolute; top:100%; margin-top:6px; font-size:10px; opacity:0.5; transform:translateX(-50%); left:100%;">120,000원</div>
+
+                    <!-- Y축 레이블 -->
+                    <div style="position:absolute; right:100%; margin-right:40px; top:50%; writing-mode:vertical-rl; transform:translateY(-50%); font-size:11px; white-space:nowrap;">브랜드 인지도</div>
+                    <!-- X축 레이블 -->
+                    <div style="position:absolute; top:100%; margin-top:28px; left:50%; transform:translateX(-50%); font-size:11px;">상품 최저가 (원)</div>
+
+                    <!-- Bubbles (x: price, y: rank/awareness, size: price) -->
+                    <!-- Price range: 8440-119150. Awareness: Rank 1(90%) to Rank 10(35%) -->
+                    <!-- Color palette: #4361ee #f72585 #4cc9f0 #f8961e #43aa8b #90be6d #277da1 #e63946 #6a4c93 #ff6b6b -->
+                    <!-- x = (price - 8440) / (119150 - 8440) * 83 + 5 -->
+                    <!-- y = (10 - rank) / 9 * 83 + 5 -->
+                    <!-- size = 32 + (price - 8440) / (119150 - 8440) * (80 - 32) -->
+
+                    <!-- 1. 뉴트리케이 (34900, Rank 1) -->
+                    <div style="position:absolute; left:25.5%; bottom:90%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+                        <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">뉴트리케이</div>
+                        <div style="width:40px; height:40px; border-radius:50%; background:#4361ee; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">1</div>
+                    </div>
+                    <!-- 2. 광동 (88000, Rank 2) -->
+                    <div style="position:absolute; left:70.1%; bottom:80%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+                        <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">광동</div>
+                        <div style="width:64px; height:64px; border-radius:50%; background:#f72585; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">2</div>
+                    </div>
+                    <!-- 3. 알부민 (벨기에산) (44800, Rank 3) -->
+                    <div style="position:absolute; left:34.2%; bottom:70%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+                        <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">알부민 (벨기에산)</div>
+                        <div style="width:44px; height:44px; border-radius:50%; background:#4cc9f0; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">3</div>
+                    </div>
+                    <!-- 4. 센티랩 (42280, Rank 4) -->
+                    <div style="position:absolute; left:32.0%; bottom:65%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+                        <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">센티랩</div>
+                        <div style="width:43px; height:43px; border-radius:50%; background:#f8961e; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">4</div>
+                    </div>
+                    <!-- 5. 랩온랩 (15800, Rank 5) -->
+                    <div style="position:absolute; left:10.5%; bottom:60%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+                        <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">랩온랩</div>
+                        <div style="width:34px; height:34px; border-radius:50%; background:#43aa8b; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">5</div>
+                    </div>
+                    <!-- 6. RAWEL (18110, Rank 6) -->
+                    <div style="position:absolute; left:12.5%; bottom:55%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+                        <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">RAWEL</div>
+                        <div style="width:35px; height:35px; border-radius:50%; background:#90be6d; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">6</div>
+                    </div>
+                    <!-- 7. 자주가게 (29400, Rank 7) -->
+                    <div style="position:absolute; left:20.8%; bottom:50%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+                        <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">자주가게</div>
+                        <div style="width:38px; height:38px; border-radius:50%; background:#277da1; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">7</div>
+                    </div>
+                    <!-- 8. 에이치엘비제약 (119150, Rank 8) -->
+                    <div style="position:absolute; left:88%; bottom:45%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+                        <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">에이치엘비제약</div>
+                        <div style="width:80px; height:80px; border-radius:50%; background:#e63946; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">8</div>
+                    </div>
+                    <!-- 9. 헬스프랜드 (11900, Rank 9) -->
+                    <div style="position:absolute; left:8.5%; bottom:40%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+                        <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">헬스프랜드</div>
+                        <div style="width:33px; height:33px; border-radius:50%; background:#6a4c93; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">9</div>
+                    </div>
+                    <!-- 10. 팔레오 (8440, Rank 10) -->
+                    <div style="position:absolute; left:5%; bottom:35%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+                        <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">팔레오</div>
+                        <div style="width:32px; height:32px; border-radius:50%; background:#ff6b6b; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">10</div>
+                    </div>
+                </div>
+
+                <div style="flex:1; display:flex; flex-direction:column; justify-content:center; gap:16px; overflow:hidden;">
+                    <div style="display:flex; flex-wrap:wrap; gap:4px 12px; flex-shrink:0;">
+                        <div style="font-size:12px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#4361ee; margin-right:5px;"></span>뉴트리케이</div>
+                        <div style="font-size:12px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#f72585; margin-right:5px;"></span>광동</div>
+                        <div style="font-size:12px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#4cc9f0; margin-right:5px;"></span>알부민 (벨기에산)</div>
+                        <div style="font-size:12px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#f8961e; margin-right:5px;"></span>센티랩</div>
+                        <div style="font-size:12px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#43aa8b; margin-right:5px;"></span>랩온랩</div>
+                        <div style="font-size:12px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#90be6d; margin-right:5px;"></span>RAWEL</div>
+                        <div style="font-size:12px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#277da1; margin-right:5px;"></span>자주가게</div>
+                        <div style="font-size:12px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#e63946; margin-right:5px;"></span>에이치엘비제약</div>
+                        <div style="font-size:12px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#6a4c93; margin-right:5px;"></span>헬스프랜드</div>
+                        <div style="font-size:12px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#ff6b6b; margin-right:5px;"></span>팔레오</div>
+                    </div>
+                    <div class="insight-box" style="margin-top:0;">
+                        <div class="insight-box-title">경쟁 포지셔닝 분석</div>
+                        <div class="insight-box-content">
+                            알부민 시장은 저가부터 고가까지 넓은 가격 스펙트럼을 보이며, 브랜드 인지도보다는 가격과 제형 선택의 폭이 넓은 것이 특징입니다.
+                        </div>
+                    </div>
+                    <div class="insight-box" style="margin-top:0;">
+                        <div class="insight-box-title">기회 영역</div>
+                        <div class="insight-box-content">
+                            중고가 영역에서 높은 브랜드 인지도를 확보하며 차별화된 가치를 제공하는 프리미엄 포지셔닝에 기회가 있습니다.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slide-footer">
+            출처: 네이버 쇼핑 검색 결과 [3]
+        </div>
+    </div>
+</div>
+
+<!-- Slide 8: Section Divider 03 -->
+<div class="slide" id="slide-8">
+    <div class="slide-inner" style="background:var(--accent-color); display:flex; align-items:center; justify-content:center; flex-direction:column; text-align:center;">
+        <div style="font-size:13px; letter-spacing:0.2em; text-transform:uppercase; opacity:0.6; margin-bottom:16px; color:#fff;">CHAPTER 03</div>
+        <div style="font-size:64px; font-weight:900; color:#fff; line-height:1;">03</div>
+        <div style="font-size:32px; font-weight:400; color:#fff; margin-top:16px; opacity:0.9;">기회 &amp; 전략</div>
+        <div style="width:60px; height:3px; background:#fff; margin-top:24px;"></div>
+    </div>
+</div>
+
+<!-- Slide 9: Pain Points -->
+<div class="slide" id="slide-9">
+    <div class="slide-inner">
+        <div class="slide-header">
+            03 기회 &amp; 전략 | 소비자 불만 및 경쟁 공백
+        </div>
+        <div class="slide-body">
+            <h2 style="font-size:24px; margin-bottom:20px;">현재 알부민 시장에서 충족되지 않는 소비자 니즈</h2>
+            <div style="display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:16px; flex:1; min-height:0;">
+                <!-- Pain Point 1 -->
+                <div style="padding:20px 24px; border:1px solid var(--border-color); border-radius:6px; display:flex; flex-direction:column; overflow:hidden; min-height:0;">
+                    <h3 style="font-size:16px; font-weight:700; color:var(--accent-color); margin:0 0 10px; flex-shrink:0;">
+                        <strong>명확한 기능성 커뮤니케이션 부족</strong>
+                    </h3>
+                    <p style="font-size:14px; line-height:1.7; flex:1; overflow:hidden; color:rgba(255,255,255,0.92);">
+                        대부분의 알부민 제품은 '단백질', '영양' 등 일반적인 효능만을 강조합니다. 식약처 개별인정형 원료로서의 구체적이고 과학적인 기능성 소통이 미흡합니다.
+                    </p>
+                </div>
+                <!-- Pain Point 2 -->
+                <div style="padding:20px 24px; border:1px solid var(--border-color); border-radius:6px; display:flex; flex-direction:column; overflow:hidden; min-height:0;">
+                    <h3 style="font-size:16px; font-weight:700; color:var(--accent-color); margin:0 0 10px; flex-shrink:0;">
+                        <strong>차별화된 원료 강점 부각 미흡</strong>
+                    </h3>
+                    <p style="font-size:14px; line-height:1.7; flex:1; overflow:hidden; color:rgba(255,255,255,0.92);">
+                        많은 제품이 '알부민 함유'에 그치며, 원료 자체의 특성(예: 특정 순도, 흡수율 증진 기술)을 명확히 내세워 소비자에게 인지시키는 브랜드가 부족합니다.
+                    </p>
+                </div>
+                <!-- Pain Point 3 -->
+                <div style="padding:20px 24px; border:1px solid var(--border-color); border-radius:6px; display:flex; flex-direction:column; overflow:hidden; min-height:0;">
+                    <h3 style="font-size:16px; font-weight:700; color:var(--accent-color); margin:0 0 10px; flex-shrink:0;">
+                        <strong>합리적 가격대의 고품질 제품 부재</strong>
+                    </h3>
+                    <p style="font-size:14px; line-height:1.7; flex:1; overflow:hidden; color:rgba(255,255,255,0.92);">
+                        고가 제품은 프리미엄 이미지를 강조하지만 접근성이 낮고, 저가 제품은 품질 신뢰도에 의문이 제기될 수 있어 중간 가격대에서 품질을 보증하는 제품이 부족합니다.
+                    </p>
+                </div>
+                <!-- Pain Point 4 -->
+                <div style="padding:20px 24px; border:1px solid var(--border-color); border-radius:6px; display:flex; flex-direction:column; overflow:hidden; min-height:0;">
+                    <h3 style="font-size:16px; font-weight:700; color:var(--accent-color); margin:0 0 10px; flex-shrink:0;">
+                        <strong>섭취 편의성을 넘어선 경험 부족</strong>
+                    </h3>
+                    <p style="font-size:14px; line-height:1.7; flex:1; overflow:hidden; color:rgba(255,255,255,0.92);">
+                        액상, 분말스틱 등 간편한 제형은 많지만, 맛, 향, 휴대성 등 전반적인 섭취 경험을 혁신적으로 개선한 제품은 찾아보기 어렵습니다.
+                    </p>
+                </div>
+            </div>
+            <div class="insight-box">
+                <div class="insight-box-title">핵심 인사이트</div>
+                <div class="insight-box-content">
+                    소비자들은 알부민의 명확한 효능, 차별화된 원료 품질, 그리고 합리적인 가격대의 프리미엄 경험을 갈망하고 있습니다.
+                </div>
+            </div>
+        </div>
+        <div class="slide-footer">
+            출처: 보고서 내부 분석, 시장 지형도 [3], 식약처 원료 현황 [식약처]
+        </div>
+    </div>
+</div>
+
+<!-- Slide 10: White Space -->
+<div class="slide" id="slide-10">
+    <div class="slide-inner">
+        <div class="slide-header">
+            03 기회 &amp; 전략 | 차별화 기회 (White Space)
+        </div>
+        <div class="slide-body">
+            <h2 style="font-size:24px; margin-bottom:20px;">경쟁 공백을 활용한 NPD 차별화 기회</h2>
+            <div style="display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:16px; flex:1; min-height:0;">
+                <!-- Concept Card 1 -->
+                <div style="padding:20px 24px; border:1px solid var(--border-color); border-radius:6px; display:flex; flex-direction:column; overflow:hidden;">
+                    <h3 style="font-size:14px; font-weight:700; color:var(--accent-color); margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em;">
+                        과학적 기능성 소구 강화
+                    </h3>
+                    <p style="font-size:15px; line-height:1.65; flex:1; color:rgba(255,255,255,0.92);">
+                        식약처 개별인정형 원료의 특정 기능성을 전면에 내세우고, 과학적 근거를 바탕으로 소비자의 건강 고민과 직접 연결되는 효능을 명확히 소통합니다.
+                    </p>
+                </div>
+                <!-- Concept Card 2 -->
+                <div style="padding:20px 24px; border:1px solid var(--border-color); border-radius:6px; display:flex; flex-direction:column; overflow:hidden;">
+                    <h3 style="font-size:14px; font-weight:700; color:var(--accent-color); margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em;">
+                        차별화된 원료 기술 적용
+                    </h3>
+                    <p style="font-size:15px; line-height:1.65; flex:1; color:rgba(255,255,255,0.92);">
+                        초고순도 알부민, 혁신적인 흡수율 증진 기술(예: 리포좀화, 나노 입자화)을 적용하여 원료 자체의 프리미엄화 및 효능 증대를 강조합니다.
+                    </p>
+                </div>
+                <!-- Concept Card 3 -->
+                <div style="padding:20px 24px; border:1px solid var(--border-color); border-radius:6px; display:flex; flex-direction:column; overflow:hidden;">
+                    <h3 style="font-size:14px; font-weight:700; color:var(--accent-color); margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em;">
+                        가성비 프리미엄 포지셔닝
+                    </h3>
+                    <p style="font-size:15px; line-height:1.65; flex:1; color:rgba(255,255,255,0.92);">
+                        신뢰할 수 있는 기업 이미지와 합리적인 가격을 결합하여, '가성비'와 '신뢰성'을 동시에 만족시키는 최적의 알부민 솔루션을 제공합니다.
+                    </p>
+                </div>
+                <!-- Concept Card 4 -->
+                <div style="padding:20px 24px; border:1px solid var(--border-color); border-radius:6px; display:flex; flex-direction:column; overflow:hidden;">
+                    <h3 style="font-size:14px; font-weight:700; color:var(--accent-color); margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em;">
+                        섭취 경험 혁신 및 편의성 증대
+                    </h3>
+                    <p style="font-size:15px; line-height:1.65; flex:1; color:rgba(255,255,255,0.92);">
+                        차별화된 제형(예: 젤리, 맛있는 드링크) 개발을 통해 섭취 편의성을 극대화하고, 즐거운 건강 관리 경험을 제공하여 시장을 선도합니다.
+                    </p>
+                </div>
+            </div>
+            <div class="insight-box">
+                <div class="insight-box-title">핵심 인사이트</div>
+                <div class="insight-box-content">
+                    알부민 시장의 차별화 기회는 명확한 기능성 소구, 혁신적인 원료 기술, 합리적 가격대의 프리미엄 제품, 그리고 섭취 경험 혁신에 있습니다.
+                </div>
+            </div>
+        </div>
+        <div class="slide-footer">
+            출처: 보고서 내부 분석, 식약처 원료 현황 [식약처]
+        </div>
+    </div>
+</div>
+
+<!-- Slide 11: Concept -->
+<div class="slide" id="slide-11">
+    <div class="slide-inner">
+        <div class="slide-header">
+            03 기회 &amp; 전략 | NPD 콘셉트
+        </div>
+        <div class="slide-body">
+            <h2 style="font-size:24px; margin-bottom:20px;">알부민 NPD 콘셉트: '활력 에센스 알부맥스'</h2>
+            <div style="display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:16px; flex:1; min-height:0;">
+                <!-- Card 1: 제품명 -->
+                <div style="padding:20px 24px; border:1px solid var(--border-color); border-radius:6px; display:flex; flex-direction:column; overflow:hidden;">
+                    <h3 style="font-size:14px; font-weight:700; color:var(--accent-color); margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em;">
+                        제품명
+                    </h3>
+                    <p style="font-size:15px; line-height:1.65; flex:1;">
+                        <strong>활력 에센스 알부맥스 (Vitality Essence Albumax)</strong>
+                        <br>일상에 활력을 불어넣고 싶은 소비자를 위한 프리미엄 알부민 솔루션.
+                    </p>
+                </div>
+                <!-- Card 2: USP -->
+                <div style="padding:20px 24px; border:1px solid var(--border-color); border-radius:6px; display:flex; flex-direction:column; overflow:hidden;">
+                    <h3 style="font-size:14px; font-weight:700; color:var(--accent-color); margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em;">
+                        USP (Unique Selling Proposition)
+                    </h3>
+                    <p style="font-size:15px; line-height:1.65; flex:1;">
+                        <strong>"과학적으로 입증된 활력 증진, 초고순도 알부민의 빠른 흡수"</strong>
+                        <br>식약처 개별인정형 기능성 + 독자적 흡수율 증진 기술을 통한 시너지 효과.
+                    </p>
+                </div>
+                <!-- Card 3: 타겟 -->
+                <div style="padding:20px 24px; border:1px solid var(--border-color); border-radius:6px; display:flex; flex-direction:column; overflow:hidden;">
+                    <h3 style="font-size:14px; font-weight:700; color:var(--accent-color); margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em;">
+                        타겟
+                    </h3>
+                    <p style="font-size:15px; line-height:1.65; flex:1;">
+                        <strong>만성 피로를 느끼는 3050 직장인 및 건강 관리에 관심 많은 중장년층</strong>
+                        <br>빠르고 확실한 컨디션 개선 효과를 원하는 소비자.
+                    </p>
+                </div>
+                <!-- Card 4: 포지셔닝 메시지 -->
+                <div style="padding:20px 24px; border:1px solid var(--border-color); border-radius:6px; display:flex; flex-direction:column; overflow:hidden;">
+                    <h3 style="font-size:14px; font-weight:700; color:var(--accent-color); margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em;">
+                        포지셔닝 메시지
+                    </h3>
+                    <p style="font-size:15px; line-height:1.65; flex:1;">
+                        <strong>"지친 일상, 활력 에센스 알부맥스로 다시 빛나는 하루를 경험하세요."</strong>
+                        <br>과학적 근거와 혁신 기술로 완성된 고품격 알부민.
+                    </p>
+                </div>
+            </div>
+            <div class="insight-box">
+                <div class="insight-box-title">핵심 인사이트</div>
+                <div class="insight-box-content">
+                    '활력 에센스 알부맥스'는 명확한 기능성 소구와 차별화된 기술을 통해 지친 현대인의 활력을 증진시키는 프리미엄 솔루션으로 포지셔닝합니다.
+                </div>
+            </div>
+        </div>
+        <div class="slide-footer">
+            출처: 보고서 내부 분석, NPD 디렉터 추정
+        </div>
+    </div>
+</div>
+
+<!-- Slide 12: Pricing -->
+<div class="slide" id="slide-12">
+    <div class="slide-inner">
+        <div class="slide-header">
+            03 기회 &amp; 전략 | 가격 전략
+        </div>
+        <div class="slide-body">
+            <h2 style="font-size:24px; margin-bottom:20px;">알부민 제품별 가격 포지셔닝 및 원가 추정</h2>
+            <table style="width:100%; border-collapse:collapse; margin-bottom:30px;">
+                <thead>
+                    <tr style="background:rgba(255,255,255,0.05);">
+                        <th style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; font-weight:500; border:1px solid var(--border-color);">상품명</th>
+                        <th style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; font-weight:500; border:1px solid var(--border-color);">제형</th>
+                        <th style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; font-weight:500; border:1px solid var(--border-color);">최저가 (단품 기준)</th>
+                        <th style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; font-weight:500; border:1px solid var(--border-color);">가격 포지셔닝</th>
+                        <th style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; font-weight:500; border:1px solid var(--border-color);">목표 원가율 (15~20%)</th>
+                        <th style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; font-weight:500; border:1px solid var(--border-color);">타겟 제조단가 범위</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid var(--border-color);">뉴트리케이 프리미엄 알부민 맥스 골드</td>
+                        <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid var(--border-color);">액상</td>
+                        <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid var(--border-color);">34,900원</td>
+                        <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid var(--border-color);">중간</td>
+                        <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid var(--border-color);">15~20%</td>
+                        <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid var(--border-color);">5,235원 ~ 6,980원</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid var(--border-color);">광동 알부민 플러스 골드</td>
+                        <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid var(--border-color);">액상</td>
+                        <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid var(--border-color);">88,000원</td>
+                        <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid var(--border-color);">높음</td>
+                        <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid var(--border-color);">15~20%</td>
+                        <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid var(--border-color);">13,200원 ~ 17,600원</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid var(--border-color);">알부민 골드 맥스 벨기에산</td>
+                        <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid var(--border-color);">정제</td>
+                        <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid var(--border-color);">44,800원</td>
+                        <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid var(--border-color);">중간</td>
+                        <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid var(--border-color);">15~20%</td>
+                        <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid var(--border-color);">6,720원 ~ 8,960원</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid var(--border-color);">에이치엘비제약 알부민 인텐시브 골드 329</td>
+                        <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid var(--border-color);">분말스틱</td>
+                        <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid var(--border-color);">119,150원</td>
+                        <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid var(--border-color);">높음</td>
+                        <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid var(--border-color);">15~20%</td>
+                        <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid var(--border-color);">17,872원 ~ 23,830원</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h3 style="font-size:20px; margin-bottom:10px;">가격 전략 근거</h3>
+            <p style="font-size:15px; line-height:1.65; margin-bottom:10px;">
+                알부민 시장은 8천원대부터 15만원대까지 넓은 가격 스펙트럼을 보입니다. 신제품은 '가성비 프리미엄' 포지셔닝을 위해 <strong>3만원 ~ 5만원대</strong>의 중고가 전략을 채택합니다.
+            </p>
+            <p style="font-size:15px; line-height:1.65;">
+                이는 최고 품질의 원료와 차별화된 기술을 적용하면서도, 소비자들이 합리적으로 접근할 수 있는 가격대를 제시하여 시장 신뢰도를 확보하는 목표를 가지고 있습니다.
+            </p>
+            <div class="insight-box">
+                <div class="insight-box-title">핵심 인사이트</div>
+                <div class="insight-box-content">
+                    경쟁사 분석을 통해 확인된 넓은 가격대 속에서, 신제품은 품질과 신뢰도를 기반으로 한 중고가 포지셔닝으로 차별화를 꾀할 수 있습니다.
+                </div>
+            </div>
+        </div>
+        <div class="slide-footer">
+            출처: 네이버 쇼핑 검색 결과 [3], NPD 디렉터 추정 (*)
+        </div>
+    </div>
+</div>
+
+<!-- Slide 13: Risk -->
+<div class="slide" id="slide-13">
+    <div class="slide-inner">
+        <div class="slide-header">
+            03 기회 &amp; 전략 | 시장 진입 리스크 및 대응 방안
+        </div>
+        <div class="slide-body">
+            <h2 style="font-size:24px; margin-bottom:20px;">알부민 시장 진입 시 예상되는 리스크</h2>
+            <div style="display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:16px; flex:1; min-height:0;">
+                <!-- Risk 1 -->
+                <div style="padding:20px 24px; border:1px solid var(--border-color); border-radius:6px; display:flex; flex-direction:column; overflow:hidden; min-height:0;">
+                    <h3 style="font-size:16px; font-weight:700; color:var(--accent-color); margin:0 0 10px; flex-shrink:0;">
+                        <strong>높은 경쟁 강도 및 유사 제품 난립</strong>
+                    </h3>
+                    <p style="font-size:14px; line-height:1.7; flex:1; overflow:hidden; color:rgba(255,255,255,0.92);">
+                        네이버 쇼핑 기준 20개사 이상의 브랜드가 존재하며, '골드', '맥스' 등 유사한 네이밍으로 차별화가 어렵습니다.
+                    </p>
+                    <div style="border-top:1px solid rgba(255,255,255,0.1); margin-top:8px; padding-top:8px; font-size:12px; color:rgba(255,255,255,0.75); flex-shrink:0;">
+                        <strong>대응 방안:</strong> 명확한 USP 기반의 브랜딩 및 마케팅 전략 강화.
+                    </div>
+                </div>
+                <!-- Risk 2 -->
+                <div style="padding:20px 24px; border:1px solid var(--border-color); border-radius:6px; display:flex; flex-direction:column; overflow:hidden; min-height:0;">
+                    <h3 style="font-size:16px; font-weight:700; color:var(--accent-color); margin:0 0 10px; flex-shrink:0;">
+                        <strong>소비자 관심도의 급격한 하락세</strong>
+                    </h3>
+                    <p style="font-size:14px; line-height:1.7; flex:1; overflow:hidden; color:rgba(255,255,255,0.92);">
+                        2026년 1월 최고점 이후 검색량이 급격히 하락하는 추세로, 시장 전체의 관심도가 낮아질 수 있습니다.
+                    </p>
+                    <div style="border-top:1px solid rgba(255,255,255,0.1); margin-top:8px; padding-top:8px; font-size:12px; color:rgba(255,255,255,0.75); flex-shrink:0;">
+                        <strong>대응 방안:</strong> 핵심 타겟층 재설정 및 장기적 관점의 꾸준한 커뮤니케이션.
+                    </div>
+                </div>
+                <!-- Risk 3 -->
+                <div style="padding:20px 24px; border:1px solid var(--border-color); border-radius:6px; display:flex; flex-direction:column; overflow:hidden; min-height:0;">
+                    <h3 style="font-size:16px; font-weight:700; color:var(--accent-color); margin:0 0 10px; flex-shrink:0;">
+                        <strong>기능성 소구의 어려움 및 모호성</strong>
+                    </h3>
+                    <p style="font-size:14px; line-height:1.7; flex:1; overflow:hidden; color:rgba(255,255,255,0.92);">
+                        '개별인정형' 원료지만, 일반 소비자에게 과학적 근거 기반의 기능성을 명확하게 전달하기 어려울 수 있습니다.
+                    </p>
+                    <div style="border-top:1px solid rgba(255,255,255,0.1); margin-top:8px; padding-top:8px; font-size:12px; color:rgba(255,255,255,0.75); flex-shrink:0;">
+                        <strong>대응 방안:</strong> 임상 데이터 등 과학적 근거를 바탕으로 한 스토리텔링 강화.
+                    </div>
+                </div>
+                <!-- Risk 4 -->
+                <div style="padding:20px 24px; border:1px solid var(--border-color); border-radius:6px; display:flex; flex-direction:column; overflow:hidden; min-height:0;">
+                    <h3 style="font-size:16px; font-weight:700; color:var(--accent-color); margin:0 0 10px; flex-shrink:0;">
+                        <strong>원료 차별화 및 품질 경쟁력 확보</strong>
+                    </h3>
+                    <p style="font-size:14px; line-height:1.7; flex:1; overflow:hidden; color:rgba(255,255,255,0.92);">
+                        '미표기' 제조원 브랜드가 다수 존재하며, 고품질 원료 및 생산 과정의 차별화가 부족할 경우 경쟁 우위를 잃을 수 있습니다.
+                    </p>
+                    <div style="border-top:1px solid rgba(255,255,255,0.1); margin-top:8px; padding-top:8px; font-size:12px; color:rgba(255,255,255,0.75); flex-shrink:0;">
+                        <strong>대응 방안:</strong> 고순도 원료 소싱, GMP 인증 등 품질 신뢰도 강화.
+                    </div>
+                </div>
+            </div>
+            <div class="insight-box">
+                <div class="insight-box-title">핵심 인사이트</div>
+                <div class="insight-box-content">
+                    알부민 시장은 높은 경쟁 강도와 소비자 관심도 변동성, 그리고 기능성 소구의 어려움이라는 리스크를 안고 있습니다. 이에 대한 명확한 대응 전략 수립이 필수적입니다.
+                </div>
+            </div>
+        </div>
+        <div class="slide-footer">
+            출처: 보고서 내부 분석, 시장 지형도 [3], 식약처 원료 현황 [식약처]
+        </div>
+    </div>
+</div>
+
+<!-- Slide 14: Roadmap -->
+<div class="slide" id="slide-14">
+    <div class="slide-inner">
+        <div class="slide-header">
+            03 기회 &amp; 전략 | 시장 진입 로드맵
+        </div>
+        <div class="slide-body">
+            <h2 style="font-size:24px; margin-bottom:20px;">알부민 NPD 실행 타임라인</h2>
+            <div style="display:flex; flex-direction:row; align-items:flex-start; gap:20px; flex:1; min-height:0;">
+                <!-- Phase 1 -->
+                <div style="flex:1; padding:24px 20px; border-top:3px solid var(--accent-color); display:flex; flex-direction:column; gap:8px; border-radius:6px;">
+                    <h3 style="font-size:18px; font-weight:700; margin:0;">Phase 1: 시장 &amp; 콘셉트 구체화</h3>
+                    <p style="font-size:13px; color:rgba(255,255,255,0.55); margin:0;">1~3개월</p>
+                    <div style="height:1px; background:rgba(255,255,255,0.08); margin:4px 0;"></div>
+                    <ul style="list-style:none; padding:0; margin:0; font-size:14px; line-height:1.7; flex:1;">
+                        <li>&#8226; 명확한 기능성 소구점 발굴</li>
+                        <li>&#8226; 과학적 근거 및 임상 자료 확보</li>
+                        <li>&#8226; 핵심 타겟 소비자 그룹 설정</li>
+                    </ul>
+                    <div style="font-size:12px; color:var(--accent-color); font-weight:700; margin-top:auto; padding-top:8px; border-top:1px solid rgba(255,255,255,0.08);">
+                        마일스톤: NPD 콘셉트 및 USP 확정
+                    </div>
+                </div>
+                <!-- Phase 2 -->
+                <div style="flex:1; padding:24px 20px; border-top:3px solid var(--accent-color); display:flex; flex-direction:column; gap:8px; border-radius:6px;">
+                    <h3 style="font-size:18px; font-weight:700; margin:0;">Phase 2: 제품 개발 &amp; 원료 소싱</h3>
+                    <p style="font-size:13px; color:rgba(255,255,255,0.55); margin:0;">3~6개월</p>
+                    <div style="height:1px; background:rgba(255,255,255,0.08); margin:4px 0;"></div>
+                    <ul style="list-style:none; padding:0; margin:0; font-size:14px; line-height:1.7; flex:1;">
+                        <li>&#8226; 차별화된 고순도 알부민 원료 소싱</li>
+                        <li>&#8226; 혁신 제형(액상, 젤리) 및 흡수율 기술 개발</li>
+                        <li>&#8226; 합리적 가격대 제품 설계 및 생산 준비</li>
+                    </ul>
+                    <div style="font-size:12px; color:var(--accent-color); font-weight:700; margin-top:auto; padding-top:8px; border-top:1px solid rgba(255,255,255,0.08);">
+                        마일스톤: 시제품 개발 및 품질 테스트 완료
+                    </div>
+                </div>
+                <!-- Phase 3 -->
+                <div style="flex:1; padding:24px 20px; border-top:3px solid var(--accent-color); display:flex; flex-direction:column; gap:8px; border-radius:6px;">
+                    <h3 style="font-size:18px; font-weight:700; margin:0;">Phase 3: 마케팅 &amp; 시장 진입</h3>
+                    <p style="font-size:13px; color:rgba(255,255,255,0.55); margin:0;">6~9개월</p>
+                    <div style="height:1px; background:rgba(255,255,255,0.08); margin:4px 0;"></div>
+                    <ul style="list-style:none; padding:0; margin:0; font-size:14px; line-height:1.7; flex:1;">
+                        <li>&#8226; USP 기반의 마케팅 메시지 개발</li>
+                        <li>&#8226; 온라인/오프라인 채널 전략 수립 및 실행</li>
+                        <li>&#8226; 초기 런칭 및 소비자 피드백 수집</li>
+                    </ul>
+                    <div style="font-size:12px; color:var(--accent-color); font-weight:700; margin-top:auto; padding-top:8px; border-top:1px solid rgba(255,255,255,0.08);">
+                        마일스톤: 시장 성공적 진입 및 초기 판매 목표 달성
+                    </div>
+                </div>
+            </div>
+            <div class="insight-box">
+                <div class="insight-box-title">핵심 인사이트</div>
+                <div class="insight-box-content">
+                    명확한 단계별 실행 계획을 통해 시장의 기회를 선점하고, 잠재 리스크에 효과적으로 대응하며 성공적인 시장 진입을 목표로 합니다.
+                </div>
+            </div>
+        </div>
+        <div class="slide-footer">
+            출처: NPD 디렉터 추정
+        </div>
+    </div>
+</div>
+
+<!-- Slide 15: References -->
+<div class="slide" id="slide-15">
+    <div class="slide-inner">
+        <div class="slide-header">
+            참고문헌 및 데이터 출처
+        </div>
+        <div class="slide-body" style="overflow-y:auto; padding-bottom:8px;">
+            <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
+                <span style="color:var(--accent-color); font-weight:700; flex-shrink:0; min-width:24px;">[1]</span>
+                <span style="color:rgba(255,255,255,0.85);">네이버 데이터랩 검색어트렌드, 조회일: 2026-04-14, 키워드: 알부민</span>
+            </div>
+            <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
+                <span style="color:var(--accent-color); font-weight:700; flex-shrink:0; min-width:24px;">[2]</span>
+                <span style="color:rgba(255,255,255,0.85);">네이버 검색광고 키워드도구, 조회일: 2026-04-14, 키워드: 알부민 &#8212; 월간 PC/모바일 검색수</span>
+            </div>
+            <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
+                <span style="color:var(--accent-color); font-weight:700; flex-shrink:0; min-width:24px;">[3]</span>
+                <span style="color:rgba(255,255,255,0.85);">네이버 쇼핑 검색결과, 조회일: 2026-04-14, 키워드: 알부민, 상위 20개 상품 기준</span>
+            </div>
+            <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
+                <span style="color:var(--accent-color); font-weight:700; flex-shrink:0; min-width:24px;">[4]</span>
+                <span style="color:rgba(255,255,255,0.85);">etoday.co.kr, Tue, 07 Apr 2026, "AOC 시대 열린다…K바이오, ‘공동개발’ 무기 장착 [차세대 신약, 외부..."</span>
+            </div>
+            <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
+                <span style="color:var(--accent-color); font-weight:700; flex-shrink:0; min-width:24px;">[5]</span>
+                <span style="color:rgba(255,255,255,0.85);">ebn.co.kr, Thu, 05 Mar 2026, "국산 혈액제제 기술, 튀르키예로 간다…SK플라즈마 1100억 기술수출"</span>
+            </div>
+            <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
+                <span style="color:var(--accent-color); font-weight:700; flex-shrink:0; min-width:24px;">[6]</span>
+                <span style="color:rgba(255,255,255,0.85);">etoday.co.kr, Tue, 07 Apr 2026, "AOC 시대 열린다…K바이오, ‘공동개발’ 무기 장착 [차세대 신약, 외부..." (에이프릴바이오 관련 내용)</span>
+            </div>
+            <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
+                <span style="color:var(--accent-color); font-weight:700; flex-shrink:0; min-width:24px;">[7]</span>
+                <span style="color:rgba(255,255,255,0.85);">ebn.co.kr, Thu, 05 Mar 2026, "국산 혈액제제 기술, 튀르키예로 간다…SK플라즈마 1100억 기술수출"</span>
+            </div>
+            <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
+                <span style="color:var(--accent-color); font-weight:700; flex-shrink:0; min-width:24px;">[8]</span>
+                <span style="color:rgba(255,255,255,0.85);">ebn.co.kr, Thu, 05 Mar 2026, "국산 혈액제제 기술, 튀르키예로 간다…SK플라즈마 1100억 기술수출" (1100억, 400억 수치 포함)</span>
+            </div>
+            <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
+                <span style="color:var(--accent-color); font-weight:700; flex-shrink:0; min-width:24px;">[9]</span>
+                <span style="color:rgba(255,255,255,0.85);">yakup.com, Wed, 04 Feb 2026, "'염증·혈관·섬유화·세포치료' 신장병 극복 K-바이오 4색 전략" (389억 달러, 674억 달러 수치 포함)</span>
+            </div>
+            <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
+                <span style="color:var(--accent-color); font-weight:700; flex-shrink:0; min-width:24px;">[식약처]</span>
+                <span style="color:rgba(255,255,255,0.85);">식품안전나라 공공데이터포털, I0760(건강기능식품 원료분류) 및 C002(일반식품 원재료), 조회일: 2026-04-14</span>
+            </div>
+            <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
+                <span style="color:var(--accent-color); font-weight:700; flex-shrink:0; min-width:24px;">(*)</span>
+                <span style="color:rgba(255,255,255,0.85);">표시 항목은 제공된 데이터를 기반으로 NPD 디렉터가 분석·추정한 내용으로 공식 통계가 아님.</span>
+            </div>
+        </div>
+        <div class="slide-footer">
+            출처: NPD 보고서 원문
+        </div>
+    </div>
+</div>
+
+<script>
+    // viewport scale
+    function scaleSlides() {
+      var s = Math.min(window.innerWidth/1600, window.innerHeight/800);
+      document.querySelectorAll('.slide-inner').forEach(function(el) {
+        el.style.transform = 'scale('+s+')';
+        el.style.transformOrigin = 'center center';
+      });
+    }
+    window.addEventListener('resize', scaleSlides);
+    scaleSlides();
+
+    // 전환
+    var slides = document.querySelectorAll('.slide');
+    var cur = 0, lock = false;
+    function show(n) {
+      slides[cur].classList.remove('active');
+      cur = (n + slides.length) % slides.length;
+      slides[cur].classList.add('active');
+      document.getElementById('slide-num').textContent = (cur+1)+' / '+slides.length;
+    }
+    document.addEventListener('keydown', function(e) {
+      if (e.key==='ArrowRight'||e.key===' '){e.preventDefault();show(cur+1);}
+      if (e.key==='ArrowLeft'){e.preventDefault();show(cur-1);}
+      if (e.key==='f'||e.key==='F'){document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen();}
+    });
+    document.addEventListener('wheel', function(e) {
+      e.preventDefault();
+      if (lock) return; lock=true;
+      show(e.deltaY>0?cur+1:cur-1);
+      setTimeout(function(){lock=false;},300);
+    },{passive:false});
+    show(0);
+
+    // Line Chart JS
+    (function() {
+      var ACCENT = '#FF5722'; /* Must match CSS variable --accent-color */
+      var pts = [
+        {l:'2024.04', v:30}, {l:'2024.07', v:45}, {l:'2024.10', v:60},
+        {l:'2025.01', v:75}, {l:'2025.04', v:85}, {l:'2025.07', v:95},
+        {l:'2025.10', v:98}, {l:'2026.01', v:100}, {l:'2026.04', v:60}
+      ];
+      function draw() {
+        var cv = document.getElementById('trendChart');
+        if (!cv) return;
+        var par = cv.parentElement;
+        var W = par.clientWidth || 1300, H = par.clientHeight || 350;
+        cv.width = W; cv.height = H;
+        var ctx = cv.getContext('2d');
+        var PL=60, PR=20, PT=20, PB=45;
+        var cW=W-PL-PR, cH=H-PT-PB;
+        var maxV=100;
+        function xp(i){return PL + i/(pts.length-1)*cW;}
+        function yp(v){return PT + cH - v/maxV*cH;}
+        // 그리드 + Y축 레이블
+        ctx.font='11px var(--font-noto)'; ctx.textAlign='right'; ctx.fillStyle='rgba(255,255,255,0.4)';
+        [0,25,50,75,100].forEach(function(v){
+          var y=yp(v);
+          ctx.strokeStyle='rgba(255,255,255,0.07)'; ctx.lineWidth=1;
+          ctx.beginPath(); ctx.moveTo(PL,y); ctx.lineTo(PL+cW,y); ctx.stroke();
+          ctx.fillText(v,PL-6,y+4);
+        });
+        // 면적 그라디언트
+        var gr=ctx.createLinearGradient(0,PT,0,PT+cH);
+        gr.addColorStop(0,ACCENT+'55'); gr.addColorStop(1,ACCENT+'05');
+        ctx.beginPath();
+        ctx.moveTo(xp(0),yp(0));
+        pts.forEach(function(d,i){ctx.lineTo(xp(i),yp(d.v));});
+        ctx.lineTo(xp(pts.length-1),yp(0)); ctx.closePath();
+        ctx.fillStyle=gr; ctx.fill();
+        // 선
+        ctx.beginPath(); ctx.strokeStyle=ACCENT; ctx.lineWidth=2.5; ctx.lineJoin='round';
+        pts.forEach(function(d,i){i?ctx.lineTo(xp(i),yp(d.v)):ctx.moveTo(xp(i),yp(d.v));});
+        ctx.stroke();
+        // 점 + 값 레이블 + X축 레이블
+        ctx.fillStyle=ACCENT; ctx.textAlign='center'; ctx.font='11px var(--font-noto)';
+        pts.forEach(function(d,i){
+          ctx.beginPath(); ctx.arc(xp(i),yp(d.v),4,0,2*Math.PI); ctx.fill();
+          ctx.fillStyle='rgba(255,255,255,0.7)';
+          ctx.fillText(d.v, xp(i), yp(d.v)-10);
+          ctx.fillStyle='rgba(255,255,255,0.4)';
+          ctx.fillText(d.l, xp(i), H-8);
+          ctx.fillStyle=ACCENT;
+        });
+      }
+      if(document.fonts) document.fonts.ready.then(draw); else window.addEventListener('load',draw);
+      window.addEventListener('resize',draw);
+    })();
+</script>
+<script>
+(function() {
+  var contentScales = {};
+
+  function measureAll() {
+    document.querySelectorAll('.slide').forEach(function(slide, i) {
+      var hidden = !slide.classList.contains('active');
+      if (hidden) {
+        slide.style.visibility = 'hidden';
+        slide.style.display    = 'flex';
+      }
+      var inner = slide.querySelector('.slide-inner');
+      if (inner) {
+        contentScales[i] = inner.scrollHeight > 800
+          ? (790 / inner.scrollHeight)
+          : 1;
+      }
+      if (hidden) {
+        slide.style.display    = '';
+        slide.style.visibility = '';
+      }
+    });
+  }
+
+  function applyScales() {
+    var vScale = Math.min(window.innerWidth / 1600, window.innerHeight / 800);
+    document.querySelectorAll('.slide').forEach(function(slide, i) {
+      var inner = slide.querySelector('.slide-inner');
+      if (!inner) return;
+      var cScale   = (contentScales[i] != null) ? contentScales[i] : 1;
+      var combined = vScale * cScale;
+      inner.style.transform       = 'scale(' + combined + ')';
+      inner.style.transformOrigin = 'center center';
+    });
+  }
+
+  window.scaleSlides = applyScales;
+  window.addEventListener('resize', applyScales);
+
+  (document.fonts ? document.fonts.ready : Promise.resolve()).then(function() {
+    measureAll();
+    applyScales();
+  });
+})();
+</script>
+</body>
+</html>
