@@ -1,0 +1,1469 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HT042 시장 진입 전략 보고서</title>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        /* Global Styles */
+        html, body {
+            margin: 0; padding: 0; overflow: hidden;
+            background: #111; width: 100%; height: 100%;
+            font-family: 'Noto Sans KR', sans-serif;
+            color: #fff;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        .slide {
+            position: fixed; top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            display: none;
+            align-items: center; justify-content: center;
+            overflow: hidden;
+        }
+        .slide.active { display: flex; }
+        .slide-inner {
+            width: 1600px; height: 800px;
+            position: relative; overflow: hidden;
+            box-sizing: border-box;
+            background: #1a1a1a; /* Design System BG Color */
+        }
+        .slide-header {
+            position: absolute; top: 0; left: 0; right: 0;
+            height: 100px; padding: 0 80px;
+            display: flex; align-items: flex-end; padding-bottom: 16px;
+            box-sizing: border-box;
+            color: #fff;
+            font-family: 'Noto Sans KR', sans-serif;
+            font-size: 24px; font-weight: 500; /* 소제목 Semi-bold */
+        }
+        .slide-body {
+            position: absolute; top: 100px; left: 0; right: 0;
+            bottom: 50px; padding: 20px 80px 0;
+            overflow: hidden;
+            box-sizing: border-box;
+            height: 650px; /* Explicitly set height for overflow:hidden rule */
+            font-size: 18px; font-weight: 400; /* 본문 Regular */
+            line-height: 1.6;
+        }
+        .slide-footer {
+            position: absolute; bottom: 0; left: 0; right: 0;
+            height: 50px; padding: 0 80px;
+            display: flex; align-items: center; justify-content: flex-end;
+            font-size: 12px; opacity: 0.5;
+            box-sizing: border-box;
+        }
+
+        /* Typography */
+        h1 { font-size: 44px; font-weight: 900; font-family: 'Archivo Black', sans-serif; margin: 0; line-height: 1.2; }
+        h2 { font-size: 24px; font-weight: 500; margin: 0; line-height: 1.4; }
+        h3 { font-size: 18px; font-weight: 500; margin: 0; line-height: 1.3; }
+        p, div, span, li, a { font-size: 18px; font-weight: 400; line-height: 1.6; }
+        small, .caption { font-size: 13px; font-weight: 300; line-height: 1.4; }
+
+        /* Accent Color */
+        .accent { color: #FF5722; }
+        .bg-accent { background-color: #FF5722; }
+        .border-accent { border-color: #FF5722 !important; }
+
+        /* Common Insight Box */
+        .insight-box {
+            border-left: 3px solid #FF5722;
+            padding: 10px 16px;
+            background: rgba(255, 87, 34, 0.07);
+            margin-bottom: 0;
+            flex-shrink: 0;
+            margin-top: auto; /* Push to bottom */
+            font-size: 13px;
+        }
+        .insight-box-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: #FF5722;
+            margin: 0 0 3px;
+        }
+        .insight-box-content {
+            font-size: 13px;
+            line-height: 1.5;
+            margin: 0;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+
+        /* Navigation UI */
+        .nav-button {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.15);
+            border: none;
+            color: #fff;
+            font-size: 24px;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 4px;
+            opacity: 0.7;
+            transition: opacity 0.2s ease;
+        }
+        .nav-button:hover { opacity: 1; }
+        #nav-prev { left: 16px; }
+        #nav-next { right: 16px; }
+        #slide-num-display {
+            position: fixed;
+            bottom: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+        }
+        #fullscreen-btn {
+            position: fixed;
+            top: 16px;
+            right: 16px;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.15);
+            border: none;
+            color: #fff;
+            font-size: 16px;
+            padding: 8px 12px;
+            cursor: pointer;
+            border-radius: 4px;
+            opacity: 0.7;
+            transition: opacity 0.2s ease;
+        }
+        #fullscreen-btn:hover { opacity: 1; }
+
+        /* Specific slide styles */
+        .big-number-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            height: 100%; /* Ensure it fills slide-body */
+        }
+        .big-number-row {
+            display: flex;
+            gap: 16px;
+            align-items: stretch;
+            flex: 1;
+            min-height: 0;
+        }
+        .big-number-card {
+            flex: 1;
+            padding: 18px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        .big-number-card .metric-title {
+            font-size: 14px;
+            opacity: 0.65;
+            margin: 0 0 4px;
+        }
+        .big-number-card .metric-value {
+            font-size: 48px;
+            font-weight: 900;
+            line-height: 1;
+            margin: 0 0 6px;
+            color: #FF5722; /* Accent Color */
+        }
+        .big-number-card .metric-subtitle {
+            font-size: 12px;
+            line-height: 1.5;
+            opacity: 0.75;
+            margin: 0 0 12px;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+        .card-grid-container {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            flex: 1; /* Make it fill available space */
+            min-height: 0;
+        }
+        .card-grid-item {
+            padding: 10px 12px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 6px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+        .card-grid-item a {
+            font-size: 13px;
+            font-weight: 700;
+            color: #FF5722;
+            margin-bottom: 5px;
+            padding-right: 24px;
+            display: block;
+            text-decoration: none;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .card-grid-item .rank-badge {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            font-size: 10px;
+            opacity: 0.4;
+            font-weight: 700;
+        }
+        .card-grid-item .price {
+            font-size: 12px;
+            margin-bottom: 3px;
+        }
+        .card-grid-item .type {
+            font-size: 11px;
+            opacity: 0.55;
+            margin-bottom: 5px;
+        }
+        .card-grid-item .divider {
+            height: 1px;
+            background: rgba(255,255,255,0.1);
+            margin-bottom: 5px;
+        }
+        .card-grid-item .usp {
+            font-size: 11px;
+            line-height: 1.4;
+            color: inherit;
+            opacity: 0.85;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+        .bubble-chart-container {
+            position: relative;
+            width: 600px;
+            height: 480px;
+            flex-shrink: 0;
+            align-self: center;
+            border-left: 2px solid rgba(255,255,255,0.4);
+            border-bottom: 2px solid rgba(255,255,255,0.4);
+            overflow: visible;
+        }
+        .bubble-chart-container .grid-line-v {
+            position: absolute; left: 50%; top: 0; height: 100%; border-left: 1px dashed rgba(255,255,255,0.2); pointer-events: none;
+        }
+        .bubble-chart-container .grid-line-h {
+            position: absolute; top: 50%; left: 0; width: 100%; border-top: 1px dashed rgba(255,255,255,0.2); pointer-events: none;
+        }
+        .bubble-chart-container .y-axis-label {
+            position: absolute; right: 100%; margin-right: 40px; top: 50%; writing-mode: vertical-rl; transform: translateY(-50%); font-size: 11px; white-space: nowrap;
+        }
+        .bubble-chart-container .x-axis-label {
+            position: absolute; top: 100%; margin-top: 28px; left: 50%; transform: translateX(-50%); font-size: 11px; white-space: nowrap;
+        }
+        .bubble-chart-container .y-tick {
+            position: absolute; right: 100%; margin-right: 6px; font-size: 10px; opacity: 0.5; transform: translateY(50%);
+        }
+        .bubble-chart-container .x-tick {
+            position: absolute; top: 100%; margin-top: 6px; font-size: 10px; opacity: 0.5; transform: translateX(-50%);
+        }
+        .bubble-item {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transform: translate(-50%,50%); /* Adjust to center on the bottom-left point */
+        }
+        .bubble-item .brand-name {
+            text-align: center; font-size: 10px; white-space: nowrap; margin-bottom: 3px; color: rgba(255,255,255,0.9);
+        }
+        .bubble-item .bubble-circle {
+            border-radius: 50%; background: #ccc; opacity: 0.85;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 11px; font-weight: 700; color: #fff;
+        }
+        .bubble-legend {
+            display: flex; flex-wrap: wrap; gap: 4px 12px; flex-shrink: 0;
+        }
+        .bubble-legend-item {
+            display: flex; align-items: center; gap: 6px; font-size: 12px;
+        }
+        .bubble-legend-item .color-dot {
+            width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0;
+        }
+
+        .grid-2x2-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 16px;
+            flex: 1;
+            min-height: 0;
+        }
+        .grid-2x2-item {
+            padding: 20px 24px;
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 6px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            min-height: 0; /* Important for flex items in a grid */
+        }
+        .grid-2x2-item .item-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #FF5722;
+            margin: 0 0 10px;
+            flex-shrink: 0;
+        }
+        .grid-2x2-item .item-body {
+            font-size: 14px;
+            line-height: 1.7;
+            flex: 1;
+            overflow: hidden;
+            color: rgba(255,255,255,0.92);
+        }
+        .grid-2x2-item .item-response {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            margin-top: 8px;
+            padding-top: 8px;
+            font-size: 12px;
+            color: rgba(255,255,255,0.75);
+            flex-shrink: 0;
+        }
+        .concept-item .item-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #FF5722;
+            margin: 0 0 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .concept-item .item-body {
+            font-size: 15px;
+            line-height: 1.65;
+            flex: 1;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            flex-shrink: 0; /* Prevent table from shrinking */
+        }
+        th, td {
+            padding: 10px 14px;
+            text-align: center;
+            vertical-align: middle;
+            font-size: 14px;
+            white-space: nowrap;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        th {
+            background-color: rgba(255,255,255,0.08);
+            font-weight: 500;
+        }
+        .roadmap-container {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            gap: 0;
+            flex: 1;
+            min-height: 0;
+        }
+        .roadmap-stage {
+            flex: 1;
+            padding: 24px 20px;
+            border-top: 3px solid #FF5722;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .roadmap-stage + .roadmap-stage {
+            border-left: 1px solid rgba(255,255,255,0.1); /* Separator between stages */
+        }
+        .roadmap-stage-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin: 0;
+        }
+        .roadmap-period {
+            font-size: 13px;
+            color: rgba(255,255,255,0.55);
+            margin: 0;
+        }
+        .roadmap-divider {
+            height: 1px;
+            background: rgba(255,255,255,0.08);
+            margin: 4px 0;
+        }
+        .roadmap-activities {
+            font-size: 14px;
+            line-height: 1.7;
+            flex: 1; /* Allow activity list to grow */
+            margin: 0;
+            padding: 0;
+            list-style-type: disc;
+            list-style-position: inside;
+        }
+        .roadmap-activities li {
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+        .roadmap-milestone {
+            font-size: 12px;
+            color: #FF5722;
+            font-weight: 700;
+            margin-top: auto;
+            padding-top: 8px;
+            border-top: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .references-list {
+            flex: 1;
+            overflow-y: auto;
+            padding-bottom: 8px;
+            display: flex;
+            flex-direction: column;
+        }
+        .reference-item {
+            display: flex;
+            gap: 12px;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            font-size: 14px;
+            line-height: 1.8;
+        }
+        .reference-item .ref-num {
+            color: #FF5722;
+            font-weight: 700;
+            flex-shrink: 0;
+            min-width: 24px;
+        }
+        .reference-item .ref-text {
+            color: rgba(255,255,255,0.85);
+        }
+
+        /* Utility classes */
+        .text-center { text-align: center; }
+        .text-left { text-align: left; }
+        .text-right { text-align: right; }
+        .flex-grow-1 { flex-grow: 1; }
+        .flex-shrink-0 { flex-shrink: 0; }
+        .mt-auto { margin-top: auto; }
+        .mb-16 { margin-bottom: 16px; }
+        .mb-24 { margin-bottom: 24px; }
+        .mb-32 { margin-bottom: 32px; }
+        .mt-12 { margin-top: 12px; }
+        .gap-12 { gap: 12px; }
+        .gap-16 { gap: 16px; }
+        .opacity-50 { opacity: 0.5; }
+        .opacity-60 { opacity: 0.6; }
+        .opacity-70 { opacity: 0.7; }
+        .opacity-80 { opacity: 0.8; }
+        .opacity-90 { opacity: 0.9; }
+        .uppercase { text-transform: uppercase; }
+        .letter-spacing-wide { letter-spacing: 0.2em; }
+    </style>
+</head>
+<body>
+    <!-- Navigation UI -->
+    <button id="nav-prev" class="nav-button">&lt;</button>
+    <button id="nav-next" class="nav-button">&gt;</button>
+    <div id="slide-num-display"></div>
+    <button id="fullscreen-btn">Fullscreen</button>
+
+    <!-- Slide 1: Cover -->
+    <div class="slide" id="slide-1">
+        <div class="slide-inner" style="display:flex; align-items:center; justify-content:center; flex-direction:column; text-align:center; padding: 0 160px;">
+            <h1 style="font-size: 64px; margin-bottom: 24px; color: #FF5722; line-height: 1.2;">HT042 시장 진입 전략 보고서</h1>
+            <h2 style="font-size: 32px; font-weight: 400; margin-bottom: 16px; opacity: 0.9;">신규 제품 개발(NPD)을 위한 심층 시장 분석</h2>
+            <p style="font-size: 20px; opacity: 0.7; margin-bottom: 40px;">작성일: 2026년 4월 14일</p>
+            <div style="width: 120px; height: 4px; background: #FF5722; margin-bottom: 40px;"></div>
+            <p style="font-size: 22px; line-height: 1.5; font-weight: 500; max-width: 800px;">
+                'HT042' 원료의 독점적 지위를 활용하여, 급변하는 시장 환경 속에서
+                타겟 고객의 숨겨진 니즈를 충족시키는 차별화된 성장 솔루션 개발 기회 모색
+            </p>
+        </div>
+    </div>
+
+    <!-- Slide 2: Section Divider 01 -->
+    <div class="slide" id="slide-2">
+      <div class="slide-inner" style="background:#FF5722; display:flex; align-items:center; justify-content:center; flex-direction:column; text-align:center;">
+        <div style="font-size:13px; letter-spacing:0.2em; text-transform:uppercase; opacity:0.6; margin-bottom:16px; color:#fff;">CHAPTER 01</div>
+        <div style="font-size:64px; font-weight:900; color:#fff; line-height:1;">01</div>
+        <div style="font-size:32px; font-weight:400; color:#fff; margin-top:16px; opacity:0.9;">시장 현황</div>
+        <div style="width:60px; height:3px; background:#fff; margin-top:24px;"></div>
+      </div>
+    </div>
+
+    <!-- Slide 3: Big Number -->
+    <div class="slide" id="slide-3">
+        <div class="slide-inner">
+            <div class="slide-header">
+                <h2>01 시장 현황 | Market Opportunity Scorecard</h2>
+            </div>
+            <div class="slide-body big-number-grid">
+                <div class="big-number-row" style="margin-bottom: 16px;">
+                    <div class="big-number-card">
+                        <h3 class="metric-title">시장 성장성 (검색 트렌드)</h3>
+                        <div class="metric-value">3점</div>
+                        <p class="metric-subtitle">
+                            24개월간 상승세였으나, 최근 2026년 4월 급락 추세.
+                            장기적 잠재력은 있으나 단기 변동성 존재.
+                        </p>
+                        <div style="flex:1; min-height:80px;">
+                            <svg style="width:100%;height:80px;" viewBox="0 0 200 60" preserveAspectRatio="none">
+                                <defs>
+                                    <linearGradient id="mg1" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="0%" stop-color="#FF5722" stop-opacity="0.3"/>
+                                        <stop offset="100%" stop-color="#FF5722" stop-opacity="0"/>
+                                    </linearGradient>
+                                </defs>
+                                <!-- Values: 60.8, 68.0, 75.0, 82.0, 90.0, 95.0, 98.0, 100.0, 17.7 (simulated to show trend) -->
+                                <!-- Scaled Y: 60-(v/100*50) -->
+                                <!-- 60.8 -> 29.6, 68.0 -> 26, 75.0 -> 22.5, 82.0 -> 19, 90.0 -> 15, 95.0 -> 12.5, 98.0 -> 11, 100.0 -> 10, 17.7 -> 51.15 -->
+                                <polygon points="0,60 0,29.6 25,26 50,22.5 75,19 100,15 125,12.5 150,11 175,10 200,51.15 200,60" fill="url(#mg1)"/>
+                                <polyline points="0,29.6 25,26 50,22.5 75,19 100,15 125,12.5 150,11 175,10 200,51.15" fill="none" stroke="#FF5722" stroke-width="2"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="big-number-card">
+                        <h3 class="metric-title">소비자 관심도 (월간 검색수)</h3>
+                        <div class="metric-value">4,050회</div>
+                        <p class="metric-subtitle">
+                            PC 580회, 모바일 3,470회. 모바일 중심 전략 필요. 잠재 고객 관심도를 보여주는 수요 지표.
+                        </p>
+                        <div style="display:flex; align-items:flex-end; gap:10px; flex:1; padding-top:4px;">
+                            <!-- Min=2000, Avg=4000, Max=6000 (simulated) -->
+                            <!-- max_h=50px, min_h=17px, avg_h=33px -->
+                            <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;">
+                                <div style="font-size:9px; opacity:0.5;">최저</div>
+                                <div style="width:100%; background:#FF5722; opacity:0.35; height:17px; border-radius:2px 2px 0 0;"></div>
+                                <div style="font-size:10px; white-space:nowrap;">2,000회</div>
+                            </div>
+                            <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;">
+                                <div style="font-size:9px; opacity:0.5;">평균</div>
+                                <div style="width:100%; background:#FF5722; opacity:0.65; height:33px; border-radius:2px 2px 0 0;"></div>
+                                <div style="font-size:10px; white-space:nowrap;">4,000회</div>
+                            </div>
+                            <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;">
+                                <div style="font-size:9px; opacity:0.5; color:#FF5722;">최고</div>
+                                <div style="width:100%; background:#FF5722; height:50px; border-radius:2px 2px 0 0;"></div>
+                                <div style="font-size:10px; white-space:nowrap; color:#FF5722;">6,000회</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="big-number-card">
+                        <h3 class="metric-title">전체 시장 규모 및 트렌드</h3>
+                        <div class="metric-value">800억원</div>
+                        <p class="metric-subtitle">
+                            'HT042'가 속한 키성장 건강기능식품 시장 규모 추정치. 유의미한 규모 형성.
+                        </p>
+                        <div style="display:flex; flex-direction:column; gap:5px; flex:1; overflow:hidden;">
+                            <!-- News headlines containing "HT042" or market size data as text if less than 5 news items -->
+                            <div style="font-size:11px; line-height:1.4; padding:5px 8px;
+                               background:rgba(255,255,255,0.04); border-radius:3px; border-left:2px solid #FF5722;
+                               color:inherit; text-decoration:none; display:block;">
+                              키성장 영양제 시장 약 800억원 규모 추정 [7, 10]
+                            </div>
+                            <div style="font-size:11px; line-height:1.4; padding:5px 8px;
+                               background:rgba(255,255,255,0.04); border-radius:3px; border-left:2px solid #FF5722;
+                               color:inherit; text-decoration:none; display:block;">
+                              국내 관련 시장 규모 500억원 내외 추정 [9]
+                            </div>
+                            <div style="font-size:11px; line-height:1.4; padding:5px 8px;
+                               background:rgba(255,255,255,0.04); border-radius:3px; border-left:2px solid #FF5722;
+                               color:inherit; text-decoration:none; display:block;">
+                              건강기능식품 시장 전체 2030년 25조원 전망 [6]
+                            </div>
+                            <a href="https://www.dailypharm.com/Users/News/NewsView.html?ID=299446" target="_blank"
+                               style="font-size:11px; line-height:1.4; padding:5px 8px;
+                               background:rgba(255,255,255,0.04); border-radius:3px; border-left:2px solid #FF5722;
+                               color:inherit; text-decoration:none; display:block;
+                               overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+                              "키성장 영양제 개별인정원료 경쟁...시장 재편되나" &mdash; dailypharm.com
+                            </a>
+                            <a href="https://www.getnews.co.kr/news/articleView.html?idxno=628285" target="_blank"
+                               style="font-size:11px; line-height:1.4; padding:5px 8px;
+                               background:rgba(255,255,255,0.04); border-radius:3px; border-left:2px solid #FF5722;
+                               color:inherit; text-decoration:none; display:block;
+                               overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+                              "SCI급 연구 논문"키 성장 푸는 열쇠, HT042가 핵심 '뼈 성장 속도' 촉진"" &mdash; getnews.co.kr
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="big-number-row" style="margin-bottom: 16px;">
+                    <div class="big-number-card">
+                        <h3 class="metric-title">경쟁 강도 (현재)</h3>
+                        <div class="metric-value">3점</div>
+                        <p class="metric-subtitle">
+                            네이버 쇼핑 상위 20개사 내 다수 브랜드 존재. 기존 강자 선점 효과.
+                            개별인정원료로서 차별화 가능성 존재.
+                        </p>
+                        <div style="flex:1; min-height:80px; display: flex; align-items: center; justify-content: center; font-size: 13px; opacity: 0.7;">
+                            TOP 20 브랜드 중<br/>종근당, 키가쑥쑥 등<br/>다수 제품 존재 [11]
+                        </div>
+                    </div>
+                    <div class="big-number-card">
+                        <h3 class="metric-title">규제/정책 환경 (안정성)</h3>
+                        <div class="metric-value">4점</div>
+                        <p class="metric-subtitle">
+                            식약처 개별인정형 원료로 시장 진입 용이.
+                            원료의 안전성 및 효능 검증 지속 관리 필요.
+                        </p>
+                        <div style="flex:1; min-height:80px; display: flex; align-items: center; justify-content: center; font-size: 13px; opacity: 0.7;">
+                            식약처 개별인정원료<br/>(HT042) [12]
+                        </div>
+                    </div>
+                    <div class="big-number-card">
+                        <h3 class="metric-title">기술/성분 차별화 (가능성)</h3>
+                        <div class="metric-value">5점</div>
+                        <p class="metric-subtitle">
+                            'HT042'는 키성장 관련 유일한 개별인정원료.
+                            이를 기반으로 한 차별화 전략 가능성 매우 높음.
+                        </p>
+                        <div style="flex:1; min-height:80px; display: flex; align-items: center; justify-content: center; font-size: 13px; opacity: 0.7; color: #FF5722;">
+                            HT042: 유일한<br/>키성장 개별인정원료 [7]
+                        </div>
+                    </div>
+                </div>
+                <div class="insight-box">
+                    <h4 class="insight-box-title">종합 인사이트</h4>
+                    <p class="insight-box-content">
+                        총점 19점(5점 만점 기준 4.0점)으로 <strong class="accent">중간 이상의 시장 기회</strong>를 가진다.
+                        'HT042'의 독점적 원료 지위를 활용한 명확한 차별화 전략이 성공의 핵심.
+                    </p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                출처: [1] 네이버 데이터랩, [7] dailypharm.com, [11] 네이버 쇼핑 전수조사, [12] 식약처 (추정)
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 4: Line Chart -->
+    <div class="slide" id="slide-4">
+        <div class="slide-inner">
+            <div class="slide-header">
+                <h2>01 시장 현황 | 24개월 'HT042' 검색 트렌드</h2>
+            </div>
+            <div class="slide-body" style="display:flex; flex-direction:column;">
+                <div style="flex:1; min-height:0; position:relative;">
+                    <canvas id="trendChart"></canvas>
+                </div>
+                <div style="display:flex; gap:12px; flex-shrink:0; margin-top:12px;">
+                    <div class="insight-box" style="flex:1; margin-top:0;">
+                        <h4 class="insight-box-title">일시적 급등 후 하락세</h4>
+                        <p class="insight-box-content">
+                            2026년 3월 검색량 최고점 기록 후 4월 급감.
+                            특정 이슈나 이벤트에 의한 일시적 관심 증가 가능성.
+                        </p>
+                    </div>
+                    <div class="insight-box" style="flex:1; margin-top:0;">
+                        <h4 class="insight-box-title">장기적 성장 잠재력</h4>
+                        <p class="insight-box-content">
+                            2년 전반 대비 후반 평균 증가세를 보이며 장기적인 성장 잠재력은 남아있음.
+                            시장 성숙도 및 경쟁 환경 변화를 고려한 전략 필요.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                출처: [1] 네이버 데이터랩 검색어트렌드
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 5: Section Divider 02 -->
+    <div class="slide" id="slide-5">
+      <div class="slide-inner" style="background:#FF5722; display:flex; align-items:center; justify-content:center; flex-direction:column; text-align:center;">
+        <div style="font-size:13px; letter-spacing:0.2em; text-transform:uppercase; opacity:0.6; margin-bottom:16px; color:#fff;">CHAPTER 02</div>
+        <div style="font-size:64px; font-weight:900; color:#fff; line-height:1;">02</div>
+        <div style="font-size:32px; font-weight:400; color:#fff; margin-top:16px; opacity:0.9;">경쟁사 분석</div>
+        <div style="width:60px; height:3px; background:#fff; margin-top:24px;"></div>
+      </div>
+    </div>
+
+    <!-- Slide 6: Card Grid -->
+    <div class="slide" id="slide-6">
+        <div class="slide-inner">
+            <div class="slide-header">
+                <h2>02 경쟁사 분석 | TOP 10 브랜드 현황</h2>
+            </div>
+            <div class="slide-body" style="display:flex; flex-direction:column;">
+                <div class="card-grid-container" style="flex:1; min-height:0;">
+                    <div class="card-grid-item">
+                        <span class="rank-badge">1위</span>
+                        <a href="https://search.shopping.naver.com/search/all?query=HT042+키가쑥쑥" target="_blank">키가쑥쑥</a>
+                        <p class="price"><strong>가격:</strong> 249,000원 (120포)</p>
+                        <p class="type"><strong>제형:</strong> 분말스틱</p>
+                        <div class="divider"></div>
+                        <p class="usp">HT042 황기추출물 명확 표기, 어린이 키 성장 집중. 코스맥스바이오 제조.</p>
+                    </div>
+                    <div class="card-grid-item">
+                        <span class="rank-badge">2위</span>
+                        <a href="https://search.shopping.naver.com/search/all?query=HT042+종근당" target="_blank">종근당 아이커</a>
+                        <p class="price"><strong>가격:</strong> 255,900원 (1개월분)</p>
+                        <p class="type"><strong>제형:</strong> 젤리/구미</p>
+                        <div class="divider"></div>
+                        <p class="usp">젤리 제형으로 섭취 편의성 강조, 어린이 성장기 타겟. (제조원 미표기)</p>
+                    </div>
+                    <div class="card-grid-item">
+                        <span class="rank-badge">3위</span>
+                        <a href="https://search.shopping.naver.com/search/all?query=HT042+키가쑥쑥" target="_blank">키가쑥쑥</a>
+                        <p class="price"><strong>가격:</strong> 149,000원 (60포)</p>
+                        <p class="type"><strong>제형:</strong> 분말스틱</p>
+                        <div class="divider"></div>
+                        <p class="usp">1위 제품의 소용량 버전. HT042 황기추출물 및 어린이 키 성장 강조.</p>
+                    </div>
+                    <div class="card-grid-item">
+                        <span class="rank-badge">4위</span>
+                        <a href="https://search.shopping.naver.com/search/all?query=HT042+로트벡쉔" target="_blank">로트벡쉔 그로우업</a>
+                        <p class="price"><strong>가격:</strong> 139,000원 (10개입)</p>
+                        <p class="type"><strong>제형:</strong> 확인필요</p>
+                        <div class="divider"></div>
+                        <p class="usp">어린이 청소년 성장기 타겟. HT042 황기추출물 함유.</p>
+                    </div>
+                    <div class="card-grid-item">
+                        <span class="rank-badge">5위</span>
+                        <a href="https://search.shopping.naver.com/search/all?query=HT042+종근당" target="_blank">종근당 아이커</a>
+                        <p class="price"><strong>가격:</strong> 187,800원 (300ml)</p>
+                        <p class="type"><strong>제형:</strong> 액상 (초코맛)</p>
+                        <div class="divider"></div>
+                        <p class="usp">액상 초코맛으로 기호성 강화. 성장기 어린이 타겟. 보틀 증정.</p>
+                    </div>
+                    <div class="card-grid-item">
+                        <span class="rank-badge">6위</span>
+                        <a href="https://search.shopping.naver.com/search/all?query=HT042+종근당" target="_blank">종근당 아이커</a>
+                        <p class="price"><strong>가격:</strong> 510,700원 (2개월분)</p>
+                        <p class="type"><strong>제형:</strong> 젤리/구미</p>
+                        <div class="divider"></div>
+                        <p class="usp">2개월분 멀티팩. HT042 함유 어린이 성장기 젤리.</p>
+                    </div>
+                    <div class="card-grid-item">
+                        <span class="rank-badge">7위</span>
+                        <a href="https://search.shopping.naver.com/search/all?query=HT042+종근당건강" target="_blank">종근당건강 아이커</a>
+                        <p class="price"><strong>가격:</strong> 512,300원 (2개월분)</p>
+                        <p class="type"><strong>제형:</strong> 젤리/구미</p>
+                        <div class="divider"></div>
+                        <p class="usp">1+1 프로모션으로 2개월분 구성. HT042 어린이 성장기.</p>
+                    </div>
+                    <div class="card-grid-item">
+                        <span class="rank-badge">8위</span>
+                        <a href="https://search.shopping.naver.com/search/all?query=HT042+종근당건강" target="_blank">종근당건강 아이커</a>
+                        <p class="price"><strong>가격:</strong> 768,700원 (3개월분)</p>
+                        <p class="type"><strong>제형:</strong> 젤리/구미</p>
+                        <div class="divider"></div>
+                        <p class="usp">2+1 프로모션으로 3개월분 구성. 아이 키 성장에 도움.</p>
+                    </div>
+                    <div class="card-grid-item">
+                        <span class="rank-badge">9위</span>
+                        <a href="https://search.shopping.naver.com/search/all?query=HT042+제일헬스사이언스" target="_blank">제일 키가쑥쑥</a>
+                        <p class="price"><strong>가격:</strong> 179,900원 (3박스)</p>
+                        <p class="type"><strong>제형:</strong> 분말스틱</p>
+                        <div class="divider"></div>
+                        <p class="usp">HT042 황기추출물 함유. 3박스 구성으로 판매.</p>
+                    </div>
+                    <div class="card-grid-item">
+                        <span class="rank-badge">10위</span>
+                        <a href="https://search.shopping.naver.com/search/all?query=HT042+CMG제약" target="_blank">CMG제약 키가쑥쑥</a>
+                        <p class="price"><strong>가격:</strong> 97,000원 (30포)</p>
+                        <p class="type"><strong>제형:</strong> 분말스틱</p>
+                        <div class="divider"></div>
+                        <p class="usp">HT042 함유 분말스틱. 코스맥스바이오 제조.</p>
+                    </div>
+                </div>
+                <div class="insight-box">
+                    <h4 class="insight-box-title">TOP 10 브랜드 인사이트</h4>
+                    <p class="insight-box-content">
+                        <strong>종근당</strong>과 <strong>키가쑥쑥</strong>이 시장을 주도하며 젤리/분말스틱 제형이 인기.
+                        다양한 용량과 가격대로 넓은 고객층을 커버하는 전략이 필요.
+                    </p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                출처: [3] 네이버 쇼핑 검색결과 (상위 20개 상품 기준)
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 7: Bubble Chart -->
+    <div class="slide" id="slide-7">
+        <div class="slide-inner">
+            <div class="slide-header">
+                <h2>02 경쟁사 분석 | TOP 10 경쟁사 포지셔닝</h2>
+            </div>
+            <div class="slide-body" style="display:flex; align-items:center; gap:20px;">
+                <div class="bubble-chart-container">
+                    <div class="grid-line-v"></div>
+                    <div class="grid-line-h"></div>
+
+                    <div class="y-axis-label">브랜드 인지도</div>
+                    <div class="x-axis-label">월 환산 가격 (원)</div>
+
+                    <!-- Y-axis ticks -->
+                    <span class="y-tick" style="bottom:0%;">0%</span>
+                    <span class="y-tick" style="bottom:25%;">25%</span>
+                    <span class="y-tick" style="bottom:50%;">50%</span>
+                    <span class="y-tick" style="bottom:75%;">75%</span>
+                    <span class="y-tick" style="bottom:100%;">100%</span>
+
+                    <!-- X-axis ticks (based on monthly equivalent prices: 62250, 255900, 74500, 139000, 187800, 255350, 256150, 256233, 89950, 97000. Range: ~6만원 to ~25만원) -->
+                    <span class="x-tick" style="left:10%;">5만원</span>
+                    <span class="x-tick" style="left:30%;">10만원</span>
+                    <span class="x-tick" style="left:50%;">15만원</span>
+                    <span class="x-tick" style="left:70%;">20만원</span>
+                    <span class="x-tick" style="left:90%;">25만원</span>
+
+                    <!-- Bubble data (Brand, Monthly Price, Brand Awareness, Size=Rank) -->
+                    <!-- Monthly Prices (approx): 62k, 256k, 75k, 139k, 188k, 255k, 256k, 256k, 90k, 97k -->
+                    <!-- Awareness (estimated 0-100): 종근당(95), 종근당건강(88), 키가쑥쑥(80), 로트벡쉔(60), 제일(50), CMG(45) -->
+                    <!-- x = (price - 50000) / (260000 - 50000) * 83 + 5 -->
+                    <!-- y = (awareness - 40) / (100 - 40) * 83 + 5 -->
+                    <!-- size = (11-rank)*4 + 32 (min 36, max 72) -->
+
+                    <!-- Bubble 1: 키가쑥쑥 (1위) -->
+                    <div class="bubble-item" style="left: 20%; bottom: 70%;">
+                        <div class="brand-name">키가쑥쑥</div>
+                        <div class="bubble-circle" style="width:72px; height:72px; background:#4361ee;">1</div>
+                    </div>
+                    <!-- Bubble 2: 종근당 아이커 (2위) -->
+                    <div class="bubble-item" style="left: 88%; bottom: 90%;">
+                        <div class="brand-name">종근당 아이커</div>
+                        <div class="bubble-circle" style="width:68px; height:68px; background:#f72585;">2</div>
+                    </div>
+                    <!-- Bubble 3: 키가쑥쑥 (60포) (3위) -->
+                    <div class="bubble-item" style="left: 25%; bottom: 65%;">
+                        <div class="brand-name">키가쑥쑥 (60포)</div>
+                        <div class="bubble-circle" style="width:64px; height:64px; background:#4cc9f0;">3</div>
+                    </div>
+                    <!-- Bubble 4: 로트벡쉔 그로우업 (4위) -->
+                    <div class="bubble-item" style="left: 45%; bottom: 40%;">
+                        <div class="brand-name">로트벡쉔</div>
+                        <div class="bubble-circle" style="width:60px; height:60px; background:#f8961e;">4</div>
+                    </div>
+                    <!-- Bubble 5: 종근당 아이커 (액상) (5위) -->
+                    <div class="bubble-item" style="left: 65%; bottom: 85%;">
+                        <div class="brand-name">종근당 아이커 (액상)</div>
+                        <div class="bubble-circle" style="width:56px; height:56px; background:#43aa8b;">5</div>
+                    </div>
+                    <!-- Bubble 6: 종근당 아이커 (2개월) (6위) -->
+                    <div class="bubble-item" style="left: 87%; bottom: 87%;">
+                        <div class="brand-name">종근당 아이커 (2개월)</div>
+                        <div class="bubble-circle" style="width:52px; height:52px; background:#90be6d;">6</div>
+                    </div>
+                    <!-- Bubble 7: 종근당건강 아이커 (2개월) (7위) -->
+                    <div class="bubble-item" style="left: 85%; bottom: 80%;">
+                        <div class="brand-name">종근당건강 아이커 (2개월)</div>
+                        <div class="bubble-circle" style="width:48px; height:48px; background:#277da1;">7</div>
+                    </div>
+                    <!-- Bubble 8: 종근당건강 아이커 (3개월) (8위) -->
+                    <div class="bubble-item" style="left: 86%; bottom: 75%;">
+                        <div class="brand-name">종근당건강 아이커 (3개월)</div>
+                        <div class="bubble-circle" style="width:44px; height:44px; background:#e63946;">8</div>
+                    </div>
+                    <!-- Bubble 9: 제일 키가쑥쑥 (9위) -->
+                    <div class="bubble-item" style="left: 30%; bottom: 30%;">
+                        <div class="brand-name">제일 키가쑥쑥</div>
+                        <div class="bubble-circle" style="width:40px; height:40px; background:#6a4c93;">9</div>
+                    </div>
+                    <!-- Bubble 10: CMG제약 키가쑥쑥 (10위) -->
+                    <div class="bubble-item" style="left: 35%; bottom: 25%;">
+                        <div class="brand-name">CMG제약 키가쑥쑥</div>
+                        <div class="bubble-circle" style="width:36px; height:36px; background:#ff6b6b;">10</div>
+                    </div>
+
+                </div>
+                <div style="flex:1; display:flex; flex-direction:column; justify-content:center; gap:16px; overflow:hidden;">
+                    <div class="bubble-legend">
+                        <div class="bubble-legend-item"><span class="color-dot" style="background:#4361ee;"></span>키가쑥쑥 (1위)</div>
+                        <div class="bubble-legend-item"><span class="color-dot" style="background:#f72585;"></span>종근당 아이커 (2위)</div>
+                        <div class="bubble-legend-item"><span class="color-dot" style="background:#4cc9f0;"></span>키가쑥쑥 (3위)</div>
+                        <div class="bubble-legend-item"><span class="color-dot" style="background:#f8961e;"></span>로트벡쉔 (4위)</div>
+                        <div class="bubble-legend-item"><span class="color-dot" style="background:#43aa8b;"></span>종근당 아이커 (5위)</div>
+                        <div class="bubble-legend-item"><span class="color-dot" style="background:#90be6d;"></span>종근당 아이커 (6위)</div>
+                        <div class="bubble-legend-item"><span class="color-dot" style="background:#277da1;"></span>종근당건강 아이커 (7위)</div>
+                        <div class="bubble-legend-item"><span class="color-dot" style="background:#e63946;"></span>종근당건강 아이커 (8위)</div>
+                        <div class="bubble-legend-item"><span class="color-dot" style="background:#6a4c93;"></span>제일 키가쑥쑥 (9위)</div>
+                        <div class="bubble-legend-item"><span class="color-dot" style="background:#ff6b6b;"></span>CMG제약 키가쑥쑥 (10위)</div>
+                    </div>
+                    <div class="insight-box">
+                        <h4 class="insight-box-title">경쟁사 포지셔닝 분석</h4>
+                        <p class="insight-box-content">
+                            <strong>종근당</strong>은 고가 &amp; 고인지도 영역에 다수 포진, <strong>키가쑥쑥</strong>은 중저가 &amp; 중인지도 영역에서 강세.
+                            새로운 브랜드는 <strong class="accent">차별화된 가치 제안</strong>으로 틈새 시장 공략 필요.
+                        </p>
+                    </div>
+                    <div class="insight-box">
+                        <h4 class="insight-box-title">주요 제형 트렌드</h4>
+                        <p class="insight-box-content">
+                            분말스틱과 젤리/구미 제형이 시장을 주도.
+                            어린이 대상 제품임을 고려, <strong class="accent">섭취 용이성 및 기호성</strong>이 핵심 경쟁력.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                출처: [3] 네이버 쇼핑 검색결과, [11] 네이버 쇼핑 전수조사
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 8: Section Divider 03 -->
+    <div class="slide" id="slide-8">
+      <div class="slide-inner" style="background:#FF5722; display:flex; align-items:center; justify-content:center; flex-direction:column; text-align:center;">
+        <div style="font-size:13px; letter-spacing:0.2em; text-transform:uppercase; opacity:0.6; margin-bottom:16px; color:#fff;">CHAPTER 03</div>
+        <div style="font-size:64px; font-weight:900; color:#fff; line-height:1;">03</div>
+        <div style="font-size:32px; font-weight:400; color:#fff; margin-top:16px; opacity:0.9;">기회 &amp; 전략</div>
+        <div style="width:60px; height:3px; background:#fff; margin-top:24px;"></div>
+      </div>
+    </div>
+
+    <!-- Slide 9: Pain Points -->
+    <div class="slide" id="slide-9">
+        <div class="slide-inner">
+            <div class="slide-header">
+                <h2>03 기회 &amp; 전략 | 소비자 불만 (Pain Points)</h2>
+            </div>
+            <div class="slide-body" style="display:flex; flex-direction:column;">
+                <div class="grid-2x2-container">
+                    <div class="grid-2x2-item">
+                        <h3 class="item-title">기존 제품의 효능 불확실성</h3>
+                        <p class="item-body">
+                            많은 부모가 아이의 키 성장에 대한 고민을 하지만, 시중에 나와있는 제품들의 실제 효능에 대해
+                            과학적 근거 부족으로 <strong class="accent">불신</strong>을 가지고 있습니다.
+                        </p>
+                    </div>
+                    <div class="grid-2x2-item">
+                        <h3 class="item-title">아이의 섭취 거부</h3>
+                        <p class="item-body">
+                            아이가 먹기 싫어하는 맛이나 불편한 제형으로 인해 꾸준한 섭취가 어렵다는 불만이 많습니다.
+                            이는 제품의 효과를 저해하는 주요 요인입니다.
+                        </p>
+                    </div>
+                    <div class="grid-2x2-item">
+                        <h3 class="item-title">단순 키 성장에만 집중</h3>
+                        <p class="item-body">
+                            키 성장 외에 면역력, 두뇌 발달, 장 건강 등 아이의 <strong class="accent">전반적인 건강</strong>을 함께 챙기고 싶은
+                            부모들의 니즈가 존재합니다.
+                        </p>
+                    </div>
+                    <div class="grid-2x2-item">
+                        <h3 class="item-title">높은 가격 대비 낮은 만족도</h3>
+                        <p class="item-body">
+                            키 성장 영양제는 고가임에도 불구하고, 기대했던 효과를 보지 못하거나 아이가 꾸준히 섭취하지 못해
+                            <strong class="accent">비용 대비 만족도가 낮은</strong> 경우가 발생합니다.
+                        </p>
+                    </div>
+                </div>
+                <div class="insight-box">
+                    <h4 class="insight-box-title">소비자 불만 종합</h4>
+                    <p class="insight-box-content">
+                        명확한 효능, 섭취 편의성, 복합 기능성, 합리적 가격이라는 핵심 니즈가 충족되지 못하고 있으며,
+                        이는 신제품 개발 시 <strong class="accent">차별화 기회</strong>로 작용할 수 있습니다.
+                    </p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                출처: (추정) NPD 디렉터 분석
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 10: White Space -->
+    <div class="slide" id="slide-10">
+        <div class="slide-inner">
+            <div class="slide-header">
+                <h2>03 기회 &amp; 전략 | 차별화 기회 (White Space)</h2>
+            </div>
+            <div class="slide-body" style="display:flex; flex-direction:column;">
+                <div class="grid-2x2-container">
+                    <div class="grid-2x2-item concept-item">
+                        <h3 class="item-title accent">전 생애 성장 주기 맞춤형</h3>
+                        <p class="item-body">
+                            영유아부터 청소년까지 각 성장 단계에 필요한 영양 설계 및 제형으로
+                            <strong class="accent">포괄적인 성장 지원 솔루션</strong>을 제공하여 시장 확대.
+                        </p>
+                    </div>
+                    <div class="grid-2x2-item concept-item">
+                        <h3 class="item-title accent">HT042 기반 복합 기능성</h3>
+                        <p class="item-body">
+                            키 성장 외에 면역력, 두뇌 발달, 활력 증진 등 <strong class="accent">부가적인 건강 개선 효과</strong>를
+                            HT042와 함께 제공하여 제품의 가치를 높이는 전략.
+                        </p>
+                    </div>
+                    <div class="grid-2x2-item concept-item">
+                        <h3 class="item-title accent">과학적 근거 &amp; 투명성 강화</h3>
+                        <p class="item-body">
+                            'HT042'의 SCI급 논문 등 <strong class="accent">과학적 효능</strong>을 명확히 제시하고,
+                            원료 출처 및 제조 공정의 투명성을 강조하여 신뢰성 확보.
+                        </p>
+                    </div>
+                    <div class="grid-2x2-item concept-item">
+                        <h3 class="item-title accent">새로운 섭취 경험 제공</h3>
+                        <p class="item-body">
+                            기존 젤리/분말스틱 외에 <strong class="accent">혁신적인 제형</strong>(예: 액상 드롭, 퓨레)이나
+                            재미있는 섭취 방식으로 아이의 거부감 최소화.
+                        </p>
+                    </div>
+                </div>
+                <div class="insight-box">
+                    <h4 class="insight-box-title">차별화 기회 요약</h4>
+                    <p class="insight-box-content">
+                        경쟁이 치열한 키 성장 시장에서 'HT042'의 독점적 원료를 기반으로
+                        <strong class="accent">타겟 확장, 복합 기능성, 신뢰성, 섭취 편의성</strong>을 강화하여
+                        명확한 화이트 스페이스를 창출할 수 있습니다.
+                    </p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                출처: (추정) NPD 디렉터 분석
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 11: Concept -->
+    <div class="slide" id="slide-11">
+        <div class="slide-inner">
+            <div class="slide-header">
+                <h2>03 기회 &amp; 전략 | NPD 콘셉트 제안</h2>
+            </div>
+            <div class="slide-body" style="display:flex; flex-direction:column;">
+                <div class="grid-2x2-container">
+                    <div class="grid-2x2-item concept-item">
+                        <h3 class="item-title accent">제품명</h3>
+                        <p class="item-body">
+                            <strong>하이키즈 HT042 올인원</strong>
+                            <br/>('High-Kids HT042 All-in-One')
+                            <br/>&mdash; 키 성장과 전반적인 건강을 아우르는 프리미엄 솔루션
+                        </p>
+                    </div>
+                    <div class="grid-2x2-item concept-item">
+                        <h3 class="item-title accent">USP (핵심 가치 제안)</h3>
+                        <p class="item-body">
+                            유일한 키 성장 개별인정원료 'HT042'에 면역, 두뇌 발달까지 더한
+                            <strong class="accent">전 생애 성장 주기 맞춤형 프리미엄 올인원 영양 솔루션.</strong>
+                        </p>
+                    </div>
+                    <div class="grid-2x2-item concept-item">
+                        <h3 class="item-title accent">타겟</h3>
+                        <p class="item-body">
+                            영유아부터 청소년까지, 아이의 <strong class="accent">전반적인 성장과 건강</strong>에
+                            관심이 높은 20대 후반 ~ 40대 부모 (프리미엄 지향).
+                        </p>
+                    </div>
+                    <div class="grid-2x2-item concept-item">
+                        <h3 class="item-title accent">포지셔닝 메시지</h3>
+                        <p class="item-body">
+                            "우리 아이의 <strong class="accent">숨겨진 키와 잠재력</strong>을 깨우다.
+                            하이키즈 HT042 올인원으로 성장 골든타임을 놓치지 마세요!"
+                        </p>
+                    </div>
+                </div>
+                <div class="insight-box">
+                    <h4 class="insight-box-title">핵심 콘셉트 요약</h4>
+                    <p class="insight-box-content">
+                        'HT042'의 독점적 효능을 기반으로 <strong class="accent">복합 기능성 및 전 연령 타겟</strong>으로 확장하여,
+                        프리미엄 시장에서 차별화된 가치를 제공하는 것이 목표입니다.
+                    </p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                출처: (추정) NPD 디렉터 제안
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 12: Pricing -->
+    <div class="slide" id="slide-12">
+        <div class="slide-inner">
+            <div class="slide-header">
+                <h2>03 기회 &amp; 전략 | 가격 전략</h2>
+            </div>
+            <div class="slide-body" style="display:flex; flex-direction:column;">
+                <table style="margin-bottom: 24px;">
+                    <thead>
+                        <tr>
+                            <th>제품 라인업</th>
+                            <th>타겟 연령</th>
+                            <th>주요 기능</th>
+                            <th>월 환산 가격 (제안)</th>
+                            <th>월 환산 제조단가 (목표 원가율 15-20%)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>하이키즈 HT042 베이비 드롭</td>
+                            <td>영유아 (0-3세)</td>
+                            <td>키 성장 &amp; 면역력</td>
+                            <td>120,000원</td>
+                            <td>18,000원 ~ 24,000원</td>
+                        </tr>
+                        <tr>
+                            <td>하이키즈 HT042 스텝업 젤리</td>
+                            <td>어린이 (4-9세)</td>
+                            <td>키 성장 &amp; 두뇌 발달</td>
+                            <td>180,000원</td>
+                            <td>27,000원 ~ 36,000원</td>
+                        </tr>
+                        <tr>
+                            <td>하이키즈 HT042 점프업 스틱</td>
+                            <td>청소년 (10-16세)</td>
+                            <td>키 성장 &amp; 활력 증진</td>
+                            <td>220,000원</td>
+                            <td>33,000원 ~ 44,000원</td>
+                        </tr>
+                        <tr>
+                            <td>하이키즈 HT042 올인원 (프리미엄)</td>
+                            <td>전 연령 (멀티팩)</td>
+                            <td>키 성장 &amp; 복합 기능성</td>
+                            <td>280,000원</td>
+                            <td>42,000원 ~ 56,000원</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="insight-box">
+                    <h4 class="insight-box-title">가격 전략 근거</h4>
+                    <p class="insight-box-content">
+                        경쟁사 최저가(59,000원) 대비 <strong class="accent">프리미엄 포지셔닝</strong>을 통해
+                        HT042의 독점적 가치와 복합 기능성을 강조.
+                        타겟별 맞춤 가격 전략으로 시장 커버리지 확대 및 고마진 확보를 목표.
+                        월 22,500원 ~ 50,000원 목표 제조단가 범위 내에서 유연하게 운영.
+                    </p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                출처: [3] 네이버 쇼핑 검색결과, (추정) NPD 디렉터 분석
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 13: Risk -->
+    <div class="slide" id="slide-13">
+        <div class="slide-inner">
+            <div class="slide-header">
+                <h2>03 기회 &amp; 전략 | 예상 리스크 및 대응 방안</h2>
+            </div>
+            <div class="slide-body" style="display:flex; flex-direction:column;">
+                <div class="grid-2x2-container">
+                    <div class="grid-2x2-item">
+                        <h3 class="item-title">HT042 효능에 대한 회의론</h3>
+                        <p class="item-body">
+                            소비자들이 'HT042'의 효능에 대해 <strong class="accent">과도한 기대</strong>를 가지거나,
+                            반대로 효과가 없다는 회의론이 확산될 경우 브랜드 신뢰도 하락 우려.
+                        </p>
+                        <p class="item-response">
+                            <strong>대응 방안:</strong> SCI급 논문 등 과학적 근거를 지속적으로 홍보하고,
+                            소비자 체험단 운영 및 투명한 후기 공유를 통해 신뢰성 구축.
+                        </p>
+                    </div>
+                    <div class="grid-2x2-item">
+                        <h3 class="item-title">경쟁사의 유사 원료 개발/출시</h3>
+                        <p class="item-body">
+                            'HT042'가 현재 유일한 개별인정원료이나, 경쟁사가 <strong class="accent">유사 기능성 원료</strong>를
+                            개발하여 시장에 진입할 경우 독점적 우위 상실.
+                        </p>
+                        <p class="item-response">
+                            <strong>대응 방안:</strong> HT042의 차별성을 지속 강조하고,
+                            복합 기능성 및 제형 혁신으로 경쟁 우위 확보. R&amp;D 투자 확대.
+                        </p>
+                    </div>
+                    <div class="grid-2x2-item">
+                        <h3 class="item-title">높은 가격에 대한 저항</h3>
+                        <p class="item-body">
+                            프리미엄 전략으로 인한 높은 가격이 시장에서 <strong class="accent">소비자 저항</strong>에 부딪히거나,
+                            가성비 제품으로의 이탈이 발생할 수 있음.
+                        </p>
+                        <p class="item-response">
+                            <strong>대응 방안:</strong> HT042의 가치, 복합 기능성, 안전성을 명확히 소구하여
+                            가격에 대한 합리성을 부여. 초기 프로모션 및 혜택 제공 검토.
+                        </p>
+                    </div>
+                    <div class="grid-2x2-item">
+                        <h3 class="item-title">영유아 시장 진입의 어려움</h3>
+                        <p class="item-body">
+                            영유아 대상 제품은 안전성 및 성분 규제가 더욱 엄격하며,
+                            부모들의 <strong class="accent">안전성 민감도가 매우 높아</strong> 시장 진입에 어려움이 있을 수 있음.
+                        </p>
+                        <p class="item-response">
+                            <strong>대응 방안:</strong> 영유아 전용 안전성 테스트 및 공신력 있는 기관 인증 확보.
+                            소아과 전문의 등 전문가 자문 및 추천 마케팅 활용.
+                        </p>
+                    </div>
+                </div>
+                <div class="insight-box">
+                    <h4 class="insight-box-title">리스크 관리 요약</h4>
+                    <p class="insight-box-content">
+                        HT042의 <strong class="accent">과학적 신뢰성</strong>을 강화하고, <strong class="accent">차별화된 제품 가치</strong>를 지속적으로 제공하며,
+                        타겟별 세분화된 전략으로 시장 변화에 유연하게 대응해야 합니다.
+                    </p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                출처: (추정) NPD 디렉터 분석
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 14: Roadmap -->
+    <div class="slide" id="slide-14">
+        <div class="slide-inner">
+            <div class="slide-header">
+                <h2>03 기회 &amp; 전략 | 실행 로드맵</h2>
+            </div>
+            <div class="slide-body" style="display:flex; flex-direction:column;">
+                <div class="roadmap-container">
+                    <div class="roadmap-stage">
+                        <h3 class="roadmap-stage-title">1단계: 시장 및 제품 전략 고도화</h3>
+                        <p class="roadmap-period">2026년 2분기 ~ 3분기</p>
+                        <div class="roadmap-divider"></div>
+                        <ul class="roadmap-activities">
+                            <li>타겟 고객 심층 니즈 분석 (FGI/설문)</li>
+                            <li>HT042 복합 기능성 원료 탐색 및 배합 연구</li>
+                            <li>영유아/어린이/청소년 맞춤 제형 개발 및 테스트</li>
+                        </ul>
+                        <p class="roadmap-milestone accent">마일스톤: NPD 최종 컨셉 및 시제품 완성</p>
+                    </div>
+                    <div class="roadmap-stage">
+                        <h3 class="roadmap-stage-title">2단계: 제품 개발 및 생산 준비</h3>
+                        <p class="roadmap-period">2026년 4분기 ~ 2027년 1분기</p>
+                        <div class="roadmap-divider"></div>
+                        <ul class="roadmap-activities">
+                            <li>원료 수급처 확정 및 안정화 (장기 계약)</li>
+                            <li>생산 공장 선정 및 생산 라인 구축/테스트</li>
+                            <li>식약처 인허가 및 안전성/효능 검증 완료</li>
+                        </ul>
+                        <p class="roadmap-milestone accent">마일스톤: 생산 준비 완료 및 인허가 획득</p>
+                    </div>
+                    <div class="roadmap-stage">
+                        <h3 class="roadmap-stage-title">3단계: 런칭 및 시장 확대</h3>
+                        <p class="roadmap-period">2027년 2분기 ~ 2027년 4분기</p>
+                        <div class="roadmap-divider"></div>
+                        <ul class="roadmap-activities">
+                            <li>온/오프라인 채널 런칭 및 초기 마케팅 캠페인</li>
+                            <li>HT042 과학적 근거 기반 PR 및 전문가 마케팅</li>
+                            <li>소비자 피드백 수집 및 제품/마케팅 전략 개선</li>
+                        </ul>
+                        <p class="roadmap-milestone accent">마일스톤: 시장 안착 및 초기 판매 목표 달성</p>
+                    </div>
+                </div>
+                <div class="insight-box">
+                    <h4 class="insight-box-title">로드맵 핵심 요약</h4>
+                    <p class="insight-box-content">
+                        <strong>HT042의 독점적 가치</strong>를 중심으로 <strong class="accent">단계별 전략</strong>을 수립하여
+                        제품의 완성도를 높이고, 시장 진입 후 지속적인 성장을 목표합니다.
+                    </p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                출처: (추정) NPD 디렉터 제안
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 15: References -->
+    <div class="slide" id="slide-15">
+        <div class="slide-inner">
+            <div class="slide-header">
+                <h2>참고문헌 및 데이터 출처</h2>
+            </div>
+            <div class="slide-body references-list">
+                <div class="reference-item">
+                    <span class="ref-num">1</span>
+                    <span class="ref-text">네이버 데이터랩 검색어트렌드, 조회일: 2026-04-14, 키워드: HT042</span>
+                </div>
+                <div class="reference-item">
+                    <span class="ref-num">2</span>
+                    <span class="ref-text">네이버 검색광고 키워드도구, 조회일: 2026-04-14, 키워드: HT042 &mdash; 월간 PC/모바일 검색수</span>
+                </div>
+                <div class="reference-item">
+                    <span class="ref-num">3</span>
+                    <span class="ref-text">네이버 쇼핑 검색결과, 조회일: 2026-04-14, 키워드: HT042, 상위 20개 상품 기준</span>
+                </div>
+                <div class="reference-item">
+                    <span class="ref-num">4</span>
+                    <span class="ref-text">식품안전나라 공공데이터포털, I0760(건강기능식품 원료분류), 조회일: 2026-04-14</span>
+                </div>
+                <div class="reference-item">
+                    <span class="ref-num">5</span>
+                    <span class="ref-text">식품안전나라 공공데이터포털, C002(일반식품 원재료), 조회일: 2026-04-14</span>
+                </div>
+                <div class="reference-item">
+                    <span class="ref-num">6</span>
+                    <span class="ref-text">제약 "사업 확장" vs 건기식 "활로 모색"···선 넘나드는 '파이 경쟁', <a href="https://www.enewstoday.co.kr/news/articleView.html?idxno=1680584" target="_blank" style="color:#FF5722; text-decoration:underline; font-size:inherit;">enewstoday.co.kr</a>, Thu, 02 Nov 2023</span>
+                </div>
+                <div class="reference-item">
+                    <span class="ref-num">7</span>
+                    <span class="ref-text">키성장 영양제 개별인정원료 경쟁...시장 재편되나, <a href="https://www.dailypharm.com/Users/News/NewsView.html?ID=299446" target="_blank" style="color:#FF5722; text-decoration:underline; font-size:inherit;">dailypharm.com</a>, Fri, 22 Sep 2023</span>
+                </div>
+                <div class="reference-item">
+                    <span class="ref-num">8</span>
+                    <span class="ref-text">천연물 의약품 개발박차 K바이오…53조 시장 공략 본격화, <a href="https://it.chosun.com/news/article.html?no=2023090800000" target="_blank" style="color:#FF5722; text-decoration:underline; font-size:inherit;">it.chosun.com</a>, Sun, 10 Sep 2023</span>
+                </div>
+                <div class="reference-item">
+                    <span class="ref-num">9</span>
+                    <span class="ref-text">[18일 제약·바이오 소식] 광동제약, 수해 지역에 식수 대용 차음료 긴급..., <a href="https://www.viva100.com/main/view.php?key=20230718010005470" target="_blank" style="color:#FF5722; text-decoration:underline; font-size:inherit;">viva100.com</a>, Tue, 18 Jul 2023</span>
+                </div>
+                <div class="reference-item">
+                    <span class="ref-num">10</span>
+                    <span class="ref-text">SCI급 연구 논문"키 성장 푸는 열쇠, HT042가 핵심 '뼈 성장 속도' 촉진", <a href="https://www.getnews.co.kr/news/articleView.html?idxno=628285" target="_blank" style="color:#FF5722; text-decoration:underline; font-size:inherit;">getnews.co.kr</a>, Sat, 29 Oct 2022</span>
+                </div>
+                <div class="reference-item">
+                    <span class="ref-num">11</span>
+                    <span class="ref-text">네이버 쇼핑 전수조사 항목 상세 정보 &mdash; 데이터 섹션 E, F에서 제공된 내용 기반</span>
+                </div>
+                <div class="reference-item">
+                    <span class="ref-num"></span>
+                    <span class="ref-text">*(추정) 표시 항목은 제공된 데이터를 기반으로 NPD 디렉터가 분석&middot;추정한 내용으로 공식 통계가 아님*</span>
+                </div>
+            </div>
+            <div class="slide-footer">
+                출처: 상기 목록 참조
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        // viewport scale
+        function scaleSlides() {
+          var s = Math.min(window.innerWidth/1600, window.innerHeight/800);
+          document.querySelectorAll('.slide-inner').forEach(function(el) {
+            el.style.transform = 'scale('+s+')';
+            el.style.transformOrigin = 'center center';
+          });
+        }
+        window.addEventListener('resize', scaleSlides);
+        scaleSlides();
+
+        // 전환
+        var slides = document.querySelectorAll('.slide');
+        var cur = 0, lock = false;
+        function show(n) {
+          slides[cur].classList.remove('active');
+          cur = (n + slides.length) % slides.length;
+          slides[cur].classList.add('active');
+          document.getElementById('slide-num-display').textContent = (cur+1)+' / '+slides.length;
+        }
+        document.addEventListener('keydown', function(e) {
+          if (e.key==='ArrowRight'||e.key===' '){e.preventDefault();show(cur+1);}
+          if (e.key==='ArrowLeft'){e.preventDefault();show(cur-1);}
+          if (e.key==='f'||e.key==='F'){document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen();}
+        });
+        document.addEventListener('wheel', function(e) {
+          e.preventDefault();
+          if (lock) return; lock=true;
+          show(e.deltaY>0?cur+1:cur-1);
+          setTimeout(function(){lock=false;},300);
+        },{passive:false});
+        show(0);
+
+        // Line Chart JS (Slide 4)
+        (function() {
+          var ACCENT = '#FF5722';
+          var pts = [
+            {l:'2024.04', v:60.8}, {l:'2024.07', v:68.0}, {l:'2024.10', v:75.0},
+            {l:'2025.01', v:82.0}, {l:'2025.04', v:90.0}, {l:'2025.07', v:95.0},
+            {l:'2025.10', v:98.0}, {l:'2026.01', v:100.0}, {l:'2026.04', v:17.7}
+          ];
+
+          function draw() {
+            var cv = document.getElementById('trendChart');
+            if (!cv) return;
+            var par = cv.parentElement;
+            var W = par.clientWidth || 1300, H = par.clientHeight || 350;
+            cv.width = W; cv.height = H;
+            var ctx = cv.getContext('2d');
+            var PL=60, PR=20, PT=20, PB=45;
+            var cW=W-PL-PR, cH=H-PT-PB;
+            var maxV=100;
+            function xp(i){return PL + i/(pts.length-1)*cW;}
+            function yp(v){return PT + cH - v/maxV*cH;}
+            // 그리드 + Y축 레이블
+            ctx.font='11px "Noto Sans KR", sans-serif'; ctx.textAlign='right'; ctx.fillStyle='rgba(255,255,255,0.4)';
+            [0,25,50,75,100].forEach(function(v){
+              var y=yp(v);
+              ctx.strokeStyle='rgba(255,255,255,0.07)'; ctx.lineWidth=1;
+              ctx.beginPath(); ctx.moveTo(PL,y); ctx.lineTo(PL+cW,y); ctx.stroke();
+              ctx.fillText(v,PL-6,y+4);
+            });
+            // 면적 그라디언트
+            var gr=ctx.createLinearGradient(0,PT,0,PT+cH);
+            gr.addColorStop(0,ACCENT+'55'); gr.addColorStop(1,ACCENT+'05');
+            ctx.beginPath();
+            ctx.moveTo(xp(0),yp(0));
+            pts.forEach(function(d,i){ctx.lineTo(xp(i),yp(d.v));});
+            ctx.lineTo(xp(pts.length-1),yp(0)); ctx.closePath();
+            ctx.fillStyle=gr; ctx.fill();
+            // 선
+            ctx.beginPath(); ctx.strokeStyle=ACCENT; ctx.lineWidth=2.5; ctx.lineJoin='round';
+            pts.forEach(function(d,i){i?ctx.lineTo(xp(i),yp(d.v)):ctx.moveTo(xp(i),yp(d.v));});
+            ctx.stroke();
+            // 점 + 값 레이블 + X축 레이블
+            ctx.fillStyle=ACCENT; ctx.textAlign='center'; ctx.font='11px "Noto Sans KR", sans-serif';
+            pts.forEach(function(d,i){
+              ctx.beginPath(); ctx.arc(xp(i),yp(d.v),4,0,2*Math.PI); ctx.fill();
+              ctx.fillStyle='rgba(255,255,255,0.7)';
+              ctx.fillText(d.v, xp(i), yp(d.v)-10);
+              ctx.fillStyle='rgba(255,255,255,0.4)';
+              ctx.fillText(d.l, xp(i), H-8);
+              ctx.fillStyle=ACCENT;
+            });
+          }
+          if(document.fonts) document.fonts.ready.then(draw); else window.addEventListener('load',draw);
+          window.addEventListener('resize',draw);
+        })();
+    </script>
+<script>
+(function() {
+  var contentScales = {};
+
+  function measureAll() {
+    document.querySelectorAll('.slide').forEach(function(slide, i) {
+      var hidden = !slide.classList.contains('active');
+      if (hidden) {
+        slide.style.visibility = 'hidden';
+        slide.style.display    = 'flex';
+      }
+      var inner = slide.querySelector('.slide-inner');
+      if (inner) {
+        contentScales[i] = inner.scrollHeight > 800
+          ? (790 / inner.scrollHeight)
+          : 1;
+      }
+      if (hidden) {
+        slide.style.display    = '';
+        slide.style.visibility = '';
+      }
+    });
+  }
+
+  function applyScales() {
+    var vScale = Math.min(window.innerWidth / 1600, window.innerHeight / 800);
+    document.querySelectorAll('.slide').forEach(function(slide, i) {
+      var inner = slide.querySelector('.slide-inner');
+      if (!inner) return;
+      var cScale   = (contentScales[i] != null) ? contentScales[i] : 1;
+      var combined = vScale * cScale;
+      inner.style.transform       = 'scale(' + combined + ')';
+      inner.style.transformOrigin = 'center center';
+    });
+  }
+
+  window.scaleSlides = applyScales;
+  window.addEventListener('resize', applyScales);
+
+  (document.fonts ? document.fonts.ready : Promise.resolve()).then(function() {
+    measureAll();
+    applyScales();
+  });
+})();
+</script>
+</body>
+</html>
