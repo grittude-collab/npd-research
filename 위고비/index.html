@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>위고비 시장 진입 전략 보고서</title>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Noto+Sans+KR:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <style>
+        /* Global Styles */
+        html, body {
+            margin: 0; padding: 0; overflow: hidden;
+            background: #1a1a1a; width: 100%; height: 100%;
+            font-family: 'Noto Sans KR', sans-serif;
+            color: #ffffff;
+            font-size: 18px; /* Base body font size */
+            line-height: 1.5;
+        }
+        .slide {
+            position: fixed; top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            display: none;
+            align-items: center; justify-content: center;
+            overflow: hidden;
+        }
+        .slide.active { display: flex; }
+        .slide-inner {
+            width: 1600px; height: 800px;
+            position: relative; overflow: hidden;
+            box-sizing: border-box;
+            background: #1a1a1a;
+            /* padding은 각 슬라이드 타입별 내부 div에서 처리 */
+        }
+        .slide-header {
+            position: absolute; top: 0; left: 0; right: 0;
+            height: 100px; padding: 0 80px;
+            display: flex; align-items: flex-end; padding-bottom: 16px;
+            box-sizing: border-box;
+            z-index: 10;
+        }
+        .slide-header h1 {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 44px;
+            font-weight: 900;
+            margin: 0;
+            line-height: 1;
+        }
+        .slide-header h2 {
+            font-size: 24px;
+            font-weight: 700; /* Semi-bold */
+            margin: 0;
+            line-height: 1.3;
+        }
+        .slide-body {
+            position: absolute; top: 100px; left: 0; right: 0;
+            bottom: 50px; padding: 20px 80px 0;
+            overflow: hidden; /* Important for content density */
+            box-sizing: border-box;
+            display: flex; /* Default flex for most content slides */
+            flex-direction: column; /* Default column for most content slides */
+            gap: 16px; /* Default gap, can be overridden */
+        }
+        .slide-footer {
+            position: absolute; bottom: 0; left: 0; right: 0;
+            height: 50px; padding: 0 80px;
+            display: flex; align-items: center; justify-content: flex-end;
+            font-size: 13px; /* Caption size */
+            font-weight: 300; /* Light */
+            opacity: 0.5;
+            box-sizing: border-box;
+            z-index: 10;
+        }
+
+        /* Typography */
+        h1 { font-size: 44px; font-weight: 900; line-height: 1; margin: 0; }
+        h2 { font-size: 24px; font-weight: 700; line-height: 1.3; margin: 0; }
+        p { font-size: 18px; font-weight: 400; line-height: 1.5; margin: 0; }
+        strong { font-weight: 700; }
+        .caption { font-size: 13px; font-weight: 300; line-height: 1.3; }
+
+        /* Accent Color - Applied as per blueprint specific instructions */
+        .accent-color { color: #FF5722; }
+        .accent-bg { background: #FF5722; }
+        .accent-border-left { border-left-color: #FF5722; }
+        .accent-border-top { border-top-color: #FF5722; }
+
+        /* Common Insight Box */
+        .insight-box {
+            border-left: 3px solid #FF5722;
+            padding: 10px 16px;
+            background: rgba(255, 87, 34, 0.07); /* Accent color with 0.07 opacity */
+            margin-bottom: 0;
+            flex-shrink: 0; /* Prevent shrinking when content is large */
+            margin-top: auto; /* Push to bottom of flex container */
+        }
+        .insight-box h3 {
+            font-size: 12px;
+            font-weight: 700;
+            color: #FF5722;
+            margin: 0 0 3px;
+            line-height: 1.2;
+        }
+        .insight-box p {
+            font-size: 13px;
+            line-height: 1.5;
+            margin: 0;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            color: #ffffff;
+        }
+
+        /* Navigation UI */
+        .nav-btn {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+            background: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 20px;
+            border-radius: 4px;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+        .nav-btn:hover { opacity: 1; }
+        .slide-number-display {
+            position: fixed;
+            bottom: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+            background: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 14px;
+            opacity: 0.7;
+        }
+        .fullscreen-btn {
+            position: fixed;
+            top: 16px;
+            right: 16px;
+            z-index: 100;
+            background: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            border: none;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 14px;
+            border-radius: 4px;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+        .fullscreen-btn:hover { opacity: 1; }
+
+        /* Specific Slide Styles */
+        /* Cover Slide */
+        .cover-slide-content {
+            text-align: center;
+            padding: 0 160px;
+        }
+        .cover-slide-content .main-title {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 80px;
+            font-weight: 900;
+            line-height: 1.1;
+            color: #FF5722; /* Accent */
+            margin-bottom: 20px;
+        }
+        .cover-slide-content .subtitle {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            opacity: 0.9;
+        }
+        .cover-slide-content .date {
+            font-size: 20px;
+            font-weight: 300;
+            opacity: 0.7;
+            margin-bottom: 30px;
+        }
+        .cover-slide-content .summary {
+            font-size: 24px;
+            font-weight: 400;
+            line-height: 1.4;
+            padding: 20px 40px;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 8px;
+            background: rgba(255,255,255,0.05);
+            display: inline-block;
+            max-width: 80%;
+        }
+
+        /* Section Divider */
+        .section-divider-title {
+            font-size: 64px;
+            font-weight: 900;
+            color: #fff;
+            line-height: 1;
+        }
+        .section-divider-subtitle {
+            font-size: 32px;
+            font-weight: 400;
+            color: #fff;
+            margin-top: 16px;
+            opacity: 0.9;
+        }
+        .section-divider-line {
+            width: 60px;
+            height: 3px;
+            background: #FF5722; /* Accent */
+            margin-top: 24px;
+        }
+
+        /* Big Number Slide */
+        .big-number-metrics {
+            display: flex;
+            gap: 16px;
+            align-items: stretch;
+            flex: 1;
+            min-height: 0;
+        }
+        .metric-block {
+            flex: 1;
+            padding: 18px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 6px;
+            overflow: hidden;
+            background: rgba(255,255,255,0.03);
+        }
+        .metric-block .metric-title {
+            font-size: 14px;
+            opacity: 0.65;
+            margin: 0 0 4px;
+            line-height: 1.2;
+        }
+        .metric-block .metric-value {
+            font-size: 48px;
+            font-weight: 900;
+            line-height: 1;
+            margin: 0 0 6px;
+            color: #FF5722; /* Accent as per blueprint */
+        }
+        .metric-block .metric-subtext {
+            font-size: 12px;
+            line-height: 1.5;
+            opacity: 0.75;
+            margin: 0 0 12px;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+        .metric-block .mini-chart-area {
+            flex: 1;
+            min-height: 80px;
+            display: flex;
+            align-items: flex-end; /* For bar chart */
+        }
+        .metric-block .news-list {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            flex: 1;
+            overflow: hidden;
+            justify-content: center; /* Center news if less than 5 */
+        }
+        .metric-block .news-list a {
+            font-size: 11px;
+            line-height: 1.4;
+            padding: 5px 8px;
+            background: rgba(255,255,255,0.04);
+            border-radius: 3px;
+            border-left: 2px solid #FF5722; /* Accent as per blueprint */
+            color: inherit;
+            text-decoration: none;
+            display: block;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .metric-block .news-list div { /* For text-only market size */
+            font-size: 13px;
+            line-height: 1.5;
+            padding: 5px 8px;
+            background: rgba(255,255,255,0.04);
+            border-radius: 3px;
+            border-left: 2px solid rgba(255,255,255,0.1); /* Subtle border for text */
+            color: inherit;
+            display: block;
+        }
+        .bar-chart-container {
+            display: flex;
+            align-items: flex-end;
+            gap: 10px;
+            flex: 1;
+            padding-top: 4px;
+        }
+        .bar-chart-container .bar-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+        }
+        .bar-chart-container .bar-label-top {
+            font-size: 9px;
+            opacity: 0.5;
+        }
+        .bar-chart-container .bar-graph {
+            width: 100%;
+            background: #FF5722; /* Accent as per blueprint */
+            border-radius: 2px 2px 0 0;
+        }
+        .bar-chart-container .bar-value {
+            font-size: 10px;
+            white-space: nowrap;
+        }
+        .bar-chart-container .bar-graph.min { opacity: 0.35; }
+        .bar-chart-container .bar-graph.avg { opacity: 0.65; }
+        .bar-chart-container .bar-graph.max { } /* Full opacity for max */
+        .bar-chart-container .bar-label-top.max { color: #FF5722; } /* Accent as per blueprint */
+        .bar-chart-container .bar-value.max { color: #FF5722; } /* Accent as per blueprint */
+
+
+        /* Line Chart Slide */
+        .line-chart-container {
+            flex: 1;
+            min-height: 0;
+            position: relative;
+        }
+        .line-chart-insights {
+            display: flex;
+            gap: 12px;
+            flex-shrink: 0;
+            margin-top: 12px;
+        }
+        .line-chart-insights .insight-box {
+            flex: 1;
+            margin-top: 0; /* Override default auto margin */
+        }
+
+        /* Card Grid Slide */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            flex: 1;
+            min-height: 0;
+        }
+        .card-grid .card {
+            padding: 10px 12px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 6px;
+            position: relative;
+            background: rgba(255,255,255,0.03);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* To push USP to bottom */
+        }
+        .card-grid .card .rank-badge {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            font-size: 10px;
+            opacity: 0.4;
+            font-weight: 700;
+        }
+        .card-grid .card .brand-name {
+            font-size: 13px;
+            font-weight: 700;
+            color: #FF5722; /* Accent as per blueprint */
+            margin-bottom: 5px;
+            padding-right: 24px; /* Space for rank badge */
+            display: block;
+            text-decoration: none;
+            line-height: 1.3;
+        }
+        .card-grid .card .price {
+            font-size: 12px;
+            margin-bottom: 3px;
+            line-height: 1.2;
+        }
+        .card-grid .card .form {
+            font-size: 11px;
+            opacity: 0.55;
+            margin-bottom: 5px;
+            line-height: 1.2;
+        }
+        .card-grid .card .divider {
+            height: 1px;
+            background: rgba(255,255,255,0.1);
+            margin-bottom: 5px;
+        }
+        .card-grid .card .usp {
+            font-size: 11px;
+            line-height: 1.4;
+            color: inherit;
+            opacity: 0.85;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            margin-top: auto; /* Push to bottom */
+        }
+
+        /* Bubble Chart Slide */
+        .bubble-chart-main {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex: 1;
+            min-height: 0;
+        }
+        .chart-area {
+            position: relative;
+            width: 600px;
+            height: 480px;
+            flex-shrink: 0;
+            align-self: center;
+            border-left: 2px solid rgba(255,255,255,0.4);
+            border-bottom: 2px solid rgba(255,255,255,0.4);
+            overflow: visible; /* Important for bubbles not to be clipped */
+        }
+        .chart-area .quadrant-line-v {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            height: 100%;
+            border-left: 1px dashed rgba(255,255,255,0.2);
+            pointer-events: none;
+        }
+        .chart-area .quadrant-line-h {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            border-top: 1px dashed rgba(255,255,255,0.2);
+            pointer-events: none;
+        }
+        .chart-area .y-tick {
+            position: absolute;
+            right: 100%;
+            margin-right: 6px;
+            font-size: 10px;
+            opacity: 0.5;
+            transform: translateY(50%);
+            white-space: nowrap;
+        }
+        .chart-area .x-tick {
+            position: absolute;
+            top: 100%;
+            margin-top: 6px;
+            font-size: 10px;
+            opacity: 0.5;
+            transform: translateX(-50%);
+            white-space: nowrap;
+        }
+        .chart-area .y-axis-label {
+            position: absolute;
+            right: 100%;
+            margin-right: 40px;
+            top: 50%;
+            writing-mode: vertical-rl;
+            transform: translateY(-50%); /* No rotate for 상-하 */
+            font-size: 11px;
+            white-space: nowrap;
+        }
+        .chart-area .x-axis-label {
+            position: absolute;
+            top: 100%;
+            margin-top: 28px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 11px;
+            white-space: nowrap;
+        }
+        .bubble {
+            position: absolute;
+            transform: translate(-50%,50%); /* Centering the bubble on its x,y percentage */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .bubble-label {
+            text-align: center;
+            font-size: 10px;
+            white-space: nowrap;
+            margin-bottom: 3px;
+            color: rgba(255,255,255,0.9);
+            line-height: 1.2;
+        }
+        .bubble-circle {
+            border-radius: 50%;
+            opacity: 0.85;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 700;
+            color: #fff;
+            flex-shrink: 0;
+        }
+        .bubble-right-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Vertically center content */
+            gap: 16px;
+            overflow: hidden;
+            align-self: stretch; /* Stretch to fill available height */
+        }
+        .bubble-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px 12px;
+            flex-shrink: 0;
+        }
+        .bubble-legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            white-space: nowrap;
+        }
+        .bubble-legend-color {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        /* Pricing Slide */
+        .pricing-table-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Center table vertically */
+            padding-bottom: 20px; /* Give some space for insight box */
+        }
+        .pricing-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        .pricing-table th, .pricing-table td {
+            padding: 10px 14px;
+            text-align: center;
+            vertical-align: middle;
+            font-size: 14px;
+            white-space: nowrap;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .pricing-table th {
+            background: rgba(255,255,255,0.08);
+            font-weight: 700;
+        }
+        .pricing-table td {
+            background: rgba(255,255,255,0.03);
+        }
+        .pricing-table .accent-cell-pricing { /* Specific class for blueprint accent */
+            color: #FF5722;
+            font-weight: 700;
+        }
+        .pricing-strategy-rationale {
+            font-size: 15px;
+            line-height: 1.6;
+            padding: 15px 20px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 6px;
+            border-left: 3px solid rgba(255,255,255,0.2);
+            margin-top: 10px;
+            flex-shrink: 0;
+        }
+
+        /* 2x2 Grid Slides (Pain Points, White Space, Risk, Concept) */
+        .grid-2x2-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 16px;
+            flex: 1;
+            min-height: 0;
+        }
+        .grid-cell {
+            padding: 20px 24px;
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 6px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            min-height: 0;
+            background: rgba(255,255,255,0.03);
+        }
+        .grid-cell .cell-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #FF5722; /* Accent as per blueprint */
+            margin: 0 0 10px;
+            flex-shrink: 0;
+            line-height: 1.3;
+        }
+        .grid-cell .cell-body {
+            font-size: 14px;
+            line-height: 1.7;
+            flex: 1;
+            overflow: hidden;
+            color: rgba(255,255,255,0.92);
+        }
+        /* Risk specific */
+        .grid-cell .risk-mitigation {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            margin-top: 8px;
+            padding-top: 8px;
+            font-size: 12px;
+            color: rgba(255,255,255,0.75);
+            flex-shrink: 0;
+            line-height: 1.4;
+        }
+        /* White Space / Concept specific */
+        .grid-cell.concept-card .cell-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #FF5722; /* Accent as per blueprint */
+            margin: 0 0 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            flex-shrink: 0;
+            line-height: 1.3;
+        }
+        .grid-cell.concept-card .cell-body {
+            font-size: 15px;
+            line-height: 1.65;
+            flex: 1;
+            color: rgba(255,255,255,0.92);
+        }
+
+        /* Roadmap Slide */
+        .roadmap-row {
+            display: flex;
+            flex-direction: row;
+            align-items: stretch; /* Changed from flex-start to stretch */
+            gap: 0;
+            flex: 1;
+            min-height: 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1); /* Add a subtle bottom border to the row */
+        }
+        .roadmap-stage {
+            flex: 1;
+            padding: 24px 20px;
+            border-top: 3px solid #FF5722; /* Accent as per blueprint */
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            background: rgba(255,255,255,0.02);
+            position: relative;
+        }
+        .roadmap-stage + .roadmap-stage {
+            border-left: 1px solid rgba(255,255,255,0.08); /* Divider between stages */
+        }
+        .roadmap-stage .stage-name {
+            font-size: 18px;
+            font-weight: 700;
+            margin: 0;
+            line-height: 1.3;
+        }
+        .roadmap-stage .stage-period {
+            font-size: 13px;
+            color: rgba(255,255,255,0.55);
+            margin: 0;
+            line-height: 1.2;
+        }
+        .roadmap-stage .stage-divider {
+            height: 1px;
+            background: rgba(255,255,255,0.08);
+            margin: 4px 0;
+        }
+        .roadmap-stage .activity-list {
+            font-size: 14px;
+            line-height: 1.7;
+            flex: 1;
+            list-style: none; /* Remove default list style */
+            padding-left: 0;
+            margin: 0;
+        }
+        .roadmap-stage .activity-list li {
+            margin-bottom: 6px;
+            position: relative;
+            padding-left: 14px;
+        }
+        .roadmap-stage .activity-list li::before {
+            content: '\2022'; /* Bullet point */
+            color: #FF5722; /* Accent as per blueprint */
+            position: absolute;
+            left: 0;
+            top: 0;
+            font-size: 1.2em;
+            line-height: 1.7;
+        }
+        .roadmap-stage .milestone {
+            font-size: 12px;
+            color: #FF5722; /* Accent as per blueprint */
+            font-weight: 700;
+            margin-top: auto;
+            padding-top: 8px;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            line-height: 1.3;
+        }
+
+        /* References Slide */
+        .references-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            flex: 1; /* Allow list to grow */
+        }
+        .references-list .ref-item {
+            display: flex;
+            gap: 12px;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            font-size: 14px;
+            line-height: 1.8;
+            align-items: flex-start;
+        }
+        .references-list .ref-item:last-child {
+            border-bottom: none;
+        }
+        .references-list .ref-number {
+            color: #FF5722; /* Accent as per blueprint */
+            font-weight: 700;
+            flex-shrink: 0;
+            min-width: 24px;
+            text-align: right;
+        }
+        .references-list .ref-text {
+            color: rgba(255,255,255,0.85);
+            flex-grow: 1;
+        }
+        .references-list .ref-text a {
+            color: inherit;
+            text-decoration: none;
+        }
+        .references-list .ref-text a:hover {
+            text-decoration: underline;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="nav-btn nav-prev" onclick="show(cur-1)">&#10094;</div>
+    <div class="nav-btn nav-next" onclick="show(cur+1)">&#10095;</div>
+    <div id="slide-num" class="slide-number-display">1 / 15</div>
+    <button class="fullscreen-btn" onclick="document.documentElement.requestFullscreen()">Full Screen</button>
+
+    <!-- Slide 1: Cover -->
+    <div class="slide active" id="slide-1">
+        <div class="slide-inner" style="display:flex; align-items:center; justify-content:center;">
+            <div class="cover-slide-content">
+                <div class="main-title">WEGOFY NPD</div>
+                <div class="subtitle">시장 분석 및 신제품 진입 전략</div>
+                <div class="date">2026년 4월 14일</div>
+                <p class="summary">급변하는 '위고비' 시장, 잠재적 기회와 전략적 접근 모색</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 2: Section Divider 01 시장 현황 -->
+    <div class="slide" id="slide-2">
+        <div class="slide-inner" style="background:#FF5722; display:flex; align-items:center; justify-content:center; flex-direction:column; text-align:center;">
+            <div style="font-size:13px; letter-spacing:0.2em; text-transform:uppercase; opacity:0.6; margin-bottom:16px; color:#fff;">CHAPTER 01</div>
+            <div class="section-divider-title">01</div>
+            <div class="section-divider-subtitle">시장 현황</div>
+            <div class="section-divider-line"></div>
+        </div>
+    </div>
+
+    <!-- Slide 3: Big Number -->
+    <div class="slide" id="slide-3">
+        <div class="slide-inner">
+            <div class="slide-header">
+                <h1>01 시장 현황 | Market Opportunity Scorecard</h1>
+            </div>
+            <div class="slide-body" style="gap:16px;">
+                <div class="big-number-metrics">
+                    <!-- Metric Block 1: 시장 성장성/트렌드 -->
+                    <div class="metric-block">
+                        <h3 class="metric-title">시장 성장성 (<script>
+(function() {
+  var contentScales = {};
+
+  function measureAll() {
+    document.querySelectorAll('.slide').forEach(function(slide, i) {
+      var hidden = !slide.classList.contains('active');
+      if (hidden) {
+        slide.style.visibility = 'hidden';
+        slide.style.display    = 'flex';
+      }
+      var inner = slide.querySelector('.slide-inner');
+      if (inner) {
+        contentScales[i] = inner.scrollHeight > 800
+          ? (790 / inner.scrollHeight)
+          : 1;
+      }
+      if (hidden) {
+        slide.style.display    = '';
+        slide.style.visibility = '';
+      }
+    });
+  }
+
+  function applyScales() {
+    var vScale = Math.min(window.innerWidth / 1600, window.innerHeight / 800);
+    document.querySelectorAll('.slide').forEach(function(slide, i) {
+      var inner = slide.querySelector('.slide-inner');
+      if (!inner) return;
+      var cScale   = (contentScales[i] != null) ? contentScales[i] : 1;
+      var combined = vScale * cScale;
+      inner.style.transform       = 'scale(' + combined + ')';
+      inner.style.transformOrigin = 'center center';
+    });
+  }
+
+  window.scaleSlides = applyScales;
+  window.addEventListener('resize', applyScales);
+
+  (document.fonts ? document.fonts.ready : Promise.resolve()).then(function() {
+    measureAll();
+    applyScales();
+  });
+})();
+</script>
