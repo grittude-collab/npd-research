@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NPD 시장 분석: 마운자로 시장 진입 전략</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        /* Global Styles */
+        html, body {
+            margin: 0; padding: 0; overflow: hidden;
+            background: #1a1a1a; width: 100%; height: 100%;
+            font-family: 'Noto Sans KR', sans-serif;
+            color: #fff;
+            line-height: 1.5;
+        }
+        .slide {
+            position: fixed; top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            display: none;
+            align-items: center; justify-content: center;
+            overflow: hidden;
+        }
+        .slide.active { display: flex; }
+        .slide-inner {
+            width: 1600px; height: 800px;
+            position: relative; overflow: hidden;
+            box-sizing: border-box;
+            background: #1a1a1a;
+        }
+        .slide-header {
+            position: absolute; top: 0; left: 0; right: 0;
+            height: 100px; padding: 0 80px;
+            display: flex; align-items: flex-end; padding-bottom: 16px;
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: rgba(255,255,255,0.9);
+        }
+        .slide-body {
+            position: absolute; top: 100px; left: 0; right: 0;
+            bottom: 50px; padding: 20px 80px 0;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .slide-footer {
+            position: absolute; bottom: 0; left: 0; right: 0;
+            height: 50px; padding: 0 80px;
+            display: flex; align-items: center; justify-content: flex-end;
+            font-size: 13px;
+            opacity: 0.5;
+            font-weight: 300;
+        }
+
+        /* Typography */
+        h1 { font-size: 44px; font-weight: 900; margin: 0; font-family: 'Archivo Black', sans-serif; }
+        h2 { font-size: 24px; font-weight: 700; margin: 0; }
+        p, div { font-size: 18px; font-weight: 400; margin: 0; }
+        small { font-size: 13px; font-weight: 300; margin: 0; }
+
+        /* Accent Color */
+        .accent { color: #FF5722; }
+        .bg-accent { background-color: #FF5722; }
+        .border-accent { border-color: #FF5722 !important; }
+
+        /* Common Insight Box */
+        .insight-box {
+            border-left: 3px solid #FF5722;
+            padding: 10px 16px;
+            background: rgba(255, 87, 34, 0.07);
+            margin-bottom: 0;
+            flex-shrink: 0;
+            margin-top: auto;
+        }
+        .insight-box-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #FF5722;
+            margin: 0 0 3px;
+        }
+        .insight-box-content {
+            font-size: 15px;
+            line-height: 1.5;
+            margin: 0;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            color: rgba(255,255,255,0.9);
+        }
+
+        /* Navigation UI */
+        .nav-button {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 24px;
+            border-radius: 4px;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+            font-family: 'Noto Sans KR', sans-serif;
+            font-weight: 700;
+        }
+        .nav-button:hover {
+            opacity: 1;
+        }
+        #nav-prev { left: 16px; }
+        #nav-next { right: 16px; }
+        #slide-num-display {
+            position: fixed;
+            bottom: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            padding: 5px 12px;
+            border-radius: 4px;
+            font-size: 14px;
+            opacity: 0.7;
+            font-weight: 500;
+        }
+        #fullscreen-button {
+            position: fixed;
+            top: 16px;
+            right: 16px;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border: none;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 14px;
+            border-radius: 4px;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+            font-family: 'Noto Sans KR', sans-serif;
+            font-weight: 500;
+        }
+        #fullscreen-button:hover {
+            opacity: 1;
+        }
+
+        /* Helper styles for specific slide types */
+        .grid-2x2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 16px;
+            flex: 1;
+            min-height: 0;
+        }
+        .grid-item {
+            padding: 20px 24px;
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 6px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            min-height: 0;
+        }
+        .grid-item h3 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #FF5722;
+            margin: 0 0 10px;
+            flex-shrink: 0;
+        }
+        .grid-item p {
+            font-size: 14px;
+            line-height: 1.7;
+            flex: 1;
+            overflow: hidden;
+            color: rgba(255,255,255,0.92);
+        }
+        .grid-item .sub-text {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            margin-top: 8px;
+            padding-top: 8px;
+            font-size: 12px;
+            color: rgba(255,255,255,0.75);
+            flex-shrink: 0;
+        }
+        
+        a { color: inherit; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+    </style>
+</head>
+<body>
+
+    <!-- Navigation UI -->
+    <button id="nav-prev" class="nav-button" onclick="show(cur-1)">&#8592; 이전</button>
+    <button id="nav-next" class="nav-button" onclick="show(cur+1)">다음 &#8594;</button>
+    <div id="slide-num-display"><span id="slide-num">1 / 15</span></div>
+    <button id="fullscreen-button" onclick="document.documentElement.requestFullscreen()">전체화면</button>
+
+    <!-- Slide 1: Cover -->
+    <div class="slide" id="slide-1">
+        <div class="slide-inner" style="background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%); display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; padding: 0 120px;">
+            <p style="font-size:24px; font-weight:700; letter-spacing:0.1em; color:#FF5722; margin-bottom:24px; text-transform:uppercase;">MAUNJARO MARKET ENTRY</p>
+            <h1 style="font-size:64px; font-weight:900; line-height:1.2; margin-bottom:24px; font-family: 'Archivo Black', sans-serif;">NPD 시장 분석: 마운자로 시장 진입 전략</h1>
+            <p style="font-size:20px; font-weight:500; opacity:0.8; margin-bottom:32px;">혁신적인 GLP-1/GIP 이중 작용 비만 치료제 시장의 폭발적인 성장 기회 분석 및 신규 진입 전략 제안</p>
+            <small style="font-size:16px; opacity:0.7;">2026년 4월 14일 | NPD 디렉터</small>
+        </div>
+    </div>
+
+    <!-- Slide 2: Section Divider 01 -->
+    <div class="slide" id="slide-2">
+        <div class="slide-inner" style="background:#1a1a1a; display:flex; align-items:center; justify-content:center; flex-direction:column; text-align:center;">
+            <div style="font-size:13px; letter-spacing:0.2em; text-transform:uppercase; opacity:0.6; margin-bottom:16px; color:#fff;">CHAPTER 01</div>
+            <div style="font-size:64px; font-weight:900; color:#FF5722; line-height:1;">01</div>
+            <div style="font-size:32px; font-weight:400; color:#fff; margin-top:16px; opacity:0.9;">시장 현황</div>
+            <div style="width:60px; height:3px; background:#FF5722; margin-top:24px;"></div>
+        </div>
+    </div>
+
+    <!-- Slide 3: Big Number -->
+    <div class="slide" id="slide-3">
+        <div class="slide-inner">
+            <div class="slide-header">
+                01 시장 현황 | <span class="accent" style="margin-left: 8px;">핵심 지표</span>
+            </div>
+            <div class="slide-body" style="display:flex; flex-direction:column; gap:16px; padding-bottom: 20px;">
+                <div style="display:flex; gap:16px; align-items:stretch; flex:1; min-height:0;">
+                    <!-- Metric Card 1: 시장 성장성 -->
+                    <div style="flex:1; padding:18px 20px; display:flex; flex-direction:column; gap:4px; border:1px solid rgba(255,255,255,0.1); border-radius:6px; overflow:hidden;">
+                        <h3 style="font-size:14px; opacity:0.65; margin:0 0 4px;">시장 성장성</h3>
+                        <p style="font-size:48px; font-weight:900; line-height:1; margin:0 0 6px;" class="accent">+898.2%</p>
+                        <small style="font-size:12px; line-height:1.5; opacity:0.75; margin:0 0 12px; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
+                            전년 동기 대비 검색량 증가율. 마운자로 키워드는 2년간 폭발적인 성장 추세에 있습니다.
+                        </small>
+                        <div style="flex:1; min-height:80px;">
+                            <svg style="width:100%;height:80px;" viewBox="0 0 200 60" preserveAspectRatio="none">
+                                <defs><linearGradient id="mg1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#FF5722" stop-opacity="0.3"/><stop offset="100%" stop-color="#FF5722" stop-opacity="0"/></linearGradient></defs>
+                                <polygon points="0,60 0,59.4 22,59.28 44,59.16 66,58.2 88,56.22 110,53.58 132,0 154,12.3 176,16.98 200,14.16 200,60" fill="url(#mg1)"/>
+                                <polyline points="0,59.4 22,59.28 44,59.16 66,58.2 88,56.22 110,53.58 132,0 154,12.3 176,16.98 200,14.16" fill="none" stroke="#FF5722" stroke-width="2"/>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- Metric Card 2: 소비자 관심도 -->
+                    <div style="flex:1; padding:18px 20px; display:flex; flex-direction:column; gap:4px; border:1px solid rgba(255,255,255,0.1); border-radius:6px; overflow:hidden;">
+                        <h3 style="font-size:14px; opacity:0.65; margin:0 0 4px;">소비자 관심도</h3>
+                        <p style="font-size:48px; font-weight:900; line-height:1; margin:0 0 6px;" class="accent">356,400회</p>
+                        <small style="font-size:12px; line-height:1.5; opacity:0.75; margin:0 0 12px; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
+                            월간 총 검색수 (PC 66,400회, 모바일 290,000회). 높은 잠재 수요를 반영합니다.
+                        </small>
+                        <div style="display:flex; align-items:flex-end; gap:10px; flex:1; padding-top:4px;">
+                            <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;">
+                                <div style="font-size:9px; opacity:0.5;">최저</div>
+                                <div style="width:100%; background:#FF5722; opacity:0.35; height:5px; border-radius:2px 2px 0 0;"></div>
+                                <div style="font-size:10px; white-space:nowrap;">3,265회</div>
+                            </div>
+                            <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;">
+                                <div style="font-size:9px; opacity:0.5;">평균</div>
+                                <div style="width:100%; background:#FF5722; opacity:0.65; height:22px; border-radius:2px 2px 0 0;"></div>
+                                <div style="font-size:10px; white-space:nowrap;">201,978회</div>
+                            </div>
+                            <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;">
+                                <div style="font-size:9px; opacity:0.5; color:#FF5722;">최고</div>
+                                <div style="width:100%; background:#FF5722; height:50px; border-radius:2px 2px 0 0;"></div>
+                                <div style="font-size:10px; white-space:nowrap; color:#FF5722;">466,492회</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Metric Card 3: 전체시장 규모 및 트렌드 -->
+                    <div style="flex:1; padding:18px 20px; display:flex; flex-direction:column; gap:4px; border:1px solid rgba(255,255,255,0.1); border-radius:6px; overflow:hidden;">
+                        <h3 style="font-size:14px; opacity:0.65; margin:0 0 4px;">전체시장 규모 및 트렌드</h3>
+                        <p style="font-size:48px; font-weight:900; line-height:1; margin:0 0 6px;" class="accent">~281조원</p>
+                        <small style="font-size:12px; line-height:1.5; opacity:0.75; margin:0 0 12px; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
+                            GLP-1 기반 비만 치료제 시장은 기존 전망치를 크게 상회하는 규모로 성장 중.
+                        </small>
+                        <div style="display:flex; flex-direction:column; gap:5px; flex:1; overflow:hidden;">
+                            <a href="https://ebn.co.kr/news/view/1720816/?utm_source=naver&utm_medium=newsstand" target="_blank" style="font-size:11px; line-height:1.4; padding:5px 8px;
+                               background:rgba(255,255,255,0.04); border-radius:3px; border-left:2px solid #FF5722;
+                               color:inherit; text-decoration:none; display:block;
+                               overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+                              "'비만약 전쟁' 격화 속 K제약도 출격 박차...'위고비&#183;마운자로' 정조준" &#8212; ebn.co.kr
+                            </a>
+                            <div style="font-size:11px; line-height:1.4; padding:5px 8px;
+                               background:rgba(255,255,255,0.04); border-radius:3px; border-left:2px solid #FF5722;
+                               color:inherit; display:block;
+                               overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+                              국내 '위고비&#183;마운자로' 시장 규모: 4,725억원 추정¹
+                            </div>
+                            <div style="font-size:11px; line-height:1.4; padding:5px 8px;
+                               background:rgba(255,255,255,0.04); border-radius:3px; border-left:2px solid #FF5722;
+                               color:inherit; display:block;
+                               overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+                              전체 비만 치료제 시장 규모: 7,000억원 규모 언급²
+                            </div>
+                            <div style="font-size:11px; line-height:1.4; padding:5px 8px;
+                               background:rgba(255,255,255,0.04); border-radius:3px; border-left:2px solid #FF5722;
+                               color:inherit; display:block;
+                               overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+                              GLP-1 기반 비만 치료제 시장: 1,900억 달러 (약 281조 원) 제시³
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="insight-box" style="margin-top:12px;">
+                    <h4 class="insight-box-title">핵심 인사이트</h4>
+                    <p class="insight-box-content">
+                        '마운자로' 키워드 검색량의 폭발적 증가와 거대한 시장 규모는 높은 시장 기회와 잠재력을 시사합니다. 규제 장벽은 존재하나 혁신적인 신규 시장 진입 가능성도 열려 있습니다.
+                    </p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                출처: ¹IM증권, ebn.co.kr (2026.04.14) | ²iM증권, mk.co.kr (2026.04.14) | ³g-enews.com (2026.04.09)
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 4: Line Chart -->
+    <div class="slide" id="slide-4">
+        <div class="slide-inner">
+            <div class="slide-header">
+                01 시장 현황 | <span class="accent" style="margin-left: 8px;">검색 트렌드 분석 (24개월)</span>
+            </div>
+            <div class="slide-body">
+                <div style="flex:1; min-height:0; position:relative;">
+                    <canvas id="trendChart"></canvas>
+                </div>
+                <div style="display:flex; gap:12px; flex-shrink:0; margin-top:12px;">
+                    <div class="insight-box" style="margin-top:0; flex:1;">
+                        <h4 class="insight-box-title">폭발적인 관심 증가</h4>
+                        <p class="insight-box-content">
+                            2025년 8월 검색량 100.0 최고치 기록 후 현재까지 높은 수준 유지. '마운자로'에 대한 대중의 인지도가 급상승했음을 시사합니다.
+                        </p>
+                    </div>
+                    <div class="insight-box" style="margin-top:0; flex:1;">
+                        <h4 class="insight-box-title">지속적인 시장 성장 동력</h4>
+                        <p class="insight-box-content">
+                            전년 동기 대비 898.2%라는 경이로운 증가율은 시장의 뜨거운 관심과 잠재력을 명확히 보여주며, 실제 구매로 이어질 가능성이 높습니다.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                출처: 네이버 데이터랩 검색어트렌드 (2026.04.14)
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 5: Section Divider 02 -->
+    <div class="slide" id="slide-5">
+        <div class="slide-inner" style="background:#1a1a1a; display:flex; align-items:center; justify-content:center; flex-direction:column; text-align:center;">
+            <div style="font-size:13px; letter-spacing:0.2em; text-transform:uppercase; opacity:0.6; margin-bottom:16px; color:#fff;">CHAPTER 02</div>
+            <div style="font-size:64px; font-weight:900; color:#FF5722; line-height:1;">02</div>
+            <div style="font-size:32px; font-weight:400; color:#fff; margin-top:16px; opacity:0.9;">경쟁사 분석</div>
+            <div style="width:60px; height:3px; background:#FF5722; margin-top:24px;"></div>
+        </div>
+    </div>
+
+    <!-- Slide 6: Card Grid (TOP 10 Brands/Products) -->
+    <div class="slide" id="slide-6">
+        <div class="slide-inner">
+            <div class="slide-header">
+                02 경쟁사 분석 | <span class="accent" style="margin-left: 8px;">TOP 10 경쟁 상품</span>
+            </div>
+            <div class="slide-body">
+                <div style="display:grid; grid-template-columns:repeat(5,1fr); gap:15px; flex:1;">
+                    <!-- Card 1 -->
+                    <div style="padding:10px 12px; overflow:hidden; border:1px solid rgba(255,255,255,0.12); border-radius:6px; position:relative; background:rgba(255,255,255,0.02);">
+                        <div style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">1위</div>
+                        <a href="https://search.shopping.naver.com/search/all?query=마운자로+성심+인슐린+펜니들+32G+4mm" target="_blank"
+                           style="font-size:13px; font-weight:700; color:#FF5722; margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+                            성심 인슐린 펜니들 32G 4mm
+                        </a>
+                        <p style="font-size:12px; margin-bottom:3px;">6,800원</p>
+                        <p style="font-size:11px; opacity:0.55; margin-bottom:5px;">확인필요</p>
+                        <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
+                        <p style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
+                            마운자로, 위고비 등 호환 주사침. 32G 얇은 바늘로 통증 최소화.
+                        </p>
+                    </div>
+                    <!-- Card 2 -->
+                    <div style="padding:10px 12px; overflow:hidden; border:1px solid rgba(255,255,255,0.12); border-radius:6px; position:relative; background:rgba(255,255,255,0.02);">
+                        <div style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">2위</div>
+                        <a href="https://search.shopping.naver.com/search/all?query=마운자로+성심+인슐린+펜니들+32G+6mm" target="_blank"
+                           style="font-size:13px; font-weight:700; color:#FF5722; margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+                            성심 인슐린 펜니들 32G 6mm
+                        </a>
+                        <p style="font-size:12px; margin-bottom:3px;">6,800원</p>
+                        <p style="font-size:11px; opacity:0.55; margin-bottom:5px;">확인필요</p>
+                        <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
+                        <p style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
+                            삭센다, 위고비, 마운자로 호환 멸균 주사바늘 100개입.
+                        </p>
+                    </div>
+                    <!-- Card 3 -->
+                    <div style="padding:10px 12px; overflow:hidden; border:1px solid rgba(255,255,255,0.12); border-radius:6px; position:relative; background:rgba(255,255,255,0.02);">
+                        <div style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">4위</div>
+                        <a href="https://search.shopping.naver.com/search/all?query=마운자로+성심+인슐린+펜니들+32G+5mm" target="_blank"
+                           style="font-size:13px; font-weight:700; color:#FF5722; margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+                            성심 인슐린 펜니들 32G 5mm
+                        </a>
+                        <p style="font-size:12px; margin-bottom:3px;">6,800원</p>
+                        <p style="font-size:11px; opacity:0.55; margin-bottom:5px;">확인필요</p>
+                        <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
+                        <p style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
+                            마운자로 등 비만치료제 주사제에 호환 가능한 주사침.
+                        </p>
+                    </div>
+                    <!-- Card 4 -->
+                    <div style="padding:10px 12px; overflow:hidden; border:1px solid rgba(255,255,255,0.12); border-radius:6px; position:relative; background:rgba(255,255,255,0.02);">
+                        <div style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">9위</div>
+                        <a href="https://search.shopping.naver.com/search/all?query=마운자로+메디프리즈+보냉+파우치" target="_blank"
+                           style="font-size:13px; font-weight:700; color:#FF5722; margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+                            메디프리즈 EVA 휴대용 보냉 파우치
+                        </a>
+                        <p style="font-size:12px; margin-bottom:3px;">14,900원</p>
+                        <p style="font-size:11px; opacity:0.55; margin-bottom:5px;">확인필요</p>
+                        <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
+                        <p style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
+                            인슐린, 위고비, 마운자로 등 다이어트 주사제 보관용 보냉 파우치.
+                        </p>
+                    </div>
+                    <!-- Card 5 -->
+                    <div style="padding:10px 12px; overflow:hidden; border:1px solid rgba(255,255,255,0.12); border-radius:6px; position:relative; background:rgba(255,255,255,0.02);">
+                        <div style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">14위</div>
+                        <a href="https://search.shopping.naver.com/search/all?query=마운자로+Eli+Lilly+프리필드펜주+5mg" target="_blank"
+                           style="font-size:13px; font-weight:700; color:#FF5722; margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+                            Eli Lilly 마운자로프리필드펜주 5mg
+                        </a>
+                        <p style="font-size:12px; margin-bottom:3px;">369,307원</p>
+                        <p style="font-size:11px; opacity:0.55; margin-bottom:5px;">액상</p>
+                        <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
+                        <p style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
+                            GLP-1/GIP 이중 작용제. 주 1회 투여, 높은 체중 감량 효과.
+                        </p>
+                    </div>
+                    <!-- Card 6 -->
+                    <div style="padding:10px 12px; overflow:hidden; border:1px solid rgba(255,255,255,0.12); border-radius:6px; position:relative; background:rgba(255,255,255,0.02);">
+                        <div style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">15위</div>
+                        <a href="https://search.shopping.naver.com/search/all?query=마운자로+Eli+Lilly+프리필드펜주+10mg" target="_blank"
+                           style="font-size:13px; font-weight:700; color:#FF5722; margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+                            Eli Lilly 마운자로프리필드펜주 10mg
+                        </a>
+                        <p style="font-size:12px; margin-bottom:3px;">521,377원</p>
+                        <p style="font-size:11px; opacity:0.55; margin-bottom:5px;">액상</p>
+                        <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
+                        <p style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
+                            고용량 프리필드펜주. 강력한 체중 감량 효과와 혈당 조절 기능.
+                        </p>
+                    </div>
+                    <!-- Card 7 -->
+                    <div style="padding:10px 12px; overflow:hidden; border:1px solid rgba(255,255,255,0.12); border-radius:6px; position:relative; background:rgba(255,255,255,0.02);">
+                        <div style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">16위</div>
+                        <a href="https://search.shopping.naver.com/search/all?query=마운자로+Eli+Lilly+프리필드펜주+2.5mg" target="_blank"
+                           style="font-size:13px; font-weight:700; color:#FF5722; margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+                            Eli Lilly 마운자로프리필드펜주 2.5mg
+                        </a>
+                        <p style="font-size:12px; margin-bottom:3px;">278,066원</p>
+                        <p style="font-size:11px; opacity:0.55; margin-bottom:5px;">액상</p>
+                        <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
+                        <p style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
+                            초기 용량 프리필드펜주. 비만 및 제2형 당뇨병 치료제.
+                        </p>
+                    </div>
+                    <!-- Card 8 -->
+                    <div style="padding:10px 12px; overflow:hidden; border:1px solid rgba(255,255,255,0.12); border-radius:6px; position:relative; background:rgba(255,255,255,0.02);">
+                        <div style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">11위</div>
+                        <a href="https://search.shopping.naver.com/search/all?query=마운자로+이중+보냉백+여행용" target="_blank"
+                           style="font-size:13px; font-weight:700; color:#FF5722; margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+                            이중 보냉백 인슐린 위고비 마운자로 쿨러
+                        </a>
+                        <p style="font-size:12px; margin-bottom:3px;">42,390원</p>
+                        <p style="font-size:11px; opacity:0.55; margin-bottom:5px;">확인필요</p>
+                        <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
+                        <p style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
+                            여행용 약품 보관 파우치. 온도 표시 기능으로 의약품 변질 방지.
+                        </p>
+                    </div>
+                    <!-- Card 9 -->
+                    <div style="padding:10px 12px; overflow:hidden; border:1px solid rgba(255,255,255,0.12); border-radius:6px; position:relative; background:rgba(255,255,255,0.02);">
+                        <div style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">12위</div>
+                        <a href="https://search.shopping.naver.com/search/all?query=마운자로+이중+보냉백+TSA+승인" target="_blank"
+                           style="font-size:13px; font-weight:700; color:#FF5722; margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+                            이중 보냉백 여행 TSA 승인 약물 정리함
+                        </a>
+                        <p style="font-size:12px; margin-bottom:3px;">34,310원</p>
+                        <p style="font-size:11px; opacity:0.55; margin-bottom:5px;">분말스틱</p>
+                        <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
+                        <p style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
+                            인슐린, 위고비, 마운자로 쿨러. 아이스팩 포함 휴대용 솔루션.
+                        </p>
+                    </div>
+                    <!-- Card 10 -->
+                    <div style="padding:10px 12px; overflow:hidden; border:1px solid rgba(255,255,255,0.12); border-radius:6px; position:relative; background:rgba(255,255,255,0.02);">
+                        <div style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">19위</div>
+                        <a href="https://search.shopping.naver.com/search/all?query=마운자로+이중+보냉백+아이스팩" target="_blank"
+                           style="font-size:13px; font-weight:700; color:#FF5722; margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+                            이중 보냉백 아이스팩 포함 정리함 (육군 녹색)
+                        </a>
+                        <p style="font-size:12px; margin-bottom:3px;">23,800원</p>
+                        <p style="font-size:11px; opacity:0.55; margin-bottom:5px;">분말스틱</p>
+                        <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
+                        <p style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
+                            인슐린, 위고비, 마운자로 쿨러. 약품 보관 파우치.
+                        </p>
+                    </div>
+                </div>
+                <div class="insight-box">
+                    <h4 class="insight-box-title">핵심 인사이트</h4>
+                    <p class="insight-box-content">
+                        '마운자로' 시장은 오리지널 의약품과 더불어, 주사침, 보냉백 등 관련 액세서리 시장이 활발하게 형성되어 있습니다. 이는 의약품 사용의 편의성을 높이는 보조 제품에 대한 수요가 크다는 것을 의미합니다.
+                    </p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                출처: 네이버 쇼핑 검색결과 (2026.04.14), 상위 20개 상품 기준
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 7: Bubble Chart -->
+    <div class="slide" id="slide-7">
+        <div class="slide-inner">
+            <div class="slide-header">
+                02 경쟁사 분석 | <span class="accent" style="margin-left: 8px;">경쟁사 포지셔닝</span>
+            </div>
+            <div class="slide-body" style="display:flex; flex-direction:column;">
+                <div style="display:flex; align-items:center; gap:20px; flex:1; min-height:0;">
+                    <div style="position:relative; width:600px; height:480px; flex-shrink:0; align-self:center;
+                                border-left:2px solid rgba(255,255,255,0.4); border-bottom:2px solid rgba(255,255,255,0.4);
+                                overflow:visible; margin-left: 40px;">
+                        <!-- 4사분면 수직선 -->
+                        <div style="position:absolute; left:50%; top:0; height:100%; border-left:1px dashed rgba(255,255,255,0.2); pointer-events:none;"></div>
+                        <!-- 4사분면 수평선 -->
+                        <div style="position:absolute; top:50%; left:0; width:100%; border-top:1px dashed rgba(255,255,255,0.2); pointer-events:none;"></div>
+
+                        <!-- Y축 눈금 (5개) -->
+                        <div style="position:absolute; right:100%; margin-right:6px; font-size:10px; opacity:0.5; bottom:0%; transform:translateY(50%);">0%</div>
+                        <div style="position:absolute; right:100%; margin-right:6px; font-size:10px; opacity:0.5; bottom:25%; transform:translateY(50%);">25%</div>
+                        <div style="position:absolute; right:100%; margin-right:6px; font-size:10px; opacity:0.5; bottom:50%; transform:translateY(50%);">50%</div>
+                        <div style="position:absolute; right:100%; margin-right:6px; font-size:10px; opacity:0.5; bottom:75%; transform:translateY(50%);">75%</div>
+                        <div style="position:absolute; right:100%; margin-right:6px; font-size:10px; opacity:0.5; bottom:100%; transform:translateY(50%);">100%</div>
+
+                        <!-- X축 눈금 (가격 4개) -->
+                        <div style="position:absolute; top:100%; margin-top:6px; font-size:10px; opacity:0.5; left:10%; transform:translateX(-50%);">5천원</div>
+                        <div style="position:absolute; top:100%; margin-top:6px; font-size:10px; opacity:0.5; left:30%; transform:translateX(-50%);">3만원</div>
+                        <div style="position:absolute; top:100%; margin-top:6px; font-size:10px; opacity:0.5; left:60%; transform:translateX(-50%);">15만원</div>
+                        <div style="position:absolute; top:100%; margin-top:6px; font-size:10px; opacity:0.5; left:90%; transform:translateX(-50%);">50만원</div>
+
+                        <!-- Y축 레이블 -->
+                        <div style="position:absolute; right:100%; margin-right:40px; top:50%; writing-mode:vertical-rl; transform:translateY(-50%); font-size:11px; white-space:nowrap; text-align:center;">브랜드 인지도</div>
+                        <!-- X축 레이블 -->
+                        <div style="position:absolute; top:100%; margin-top:28px; left:50%; transform:translateX(-50%); font-size:11px; text-align:center;">월 환산 가격 (원)</div>
+
+                        <!-- Bubbles -->
+                        <!-- Eli Lilly Italia S.p.A,마운자로프리필드펜주 10mg (521377, 15위) -->
+                        <div style="position:absolute; left:85%; bottom:90%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+                            <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">Eli Lilly 10mg</div>
+                            <div style="width:46px; height:46px; border-radius:50%; background:#4361ee; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">15</div>
+                        </div>
+                        <!-- Eli Lilly Italia S.p.A,마운자로프리필드펜주 5mg (369307, 14위) -->
+                        <div style="position:absolute; left:75%; bottom:85%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+                            <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">Eli Lilly 5mg</div>
+                            <div style="width:50px; height:50px; border-radius:50%; background:#f72585; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">14</div>
+                        </div>
+                        <!-- Eli Lilly Italia S.p.A,마운자로프리필드펜주 2.5mg (278066, 16위) -->
+                        <div style="position:absolute; left:65%; bottom:80%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+                            <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">Eli Lilly 2.5mg</div>
+                            <div style="width:44px; height:44px; border-radius:50%; background:#4cc9f0; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">16</div>
+                        </div>
+                        <!-- 성심 인슐린 펜니들 32G 4mm (6800, 1위) -->
+                        <div style="position:absolute; left:8%; bottom:70%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+                            <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">성심 펜니들 4mm</div>
+                            <div style="width:80px; height:80px; border-radius:50%; background:#f8961e; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">1</div>
+                        </div>
+                        <!-- 성심 인슐린 펜니들 32G 6mm (6800, 2위) -->
+                        <div style="position:absolute; left:10%; bottom:65%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+                            <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">성심 펜니들 6mm</div>
+                            <div style="width:78px; height:78px; border-radius:50%; background:#43aa8b; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">2</div>
+                        </div>
+                        <!-- 성심 인슐린 펜니들 32G 5mm (6800, 4위) -->
+                        <div style="position:absolute; left:12%; bottom:60%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+                            <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">성심 펜니들 5mm</div>
+                            <div style="width:69px; height:69px; border-radius:50%; background:#90be6d; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">4</div>
+                        </div>
+                        <!-- 메디프리즈 EVA 휴대용 보냉 파우치 (14900, 9위) -->
+                        <div style="position:absolute; left:15%; bottom:40%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+                            <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">메디프리즈 파우치</div>
+                            <div style="width:61px; height:61px; border-radius:50%; background:#277da1; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">9</div>
+                        </div>
+                        <!-- 이중 보냉백 인슐린 위고비 마운자로 쿨러 (42390, 11위) -->
+                        <div style="position:absolute; left:40%; bottom:30%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+                            <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">이중 보냉백 (여행용)</div>
+                            <div style="width:56px; height:56px; border-radius:50%; background:#e63946; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">11</div>
+                        </div>
+                        <!-- 이중 보냉백 TSA 승인 약물 정리함 (34310, 12위) -->
+                        <div style="position:absolute; left:34%; bottom:25%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+                            <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">이중 보냉백 (TSA)</div>
+                            <div style="width:54px; height:54px; border-radius:50%; background:#6a4c93; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">12</div>
+                        </div>
+                        <!-- 이중 보냉백 아이스팩 포함 정리함 (23800, 19위) -->
+                        <div style="position:absolute; left:22%; bottom:20%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+                            <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">이중 보냉백 (아이스팩)</div>
+                            <div style="width:37px; height:37px; border-radius:50%; background:#ff6b6b; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">19</div>
+                        </div>
+                    </div>
+                    <div style="flex:1; display:flex; flex-direction:column; justify-content:center; gap:16px; overflow:hidden;">
+                        <div style="display:flex; flex-wrap:wrap; gap:8px 16px; flex-shrink:0;">
+                            <div style="display:flex; align-items:center; gap:6px; font-size:12px;"><div style="width:10px; height:10px; border-radius:50%; background:#4361ee;"></div> Eli Lilly 10mg</div>
+                            <div style="display:flex; align-items:center; gap:6px; font-size:12px;"><div style="width:10px; height:10px; border-radius:50%; background:#f72585;"></div> Eli Lilly 5mg</div>
+                            <div style="display:flex; align-items:center; gap:6px; font-size:12px;"><div style="width:10px; height:10px; border-radius:50%; background:#4cc9f0;"></div> Eli Lilly 2.5mg</div>
+                            <div style="display:flex; align-items:center; gap:6px; font-size:12px;"><div style="width:10px; height:10px; border-radius:50%; background:#f8961e;"></div> 성심 펜니들 4mm</div>
+                            <div style="display:flex; align-items:center; gap:6px; font-size:12px;"><div style="width:10px; height:10px; border-radius:50%; background:#43aa8b;"></div> 성심 펜니들 6mm</div>
+                            <div style="display:flex; align-items:center; gap:6px; font-size:12px;"><div style="width:10px; height:10px; border-radius:50%; background:#90be6d;"></div> 성심 펜니들 5mm</div>
+                            <div style="display:flex; align-items:center; gap:6px; font-size:12px;"><div style="width:10px; height:10px; border-radius:50%; background:#277da1;"></div> 메디프리즈 파우치</div>
+                            <div style="display:flex; align-items:center; gap:6px; font-size:12px;"><div style="width:10px; height:10px; border-radius:50%; background:#e63946;"></div> 이중 보냉백 (여행용)</div>
+                            <div style="display:flex; align-items:center; gap:6px; font-size:12px;"><div style="width:10px; height:10px; border-radius:50%; background:#6a4c93;"></div> 이중 보냉백 (TSA)</div>
+                            <div style="display:flex; align-items:center; gap:6px; font-size:12px;"><div style="width:10px; height:10px; border-radius:50%; background:#ff6b6b;"></div> 이중 보냉백 (아이스팩)</div>
+                        </div>
+                        <div class="insight-box" style="margin-top:0;">
+                            <h4 class="insight-box-title">고가 오리지널 의약품과 저가 보조재 시장 분리</h4>
+                            <p class="insight-box-content">
+                                'Eli Lilly'의 고가 오리지널 의약품과 '성심', '이중', '메디프리즈'의 저가 보조재 시장이 명확히 구분됩니다. 이는 '마운자로' 사용 환경을 지원하는 다양한 니즈가 존재함을 보여줍니다.
+                            </p>
+                        </div>
+                        <div class="insight-box" style="margin-top:0;">
+                            <h4 class="insight-box-title">보조재 시장의 높은 경쟁 강도</h4>
+                            <p class="insight-box-content">
+                                주사침과 보냉백 시장은 다수의 브랜드가 유사한 가격대에 포진하며 경쟁이 심화되고 있습니다. 차별화된 기능이나 서비스 통합이 필요합니다.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                출처: 네이버 쇼핑 검색결과 (2026.04.14), 상위 20개 상품 기준
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 8: Section Divider 03 -->
+    <div class="slide" id="slide-8">
+        <div class="slide-inner" style="background:#1a1a1a; display:flex; align-items:center; justify-content:center; flex-direction:column; text-align:center;">
+            <div style="font-size:13px; letter-spacing:0.2em; text-transform:uppercase; opacity:0.6; margin-bottom:16px; color:#fff;">CHAPTER 03</div>
+            <div style="font-size:64px; font-weight:900; color:#FF5722; line-height:1;">03</div>
+            <div style="font-size:32px; font-weight:400; color:#fff; margin-top:16px; opacity:0.9;">기회 & 전략</div>
+            <div style="width:60px; height:3px; background:#FF5722; margin-top:24px;"></div>
+        </div>
+    </div>
+
+    <!-- Slide 9: Pain Points (2x2 Grid) -->
+    <div class="slide" id="slide-9">
+        <div class="slide-inner">
+            <div class="slide-header">
+                03 기회 & 전략 | <span class="accent" style="margin-left: 8px;">소비자 불만</span>
+            </div>
+            <div class="slide-body">
+                <div class="grid-2x2">
+                    <div class="grid-item">
+                        <h3>1. 높은 비용 부담</h3>
+                        <p>
+                            '마운자로'의 뛰어난 효능에도 불구하고, 처방 및 구매 비용이 소비자들에게 상당한 부담으로 작용합니다. 장기적인 건강 관리를 위한 지속적인 지출은 큰 진입 장벽입니다.
+                        </p>
+                    </div>
+                    <div class="grid-item">
+                        <h3>2. 투여 관련 불편함</h3>
+                        <p>
+                            주사 자체에 대한 거부감, 올바른 보관 및 휴대 방법 정보 부족, 주사 후 발생할 수 있는 피부 트러블 등 부가적인 불편함에 대한 해결책이 부족합니다.
+                        </p>
+                    </div>
+                    <div class="grid-item">
+                        <h3>3. 통합 관리 솔루션 부재</h3>
+                        <p>
+                            단순 약물 치료를 넘어, 건강한 식단, 운동, 생활 습관 개선 등 '마운자로'의 효과를 극대화하고 부작용을 최소화할 통합 관리 프로그램에 대한 니즈가 높습니다.
+                        </p>
+                    </div>
+                    <div class="grid-item">
+                        <h3>4. 정보 접근성 부족</h3>
+                        <p>
+                            '마운자로'와 같은 전문 의약품에 대한 일반 대중의 정확하고 신뢰할 수 있는 정보 접근성이 부족하여, 오남용 및 잘못된 정보 확산에 대한 우려가 존재합니다.
+                        </p>
+                    </div>
+                </div>
+                <div class="insight-box">
+                    <h4 class="insight-box-title">핵심 인사이트</h4>
+                    <p class="insight-box-content">
+                        소비자들은 '마운자로'의 효과를 넘어선 통합적인 관리와 비용 효율성, 그리고 정확한 정보 제공을 요구하고 있습니다. 이는 신규 시장 진입의 핵심 기회입니다.
+                    </p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                출처: NPD 자체 분석 (2026.04.14)
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 10: White Space (2x2 Grid, same as Concept) -->
+    <div class="slide" id="slide-10">
+        <div class="slide-inner">
+            <div class="slide-header">
+                03 기회 & 전략 | <span class="accent" style="margin-left: 8px;">차별화 기회</span>
+            </div>
+            <div class="slide-body">
+                <div class="grid-2x2">
+                    <div class="grid-item">
+                        <h3 style="font-size:14px; font-weight:700; color:#FF5722; margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em;">마운자로 통합 관리 키트</h3>
+                        <p style="font-size:15px; line-height:1.65; flex:1; color:rgba(255,255,255,0.92);">
+                            '마운자로' 사용자를 위한 올바른 주사법, 식단, 운동 가이드 및 투여 부위 스킨케어 등을 정기 구독 형태로 제공하여 전반적인 건강 관리를 지원합니다.
+                        </p>
+                    </div>
+                    <div class="grid-item">
+                        <h3 style="font-size:14px; font-weight:700; color:#FF5722; margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em;">스마트 투여 보조 액세서리</h3>
+                        <p style="font-size:15px; line-height:1.65; flex:1; color:rgba(255,255,255,0.92);">
+                            AI 기반으로 투여 시간 알림, 용량 체크, 부위 기록 및 주사 통증 완화 기능을 제공하여 사용자 경험을 혁신하고 정확한 관리를 돕습니다.
+                        </p>
+                    </div>
+                    <div class="grid-item">
+                        <h3 style="font-size:14px; font-weight:700; color:#FF5722; margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em;">맞춤형 건강기능식품 (컨설팅 연계)</h3>
+                        <p style="font-size:15px; line-height:1.65; flex:1; color:rgba(255,255,255,0.92);">
+                            '마운자로'와 시너지를 낼 수 있는 영양 성분을 엄선한 건기식과 전문 의사/영양사 1:1 온라인 컨설팅을 제공하여 효과를 극대화합니다.
+                        </p>
+                    </div>
+                    <div class="grid-item">
+                        <h3 style="font-size:14px; font-weight:700; color:#FF5722; margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em;">개인 맞춤형 디지털 플랫폼</h3>
+                        <p style="font-size:15px; line-height:1.65; flex:1; color:rgba(255,255,255,0.92);">
+                            '마운자로' 사용자를 위한 맞춤 식단, 운동, 심리 상담 등을 제공하는 디지털 플랫폼. 건강 데이터 기반으로 최적화된 관리 계획을 수립하고 동기 부여를 제공합니다.
+                        </p>
+                    </div>
+                </div>
+                <div class="insight-box">
+                    <h4 class="insight-box-title">핵심 인사이트</h4>
+                    <p class="insight-box-content">
+                        '마운자로'의 직접적인 효능을 보조하고 사용자 경험을 개선하는 통합 솔루션과 디지털 플랫폼, 개인 맞춤형 제품이 새로운 시장 기회를 창출할 것입니다.
+                    </p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                출처: NPD 자체 분석 (2026.04.14)
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 11: Concept (2x2 Card Layout) -->
+    <div class="slide" id="slide-11">
+        <div class="slide-inner">
+            <div class="slide-header">
+                03 기회 & 전략 | <span class="accent" style="margin-left: 8px;">NPD 콘셉트: 마운자로 케어 플러스</span>
+            </div>
+            <div class="slide-body">
+                <div class="grid-2x2">
+                    <div class="grid-item">
+                        <h3 style="font-size:14px; font-weight:700; color:#FF5722; margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em;">제품명</h3>
+                        <p style="font-size:15px; line-height:1.65; flex:1;">
+                            <strong>마운자로 케어 플러스 (Maunja-care+)</strong><br>
+                            '마운자로' 투여를 넘어선 전반적인 건강 관리와 삶의 질 향상을 목표로 합니다.
+                        </p>
+                    </div>
+                    <div class="grid-item">
+                        <h3 style="font-size:14px; font-weight:700; color:#FF5722; margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em;">USP</h3>
+                        <p style="font-size:15px; line-height:1.65; flex:1;">
+                            '마운자로' 효과 극대화 및 지속을 위한 개인 맞춤형 통합 건강 관리 솔루션 (정기 구독형). 주사법 교육, 식단, 운동, 스킨케어 큐레이션.
+                        </p>
+                    </div>
+                    <div class="grid-item">
+                        <h3 style="font-size:14px; font-weight:700; color:#FF5722; margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em;">타겟</h3>
+                        <p style="font-size:15px; line-height:1.65; flex:1;">
+                            '마운자로' 처방을 받았거나 고려 중인, 체중 감량 및 건강 관리 의지가 높은 30-50대 성인 (특히 여성). 건강 정보 탐색 및 자기 관리에 적극적인 소비자.
+                        </p>
+                    </div>
+                    <div class="grid-item">
+                        <h3 style="font-size:14px; font-weight:700; color:#FF5722; margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em;">포지셔닝 메시지</h3>
+                        <p style="font-size:15px; line-height:1.65; flex:1;">
+                            "마운자로, 그 이상의 건강한 변화. 전문가와 함께하는 맞춤형 케어로 당신의 성공적인 체중 감량 여정을 완성하세요."
+                        </p>
+                    </div>
+                </div>
+                <div class="insight-box">
+                    <h4 class="insight-box-title">핵심 인사이트</h4>
+                    <p class="insight-box-content">
+                        '마운자로 케어 플러스'는 약물 효과를 넘어선 통합적이고 개인화된 관리 경험을 제공하여, 높은 만족도와 장기적인 고객 관계를 구축할 것입니다.
+                    </p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                출처: NPD 자체 분석 (2026.04.14)
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 12: Pricing Table -->
+    <div class="slide" id="slide-12">
+        <div class="slide-inner">
+            <div class="slide-header">
+                03 기회 & 전략 | <span class="accent" style="margin-left: 8px;">가격 전략</span>
+            </div>
+            <div class="slide-body">
+                <table style="width:100%; border-collapse:collapse; margin-bottom:20px;">
+                    <thead>
+                        <tr style="background:rgba(255,255,255,0.08);">
+                            <th style="padding:12px 14px; text-align:center; font-size:14px; white-space:nowrap; border:1px solid rgba(255,255,255,0.1); color:#FF5722;">플랜</th>
+                            <th style="padding:12px 14px; text-align:center; font-size:14px; white-space:nowrap; border:1px solid rgba(255,255,255,0.1); color:#FF5722;">월 이용료</th>
+                            <th style="padding:12px 14px; text-align:center; font-size:14px; white-space:nowrap; border:1px solid rgba(255,255,255,0.1); color:#FF5722;">주요 포함 서비스</th>
+                            <th style="padding:12px 14px; text-align:center; font-size:14px; white-space:nowrap; border:1px solid rgba(255,255,255,0.1); color:#FF5722;">타겟 고객</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid rgba(255,255,255,0.1);">베이직</td>
+                            <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid rgba(255,255,255,0.1);">15,000원</td>
+                            <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; border:1px solid rgba(255,255,255,0.1);">올바른 주사법 교육 영상, 식단 가이드, 운동 루틴 (디지털 콘텐츠)</td>
+                            <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; border:1px solid rgba(255,255,255,0.1);">기본 정보 및 가이드가 필요한 초기 사용자</td>
+                        </tr>
+                        <tr>
+                            <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid rgba(255,255,255,0.1);">스탠다드</td>
+                            <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid rgba(255,255,255,0.1);">25,000원</td>
+                            <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; border:1px solid rgba(255,255,255,0.1);">베이직 + 저자극성 스킨케어 1종 (투여 부위용), 온라인 Q&A</td>
+                            <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; border:1px solid rgba(255,255,255,0.1);">실질적인 보조 제품과 소통을 원하는 사용자</td>
+                        </tr>
+                        <tr>
+                            <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid rgba(255,255,255,0.1);">프리미엄</td>
+                            <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid rgba(255,255,255,0.1);">40,000원</td>
+                            <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; border:1px solid rgba(255,255,255,0.1);">스탠다드 + 1:1 온라인 코칭 (월 1회), 개인 맞춤 영양제 추천</td>
+                            <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; border:1px solid rgba(255,255,255,0.1);">전문적인 코칭과 통합 관리를 통해 최대 효과를 원하는 사용자</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div style="font-size:16px; font-weight:700; margin-bottom:10px;">가격 전략 근거</div>
+                <p style="font-size:14px; line-height:1.7; color:rgba(255,255,255,0.9);">
+                    '마운자로'의 높은 약가에 대한 부담을 보완하고, 효과적인 체중 감량 및 건강 관리를 위한 통합 솔루션의 가치를 합리적인 월간 구독료로 제공합니다.
+                    다양한 서비스 옵션을 통해 소비자의 니즈와 예산에 맞춰 선택의 폭을 넓히고, 장기적인 고객 유지 및 만족도 향상을 목표로 합니다.
+                    예상 제조단가 범위(3,000원 ~ 8,000원)를 고려하여, 15~20%의 목표 원가율을 유지하면서도 시장 경쟁력을 확보할 수 있도록 가격대를 설정했습니다.
+                </p>
+                <div class="insight-box" style="margin-top:auto;">
+                    <h4 class="insight-box-title">핵심 인사이트</h4>
+                    <p class="insight-box-content">
+                        구독형 모델은 '마운자로' 사용의 지속성을 높이고, 부가 서비스로 약물 외적인 가치를 제공하여 소비자의 비용 부담을 완화하면서도 만족도를 극대화할 수 있습니다.
+                    </p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                출처: NPD 자체 분석 (2026.04.14)
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 13: Risk (2x2 Grid) -->
+    <div class="slide" id="slide-13">
+        <div class="slide-inner">
+            <div class="slide-header">
+                03 기회 & 전략 | <span class="accent" style="margin-left: 8px;">리스크 및 대응 전략</span>
+            </div>
+            <div class="slide-body">
+                <div class="grid-2x2">
+                    <div class="grid-item">
+                        <h3>1. 규제 강화 및 정책 변화</h3>
+                        <p>
+                            '마운자로' 관련 의약품 규제 강화 또는 건강기능식품/일반식품 원료 등록 기준 변화 가능성. 이는 신규 서비스 및 제품 출시에 직접적인 영향을 줄 수 있습니다.
+                        </p>
+                        <div class="sub-text">
+                            <strong>대응 방안:</strong> 식약처 등 관련 기관의 규제 동향을 상시 모니터링하고, 법률 전문가와 협력하여 선제적으로 대응합니다.
+                        </div>
+                    </div>
+                    <div class="grid-item">
+                        <h3>2. 경쟁 심화 및 신규 경쟁자 출현</h3>
+                        <p>
+                            '위고비' 등 기존 강자 존재 및 K제약사의 GLP-1 유사체 개발 가속화는 시장 경쟁을 더욱 치열하게 만들 수 있습니다.
+                        </p>
+                        <div class="sub-text">
+                            <strong>대응 방안:</strong> UTP를 통한 차별화된 가치 제공 및 고객 충성도 강화. 지속적인 서비스 고도화 및 파트너십 확장을 추진합니다.
+                        </div>
+                    </div>
+                    <div class="grid-item">
+                        <h3>3. 소비자 기대치 미충족 및 부작용 우려</h3>
+                        <p>
+                            '마운자로' 자체의 부작용 또는 통합 관리 키트의 효과에 대한 소비자 기대치 미충족 시 서비스 만족도 하락 및 이탈로 이어질 수 있습니다.
+                        </p>
+                        <div class="sub-text">
+                            <strong>대응 방안:</strong> 정확한 정보 제공 및 효과에 대한 현실적인 안내. 부작용 발생 시 신속하고 전문적인 상담 및 지원 시스템을 구축합니다.
+                        </div>
+                    </div>
+                    <div class="grid-item">
+                        <h3>4. 유통 및 공급망 불안정</h3>
+                        <p>
+                            '마운자로' 의약품 공급 문제 또는 관련 액세서리/건기식 원료 수급 불안정은 서비스 제공에 차질을 초래할 수 있습니다.
+                        </p>
+                        <div class="sub-text">
+                            <strong>대응 방안:</strong> 다중 공급처 확보 및 재고 관리 최적화. 안정적인 협력 체계 구축 및 위기 대응 계획을 수립하여 리스크를 최소화합니다.
+                        </div>
+                    </div>
+                </div>
+                <div class="insight-box">
+                    <h4 class="insight-box-title">핵심 인사이트</h4>
+                    <p class="insight-box-content">
+                        시장 진입 시 예상되는 다양한 리스크에 대한 면밀한 분석과 선제적인 대응 전략 마련은 성공적인 사업 추진을 위한 필수 요소입니다.
+                    </p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                출처: NPD 자체 분석 (2026.04.14)
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 14: Roadmap (3-stage horizontal) -->
+    <div class="slide" id="slide-14">
+        <div class="slide-inner">
+            <div class="slide-header">
+                03 기회 & 전략 | <span class="accent" style="margin-left: 8px;">실행 로드맵</span>
+            </div>
+            <div class="slide-body">
+                <div style="display:flex; flex-direction:row; align-items:flex-start; gap:20px; flex:1; min-height:0;">
+                    <!-- Stage 1 -->
+                    <div style="flex:1; padding:24px 20px; border-top:3px solid #FF5722; display:flex; flex-direction:column; gap:8px; background:rgba(255,255,255,0.02); border-radius:6px;">
+                        <h3 style="font-size:18px; font-weight:700; margin:0;">1단계: 콘셉트 검증 및 MVP 개발</h3>
+                        <p style="font-size:13px; color:rgba(255,255,255,0.55); margin:0;">2026년 Q2 - Q3</p>
+                        <div style="height:1px; background:rgba(255,255,255,0.08); margin:4px 0;"></div>
+                        <ul style="font-size:14px; line-height:1.7; flex:1; padding-left:20px; margin:0;">
+                            <li>통합 관리 키트 (UTP 1) 콘텐츠 기획 및 파일럿 테스트</li>
+                            <li>스마트 투여 보조 액세서리 (UTP 2) 기술 타당성 검토 및 MVP 개발</li>
+                            <li>시장 반응 및 사용자 피드백 수집 및 분석</li>
+                        </ul>
+                        <div style="font-size:12px; color:#FF5722; font-weight:700; margin-top:auto; padding-top:8px; border-top:1px solid rgba(255,255,255,0.08);">
+                            마일스톤: 통합 관리 키트 파일럿 성공 & 스마트 액세서리 MVP 출시
+                        </div>
+                    </div>
+                    <!-- Stage 2 -->
+                    <div style="flex:1; padding:24px 20px; border-top:3px solid #FF5722; display:flex; flex-direction:column; gap:8px; background:rgba(255,255,255,0.02); border-radius:6px;">
+                        <h3 style="font-size:18px; font-weight:700; margin:0;">2단계: 제품 확장 및 규제 대응</h3>
+                        <p style="font-size:13px; color:rgba(255,255,255,0.55); margin:0;">2026년 Q4 - 2027년 Q1</p>
+                        <div style="height:1px; background:rgba(255,255,255,0.08); margin:4px 0;"></div>
+                        <ul style="font-size:14px; line-height:1.7; flex:1; padding-left:20px; margin:0;">
+                            <li>맞춤형 건강기능식품 (UTP 3) 상품 기획 및 식약처 규제 검토</li>
+                            <li>통합 관리 키트 서비스 고도화 및 정식 상품화 준비</li>
+                            <li>파트너십 구축 (의료기관, 영양사, 제조사 등)</li>
+                        </ul>
+                        <div style="font-size:12px; color:#FF5722; font-weight:700; margin-top:auto; padding-top:8px; border-top:1px solid rgba(255,255,255,0.08);">
+                            마일스톤: 맞춤형 건기식 상품화 확정 & 주요 파트너십 체결
+                        </div>
+                    </div>
+                    <!-- Stage 3 -->
+                    <div style="flex:1; padding:24px 20px; border-top:3px solid #FF5722; display:flex; flex-direction:column; gap:8px; background:rgba(255,255,255,0.02); border-radius:6px;">
+                        <h3 style="font-size:18px; font-weight:700; margin:0;">3단계: 정식 런칭 및 시장 확대</h3>
+                        <p style="font-size:13px; color:rgba(255,255,255,0.55); margin:0;">2027년 Q2 이후</p>
+                        <div style="height:1px; background:rgba(255,255,255,0.08); margin:4px 0;"></div>
+                        <ul style="font-size:14px; line-height:1.7; flex:1; padding-left:20px; margin:0;">
+                            <li>'마운자로 케어 플러스' 정식 런칭 및 마케팅 캠페인 전개</li>
+                            <li>디지털 플랫폼 연동 및 서비스 통합 추진</li>
+                            <li>글로벌 시장 진출 가능성 타진 및 전략 수립</li>
+                        </ul>
+                        <div style="font-size:12px; color:#FF5722; font-weight:700; margin-top:auto; padding-top:8px; border-top:1px solid rgba(255,255,255,0.08);">
+                            마일스톤: '마운자로 케어 플러스' 시장 안착 및 신규 고객 확보
+                        </div>
+                    </div>
+                </div>
+                <div class="insight-box">
+                    <h4 class="insight-box-title">핵심 인사이트</h4>
+                    <p class="insight-box-content">
+                        단계별 로드맵은 시장 검증을 통한 리스크 최소화와 지속적인 가치 창출을 목표로 합니다. 유연한 전략으로 변화하는 시장에 효과적으로 대응할 것입니다.
+                    </p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                출처: NPD 자체 분석 (2026.04.14)
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 15: References -->
+    <div class="slide" id="slide-15">
+        <div class="slide-inner">
+            <div class="slide-header">
+                참고문헌 및 데이터 출처
+            </div>
+            <div class="slide-body" style="overflow-y:auto; padding-bottom:8px; gap:0;">
+                <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
+                    <span style="color:#FF5722; font-weight:700; flex-shrink:0; min-width:24px;">[1]</span>
+                    <span style="color:rgba(255,255,255,0.85);">네이버 데이터랩 검색어트렌드, 조회일: 2026-04-14, 키워드: 마운자로</span>
+                </div>
+                <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
+                    <span style="color:#FF5722; font-weight:700; flex-shrink:0; min-width:24px;">[2]</span>
+                    <span style="color:rgba(255,255,255,0.85);">네이버 검색광고 키워드도구, 조회일: 2026-04-14, 키워드: 마운자로 &#8212; 월간 PC/모바일 검색수 (PC: 66,400회, 모바일: 290,000회, 합계: 356,400회)</span>
+                </div>
+                <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
+                    <span style="color:#FF5722; font-weight:700; flex-shrink:0; min-width:24px;">[3]</span>
+                    <span style="color:rgba(255,255,255,0.85);">네이버 쇼핑 검색결과, 조회일: 2026-04-14, 키워드: 마운자로, 상위 20개 상품 기준</span>
+                </div>
+                <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
+                    <span style="color:#FF5722; font-weight:700; flex-shrink:0; min-width:24px;">[4]</span>
+                    <span style="color:rgba(255,255,255,0.85);">IM증권, "비만약 전쟁' 격화 속 K제약도 출격 박차...'위고비&#183;마운자로' 정조준", ebn.co.kr, Tue, 14 Apr 2026</span>
+                </div>
+                <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
+                    <span style="color:#FF5722; font-weight:700; flex-shrink:0; min-width:24px;">[5]</span>
+                    <span style="color:rgba(255,255,255,0.85);">iM증권, “한미약품, 본업 성장세 견조하지만 목표가 하향”…이유는?, mk.co.kr, Tue, 14 Apr 2026 (추정: 7,000억원 규모 언급)</span>
+                </div>
+                <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
+                    <span style="color:#FF5722; font-weight:700; flex-shrink:0; min-width:24px;">[6]</span>
+                    <span style="color:rgba(255,255,255,0.85);">g-enews.com, "281조 ‘다이아베시티’ 시장 재편… 일라이릴리, 노보노디스크 꺾고 ‘...", Thu, 09 Apr 2026 (1,900억 달러/281조 원 규모 언급)</span>
+                </div>
+                <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
+                    <span style="color:#FF5722; font-weight:700; flex-shrink:0; min-width:24px;">[7]</span>
+                    <span style="color:rgba(255,255,255,0.85);">ebn.co.kr, "'비만약 전쟁' 격화 속 K제약도 출격 박차...'위고비&#183;마운자로' 정조준", Tue, 14 Apr 2026 (4,725억원 규모 언급)</span>
+                </div>
+                <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
+                    <span style="color:#FF5722; font-weight:700; flex-shrink:0; min-width:24px;">[8]</span>
+                    <span style="color:rgba(255,255,255,0.85);">joongang.co.kr, "[박수련의 시시각각] 비만치료제가 뒤흔든 시장", Fri, 10 Apr 2026 (2024년 말 위고비 주사제 언급)</span>
+                </div>
+                <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
+                    <span style="color:#FF5722; font-weight:700; flex-shrink:0; min-width:24px;">[식약처]</span>
+                    <span style="color:rgba(255,255,255,0.85);">식품안전나라 공공데이터포털, I0760(건강기능식품 원료분류), C002(일반식품 원재료), 조회일: 2026-04-14</span>
+                </div>
+                <div style="display:flex; gap:12px; padding:10px 0; font-size:14px; line-height:1.8;">
+                    <span style="color:#FF5722; font-weight:700; flex-shrink:0; min-width:24px;">*</span>
+                    <span style="color:rgba(255,255,255,0.85);">'(추정)' 표시 항목은 제공된 데이터를 기반으로 NPD 디렉터가 분석&#183;추정한 내용으로 공식 통계가 아님</span>
+                </div>
+            </div>
+            <div class="slide-footer">
+                출처: 위 목록 참조
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript for slide functionality -->
+    <script>
+        // viewport scale
+        function scaleSlides() {
+            var s = Math.min(window.innerWidth/1600, window.innerHeight/800);
+            document.querySelectorAll('.slide-inner').forEach(function(el) {
+                el.style.transform = 'scale('+s+')';
+                el.style.transformOrigin = 'center center';
+            });
+        }
+        window.addEventListener('resize', scaleSlides);
+        scaleSlides();
+
+        // 전환
+        var slides = document.querySelectorAll('.slide');
+        var cur = 0, lock = false;
+        function show(n) {
+            slides[cur].classList.remove('active');
+            cur = (n + slides.length) % slides.length;
+            slides[cur].classList.add('active');
+            document.getElementById('slide-num').textContent = (cur+1)+' / '+slides.length;
+        }
+        document.addEventListener('keydown', function(e) {
+            if (e.key==='ArrowRight'||e.key===' '){e.preventDefault();show(cur+1);}
+            if (e.key==='ArrowLeft'){e.preventDefault();show(cur-1);}
+            if (e.key==='f'||e.key==='F'){document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen();}
+        });
+        document.addEventListener('wheel', function(e) {
+            e.preventDefault();
+            if (lock) return; lock=true;
+            show(e.deltaY>0?cur+1:cur-1);
+            setTimeout(function(){lock=false;},300);
+        },{passive:false});
+        show(0);
+
+        // Line Chart JavaScript (for slide-4)
+        (function() {
+            var ACCENT = '#FF5722';
+            var pts = [
+                {l:'2024.04', v:1.0}, {l:'2024.07', v:1.2}, {l:'2024.10', v:1.4},
+                {l:'2025.01', v:3.0}, {l:'2025.05', v:6.3}, {l:'2025.07', v:10.7},
+                {l:'2025.08', v:100.0}, {l:'2025.10', v:79.5}, {l:'2026.01', v:71.7}, {l:'2026.04', v:76.4}
+            ];
+            function draw() {
+                var cv = document.getElementById('trendChart');
+                if (!cv) return;
+                var par = cv.parentElement;
+                var W = par.clientWidth || 1300, H = par.clientHeight || 350;
+                cv.width = W; cv.height = H;
+                var ctx = cv.getContext('2d');
+                var PL=60, PR=20, PT=20, PB=45;
+                var cW=W-PL-PR, cH=H-PT-PB;
+                var maxV=100;
+                function xp(i){return PL + i/(pts.length-1)*cW;}
+                function yp(v){return PT + cH - v/maxV*cH;}
+                // 그리드 + Y축 레이블
+                ctx.font='11px "Noto Sans KR", sans-serif'; ctx.textAlign='right'; ctx.fillStyle='rgba(255,255,255,0.4)';
+                [0,25,50,75,100].forEach(function(v){
+                    var y=yp(v);
+                    ctx.strokeStyle='rgba(255,255,255,0.07)'; ctx.lineWidth=1;
+                    ctx.beginPath(); ctx.moveTo(PL,y); ctx.lineTo(PL+cW,y); ctx.stroke();
+                    ctx.fillText(v,PL-6,y+4);
+                });
+                // 면적 그라디언트
+                var gr=ctx.createLinearGradient(0,PT,0,PT+cH);
+                gr.addColorStop(0,ACCENT+'55'); gr.addColorStop(1,ACCENT+'05');
+                ctx.beginPath();
+                ctx.moveTo(xp(0),yp(0));
+                pts.forEach(function(d,i){ctx.lineTo(xp(i),yp(d.v));});
+                ctx.lineTo(xp(pts.length-1),yp(0)); ctx.closePath();
+                ctx.fillStyle=gr; ctx.fill();
+                // 선
+                ctx.beginPath(); ctx.strokeStyle=ACCENT; ctx.lineWidth=2.5; ctx.lineJoin='round';
+                pts.forEach(function(d,i){i?ctx.lineTo(xp(i),yp(d.v)):ctx.moveTo(xp(i),yp(d.v));});
+                ctx.stroke();
+                // 점 + 값 레이블 + X축 레이블
+                ctx.fillStyle=ACCENT; ctx.textAlign='center'; ctx.font='11px "Noto Sans KR", sans-serif';
+                pts.forEach(function(d,i){
+                    ctx.beginPath(); ctx.arc(xp(i),yp(d.v),4,0,2*Math.PI); ctx.fill();
+                    ctx.fillStyle='rgba(255,255,255,0.7)';
+                    ctx.fillText(d.v, xp(i), yp(d.v)-10);
+                    ctx.fillStyle='rgba(255,255,255,0.4)';
+                    ctx.fillText(d.l, xp(i), H-8);
+                    ctx.fillStyle=ACCENT;
+                });
+            }
+            // Ensure draw is called after fonts are loaded, or on window load if fonts API not available
+            if(document.fonts) {
+                document.fonts.ready.then(function() {
+                    if (document.getElementById('trendChart')) {
+                        draw();
+                    }
+                });
+            } else {
+                window.addEventListener('load', function() {
+                    if (document.getElementById('trendChart')) {
+                        draw();
+                    }
+                });
+            }
+            window.addEventListener('resize', draw);
+            document.addEventListener('DOMContentLoaded', function() {
+                var observer = new MutationObserver(function(mutations) {
+                    mutations.forEach(function(mutation) {
+                        if (mutation.attributeName === 'class' && mutation.target.classList.contains('active')) {
+                            if (mutation.target.id === 'slide-4') {
+                                draw();
+                            }
+                        }
+                    });
+                });
+                slides.forEach(function(slide) {
+                    observer.observe(slide, { attributes: true });
+                });
+            });
+        })();
+    </script>
+<script>
+(function() {
+  var contentScales = {};
+
+  function measureAll() {
+    document.querySelectorAll('.slide').forEach(function(slide, i) {
+      var hidden = !slide.classList.contains('active');
+      if (hidden) {
+        slide.style.visibility = 'hidden';
+        slide.style.display    = 'flex';
+      }
+      var inner = slide.querySelector('.slide-inner');
+      if (inner) {
+        contentScales[i] = inner.scrollHeight > 800
+          ? (790 / inner.scrollHeight)
+          : 1;
+      }
+      if (hidden) {
+        slide.style.display    = '';
+        slide.style.visibility = '';
+      }
+    });
+  }
+
+  function applyScales() {
+    var vScale = Math.min(window.innerWidth / 1600, window.innerHeight / 800);
+    document.querySelectorAll('.slide').forEach(function(slide, i) {
+      var inner = slide.querySelector('.slide-inner');
+      if (!inner) return;
+      var cScale   = (contentScales[i] != null) ? contentScales[i] : 1;
+      var combined = vScale * cScale;
+      inner.style.transform       = 'scale(' + combined + ')';
+      inner.style.transformOrigin = 'center center';
+    });
+  }
+
+  window.scaleSlides = applyScales;
+  window.addEventListener('resize', applyScales);
+
+  (document.fonts ? document.fonts.ready : Promise.resolve()).then(function() {
+    measureAll();
+    applyScales();
+  });
+})();
+</script>
+</body>
+</html>
