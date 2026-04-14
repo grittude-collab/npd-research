@@ -1,0 +1,1583 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>유산균발효굴추출물 시장 진입 전략 보고서</title>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        /* Global Styles */
+        html, body {
+            margin: 0; padding: 0; overflow: hidden;
+            background: #111; width: 100%; height: 100%;
+            font-family: 'Noto Sans KR', sans-serif;
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Slide Container CSS - EXACTLY AS PROVIDED */
+        .slide {
+            position: fixed; top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            display: none;
+            align-items: center; justify-content: center;
+            overflow: hidden;
+        }
+        .slide.active { display: flex; }
+        .slide-inner {
+            width: 1600px; height: 800px;
+            position: relative; overflow: hidden;
+            box-sizing: border-box;
+            background: #1a1a1a; /* Base background for content slides */
+        }
+        .slide-header {
+            position: absolute; top: 0; left: 0; right: 0;
+            height: 100px; padding: 0 80px;
+            display: flex; align-items: flex-end; padding-bottom: 16px;
+            box-sizing: border-box;
+        }
+        .slide-body {
+            position: absolute; top: 100px; left: 0; right: 0;
+            bottom: 50px; padding: 20px 80px 0;
+            overflow: hidden; /* Crucial for content limits */
+            box-sizing: border-box;
+            max-height: 650px; /* Explicitly enforce max height */
+        }
+        .slide-footer {
+            position: absolute; bottom: 0; left: 0; right: 0;
+            height: 50px; padding: 0 80px;
+            display: flex; align-items: center; justify-content: flex-end;
+            font-size: 12px; opacity: 0.5;
+            box-sizing: border-box;
+        }
+
+        /* Typography */
+        h1 { font-size: 44px; font-weight: 900; font-family: 'Archivo Black', sans-serif; margin: 0; line-height: 1.2; }
+        h2 { font-size: 24px; font-weight: 500; margin: 0; line-height: 1.4; } /* Semi-bold */
+        p { font-size: 18px; font-weight: 400; margin: 0; } /* Regular */
+        .caption { font-size: 13px; font-weight: 300; margin: 0; } /* Light */
+        strong { font-weight: 700; } /* For bold text within paragraphs */
+
+        /* Accent Color */
+        :root {
+            --accent-color: #FF5722;
+        }
+
+        /* Common Insight Box */
+        .insight-box {
+            border-left: 3px solid var(--accent-color);
+            padding: 10px 16px;
+            background: rgba(255, 87, 34, 0.07); /* Using actual accent color hex */
+            margin-bottom: 0;
+            flex-shrink: 0;
+            margin-top: auto; /* Push to bottom */
+            box-sizing: border-box;
+            width: 100%; /* Ensure it spans full width */
+        }
+        .insight-box-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin: 0 0 3px;
+        }
+        .insight-box-content {
+            font-size: 13px;
+            line-height: 1.5;
+            margin: 0;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+
+        /* Navigation UI */
+        .nav-button {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: #fff;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 24px;
+            border-radius: 4px;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+        .nav-button:hover { opacity: 1; }
+        #nav-prev { left: 16px; }
+        #nav-next { right: 16px; }
+        #slide-num-display {
+            position: fixed;
+            bottom: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+        }
+        #fullscreen-button {
+            position: fixed;
+            top: 16px;
+            right: 16px;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: #fff;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 14px;
+            border-radius: 4px;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+        #fullscreen-button:hover { opacity: 1; }
+
+        /* Specific Slide Styles */
+        /* Cover Slide */
+        #slide-1 .slide-inner {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0 160px;
+        }
+        #slide-1 .slide-inner h1 {
+            font-size: 64px; /* Larger for cover */
+            line-height: 800px;
+            margin-bottom: 20px;
+            color: var(--accent-color); /* ACCENT: 1. Main title */
+        }
+        #slide-1 .slide-inner h2 {
+            font-size: 36px; /* Larger subtitle */
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        #slide-1 .slide-inner .caption {
+            font-size: 20px; /* Larger date */
+            opacity: 0.7;
+            margin-bottom: 40px;
+        }
+        #slide-1 .slide-inner p {
+            font-size: 24px; /* Larger summary */
+            line-height: 800px;
+            max-width: 800px;
+            opacity: 0.85;
+        }
+
+        /* Section Divider */
+        .section-divider .slide-inner {
+            background: #111; /* Darker background for dividers */
+        }
+        .section-divider .slide-inner div {
+            color: #fff;
+        }
+        .section-divider .slide-inner .divider-line {
+            width: 60px; height: 800px; background: var(--accent-color);
+            margin-top: 24px;
+        }
+
+        /* Big Number Slide */
+        #slide-3 .slide-body {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+        #slide-3 .metric-row {
+            display: flex;
+            gap: 16px;
+            align-items: stretch;
+            flex: 1;
+            min-height: 0;
+        }
+        #slide-3 .metric-block {
+            flex: 1;
+            padding: 18px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        #slide-3 .metric-title {
+            font-size: 14px;
+            opacity: 0.65;
+            margin: 0 0 4px;
+        }
+        #slide-3 .metric-value {
+            font-size: 48px;
+            font-weight: 900;
+            line-height: 1;
+            margin: 0 0 6px;
+            color: var(--accent-color); /* ACCENT: 1. Metric values */
+            font-family: 'Archivo Black', sans-serif;
+        }
+        #slide-3 .metric-subtext {
+            font-size: 12px;
+            line-height: 1.5;
+            opacity: 0.75;
+            margin: 0 0 12px;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+        #slide-3 .mini-viz-area {
+            flex: 1;
+            min-height: 80px;
+        }
+        #slide-3 .bar-chart-container {
+            display: flex;
+            align-items: flex-end;
+            gap: 10px;
+            flex: 1;
+            padding-top: 4px;
+            height: 80px; /* Fixed height for consistency */
+        }
+        #slide-3 .bar-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            justify-content: flex-end;
+        }
+        #slide-3 .bar-label-top {
+            font-size: 9px;
+            opacity: 0.5;
+        }
+        #slide-3 .bar {
+            width: 100%;
+            background: var(--accent-color);
+            border-radius: 2px 2px 0 0;
+        }
+        #slide-3 .bar-label-bottom {
+            font-size: 10px;
+            white-space: nowrap;
+        }
+        #slide-3 .bar-item:last-child .bar-label-top,
+        #slide-3 .bar-item:last-child .bar-label-bottom {
+            color: var(--accent-color); /* ACCENT: 2. Max bar label */
+        }
+        #slide-3 .news-link {
+            font-size: 11px;
+            line-height: 1.4;
+            padding: 5px 8px;
+            background: rgba(255,255,255,0.04);
+            border-radius: 3px;
+            border-left: 2px solid var(--accent-color); /* ACCENT: 2. News link border */
+            color: inherit;
+            text-decoration: none;
+            display: block;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        #slide-3 .news-item {
+            font-size: 11px;
+            line-height: 1.4;
+            padding: 5px 8px;
+            background: rgba(255,255,255,0.04);
+            border-radius: 3px;
+            border-left: 2px solid rgba(255,255,255,0.1); /* Non-accent for text only item */
+            color: inherit;
+            display: block;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        #slide-3 .news-container {
+            display:flex; flex-direction:column; gap:5px; flex:1; overflow:hidden;
+            justify-content: center; /* Center content if few items */
+        }
+
+
+        /* Line Chart Slide */
+        #slide-4 .slide-body {
+            display: flex;
+            flex-direction: column;
+        }
+        #slide-4 .chart-container {
+            flex: 1;
+            min-height: 0;
+            position: relative;
+        }
+        #slide-4 .insight-row {
+            display: flex;
+            gap: 12px;
+            flex-shrink: 0;
+            margin-top: 12px;
+        }
+        #slide-4 .insight-row .insight-box {
+            flex: 1;
+            margin-top: 0; /* Override auto margin for side-by-side */
+            border-left: 3px solid rgba(255,255,255,0.1); /* Default for second box */
+            background: rgba(255,255,255,0.03);
+        }
+        #slide-4 .insight-row .insight-box-title {
+            color: rgba(255,255,255,0.7);
+        }
+        #slide-4 .insight-row .insight-box:first-child {
+            border-left: 3px solid var(--accent-color); /* ACCENT: 2. First insight box */
+            background: rgba(255, 87, 34, 0.07);
+        }
+        #slide-4 .insight-row .insight-box:first-child .insight-box-title {
+            color: var(--accent-color);
+        }
+
+
+        /* Card Grid Slide */
+        #slide-6 .slide-body {
+            display: flex;
+            flex-direction: column;
+        }
+        #slide-6 .card-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            grid-template-rows: 1fr 1fr; /* 2 rows */
+            gap: 10px;
+            flex: 1; /* Allow grid to fill space */
+            min-height: 0;
+        }
+        #slide-6 .card {
+            padding: 10px 12px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 6px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        #slide-6 .rank-badge {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            font-size: 10px;
+            opacity: 0.4;
+            font-weight: 700;
+        }
+        #slide-6 .brand-name {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--accent-color); /* ACCENT: 1. Brand names */
+            margin-bottom: 5px;
+            padding-right: 24px;
+            display: block;
+            text-decoration: none;
+        }
+        #slide-6 .card-price {
+            font-size: 12px;
+            margin-bottom: 3px;
+            display: block;
+        }
+        #slide-6 .card-form {
+            font-size: 11px;
+            opacity: 0.55;
+            margin-bottom: 5px;
+            display: block;
+        }
+        #slide-6 .card-divider {
+            height: 1px;
+            background: rgba(255,255,255,0.1);
+            margin-bottom: 5px;
+            flex-shrink: 0;
+        }
+        #slide-6 .card-usp {
+            font-size: 11px;
+            line-height: 1.4;
+            color: inherit;
+            opacity: 0.85;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            flex: 1;
+        }
+
+        /* Bubble Chart Slide */
+        #slide-7 .slide-body {
+            display: flex;
+            flex-direction: column;
+        }
+        #slide-7 .main-row {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex: 1;
+            min-height: 0;
+        }
+        #slide-7 .chart-area {
+            position: relative;
+            width: 600px;
+            height: 480px;
+            flex-shrink: 0;
+            align-self: center;
+            border-left: 2px solid rgba(255,255,255,0.4);
+            border-bottom: 2px solid rgba(255,255,255,0.4);
+            overflow: visible; /* Allow bubbles to extend */
+        }
+        #slide-7 .grid-line-v {
+            position: absolute; left: 50%; top: 0; height: 100%; border-left: 1px dashed rgba(255,255,255,0.2); pointer-events: none;
+        }
+        #slide-7 .grid-line-h {
+            position: absolute; top: 50%; left: 0; width: 100%; border-top: 1px dashed rgba(255,255,255,0.2); pointer-events: none;
+        }
+        #slide-7 .y-tick {
+            position: absolute; right: 100%; margin-right: 6px; font-size: 10px; opacity: 0.5; transform: translateY(50%);
+        }
+        #slide-7 .x-tick {
+            position: absolute; top: 100%; margin-top: 6px; font-size: 10px; opacity: 0.5; transform: translateX(-50%);
+        }
+        #slide-7 .y-axis-label {
+            position: absolute; right: 100%; margin-right: 40px; top: 50%; writing-mode: vertical-rl; transform: translateY(-50%); font-size: 11px; white-space: nowrap;
+            color: var(--accent-color); /* ACCENT: 1. Y-axis label */
+        }
+        #slide-7 .x-axis-label {
+            position: absolute; top: 100%; margin-top: 28px; left: 50%; transform: translateX(-50%); font-size: 11px; white-space: nowrap;
+            color: var(--accent-color); /* ACCENT: 1. X-axis label */
+        }
+        #slide-7 .bubble-wrapper {
+            position: absolute;
+            transform: translate(-50%,50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 10; /* Ensure bubbles are above grid lines */
+        }
+        #slide-7 .bubble-label {
+            text-align: center; font-size: 10px; white-space: nowrap; margin-bottom: 3px; color: rgba(255,255,255,0.9);
+        }
+        #slide-7 .bubble-circle {
+            border-radius: 50%;
+            opacity: 0.85;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 700;
+            color: #fff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        #slide-7 .right-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Center content vertically */
+            gap: 16px;
+            overflow: hidden;
+            align-self: stretch; /* Stretch to fill height */
+            padding-left: 20px;
+        }
+        #slide-7 .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px 12px;
+            flex-shrink: 0;
+            font-size: 12px;
+        }
+        #slide-7 .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        #slide-7 .legend-color {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        #slide-7 .right-panel .insight-box {
+            margin-top: 0; /* Override margin-top:auto for these boxes */
+            border-left: 3px solid rgba(255,255,255,0.1); /* Default for second box */
+            background: rgba(255,255,255,0.03);
+        }
+        #slide-7 .right-panel .insight-box-title {
+            color: rgba(255,255,255,0.7);
+        }
+        #slide-7 .right-panel .insight-box:first-of-type {
+            border-left: 3px solid var(--accent-color); /* ACCENT: 2. First insight box */
+            background: rgba(255, 87, 34, 0.07);
+        }
+        #slide-7 .right-panel .insight-box:first-of-type .insight-box-title {
+            color: var(--accent-color);
+        }
+
+        /* 2x2 Grid Slides (Pain Points, White Space, Concept, Risk) */
+        .grid-2x2-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr; /* Crucial for equal height cells */
+            gap: 16px;
+            flex: 1; /* Allow grid to fill space */
+            min-height: 0;
+        }
+        .grid-2x2-cell {
+            padding: 20px 24px;
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 6px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            min-height: 0;
+        }
+        .grid-2x2-cell-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--accent-color); /* ACCENT: 1. Cell titles */
+            margin: 0 0 10px;
+            flex-shrink: 0;
+        }
+        .grid-2x2-cell-body {
+            font-size: 14px;
+            line-height: 1.7;
+            flex: 1;
+            overflow: hidden;
+            color: rgba(255,255,255,0.92);
+        }
+        /* Risk specific */
+        .grid-2x2-cell-risk-solution {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            margin-top: 8px;
+            padding-top: 8px;
+            font-size: 12px;
+            color: rgba(255,255,255,0.75);
+            flex-shrink: 0;
+            line-height: 1.5;
+        }
+        .grid-2x2-cell-risk-solution strong {
+            color: rgba(255,255,255,0.85); /* Not accent color */
+        }
+
+        /* White Space / Concept specific */
+        .concept-card-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--accent-color); /* ACCENT: 1. Card titles */
+            margin: 0 0 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .concept-card-content {
+            font-size: 15px;
+            line-height: 1.65;
+            flex: 1;
+        }
+
+        /* Pricing Table */
+        #slide-12 table {
+            width: 100%;
+            border-collapse: collapse;
+            flex: 1;
+            min-height: 0;
+            margin-bottom: 20px;
+        }
+        #slide-12 th, #slide-12 td {
+            padding: 10px 14px;
+            text-align: center;
+            vertical-align: middle;
+            font-size: 14px;
+            white-space: nowrap;
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+        #slide-12 th {
+            background: rgba(255,255,255,0.05);
+            font-weight: 700;
+            color: var(--accent-color); /* ACCENT: 1. Table header */
+        }
+        #slide-12 td {
+            background: rgba(255,255,255,0.02);
+            color: rgba(255,255,255,0.85);
+        }
+        #slide-12 .pricing-explanation {
+            font-size: 14px;
+            line-height: 1.6;
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 10px;
+        }
+
+        /* Roadmap */
+        #slide-14 .slide-body {
+            display: flex;
+            flex-direction: column;
+        }
+        #slide-14 .roadmap-row {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            gap: 20px; /* Add some gap between stages */
+            flex: 1;
+            min-height: 0;
+        }
+        #slide-14 .roadmap-stage {
+            flex: 1;
+            padding: 24px 20px;
+            border-top: 3px solid var(--accent-color); /* ACCENT: 1. Stage top border */
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 4px;
+            min-height: 0;
+            box-sizing: border-box;
+        }
+        #slide-14 .stage-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin: 0;
+            color: rgba(255,255,255,0.95);
+        }
+        #slide-14 .stage-period {
+            font-size: 13px;
+            color: rgba(255,255,255,0.55);
+            margin: 0;
+        }
+        #slide-14 .stage-divider {
+            height: 1px;
+            background: rgba(255,255,255,0.08);
+            margin: 4px 0;
+        }
+        #slide-14 .stage-activities {
+            font-size: 14px;
+            line-height: 1.7;
+            flex: 1;
+            margin: 0;
+            padding: 0;
+            list-style: none; /* Remove default list style */
+        }
+        #slide-14 .stage-activities li::before {
+            content: '• ';
+            color: rgba(255,255,255,0.5); /* Not accent color */
+            margin-right: 5px;
+        }
+        #slide-14 .stage-milestone {
+            font-size: 12px;
+            color: var(--accent-color); /* ACCENT: 2. Milestone text */
+            font-weight: 700;
+            margin-top: auto;
+            padding-top: 8px;
+            border-top: 1px solid rgba(255,255,255,0.08);
+        }
+
+        /* References */
+        #slide-15 .slide-body {
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            padding-bottom: 8px;
+            gap: 0; /* Remove default gap */
+        }
+        #slide-15 .reference-item {
+            display: flex;
+            gap: 12px;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            font-size: 14px;
+            line-height: 1.8;
+        }
+        #slide-15 .reference-number {
+            color: var(--accent-color); /* ACCENT: 1. Reference number */
+            font-weight: 700;
+            flex-shrink: 0;
+            min-width: 24px;
+        }
+        #slide-15 .reference-text {
+            color: rgba(255,255,255,0.85);
+        }
+        #slide-15 .reference-text a {
+            color: inherit;
+            text-decoration: none;
+        }
+        #slide-15 .reference-text a:hover {
+            text-decoration: underline;
+            color: var(--accent-color); /* ACCENT: 2. Link hover */
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Navigation UI -->
+    <button id="nav-prev" class="nav-button" onclick="show(cur-1)">&#8592;</button>
+    <button id="nav-next" class="nav-button" onclick="show(cur+1)">&#8594;</button>
+    <div id="slide-num-display"><span id="slide-num">1 / 15</span></div>
+    <button id="fullscreen-button" onclick="document.documentElement.requestFullscreen()">Full Screen</button>
+
+    <!-- Slide 1: Cover -->
+    <div class="slide" id="slide-1">
+        <div class="slide-inner">
+            <h1>유산균발효굴추출물<br>시장 진입 전략</h1>
+            <h2>NPD 시장 분석</h2>
+            <p class="caption">2026년 4월 14일</p>
+            <p>급성장하는 시장 기회와 차별화된 전략을 통한 성공적인 NPD 진입 방안 모색</p>
+        </div>
+    </div>
+
+    <!-- Slide 2: Section Divider "01 시장 현황" -->
+    <div class="slide section-divider" id="slide-2">
+        <div class="slide-inner" style="background:#111; display:flex; align-items:center; justify-content:center; flex-direction:column; text-align:center;">
+            <div style="font-size:13px; letter-spacing:0.2em; text-transform:uppercase; opacity:0.6; margin-bottom:16px; color:#fff;">CHAPTER 01</div>
+            <div style="font-size:64px; font-weight:900; color:#fff; line-height:1;">01</div>
+            <div style="font-size:32px; font-weight:400; color:#fff; margin-top:16px; opacity:0.9;">시장 현황</div>
+            <div class="divider-line"></div>
+        </div>
+    </div>
+
+    <!-- Slide 3: Big Number -->
+    <div class="slide" id="slide-3">
+        <div class="slide-inner">
+            <div class="slide-header">
+                <h1>01 시장 현황 | Market Opportunity Scorecard</h1>
+            </div>
+            <div class="slide-body">
+                <div class="metric-row">
+                    <div class="metric-block">
+                        <h3 class="metric-title">시장 성장성 (2년 추세)</h3>
+                        <div class="metric-value">+447.0%</div>
+                        <p class="metric-subtext">2026년 4월 기준, 2년 전 동기 대비 '유산균발효굴추출물' 검색량 증가율. 시장의 폭발적인 성장세를 보여줍니다.</p>
+                        <div class="mini-viz-area">
+                            <svg style="width:100%;height:80px;" viewBox="0 0 200 60" preserveAspectRatio="none">
+                                <defs><linearGradient id="mg1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#FF5722" stop-opacity="0.3"/><stop offset="100%" stop-color="#FF5722" stop-opacity="0"/></linearGradient></defs>
+                                <polygon points="0,60 0,57.1 28.5,56.9 57.0,56.1 85.5,54 114.0,40 142.5,0 171.0,56.1 200,60" fill="url(#mg1)"/>
+                                <polyline points="0,57.1 28.5,56.9 57.0,56.1 85.5,54 114.0,40 142.5,0 171.0,56.1" fill="none" stroke="#FF5722" stroke-width="2"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="metric-block">
+                        <h3 class="metric-title">소비자 관심도 (월간 총 검색수)</h3>
+                        <div class="metric-value">1,520회</div>
+                        <p class="metric-subtext">PC 140회, 모바일 1,380회. 특정 원료에 대한 소비자의 실질적인 검색 수요가 상당함을 의미합니다.</p>
+                        <div class="mini-viz-area bar-chart-container">
+                            <div class="bar-item">
+                                <div class="bar-label-top">최저</div>
+                                <div class="bar" style="opacity:0.35; height:2.4px;"></div>
+                                <div class="bar-label-bottom">1,105회</div>
+                            </div>
+                            <div class="bar-item">
+                                <div class="bar-label-top">평균</div>
+                                <div class="bar" style="opacity:0.65; height:14.2px;"></div>
+                                <div class="bar-label-bottom">6,557회</div>
+                            </div>
+                            <div class="bar-item">
+                                <div class="bar-label-top" style="color:var(--accent-color);">최고</div>
+                                <div class="bar" style="height:50px;"></div>
+                                <div class="bar-label-bottom" style="color:var(--accent-color);">23,030회</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="metric-block">
+                        <h3 class="metric-title">전체시장 규모 및 트렌드</h3>
+                        <div class="metric-value">高 잠재력</div>
+                        <p class="metric-subtext">직접적 통계는 부재하나, 연관 시장의 성장세 및 유산균 시장 내 주요 기업 실적을 통해 잠재적 성장 가능성을 확인합니다.</p>
+                        <div class="mini-viz-area news-container">
+                            <div class="news-item">
+                                국내 키즈 건강기능식품 시장 규모: 약 2,599억원 (2025년 기준, 2020년 대비 52% 성장)
+                            </div>
+                            <div class="news-item">
+                                쎌바이오텍 관련 언급 매출: 533억원, 79억원 <span class="caption">(유산균 시장 성장세 참고)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="insight-box">
+                    <h4 class="insight-box-title">핵심 인사이트</h4>
+                    <p class="insight-box-content">
+                        '유산균발효굴추출물'은 폭발적인 소비자 관심도와 높은 시장 성장 잠재력을 지닌 매력적인 신규 진입 시장입니다.
+                        정확한 시장 규모 데이터는 부족하나, 연관 시장의 성장세가 긍정적인 신호를 제공합니다.
+                    </p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <p>NPD 시장 분석 보고서</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 4: Line Chart -->
+    <div class="slide" id="slide-4">
+        <div class="slide-inner">
+            <div class="slide-header">
+                <h1>01 시장 현황 | 24개월 검색 트렌드 분석</h1>
+            </div>
+            <div class="slide-body">
+                <div class="chart-container">
+                    <canvas id="trendChart"></canvas>
+                </div>
+                <div class="insight-row">
+                    <div class="insight-box">
+                        <h4 class="insight-box-title">급격한 관심도 상승</h4>
+                        <p class="insight-box-content">
+                            2025년 하반기에 검색량이 최고점에 도달하며 시장의 폭발적인 관심을 증명했습니다.
+                            초기 시장 선점 기회가 존재합니다.
+                        </p>
+                    </div>
+                    <div class="insight-box">
+                        <h4 class="insight-box-title" style="color:rgba(255,255,255,0.7);">지속적인 성장 잠재력</h4>
+                        <p class="insight-box-content">
+                            최고점 이후 조정기를 겪고 있으나, 2년 전 대비 447% 성장률은 장기적인 상승 추세와 잠재력을 시사합니다.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <p>출처: 네이버 데이터랩 검색어트렌드 [1] | NPD 시장 분석 보고서</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 5: Section Divider "02 경쟁사 분석" -->
+    <div class="slide section-divider" id="slide-5">
+        <div class="slide-inner" style="background:#111; display:flex; align-items:center; justify-content:center; flex-direction:column; text-align:center;">
+            <div style="font-size:13px; letter-spacing:0.2em; text-transform:uppercase; opacity:0.6; margin-bottom:16px; color:#fff;">CHAPTER 02</div>
+            <div style="font-size:64px; font-weight:900; color:#fff; line-height:1;">02</div>
+            <div style="font-size:32px; font-weight:400; color:#fff; margin-top:16px; opacity:0.9;">경쟁사 분석</div>
+            <div class="divider-line"></div>
+        </div>
+    </div>
+
+    <!-- Slide 6: Card Grid (TOP 10 브랜드) -->
+    <div class="slide" id="slide-6">
+        <div class="slide-inner">
+            <div class="slide-header">
+                <h1>02 경쟁사 분석 | TOP 10 브랜드 현황</h1>
+            </div>
+            <div class="slide-body">
+                <div class="card-grid">
+                    <div class="card">
+                        <span class="rank-badge">1위</span>
+                        <a href="https://search.shopping.naver.com/search/all?query=유산균발효굴추출물+유산균" target="_blank" class="brand-name">유산균</a>
+                        <span class="card-price">18,800원</span>
+                        <span class="card-form">정제</span>
+                        <div class="card-divider"></div>
+                        <p class="card-usp">유산균 함유 발효굴 추출물 &amp; 가바 칼슘 복합 정제</p>
+                    </div>
+                    <div class="card">
+                        <span class="rank-badge">2위</span>
+                        <a href="https://search.shopping.naver.com/search/all?query=유산균발효굴추출물+두드림" target="_blank" class="brand-name">두드림</a>
+                        <span class="card-price">337,800원</span>
+                        <span class="card-form">젤리/구미</span>
+                        <div class="card-divider"></div>
+                        <p class="card-usp">FGO 아이클타임 키즈 성장 젤리 (2박스), 집중 성장 케어</p>
+                    </div>
+                    <div class="card">
+                        <span class="rank-badge">3위</span>
+                        <a href="https://search.shopping.naver.com/search/all?query=유산균발효굴추출물+두드림" target="_blank" class="brand-name">두드림</a>
+                        <span class="card-price">169,000원</span>
+                        <span class="card-form">젤리/구미</span>
+                        <div class="card-divider"></div>
+                        <p class="card-usp">FGO 아이클타임 청소년 성장 젤리, 건강한 성장 지원</p>
+                    </div>
+                    <div class="card">
+                        <span class="rank-badge">4위</span>
+                        <a href="https://search.shopping.naver.com/search/all?query=유산균발효굴추출물+유산균" target="_blank" class="brand-name">유산균</a>
+                        <span class="card-price">49,800원</span>
+                        <span class="card-form">정제</span>
+                        <div class="card-divider"></div>
+                        <p class="card-usp">유산균 함유 발효굴 추출 분말 &amp; 유산균 정 (6개월분)</p>
+                    </div>
+                    <div class="card">
+                        <span class="rank-badge">5위</span>
+                        <a href="https://search.shopping.naver.com/search/all?query=유산균발효굴추출물+두드림" target="_blank" class="brand-name">두드림</a>
+                        <span class="card-price">169,000원</span>
+                        <span class="card-form">젤리/구미</span>
+                        <div class="card-divider"></div>
+                        <p class="card-usp">FGO 아이클타임 키즈 성장 젤리, 원산지 상세표시</p>
+                    </div>
+                    <div class="card">
+                        <span class="rank-badge">6위</span>
+                        <a href="https://search.shopping.naver.com/search/all?query=유산균발효굴추출물+두드림" target="_blank" class="brand-name">두드림</a>
+                        <span class="card-price">169,900원</span>
+                        <span class="card-form">젤리/구미</span>
+                        <div class="card-divider"></div>
+                        <p class="card-usp">아이클타임 어린이 키성장 FGO 젤리 (20g x 30포)</p>
+                    </div>
+                    <div class="card">
+                        <span class="rank-badge">7위</span>
+                        <a href="https://search.shopping.naver.com/search/all?query=유산균발효굴추출물+빙그레" target="_blank" class="brand-name">빙그레</a>
+                        <span class="card-price">3,000원</span>
+                        <span class="card-form">젤리/구미</span>
+                        <div class="card-divider"></div>
+                        <p class="card-usp">잘키 어린이 키성장 망고맛 젤리스틱 체험팩 (1포)</p>
+                    </div>
+                    <div class="card">
+                        <span class="rank-badge">8위</span>
+                        <a href="https://search.shopping.naver.com/search/all?query=유산균발효굴추출물+두드림" target="_blank" class="brand-name">두드림</a>
+                        <span class="card-price">338,000원</span>
+                        <span class="card-form">젤리/구미</span>
+                        <div class="card-divider"></div>
+                        <p class="card-usp">아이클타임 어린이 키성장 FGO 젤리 (2개월분)</p>
+                    </div>
+                    <div class="card">
+                        <span class="rank-badge">9위</span>
+                        <a href="https://search.shopping.naver.com/search/all?query=유산균발효굴추출물+두드림" target="_blank" class="brand-name">두드림</a>
+                        <span class="card-price">337,800원</span>
+                        <span class="card-form">젤리/구미</span>
+                        <div class="card-divider"></div>
+                        <p class="card-usp">아이클타임 어린이 키성장 FGO 젤리 (20g x 60포)</p>
+                    </div>
+                    <div class="card">
+                        <span class="rank-badge">10위</span>
+                        <a href="https://search.shopping.naver.com/search/all?query=유산균발효굴추출물+두드림" target="_blank" class="brand-name">두드림</a>
+                        <span class="card-price">1,038,600원</span>
+                        <span class="card-form">젤리/구미</span>
+                        <div class="card-divider"></div>
+                        <p class="card-usp">아이클타임 어린이 키성장 FGO 젤리 (6개월분)</p>
+                    </div>
+                </div>
+                <div class="insight-box">
+                    <h4 class="insight-box-title">핵심 인사이트</h4>
+                    <p class="insight-box-content">
+                        '두드림'의 '아이클타임'이 시장을 주도하며 젤리/구미 제형이 압도적인 비중을 차지합니다.
+                        'FGO' 기능성 표기가 소비자 선택에 큰 영향을 미칩니다.
+                    </p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <p>출처: 네이버 쇼핑 검색결과 [3] | NPD 시장 분석 보고서</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 7: Bubble Chart -->
+    <div class="slide" id="slide-7">
+        <div class="slide-inner">
+            <div class="slide-header">
+                <h1>02 경쟁사 분석 | 경쟁사 포지셔닝 (TOP 10)</h1>
+            </div>
+            <div class="slide-body">
+                <div class="main-row">
+                    <div class="chart-area">
+                        <div class="grid-line-v"></div>
+                        <div class="grid-line-h"></div>
+                        <div class="y-tick" style="bottom:0%;">0%</div>
+                        <div class="y-tick" style="bottom:25%;">25%</div>
+                        <div class="y-tick" style="bottom:50%;">50%</div>
+                        <div class="y-tick" style="bottom:75%;">75%</div>
+                        <div class="y-tick" style="bottom:100%;">100%</div>
+                        <div class="x-tick" style="left:5%;">0원</div>
+                        <div class="x-tick" style="left:27%;">50,000원</div>
+                        <div class="x-tick" style="left:49%;">100,000원</div>
+                        <div class="x-tick" style="left:71%;">150,000원</div>
+                        <div class="x-tick" style="left:93%;">200,000원</div>
+                        <div class="y-axis-label">브랜드 인지도</div>
+                        <div class="x-axis-label">월 환산 가격 (원)</div>
+
+                        <!-- Bubbles (Brand, Monthly Price, Brand Awareness, Rank) -->
+                        <!-- Monthly prices: 18800, 168900, 169000, 8300, 169000, 169900, 155900, 169000, 168900, 173100 -->
+                        <!-- X-axis: 0 to 200000. Scale factor for 0-100%: 100/200000 = 0.0005. So x = price * 0.0005 * 0.9 + 5% (to avoid edge) -->
+                        <!-- Y-axis: 0 to 100. Scale factor: 1. So y = awareness * 0.9 + 5% (to avoid edge) -->
+                        <!-- Ranks: 1-10. Size: 80px to 32px. Size = 80 - (rank-1)*5.33 -->
+                        <!-- Colors: #4361ee (유산균) #f72585 (두드림) #4cc9f0 (빙그레) -->
+
+                        <div class="bubble-wrapper" style="left:12.4%; bottom:23%;">
+                            <div class="bubble-label">유산균</div>
+                            <div class="bubble-circle" style="background:#4361ee; width:80px; height:80px;">1</div>
+                        </div>
+                        <div class="bubble-wrapper" style="left:80.5%; bottom:86%;">
+                            <div class="bubble-label">두드림</div>
+                            <div class="bubble-circle" style="background:#f72585; width:74.6px; height:74.6px;">2</div>
+                        </div>
+                        <div class="bubble-wrapper" style="left:80.5%; bottom:80%;">
+                            <div class="bubble-label">두드림</div>
+                            <div class="bubble-circle" style="background:#f72585; width:69.3px; height:69.3px;">3</div>
+                        </div>
+                        <div class="bubble-wrapper" style="left:8.7%; bottom:18%;">
+                            <div class="bubble-label">유산균</div>
+                            <div class="bubble-circle" style="background:#4361ee; width:64px; height:64px;">4</div>
+                        </div>
+                        <div class="bubble-wrapper" style="left:80.5%; bottom:74%;">
+                            <div class="bubble-label">두드림</div>
+                            <div class="bubble-circle" style="background:#f72585; width:58.6px; height:58.6px;">5</div>
+                        </div>
+                        <div class="bubble-wrapper" style="left:80.9%; bottom:68%;">
+                            <div class="bubble-label">두드림</div>
+                            <div class="bubble-circle" style="background:#f72585; width:53.3px; height:53.3px;">6</div>
+                        </div>
+                        <div class="bubble-wrapper" style="left:76.2%; bottom:59%;">
+                            <div class="bubble-label">빙그레</div>
+                            <div class="bubble-circle" style="background:#4cc9f0; width:48px; height:48px;">7</div>
+                        </div>
+                        <div class="bubble-wrapper" style="left:80.5%; bottom:62%;">
+                            <div class="bubble-label">두드림</div>
+                            <div class="bubble-circle" style="background:#f72585; width:42.6px; height:42.6px;">8</div>
+                        </div>
+                        <div class="bubble-wrapper" style="left:80.5%; bottom:56%;">
+                            <div class="bubble-label">두드림</div>
+                            <div class="bubble-circle" style="background:#f72585; width:37.3px; height:37.3px;">9</div>
+                        </div>
+                        <div class="bubble-wrapper" style="left:82.2%; bottom:50%;">
+                            <div class="bubble-label">두드림</div>
+                            <div class="bubble-circle" style="background:#f72585; width:32px; height:32px;">10</div>
+                        </div>
+                    </div>
+                    <div class="right-panel">
+                        <div class="legend">
+                            <div class="legend-item"><span class="legend-color" style="background:#f72585;"></span>두드림</div>
+                            <div class="legend-item"><span class="legend-color" style="background:#4361ee;"></span>유산균</div>
+                            <div class="legend-item"><span class="legend-color" style="background:#4cc9f0;"></span>빙그레</div>
+                        </div>
+                        <div class="insight-box">
+                            <h4 class="insight-box-title">시장 리더의 포지셔닝</h4>
+                            <p class="insight-box-content">
+                                '두드림'은 고가 정책과 높은 브랜드 인지도를 바탕으로 시장 상단에 확고하게 자리매김하고 있습니다.
+                                이는 프리미엄 전략이 유효함을 보여줍니다.
+                            </p>
+                        </div>
+                        <div class="insight-box">
+                            <h4 class="insight-box-title" style="color:rgba(255,255,255,0.7);">경쟁 공백 영역</h4>
+                            <p class="insight-box-content">
+                                저가-고인지도, 중가-고인지도 영역에 경쟁이 적습니다.
+                                합리적인 가격에 높은 신뢰도를 줄 수 있다면 시장 침투 기회가 있습니다.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <p>NPD 시장 분석 보고서</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 8: Section Divider "03 기회 & 전략" -->
+    <div class="slide section-divider" id="slide-8">
+        <div class="slide-inner" style="background:#111; display:flex; align-items:center; justify-content:center; flex-direction:column; text-align:center;">
+            <div style="font-size:13px; letter-spacing:0.2em; text-transform:uppercase; opacity:0.6; margin-bottom:16px; color:#fff;">CHAPTER 03</div>
+            <div style="font-size:64px; font-weight:900; color:#fff; line-height:1;">03</div>
+            <div style="font-size:32px; font-weight:400; color:#fff; margin-top:16px; opacity:0.9;">기회 &amp; 전략</div>
+            <div class="divider-line"></div>
+        </div>
+    </div>
+
+    <!-- Slide 9: Pain Points -->
+    <div class="slide" id="slide-9">
+        <div class="slide-inner">
+            <div class="slide-header">
+                <h1>03 기회 &amp; 전략 | 소비자 불만 (Pain Points)</h1>
+            </div>
+            <div class="slide-body">
+                <div class="grid-2x2-container">
+                    <div class="grid-2x2-cell">
+                        <h3 class="grid-2x2-cell-title">구체적 기능성 소구 부족</h3>
+                        <p class="grid-2x2-cell-body">
+                            현재 시장은 '키 성장'이라는 포괄적 효능에 집중하나, '유산균발효굴추출물'의 핵심 성분이
+                            어떤 메커니즘으로 다양한 건강 이점을 제공하는지 명확한 설명이 부재합니다.
+                        </p>
+                    </div>
+                    <div class="grid-2x2-cell">
+                        <h3 class="grid-2x2-cell-title">원료 효능 연결성 미흡</h3>
+                        <p class="grid-2x2-cell-body">
+                            굴의 아연, 미네랄과 유산균 발효 과정의 시너지 효과에 대한 깊이 있는 정보 제공이 미흡하여,
+                            소비자가 원료의 가치를 온전히 이해하기 어렵습니다.
+                        </p>
+                    </div>
+                    <div class="grid-2x2-cell">
+                        <h3 class="grid-2x2-cell-title">타겟 연령층 및 니즈 제한</h3>
+                        <p class="grid-2x2-cell-body">
+                            대부분 제품이 키즈 타겟에 집중되어 있어, 성인의 면역력, 소화 건강, 갱년기 건강 등
+                            다양한 건강 니즈를 가진 소비자층을 위한 맞춤형 제품이 부족합니다.
+                        </p>
+                    </div>
+                    <div class="grid-2x2-cell">
+                        <h3 class="grid-2x2-cell-title">높은 가격 장벽 및 불투명한 가치</h3>
+                        <p class="grid-2x2-cell-body">
+                            일부 프리미엄 제품의 가격대가 높아 대다수 소비자에게 부담이 됩니다.
+                            가격 대비 구체적인 가치 제안이 부족하여 구매를 망설이게 합니다.
+                        </p>
+                    </div>
+                </div>
+                <div class="insight-box">
+                    <h4 class="insight-box-title">핵심 인사이트</h4>
+                    <p class="insight-box-content">
+                        소비자들은 단순한 키 성장 효과를 넘어, 원료의 과학적 근거와 다양한 건강 이점에 대한
+                        명확하고 신뢰할 수 있는 정보를 갈망하고 있습니다.
+                    </p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <p>NPD 시장 분석 보고서</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 10: White Space -->
+    <div class="slide" id="slide-10">
+        <div class="slide-inner">
+            <div class="slide-header">
+                <h1>03 기회 &amp; 전략 | 차별화 기회 (White Space)</h1>
+            </div>
+            <div class="slide-body">
+                <div class="grid-2x2-container">
+                    <div class="grid-2x2-cell">
+                        <h3 class="concept-card-title">성장+면역 특화 솔루션</h3>
+                        <p class="concept-card-content">
+                            굴의 풍부한 아연과 유산균 발효의 시너지를 강조하여, 단순 키 성장을 넘어 전반적인
+                            면역력 강화까지 복합적으로 케어하는 제품으로 차별화합니다.
+                        </p>
+                    </div>
+                    <div class="grid-2x2-cell">
+                        <h3 class="concept-card-title">3중 복합 기능성 소구</h3>
+                        <p class="concept-card-content">
+                            키 성장 외에 장 건강(유산균) 및 활력 증진(굴의 미네랄/아미노산)을 동시에 소구하여,
+                            종합 건강기능식품으로서의 가치를 부각하고 경쟁 우위를 확보합니다.
+                        </p>
+                    </div>
+                    <div class="grid-2x2-cell">
+                        <h3 class="concept-card-title">독보적 원료 효능 과학적 입증</h3>
+                        <p class="concept-card-content">
+                            식약처 개별 인정형 원료 등록 추진 및 자체 R&amp;D를 통해 얻은 과학적 데이터를 기반으로,
+                            경쟁사 모방이 어려운 독보적인 원료 효능을 스토리텔링합니다.
+                        </p>
+                    </div>
+                    <div class="grid-2x2-cell">
+                        <h3 class="concept-card-title">성인 타겟 확장 및 맞춤형 제품</h3>
+                        <p class="concept-card-content">
+                            키즈 시장 외에 성인의 면역력, 소화 건강, 갱년기 건강 등 다양한 니즈를 공략하는
+                            맞춤형 제품을 개발하여 시장 범위를 넓힙니다.
+                        </p>
+                    </div>
+                </div>
+                <div class="insight-box">
+                    <h4 class="insight-box-title">핵심 인사이트</h4>
+                    <p class="insight-box-content">
+                        '유산균발효굴추출물'의 다중 기능성을 과학적으로 명확히 소구하고,
+                        타겟층을 확장하여 기존 시장의 한계를 넘어서는 것이 중요합니다.
+                    </p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <p>NPD 시장 분석 보고서</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 11: Concept -->
+    <div class="slide" id="slide-11">
+        <div class="slide-inner">
+            <div class="slide-header">
+                <h1>03 기회 &amp; 전략 | NPD 콘셉트</h1>
+            </div>
+            <div class="slide-body">
+                <div class="grid-2x2-container">
+                    <div class="grid-2x2-cell">
+                        <h3 class="concept-card-title">제품명 (Product Name)</h3>
+                        <p class="concept-card-content">
+                            <strong>오이스터락토 그로우 (OysterLacto Grow)</strong><br>
+                            굴(Oyster)과 유산균(Lacto)의 시너지, 그리고 성장(Grow)을 직관적으로 표현하여
+                            원료의 특징과 핵심 효능을 강조합니다.
+                        </p>
+                    </div>
+                    <div class="grid-2x2-cell">
+                        <h3 class="concept-card-title">핵심 차별점 (USP)</h3>
+                        <p class="concept-card-content">
+                            <strong>"압도적 아연+유산균 시너지로 완성하는 3중 기능성: 성장, 면역, 장 건강"</strong><br>
+                            식약처 개별 인정형 원료 등록을 통해 과학적으로 검증된 독보적인 효능을 제공합니다.
+                        </p>
+                    </div>
+                    <div class="grid-2x2-cell">
+                        <h3 class="concept-card-title">타겟 (Target Audience)</h3>
+                        <p class="concept-card-content">
+                            <strong>성장기 어린이 및 청소년, 면역력 증진이 필요한 성인</strong><br>
+                            키즈 시장의 높은 관심을 활용하되, 성인층의 다양한 건강 니즈까지 충족할 수 있도록 확장합니다.
+                        </p>
+                    </div>
+                    <div class="grid-2x2-cell">
+                        <h3 class="concept-card-title">포지셔닝 메시지 (Positioning Message)</h3>
+                        <p class="concept-card-content">
+                            <strong>"과학으로 증명된 차세대 성장 솔루션, 가족 건강을 위한 프리미엄 선택"</strong><br>
+                            신뢰성, 혁신성, 그리고 온 가족을 위한 가치를 동시에 전달하여 시장에 안착합니다.
+                        </p>
+                    </div>
+                </div>
+                <div class="insight-box">
+                    <h4 class="insight-box-title">핵심 인사이트</h4>
+                    <p class="insight-box-content">
+                        명확한 제품명과 강력한 USP를 통해 다중 타겟층에 어필하고,
+                        과학적 근거 기반의 프리미엄 포지셔닝으로 시장을 선도해야 합니다.
+                    </p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <p>NPD 시장 분석 보고서</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 12: Pricing -->
+    <div class="slide" id="slide-12">
+        <div class="slide-inner">
+            <div class="slide-header">
+                <h1>03 기회 &amp; 전략 | 가격 전략</h1>
+            </div>
+            <div class="slide-body">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>제품명</th>
+                            <th>타겟 판매가 (월)</th>
+                            <th>타겟 제조단가 (월, 15~20%)</th>
+                            <th>전략</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>프리미엄 키즈 성장 젤리</td>
+                            <td>150,000원대</td>
+                            <td>25,000원 ~ 35,000원</td>
+                            <td>시장 리더 '아이클타임' 대비 합리적 프리미엄</td>
+                        </tr>
+                        <tr>
+                            <td>보급형 종합 영양 정제</td>
+                            <td>30,000원대</td>
+                            <td>3,000원 ~ 4,000원</td>
+                            <td>접근성 확대 및 일반 건강기능식품 시장 공략</td>
+                        </tr>
+                        <tr>
+                            <td>성인 면역/활력 스틱</td>
+                            <td>50,000원대</td>
+                            <td>8,000원 ~ 12,000원</td>
+                            <td>신규 시장 개척 및 성인층 니즈 충족</td>
+                        </tr>
+                        <tr>
+                            <td>체험팩/소량 구성</td>
+                            <td>5,000원대</td>
+                            <td>1,000원 ~ 2,000원</td>
+                            <td>시장 진입 장벽 낮추기 및 초기 고객 확보</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p class="pricing-explanation">
+                    경쟁사 '아이클타임'의 월 환산 가격(16~17만원대)과 제조단가(2.5~3.5만원)를 벤치마킹하여
+                    프리미엄 제품은 유사한 가격대로 포지셔닝하되, 보급형 및 성인용 제품으로 가격 스펙트럼을
+                    확장하여 다양한 소비자층의 접근성을 높이는 전략이 필요합니다.
+                </p>
+                <div class="insight-box">
+                    <h4 class="insight-box-title">핵심 인사이트</h4>
+                    <p class="insight-box-content">
+                        프리미엄 시장을 공략하면서도 다양한 가격대의 제품군을 구축하여 시장 점유율을 확대하고,
+                        신규 고객 유입을 촉진하는 전략적 가격 책정이 중요합니다.
+                    </p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <p>NPD 시장 분석 보고서</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 13: Risk -->
+    <div class="slide" id="slide-13">
+        <div class="slide-inner">
+            <div class="slide-header">
+                <h1>03 기회 &amp; 전략 | 예상 리스크 및 대응 방안</h1>
+            </div>
+            <div class="slide-body">
+                <div class="grid-2x2-container">
+                    <div class="grid-2x2-cell">
+                        <h3 class="grid-2x2-cell-title">식약처 원료 미등록</h3>
+                        <p class="grid-2x2-cell-body">
+                            '유산균발효굴추출물'은 현재 건강기능식품 원료로 공식 등록되어 있지 않아,
+                            마케팅 제약 및 소비자 신뢰도 문제 발생 가능성이 있습니다.
+                        </p>
+                        <p class="grid-2x2-cell-risk-solution">
+                            <strong style="color:rgba(255,255,255,0.85);">대응 방안:</strong> 개별 인정형 원료 등록 최우선 추진. 등록 전까지 GMP 기준 준수 및 품질 관리 강화.
+                        </p>
+                    </div>
+                    <div class="grid-2x2-cell">
+                        <h3 class="grid-2x2-cell-title">경쟁 심화 및 시장 독점</h3>
+                        <p class="grid-2x2-cell-body">
+                            '아이클타임' 등 선도 제품이 시장을 지배하며 높은 인지도를 확보하고 있어,
+                            신규 진입 시 강력한 경쟁에 직면할 수 있습니다.
+                        </p>
+                        <p class="grid-2x2-cell-risk-solution">
+                            <strong style="color:rgba(255,255,255,0.85);">대응 방안:</strong> 명확한 UTP 기반 차별화 전략, 새로운 타겟층(성인) 발굴 및 확장.
+                        </p>
+                    </div>
+                    <div class="grid-2x2-cell">
+                        <h3 class="grid-2x2-cell-title">소비자 인지도 부족</h3>
+                        <p class="grid-2x2-cell-body">
+                            '유산균발효굴추출물' 자체에 대한 일반 소비자 인지도가 아직 낮아,
+                            초기 시장 진입 시 교육 및 설득 비용이 높을 수 있습니다.
+                        </p>
+                        <p class="grid-2x2-cell-risk-solution">
+                            <strong style="color:rgba(255,255,255,0.85);">대응 방안:</strong> 과학적 근거 기반 효능 스토리텔링, 교육적 마케팅 캠페인 집중.
+                        </p>
+                    </div>
+                    <div class="grid-2x2-cell">
+                        <h3 class="grid-2x2-cell-title">원료 수급 및 품질 변동성</h3>
+                        <p class="grid-2x2-cell-body">
+                            굴 추출물 특성상 원료 수급의 안정성 및 품질 관리가 중요하며,
+                            이는 제품의 일관된 품질 유지에 영향을 미칠 수 있습니다.
+                        </p>
+                        <p class="grid-2x2-cell-risk-solution">
+                            <strong style="color:rgba(255,255,255,0.85);">대응 방안:</strong> 복수 공급처 확보, 엄격한 품질 검사 시스템 구축, 원료 표준화 R&amp;D.
+                        </p>
+                    </div>
+                </div>
+                <div class="insight-box">
+                    <h4 class="insight-box-title">핵심 인사이트</h4>
+                    <p class="insight-box-content">
+                        규제 대응, 경쟁 차별화, 인지도 제고, 안정적인 원료 관리는 성공적인 시장 진입을 위한
+                        필수적인 리스크 관리 요소입니다.
+                    </p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <p>NPD 시장 분석 보고서</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 14: Roadmap -->
+    <div class="slide" id="slide-14">
+        <div class="slide-inner">
+            <div class="slide-header">
+                <h1>03 기회 &amp; 전략 | 실행 로드맵</h1>
+            </div>
+            <div class="slide-body">
+                <div class="roadmap-row">
+                    <div class="roadmap-stage">
+                        <h3 class="stage-title">Phase 1: 원료 기능성 확립 및 제품 기획</h3>
+                        <p class="stage-period">기간: 초기 6개월</p>
+                        <div class="stage-divider"></div>
+                        <ul class="stage-activities">
+                            <li>'유산균발효굴추출물' 기능성 R&amp;D 집중</li>
+                            <li>식약처 개별 인정형 원료 등록 준비</li>
+                            <li>UTP 기반 제품 콘셉트 및 제형 기획</li>
+                            <li>초기 시제품 개발 및 내부 테스트</li>
+                        </ul>
+                        <p class="stage-milestone">마일스톤: 개별 인정형 원료 등록 신청 완료, 시제품 개발 완료</p>
+                    </div>
+                    <div class="roadmap-stage">
+                        <h3 class="stage-title">Phase 2: 생산 및 시장 진입</h3>
+                        <p class="stage-period">기간: 다음 9개월</p>
+                        <div class="stage-divider"></div>
+                        <ul class="stage-activities">
+                            <li>GMP 시설 생산 계약 및 품질 관리 시스템 구축</li>
+                            <li>초기 마케팅 캠페인 기획 및 실행 (온/오프라인)</li>
+                            <li>주요 온라인 및 드럭스토어 유통 채널 확보</li>
+                            <li>소비자 피드백 수집 및 제품 개선 계획 수립</li>
+                        </ul>
+                        <p class="stage-milestone">마일스톤: 제품 출시 및 초기 판매 목표 달성, 주요 유통 채널 입점</p>
+                    </div>
+                    <div class="roadmap-stage">
+                        <h3 class="stage-title">Phase 3: 시장 확장 및 브랜드 강화</h3>
+                        <p class="stage-period">기간: 12개월 이상</p>
+                        <div class="stage-divider"></div>
+                        <ul class="stage-activities">
+                            <li>성인 타겟 제품 라인업 확장 및 포트폴리오 다각화</li>
+                            <li>해외 시장 진출 가능성 검토 및 전략 수립</li>
+                            <li>지속적인 R&amp;D를 통한 기능성 업그레이드</li>
+                            <li>고객 충성도 프로그램 운영 및 브랜드 커뮤니티 강화</li>
+                        </ul>
+                        <p class="stage-milestone">마일스톤: 시장 점유율 확대, 글로벌 브랜드 성장 기반 마련</p>
+                    </div>
+                </div>
+                <div class="insight-box">
+                    <h4 class="insight-box-title">핵심 인사이트</h4>
+                    <p class="insight-box-content">
+                        장기적인 관점에서 R&amp;D 투자와 규제 대응을 최우선 과제로 삼고,
+                        단계별 명확한 목표 설정과 유연한 전략 수정을 통해 시장을 선도해야 합니다.
+                    </p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <p>NPD 시장 분석 보고서</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 15: References -->
+    <div class="slide" id="slide-15">
+        <div class="slide-inner">
+            <div class="slide-header">
+                <h1>참고문헌 및 데이터 출처</h1>
+            </div>
+            <div class="slide-body">
+                <div class="reference-item">
+                    <span class="reference-number">1</span>
+                    <span class="reference-text">네이버 데이터랩 검색어트렌드, 조회일: 2026-04-14, 키워드: 유산균발효굴추출물</span>
+                </div>
+                <div class="reference-item">
+                    <span class="reference-number">2</span>
+                    <span class="reference-text">네이버 검색광고 키워드도구, 조회일: 2026-04-14, 키워드: 유산균발효굴추출물 &#8212; 월간 PC/모바일 검색수</span>
+                </div>
+                <div class="reference-item">
+                    <span class="reference-number">3</span>
+                    <span class="reference-text">네이버 쇼핑 검색결과, 조회일: 2026-04-14, 키워드: 유산균발효굴추출물, 상위 20개 상품 기준</span>
+                </div>
+                <div class="reference-item">
+                    <span class="reference-number">4</span>
+                    <span class="reference-text"><a href="https://greened.kr/news/articleView.html?idxno=302450" target="_blank">greened.kr, "[유통가 레이더] 폭우 피해민 돕는다...SPC그룹 등 유통기업들, 수해...", 2025년 7월 18일</a></span>
+                </div>
+                <div class="reference-item">
+                    <span class="reference-number">5</span>
+                    <span class="reference-text"><a href="https://www.ibabynews.com/news/articleView.html?idxno=105494" target="_blank">ibabynews.com, "[제약 트렌드] 쎌바이오텍, 글로벌 'K-유산균' 열풍에 533억원 매출 기록...", 2026년 2월 24일</a></span>
+                </div>
+                <div class="reference-item">
+                    <span class="reference-number">6</span>
+                    <span class="reference-text"><a href="http://www.theviewers.co.kr/news/articleView.html?idxno=64359" target="_blank">theviewers.co.kr, "[유통갤러리] 남양유업, ‘2023 신입사원 입직교육’ 성료 외", 2023년 7월 27일</a></span>
+                </div>
+                <div class="reference-item">
+                    <span class="reference-number">7</span>
+                    <span class="reference-text">식품안전나라 공공데이터포털, I0760(건강기능식품 원료분류), 조회일: 2026-04-14</span>
+                </div>
+                <div class="reference-item">
+                    <span class="reference-number">8</span>
+                    <span class="reference-text">식품안전나라 공공데이터포털, C002(일반식품 원재료), 조회일: 2026-04-14</span>
+                </div>
+                <div class="reference-item">
+                    <span class="reference-number"></span>
+                    <span class="reference-text">*(추정) 표시는 제공된 데이터를 기반으로 NPD 디렉터가 분석&#8226;추정한 내용으로 공식 통계가 아님*</span>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <p>NPD 시장 분석 보고서</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- JS - EXACTLY AS PROVIDED -->
+    <script>
+        // viewport scale
+        function scaleSlides() {
+          var s = Math.min(window.innerWidth/1600, window.innerHeight/800);
+          document.querySelectorAll('.slide-inner').forEach(function(el) {
+            el.style.transform = 'scale('+s+')';
+            el.style.transformOrigin = 'center center';
+          });
+        }
+        window.addEventListener('resize', scaleSlides);
+        scaleSlides();
+
+        // 전환
+        var slides = document.querySelectorAll('.slide');
+        var cur = 0, lock = false;
+        function show(n) {
+          slides[cur].classList.remove('active');
+          cur = (n + slides.length) % slides.length;
+          slides[cur].classList.add('active');
+          document.getElementById('slide-num').textContent = (cur+1)+' / '+slides.length;
+        }
+        document.addEventListener('keydown', function(e) {
+          if (e.key==='ArrowRight'||e.key===' '){e.preventDefault();show(cur+1);}
+          if (e.key==='ArrowLeft'){e.preventDefault();show(cur-1);}
+          if (e.key==='f'||e.key==='F'){document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen();}
+        });
+        document.addEventListener('wheel', function(e) {
+          e.preventDefault();
+          if (lock) return; lock=true;
+          show(e.deltaY>0?cur+1:cur-1);
+          setTimeout(function(){lock=false;},300);
+        },{passive:false});
+        show(0);
+    </script>
+
+    <!-- Slide 4 Canvas Chart JS - EXACTLY AS PROVIDED TEMPLATE -->
+    <script>
+        (function() {
+          var ACCENT = '#FF5722'; /* ACCENT color HEX */
+          var pts = [
+            {l:'2024.04', v:4.8}, {l:'2024.07', v:5.0}, {l:'2024.10', v:6.5},
+            {l:'2025.01', v:10.0}, {l:'2025.04', v:20.0}, {l:'2025.07', v:72.9},
+            {l:'2025.10', v:100.0}, {l:'2026.04', v:6.6}
+          ];
+          function draw() {
+            var cv = document.getElementById('trendChart');
+            if (!cv) return;
+            var par = cv.parentElement;
+            var W = par.clientWidth || 1300, H = par.clientHeight || 350;
+            cv.width = W; cv.height = H;
+            var ctx = cv.getContext('2d');
+            var PL=60, PR=20, PT=20, PB=45;
+            var cW=W-PL-PR, cH=H-PT-PB;
+            var maxV=100;
+            function xp(i){return PL + i/(pts.length-1)*cW;}
+            function yp(v){return PT + cH - v/maxV*cH;}
+            // 그리드 + Y축 레이블
+            ctx.font='11px "Noto Sans KR", sans-serif'; ctx.textAlign='right'; ctx.fillStyle='rgba(255,255,255,0.4)';
+            [0,25,50,75,100].forEach(function(v){
+              var y=yp(v);
+              ctx.strokeStyle='rgba(255,255,255,0.07)'; ctx.lineWidth=1;
+              ctx.beginPath(); ctx.moveTo(PL,y); ctx.lineTo(PL+cW,y); ctx.stroke();
+              ctx.fillText(v,PL-6,y+4);
+            });
+            // 면적 그라디언트
+            var gr=ctx.createLinearGradient(0,PT,0,PT+cH);
+            gr.addColorStop(0,ACCENT+'55'); gr.addColorStop(1,ACCENT+'05');
+            ctx.beginPath();
+            ctx.moveTo(xp(0),yp(0));
+            pts.forEach(function(d,i){ctx.lineTo(xp(i),yp(d.v));});
+            ctx.lineTo(xp(pts.length-1),yp(0)); ctx.closePath();
+            ctx.fillStyle=gr; ctx.fill();
+            // 선
+            ctx.beginPath(); ctx.strokeStyle=ACCENT; ctx.lineWidth=2.5; ctx.lineJoin='round';
+            pts.forEach(function(d,i){i?ctx.lineTo(xp(i),yp(d.v)):ctx.moveTo(xp(i),yp(d.v));});
+            ctx.stroke();
+            // 점 + 값 레이블 + X축 레이블
+            ctx.fillStyle=ACCENT; ctx.textAlign='center'; ctx.font='11px "Noto Sans KR", sans-serif';
+            pts.forEach(function(d,i){
+              ctx.beginPath(); ctx.arc(xp(i),yp(d.v),4,0,2*Math.PI); ctx.fill();
+              ctx.fillStyle='rgba(255,255,255,0.7)';
+              ctx.fillText(d.v, xp(i), yp(d.v)-10);
+              ctx.fillStyle='rgba(255,255,255,0.4)';
+              ctx.fillText(d.l, xp(i), H-8);
+              ctx.fillStyle=ACCENT;
+            });
+          }
+          if(document.fonts) document.fonts.ready.then(draw); else window.addEventListener('load',draw);
+          window.addEventListener('resize',draw);
+        })();
+    </script>
+<script>
+(function() {
+  var contentScales = {};
+
+  function measureAll() {
+    document.querySelectorAll('.slide').forEach(function(slide, i) {
+      var hidden = !slide.classList.contains('active');
+      if (hidden) {
+        slide.style.visibility = 'hidden';
+        slide.style.display    = 'flex';
+      }
+      var inner = slide.querySelector('.slide-inner');
+      if (inner) {
+        contentScales[i] = inner.scrollHeight > 800
+          ? (790 / inner.scrollHeight)
+          : 1;
+      }
+      if (hidden) {
+        slide.style.display    = '';
+        slide.style.visibility = '';
+      }
+    });
+  }
+
+  function applyScales() {
+    var vScale = Math.min(window.innerWidth / 1600, window.innerHeight / 800);
+    document.querySelectorAll('.slide').forEach(function(slide, i) {
+      var inner = slide.querySelector('.slide-inner');
+      if (!inner) return;
+      var cScale   = (contentScales[i] != null) ? contentScales[i] : 1;
+      var combined = vScale * cScale;
+      inner.style.transform       = 'scale(' + combined + ')';
+      inner.style.transformOrigin = 'center center';
+    });
+  }
+
+  window.scaleSlides = applyScales;
+  window.addEventListener('resize', applyScales);
+
+  (document.fonts ? document.fonts.ready : Promise.resolve()).then(function() {
+    measureAll();
+    applyScales();
+  });
+})();
+</script>
+</body>
+</html>
