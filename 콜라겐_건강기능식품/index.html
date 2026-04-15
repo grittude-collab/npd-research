@@ -1,0 +1,1218 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>콜라겐 건강기능식품 시장 진입 전략 보고서</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        /* Global Styles */
+        :root {
+            --bg-color: #1a1a1a;
+            --text-color: rgba(255, 255, 255, 0.9);
+            --secondary-text-color: rgba(255, 255, 255, 0.7);
+            --accent-color: #FF5722;
+            --border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        html, body {
+            margin: 0; padding: 0; overflow: hidden;
+            background: var(--bg-color); width: 100%; height: 100%;
+            font-family: 'Noto Sans KR', sans-serif;
+            color: var(--text-color);
+            line-height: 1.5;
+            font-size: 18px; /* 본문: 18px Regular */
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Archivo Black', sans-serif; /* 대제목: Archivo Black */
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 { font-size: 44px; font-weight: 900; } /* 대제목 */
+        h2 { font-size: 24px; font-weight: 700; font-family: 'Noto Sans KR', sans-serif;} /* 소제목: 24px Semi-bold */
+        p, div { font-weight: 400; } /* 본문: 18px Regular */
+        .caption { font-size: 13px; font-weight: 300; } /* 캡션: 13px Light */
+
+        strong { font-weight: 700; } /* Noto Sans KR Semi-bold */
+
+        /* Slide Container CSS (Provided) */
+        .slide {
+            position: fixed; top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            display: none;
+            align-items: center; justify-content: center;
+            overflow: hidden;
+        }
+        .slide.active { display: flex; }
+        .slide-inner {
+            width: 1600px; height: 800px;
+            position: relative; overflow: hidden;
+            box-sizing: border-box;
+            background: var(--bg-color);
+        }
+        .slide-header {
+            position: absolute; top: 0; left: 0; right: 0;
+            height: 100px; padding: 0 80px;
+            display: flex; align-items: flex-end; padding-bottom: 16px;
+            box-sizing: border-box;
+            color: var(--text-color);
+            font-family: 'Noto Sans KR', sans-serif; /* 헤더 텍스트는 Noto Sans KR */
+            font-size: 24px; /* 소제목 */
+            font-weight: 700;
+        }
+        .slide-body {
+            position: absolute; top: 100px; left: 0; right: 0;
+            bottom: 50px; padding: 20px 80px 0;
+            overflow: hidden;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+        }
+        .slide-footer {
+            position: absolute; bottom: 0; left: 0; right: 0;
+            height: 50px; padding: 0 80px;
+            display: flex; align-items: center; justify-content: flex-end;
+            font-size: 12px; opacity: 0.5;
+            box-sizing: border-box;
+            color: var(--text-color);
+        }
+
+        /* Common Insight Box Style */
+        .insight-box {
+            border-left: 3px solid var(--accent-color);
+            padding: 10px 16px;
+            background: rgba(255, 87, 34, 0.07);
+            margin-bottom: 0;
+            flex-shrink: 0;
+            margin-top: auto;
+        }
+        .insight-box-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin: 0 0 3px;
+        }
+        .insight-box-content {
+            font-size: 13px;
+            line-height: 1.5;
+            margin: 0;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            color: var(--secondary-text-color);
+        }
+
+        /* Navigation UI */
+        .nav-button {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-color);
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 24px;
+            border-radius: 5px;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+        .nav-button:hover {
+            opacity: 1;
+        }
+        #prev-slide { left: 16px; }
+        #next-slide { right: 16px; }
+
+        #slide-num-display {
+            position: fixed;
+            bottom: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+            color: var(--text-color);
+            font-size: 14px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        #fullscreen-button {
+            position: fixed;
+            top: 16px;
+            right: 16px;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-color);
+            border: none;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 14px;
+            border-radius: 5px;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+        #fullscreen-button:hover {
+            opacity: 1;
+        }
+
+        /* Link style */
+        a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <button id="prev-slide" class="nav-button" onclick="show(cur-1)">&#10094;</button>
+    <button id="next-slide" class="nav-button" onclick="show(cur+1)">&#10095;</button>
+    <div id="slide-num-display">1 / 15</div>
+    <button id="fullscreen-button" onclick="document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen();">전체화면</button>
+
+    <!-- Slide 1: Cover -->
+    <div class="slide" id="slide-1">
+        <div class="slide-inner" style="display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; padding:0 80px;">
+            <h1 style="font-size:64px; margin-bottom:20px; color:var(--accent-color);">콜라겐 건강기능식품</h1>
+            <h2 style="font-size:36px; font-weight:400; font-family: 'Noto Sans KR', sans-serif; margin-bottom:30px; line-height:1.2;">NPD 시장 분석 및 신제품 진입 전략</h2>
+            <p style="font-size:20px; opacity:0.7; margin-bottom:50px;">기준일: 2026년 4월 15일</p>
+            <div style="width:120px; height:4px; background:var(--accent-color); margin-bottom:30px;"></div>
+            <p style="font-size:22px; font-weight:500; line-height:1.4;">
+                잠재적 성장 가능성을 가진 시장, <br>
+                데이터 기반의 명확한 차별화 전략으로 성공적인 시장 진입을 모색합니다.
+            </p>
+        </div>
+    </div>
+
+    <!-- Slide 2: Section Divider "01 시장 현황" -->
+    <div class="slide" id="slide-2">
+        <div class="slide-inner" style="background:var(--accent-color); display:flex; align-items:center; justify-content:center; flex-direction:column; text-align:center;">
+            <div style="font-size:13px; letter-spacing:0.2em; text-transform:uppercase; opacity:0.6; margin-bottom:16px; color:#fff;">CHAPTER 01</div>
+            <div style="font-size:64px; font-weight:900; color:#fff; line-height:1;">01</div>
+            <div style="font-size:32px; font-weight:400; font-family: 'Noto Sans KR', sans-serif; color:#fff; margin-top:16px; opacity:0.9;">시장 현황</div>
+            <div style="width:60px; height:3px; background:#fff; margin-top:24px;"></div>
+        </div>
+    </div>
+
+    <!-- Slide 3: Big Number -->
+    <div class="slide" id="slide-3">
+        <div class="slide-inner">
+            <div class="slide-header">
+                01 시장 현황 | Market Opportunity Scorecard
+            </div>
+            <div class="slide-body" style="display:flex; flex-direction:column; gap:16px;">
+                <div style="display:flex; gap:16px; align-items:stretch; flex:1; min-height:0;">
+                    <!-- Card 1: 시장 성장성/트렌드 -->
+                    <div style="flex:1; padding:18px 20px; display:flex; flex-direction:column; gap:4px; border:1px solid var(--border-color); border-radius:6px; overflow:hidden;">
+                        <h3 style="font-size:14px; opacity:0.65; margin:0 0 4px; font-family: 'Noto Sans KR', sans-serif; font-weight: 500;">시장 성장성 (검색 트렌드)</h3>
+                        <div style="font-size:48px; font-weight:900; line-height:1; margin:0 0 6px; color:var(--accent-color);">하락 추세</div>
+                        <p style="font-size:12px; line-height:1.5; opacity:0.75; margin:0 0 12px; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
+                            월간 합산 검색량 10회 미만으로 직접적인 소비자 검색 수요가 매우 낮음. [2]
+                        </p>
+                        <div style="flex:1; min-height:80px;">
+                            <svg style="width:100%;height:80px;" viewBox="0 0 200 60" preserveAspectRatio="none">
+                                <defs><linearGradient id="mg1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#FF5722" stop-opacity="0.3"/><stop offset="100%" stop-color="#FF5722" stop-opacity="0"/></linearGradient></defs>
+                                <polygon points="0,60 0,10 40,20 80,30 120,40 160,50 200,60" fill="url(#mg1)"/>
+                                <polyline points="0,10 40,20 80,30 120,40 160,50" fill="none" stroke="#FF5722" stroke-width="2"/>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- Card 2: 소비자 관심도 -->
+                    <div style="flex:1; padding:18px 20px; display:flex; flex-direction:column; gap:4px; border:1px solid var(--border-color); border-radius:6px; overflow:hidden;">
+                        <h3 style="font-size:14px; opacity:0.65; margin:0 0 4px; font-family: 'Noto Sans KR', sans-serif; font-weight: 500;">소비자 관심도 (월간 총 검색수)</h3>
+                        <div style="font-size:48px; font-weight:900; line-height:1; margin:0 0 6px; color:var(--accent-color);">&lt; 10회</div>
+                        <p style="font-size:12px; line-height:1.5; opacity:0.75; margin:0 0 12px; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
+                            24개월 기준 역산 최저/평균/최고 검색수
+                        </p>
+                        <div style="display:flex; align-items:flex-end; gap:10px; flex:1; padding-top:4px;">
+                            <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;">
+                                <div style="font-size:9px; opacity:0.5;">최저</div>
+                                <div style="width:100%; background:var(--accent-color); opacity:0.35; height:8px; border-radius:2px 2px 0 0;"></div>
+                                <div style="font-size:10px; white-space:nowrap;">1회</div>
+                            </div>
+                            <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;">
+                                <div style="font-size:9px; opacity:0.5;">평균</div>
+                                <div style="width:100%; background:var(--accent-color); opacity:0.65; height:25px; border-radius:2px 2px 0 0;"></div>
+                                <div style="font-size:10px; white-space:nowrap;">5회</div>
+                            </div>
+                            <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;">
+                                <div style="font-size:9px; opacity:0.5; color:var(--accent-color);">최고</div>
+                                <div style="width:100%; background:var(--accent-color); height:50px; border-radius:2px 2px 0 0;"></div>
+                                <div style="font-size:10px; white-space:nowrap; color:var(--accent-color);">10회</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 3: 전체시장 규모 및 트렌드 -->
+                    <div style="flex:1; padding:18px 20px; display:flex; flex-direction:column; gap:4px; border:1px solid var(--border-color); border-radius:6px; overflow:hidden;">
+                        <h3 style="font-size:14px; opacity:0.65; margin:0 0 4px; font-family: 'Noto Sans KR', sans-serif; font-weight: 500;">전체시장 규모 및 트렌드</h3>
+                        <div style="font-size:48px; font-weight:900; line-height:1; margin:0 0 6px; color:var(--accent-color);">규모 추정 필요</div>
+                        <p style="font-size:12px; line-height:1.5; opacity:0.75; margin:0 0 12px; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
+                            명확한 시장 규모 통계 부재, 관련 뉴스 헤드라인으로 간접 추정.
+                        </p>
+                        <div style="display:flex; flex-direction:column; gap:5px; flex:1; overflow:hidden;">
+                            <a href="https://www.nongup.net/" target="_blank" style="font-size:11px; line-height:1.4; padding:5px 8px;
+                               background:rgba(255,255,255,0.04); border-radius:3px; border-left:2px solid var(--accent-color);
+                               color:inherit; text-decoration:none; display:block;
+                               overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+                              "모르고 먹으면 손해… 해외에서 갈아탄 관절 원료 DEM" &#8212; nongup.net
+                            </a>
+                            <a href="https://www.mkhealth.co.kr/news/articleView.html?idxno=24522" target="_blank" style="font-size:11px; line-height:1.4; padding:5px 8px;
+                               background:rgba(255,255,255,0.04); border-radius:3px; border-left:2px solid var(--accent-color);
+                               color:inherit; text-decoration:none; display:block;
+                               overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+                              "콜라겐 시장 급성장…뉴트리 '에버콜라겐' 가장 많이 팔렸다" &#8212; mkhealth.co.kr
+                            </a>
+                            <div style="font-size:11px; line-height:1.4; padding:5px 8px;
+                               background:rgba(255,255,255,0.04); border-radius:3px; border-left:2px solid var(--accent-color);
+                               color:inherit; text-decoration:none; display:block;
+                               overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+                               "관련 업계 뉴스 및 쇼핑 상위 상품 가격대 고려 시 상당 규모 시장 추정" &#8212; NPD 디렉터
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="insight-box">
+                    <h4 class="insight-box-title">핵심 인사이트</h4>
+                    <p class="insight-box-content">
+                        '콜라겐_건강기능식품'의 직접적인 검색 수요는 낮으나, 관련 뉴스 및 쇼핑 트렌드를 볼 때 잠재적 시장은 존재합니다.
+                        명확한 시장 규모 통계가 부재하므로, 전략적 시장 진입을 위한 추가 분석이 필수적입니다.
+                    </p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                출처: 네이버 데이터랩 [1], 네이버 검색광고 키워드도구 [2], 네이버 쇼핑 [3], ajunews.com [4], dream.kotra.or.kr [5], nongup.net [6], hankyung.com [7], biz.heraldcorp.com [8], mkhealth.co.kr [9], theviewers.co.kr [10] *(추정)
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 4: Line Chart (Canvas + JS) -->
+    <div class="slide" id="slide-4">
+        <div class="slide-inner">
+            <div class="slide-header">
+                01 시장 현황 | 24개월 검색 트렌드 분석
+            </div>
+            <div class="slide-body" style="display:flex; flex-direction:column;">
+                <div style="flex:1; min-height:0; position:relative;">
+                    <canvas id="trendChart"></canvas>
+                </div>
+
+                <div style="display:flex; gap:12px; flex-shrink:0; margin-top:12px;">
+                    <div class="insight-box" style="flex:1; margin-top:0;">
+                        <h4 class="insight-box-title">검색량 정체 현상</h4>
+                        <p class="insight-box-content">
+                            지난 24개월간 '콜라겐_건강기능식품' 키워드의 검색량은 매우 낮은 수준에 머물러 있습니다.
+                            이는 대중적 관심이 아직 형성되지 않았거나, 특정 니즈를 가진 소수에게만 집중될 가능성을 시사합니다.
+                        </p>
+                    </div>
+                    <div class="insight-box" style="flex:1; margin-top:0;">
+                        <h4 class="insight-box-title">잠재적 관심 발굴 필요</h4>
+                        <p class="insight-box-content">
+                            직접 검색량은 낮지만, 관련 뉴스 언급 등을 통해 잠재적 관심은 존재합니다.
+                            효과적인 마케팅 전략을 통해 숨겨진 수요를 발굴하고 인지도를 높이는 노력이 필요합니다.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                출처: 네이버 데이터랩 [1], 네이버 검색광고 키워드도구 [2]
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 5: Section Divider "02 경쟁사 분석" -->
+    <div class="slide" id="slide-5">
+        <div class="slide-inner" style="background:var(--accent-color); display:flex; align-items:center; justify-content:center; flex-direction:column; text-align:center;">
+            <div style="font-size:13px; letter-spacing:0.2em; text-transform:uppercase; opacity:0.6; margin-bottom:16px; color:#fff;">CHAPTER 02</div>
+            <div style="font-size:64px; font-weight:900; color:#fff; line-height:1;">02</div>
+            <div style="font-size:32px; font-weight:400; font-family: 'Noto Sans KR', sans-serif; color:#fff; margin-top:16px; opacity:0.9;">경쟁사 분석</div>
+            <div style="width:60px; height:3px; background:#fff; margin-top:24px;"></div>
+        </div>
+    </div>
+
+    <!-- Slide 6: Card Grid (TOP 10 Brands) -->
+    <div class="slide" id="slide-6">
+        <div class="slide-inner">
+            <div class="slide-header">
+                02 경쟁사 분석 | TOP 10 브랜드 분석
+            </div>
+            <div class="slide-body" style="display:flex; flex-direction:column; gap:16px;">
+                <div style="display:grid; grid-template-columns:repeat(5,1fr); grid-auto-rows:minmax(0,1fr); gap:10px; flex:1; min-height:0;">
+                    <!-- Card 1 -->
+                    <div style="padding:10px 12px; overflow:hidden; border:1px solid var(--border-color); border-radius:6px; position:relative; display:flex; flex-direction:column;">
+                        <span style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">1위</span>
+                        <a href="https://search.shopping.naver.com/search/all?query=콜라겐_건강기능식품+주영엔에스" target="_blank"
+                           style="font-size:13px; font-weight:700; color:var(--accent-color); margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+                            주영엔에스
+                        </a>
+                        <span style="font-size:12px; margin-bottom:3px;">가격: 28,890원</span>
+                        <span style="font-size:11px; opacity:0.55; margin-bottom:5px;">제형: 액상 (20ml x 28포)</span>
+                        <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
+                        <p style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
+                            모발 건강에 특화된 콜라겐 제품임을 강조합니다.
+                        </p>
+                    </div>
+                    <!-- Card 2 -->
+                    <div style="padding:10px 12px; overflow:hidden; border:1px solid var(--border-color); border-radius:6px; position:relative; display:flex; flex-direction:column;">
+                        <span style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">2위</span>
+                        <a href="https://search.shopping.naver.com/search/all?query=콜라겐_건강기능식품+뉴트리" target="_blank"
+                           style="font-size:13px; font-weight:700; color:var(--accent-color); margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+                            뉴트리
+                        </a>
+                        <span style="font-size:12px; margin-bottom:3px;">가격: 116,000원 (4개월분)</span>
+                        <span style="font-size:11px; opacity:0.55; margin-bottom:5px;">제형: 확인필요</span>
+                        <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
+                        <p style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
+                            저분자 트리 펩타이드 콜라겐과 레티놀A 결합, '에버콜라겐' 브랜드 파워.
+                        </p>
+                    </div>
+                    <!-- Card 3 -->
+                    <div style="padding:10px 12px; overflow:hidden; border:1px solid var(--border-color); border-radius:6px; position:relative; display:flex; flex-direction:column;">
+                        <span style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">3위</span>
+                        <a href="https://search.shopping.naver.com/search/all?query=콜라겐_건강기능식품+라이필" target="_blank"
+                           style="font-size:13px; font-weight:700; color:var(--accent-color); margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+                            라이필
+                        </a>
+                        <span style="font-size:12px; margin-bottom:3px;">가격: 76,550원 (3개)</span>
+                        <span style="font-size:11px; opacity:0.55; margin-bottom:5px;">제형: 정제 (800mg x 84정)</span>
+                        <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
+                        <p style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
+                            '더마콜라겐'으로 피부 건강 기능성 강조, 정제 형태의 편리함.
+                        </p>
+                    </div>
+                    <!-- Card 4 -->
+                    <div style="padding:10px 12px; overflow:hidden; border:1px solid var(--border-color); border-radius:6px; position:relative; display:flex; flex-direction:column;">
+                        <span style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">4위</span>
+                        <a href="https://search.shopping.naver.com/search/all?query=콜라겐_건강기능식품+에이치엘비제약" target="_blank"
+                           style="font-size:13px; font-weight:700; color:var(--accent-color); margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+                            에이치엘비제약
+                        </a>
+                        <span style="font-size:12px; margin-bottom:3px;">가격: 64,420원 (5개)</span>
+                        <span style="font-size:11px; opacity:0.55; margin-bottom:5px;">제형: 분말스틱 (2g x 14포)</span>
+                        <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
+                        <p style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
+                            저분자 모발 콜라겐으로 특정 기능성 강조.
+                        </p>
+                    </div>
+                    <!-- Card 5 -->
+                    <div style="padding:10px 12px; overflow:hidden; border:1px solid var(--border-color); border-radius:6px; position:relative; display:flex; flex-direction:column;">
+                        <span style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">5위</span>
+                        <a href="https://search.shopping.naver.com/search/all?query=콜라겐_건강기능식품+뉴트리코어" target="_blank"
+                           style="font-size:13px; font-weight:700; color:var(--accent-color); margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+                            뉴트리코어
+                        </a>
+                        <span style="font-size:12px; margin-bottom:3px;">가격: 135,100원 (5개)</span>
+                        <span style="font-size:11px; opacity:0.55; margin-bottom:5px;">제형: 액상 (20ml x 15포)</span>
+                        <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
+                        <p style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
+                            고가 포지셔닝으로 프리미엄 시장 공략.
+                        </p>
+                    </div>
+                    <!-- Card 6 -->
+                    <div style="padding:10px 12px; overflow:hidden; border:1px solid var(--border-color); border-radius:6px; position:relative; display:flex; flex-direction:column;">
+                        <span style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">6위</span>
+                        <a href="https://search.shopping.naver.com/search/all?query=콜라겐_건강기능식품+에버콜라겐" target="_blank"
+                           style="font-size:13px; font-weight:700; color:var(--accent-color); margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+                            에버콜라겐
+                        </a>
+                        <span style="font-size:12px; margin-bottom:3px;">가격: 30,080원</span>
+                        <span style="font-size:11px; opacity:0.55; margin-bottom:5px;">제형: 액상 (20ml x 28포)</span>
+                        <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
+                        <p style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
+                            강력한 브랜드 인지도를 기반으로 다양한 제품군 보유.
+                        </p>
+                    </div>
+                    <!-- Card 7 -->
+                    <div style="padding:10px 12px; overflow:hidden; border:1px solid var(--border-color); border-radius:6px; position:relative; display:flex; flex-direction:column;">
+                        <span style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">7위</span>
+                        <a href="https://search.shopping.naver.com/search/all?query=콜라겐_건강기능식품+라이필" target="_blank"
+                           style="font-size:13px; font-weight:700; color:var(--accent-color); margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+                            라이필
+                        </a>
+                        <span style="font-size:12px; margin-bottom:3px;">가격: 87,100원 (3개)</span>
+                        <span style="font-size:11px; opacity:0.55; margin-bottom:5px;">제형: 정제 (645mg x 84정)</span>
+                        <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
+                        <p style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
+                            피부 건강에 초점을 맞춘 시그니처 라인업.
+                        </p>
+                    </div>
+                    <!-- Card 8 -->
+                    <div style="padding:10px 12px; overflow:hidden; border:1px solid var(--border-color); border-radius:6px; position:relative; display:flex; flex-direction:column;">
+                        <span style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">8위</span>
+                        <a href="https://search.shopping.naver.com/search/all?query=콜라겐_건강기능식품+피트라인" target="_blank"
+                           style="font-size:13px; font-weight:700; color:var(--accent-color); margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+                            피트라인
+                        </a>
+                        <span style="font-size:12px; margin-bottom:3px;">가격: 46,760원</span>
+                        <span style="font-size:11px; opacity:0.55; margin-bottom:5px;">제형: 분말 (195g)</span>
+                        <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
+                        <p style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
+                            분말 형태로 다양한 섭취 방식 가능.
+                        </p>
+                    </div>
+                    <!-- Card 9 -->
+                    <div style="padding:10px 12px; overflow:hidden; border:1px solid var(--border-color); border-radius:6px; position:relative; display:flex; flex-direction:column;">
+                        <span style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">9위</span>
+                        <a href="https://search.shopping.naver.com/search/all?query=콜라겐_건강기능식품+주영엔에스" target="_blank"
+                           style="font-size:13px; font-weight:700; color:var(--accent-color); margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+                            주영엔에스
+                        </a>
+                        <span style="font-size:12px; margin-bottom:3px;">가격: 28,900원</span>
+                        <span style="font-size:11px; opacity:0.55; margin-bottom:5px;">제형: 분말스틱 (28포)</span>
+                        <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
+                        <p style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
+                            모발 건강 특화 제품으로, 편리한 분말스틱 제형.
+                        </p>
+                    </div>
+                    <!-- Card 10 -->
+                    <div style="padding:10px 12px; overflow:hidden; border:1px solid var(--border-color); border-radius:6px; position:relative; display:flex; flex-direction:column;">
+                        <span style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">10위</span>
+                        <a href="https://search.shopping.naver.com/search/all?query=콜라겐_건강기능식품+에버콜라겐" target="_blank"
+                           style="font-size:13px; font-weight:700; color:var(--accent-color); margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+                            에버콜라겐
+                        </a>
+                        <span style="font-size:12px; margin-bottom:3px;">가격: 19,410원</span>
+                        <span style="font-size:11px; opacity:0.55; margin-bottom:5px;">제형: 정제 (750mg x 56정)</span>
+                        <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
+                        <p style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
+                            비오틴 성분을 더해 복합적인 이너뷰티를 제안.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="insight-box">
+                    <h4 class="insight-box-title">경쟁 구도 및 시장 특성</h4>
+                    <p class="insight-box-content">
+                        '에버콜라겐'과 '라이필'이 시장을 주도하며 다양한 제형과 가격대로 포지셔닝하고 있습니다.
+                        모발, 피부 등 특정 기능성을 강조하는 제품이 많으며, 저분자 콜라겐에 대한 관심이 높습니다.
+                    </p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                출처: 네이버 쇼핑 [3]
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 7: Bubble Chart (Competitor Positioning) -->
+    <div class="slide" id="slide-7">
+        <div class="slide-inner">
+            <div class="slide-header">
+                02 경쟁사 분석 | 경쟁사 포지셔닝 (TOP 10)
+            </div>
+            <div class="slide-body" style="display:flex; flex-direction:column;">
+                <div style="display:flex; align-items:stretch; gap:20px; flex:1; min-height:0;">
+                    <!-- Chart Area -->
+                    <div style="position:relative; width:600px; height:480px; flex-shrink:0; align-self:center;
+                                border-left:2px solid rgba(255,255,255,0.4); border-bottom:2px solid rgba(255,255,255,0.4);
+                                overflow:visible;">
+                        <!-- 4사분면 수직선 -->
+                        <div style="position:absolute; left:50%; top:0; height:100%; border-left:1px dashed rgba(255,255,255,0.2); pointer-events:none;"></div>
+                        <!-- 4사분면 수평선 -->
+                        <div style="position:absolute; top:50%; left:0; width:100%; border-top:1px dashed rgba(255,255,255,0.2); pointer-events:none;"></div>
+                        <!-- Y축 눈금 (5개) -->
+                        <div style="position:absolute; right:100%; margin-right:6px; font-size:10px; opacity:0.5; transform:translateY(50%); bottom:0%;">0%</div>
+                        <div style="position:absolute; right:100%; margin-right:6px; font-size:10px; opacity:0.5; transform:translateY(50%); bottom:25%;">25%</div>
+                        <div style="position:absolute; right:100%; margin-right:6px; font-size:10px; opacity:0.5; transform:translateY(50%); bottom:50%;">50%</div>
+                        <div style="position:absolute; right:100%; margin-right:6px; font-size:10px; opacity:0.5; transform:translateY(50%); bottom:75%;">75%</div>
+                        <div style="position:absolute; right:100%; margin-right:6px; font-size:10px; opacity:0.5; transform:translateY(50%); bottom:100%;">100%</div>
+                        <!-- X축 눈금 (가격 4개) -->
+                        <div style="position:absolute; top:100%; margin-top:6px; font-size:10px; opacity:0.5; transform:translateX(-50%); left:10%;">2만원</div>
+                        <div style="position:absolute; top:100%; margin-top:6px; font-size:10px; opacity:0.5; transform:translateX(-50%); left:35%;">6만원</div>
+                        <div style="position:absolute; top:100%; margin-top:6px; font-size:10px; opacity:0.5; transform:translateX(-50%); left:65%;">10만원</div>
+                        <div style="position:absolute; top:100%; margin-top:6px; font-size:10px; opacity:0.5; transform:translateX(-50%); left:90%;">14만원</div>
+                        <!-- Y축 레이블 -->
+                        <div style="position:absolute; right:100%; margin-right:40px; top:50%; writing-mode:vertical-rl; transform:translateY(-50%); font-size:11px; white-space:nowrap; color:var(--text-color);">브랜드 인지도</div>
+                        <!-- X축 레이블 -->
+                        <div style="position:absolute; top:100%; margin-top:28px; left:50%; transform:translateX(-50%); font-size:11px; color:var(--text-color);">월 환산 가격 (원)</div>
+
+                        <!-- Bubbles (Brand, Price, Awareness, Rank, Color) -->
+                        <!-- Prices are monthly equivalent from report or estimated for consistency -->
+                        <!-- Colors: #f72585(에버콜라겐), #4361ee(라이필), #f8961e(뉴트리), #4cc9f0(주영엔에스), #43aa8b(에이치엘비제약), #90be6d(뉴트리코어), #277da1(피트라인), #e63946(GNC), #6a4c93(트루엔), #ff6b6b(종근당건강) -->
+                        <!-- Estimated Positions based on report data and general market sense -->
+                        <!-- Rank 1 (주영엔에스): Price 28890 (X~20%), High Awareness (Y~80%), Size 80px -->
+                        <!-- Rank 2 (뉴트리): Price 29000 (X~22%), High Awareness (Y~70%), Size 78px -->
+                        <!-- Rank 3 (라이필): Price 25516 (X~18%), High Awareness (Y~65%), Size 76px -->
+                        <!-- Rank 4 (에이치엘비제약): Price 12884 (X~8%), Mid Awareness (Y~45%), Size 74px -->
+                        <!-- Rank 5 (뉴트리코어): Price 27020 (X~20%), Mid Awareness (Y~50%), Size 72px -->
+                        <!-- Rank 6 (에버콜라겐): Price 30080 (X~25%), Very High Awareness (Y~85%), Size 70px -->
+                        <!-- Rank 7 (라이필): Price 29033 (X~22%), High Awareness (Y~60%), Size 68px -->
+                        <!-- Rank 8 (피트라인): Price 46760 (X~35%), Mid Awareness (Y~40%), Size 66px -->
+                        <!-- Rank 9 (주영엔에스): Price 28900 (X~20%), High Awareness (Y~75%), Size 64px -->
+                        <!-- Rank 10 (에버콜라겐): Price 19410 (X~10%), Very High Awareness (Y~90%), Size 62px -->
+
+                        <div style="position:absolute; left:20%; bottom:80%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+                            <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">주영엔에스</div>
+                            <div style="width:80px; height:80px; border-radius:50%; background:#4cc9f0; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">1</div>
+                        </div>
+                        <div style="position:absolute; left:22%; bottom:70%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+                            <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">뉴트리</div>
+                            <div style="width:78px; height:78px; border-radius:50%; background:#f8961e; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">2</div>
+                        </div>
+                        <div style="position:absolute; left:18%; bottom:65%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+                            <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">라이필</div>
+                            <div style="width:76px; height:76px; border-radius:50%; background:#4361ee; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">3</div>
+                        </div>
+                        <div style="position:absolute; left:8%; bottom:45%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+                            <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">에이치엘비제약</div>
+                            <div style="width:74px; height:74px; border-radius:50%; background:#43aa8b; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">4</div>
+                        </div>
+                        <div style="position:absolute; left:20%; bottom:50%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+                            <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">뉴트리코어</div>
+                            <div style="width:72px; height:72px; border-radius:50%; background:#90be6d; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">5</div>
+                        </div>
+                        <div style="position:absolute; left:25%; bottom:85%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+                            <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">에버콜라겐</div>
+                            <div style="width:70px; height:70px; border-radius:50%; background:#f72585; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">6</div>
+                        </div>
+                        <div style="position:absolute; left:22%; bottom:60%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+                            <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">라이필 (2)</div>
+                            <div style="width:68px; height:68px; border-radius:50%; background:#4361ee; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">7</div>
+                        </div>
+                        <div style="position:absolute; left:35%; bottom:40%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+                            <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">피트라인</div>
+                            <div style="width:66px; height:66px; border-radius:50%; background:#277da1; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">8</div>
+                        </div>
+                        <div style="position:absolute; left:20%; bottom:75%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+                            <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">주영엔에스 (2)</div>
+                            <div style="width:64px; height:64px; border-radius:50%; background:#4cc9f0; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">9</div>
+                        </div>
+                        <div style="position:absolute; left:10%; bottom:90%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+                            <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">에버콜라겐 (2)</div>
+                            <div style="width:62px; height:62px; border-radius:50%; background:#f72585; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">10</div>
+                        </div>
+                        <!-- GNC (12), 트루엔 (13), 종근당건강 (19) are beyond TOP 10, but were mentioned in the previous slide as part of 20 companies.
+                             Adding them as smaller bubbles to fill space slightly. -->
+                        <div style="position:absolute; left:45%; bottom:25%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+                            <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">GNC</div>
+                            <div style="width:40px; height:40px; border-radius:50%; background:#e63946; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">12</div>
+                        </div>
+                        <div style="position:absolute; left:55%; bottom:30%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+                            <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">트루엔</div>
+                            <div style="width:38px; height:38px; border-radius:50%; background:#6a4c93; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">13</div>
+                        </div>
+                        <div style="position:absolute; left:70%; bottom:15%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+                            <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">종근당건강</div>
+                            <div style="width:32px; height:32px; border-radius:50%; background:#ff6b6b; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">19</div>
+                        </div>
+                    </div>
+
+                    <!-- Right Panel -->
+                    <div style="flex:1; display:flex; flex-direction:column; justify-content:center; gap:16px; overflow:hidden;">
+                        <h2 style="font-size:18px; font-weight:700; font-family: 'Noto Sans KR', sans-serif; color:var(--text-color);">경쟁사 포지셔닝 지도</h2>
+                        <!-- 범례 -->
+                        <div style="display:flex; flex-wrap:wrap; gap:4px 12px; flex-shrink:0;">
+                            <div style="display:flex; align-items:center; gap:4px; font-size:12px;"><div style="width:10px; height:10px; border-radius:50%; background:#f72585;"></div>에버콜라겐</div>
+                            <div style="display:flex; align-items:center; gap:4px; font-size:12px;"><div style="width:10px; height:10px; border-radius:50%; background:#4361ee;"></div>라이필</div>
+                            <div style="display:flex; align-items:center; gap:4px; font-size:12px;"><div style="width:10px; height:10px; border-radius:50%; background:#f8961e;"></div>뉴트리</div>
+                            <div style="display:flex; align-items:center; gap:4px; font-size:12px;"><div style="width:10px; height:10px; border-radius:50%; background:#4cc9f0;"></div>주영엔에스</div>
+                            <div style="display:flex; align-items:center; gap:4px; font-size:12px;"><div style="width:10px; height:10px; border-radius:50%; background:#43aa8b;"></div>에이치엘비제약</div>
+                            <div style="display:flex; align-items:center; gap:4px; font-size:12px;"><div style="width:10px; height:10px; border-radius:50%; background:#90be6d;"></div>뉴트리코어</div>
+                            <div style="display:flex; align-items:center; gap:4px; font-size:12px;"><div style="width:10px; height:10px; border-radius:50%; background:#277da1;"></div>피트라인</div>
+                            <div style="display:flex; align-items:center; gap:4px; font-size:12px;"><div style="width:10px; height:10px; border-radius:50%; background:#e63946;"></div>GNC</div>
+                            <div style="display:flex; align-items:center; gap:4px; font-size:12px;"><div style="width:10px; height:10px; border-radius:50%; background:#6a4c93;"></div>트루엔</div>
+                            <div style="display:flex; align-items:center; gap:4px; font-size:12px;"><div style="width:10px; height:10px; border-radius:50%; background:#ff6b6b;"></div>종근당건강</div>
+                        </div>
+
+                        <div class="insight-box" style="margin-top:0;">
+                            <h4 class="insight-box-title">시장 집중도 및 가격대</h4>
+                            <p class="insight-box-content">
+                                '에버콜라겐', '라이필', '뉴트리', '주영엔에스' 등 상위 브랜드들이 시장 인지도를 높게 점유하고 있으며,
+                                대부분의 제품이 2~3만원대 월 환산 가격으로 형성되어 있습니다.
+                            </p>
+                        </div>
+                        <div class="insight-box" style="margin-top:0;">
+                            <h4 class="insight-box-title">경쟁 공백 영역</h4>
+                            <p class="insight-box-content">
+                                고인식 고가격대 시장은 '뉴트리코어' 등 일부 브랜드가 포지셔닝하고 있으나,
+                                특정 기능성이나 차별화된 가치를 제공하는 고가격대 제품에 대한 기회가 존재할 수 있습니다.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                출처: 네이버 쇼핑 [3] *(추정)
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 8: Section Divider "03 기회 & 전략" -->
+    <div class="slide" id="slide-8">
+        <div class="slide-inner" style="background:var(--accent-color); display:flex; align-items:center; justify-content:center; flex-direction:column; text-align:center;">
+            <div style="font-size:13px; letter-spacing:0.2em; text-transform:uppercase; opacity:0.6; margin-bottom:16px; color:#fff;">CHAPTER 03</div>
+            <div style="font-size:64px; font-weight:900; color:#fff; line-height:1;">03</div>
+            <div style="font-size:32px; font-weight:400; font-family: 'Noto Sans KR', sans-serif; color:#fff; margin-top:16px; opacity:0.9;">기회 & 전략</div>
+            <div style="width:60px; height:3px; background:#fff; margin-top:24px;"></div>
+        </div>
+    </div>
+
+    <!-- Slide 9: Pain Points (2x2 Grid) -->
+    <div class="slide" id="slide-9">
+        <div class="slide-inner">
+            <div class="slide-header">
+                03 기회 & 전략 | 소비자 불만 분석 (Pain Points)
+            </div>
+            <div class="slide-body" style="display:flex; flex-direction:column; gap:16px;">
+                <div style="display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:16px; flex:1; min-height:0;">
+                    <!-- Pain Point 1 -->
+                    <div style="padding:20px 24px; border:1px solid var(--border-color); border-radius:6px; display:flex; flex-direction:column; overflow:hidden; min-height:0;">
+                        <h3 style="font-size:16px; font-weight:700; color:var(--accent-color); margin:0 0 10px; flex-shrink:0; font-family: 'Noto Sans KR', sans-serif;">체감 효과의 개인차</h3>
+                        <p style="font-size:14px; line-height:1.7; flex:1; overflow:hidden; color:rgba(255,255,255,0.92);">
+                            콜라겐 섭취 후 개인별로 느끼는 효과의 차이가 크다는 점이 간과되고 있습니다. 일부 소비자는 기대만큼의 효과를 얻지 못해 불만족을 느낍니다.
+                        </p>
+                    </div>
+                    <!-- Pain Point 2 -->
+                    <div style="padding:20px 24px; border:1px solid var(--border-color); border-radius:6px; display:flex; flex-direction:column; overflow:hidden; min-height:0;">
+                        <h3 style="font-size:16px; font-weight:700; color:var(--accent-color); margin:0 0 10px; flex-shrink:0; font-family: 'Noto Sans KR', sans-serif;">과학적 근거 부족</h3>
+                        <p style="font-size:14px; line-height:1.7; flex:1; overflow:hidden; color:rgba(255,255,255,0.92);">
+                            특정 효능을 주장하지만, 실제 인체 적용 시험 등 과학적 근거가 명확하게 제시되지 않는 경우가 많아 소비자의 신뢰를 얻기 어렵습니다.
+                        </p>
+                    </div>
+                    <!-- Pain Point 3 -->
+                    <div style="padding:20px 24px; border:1px solid var(--border-color); border-radius:6px; display:flex; flex-direction:column; overflow:hidden; min-height:0;">
+                        <h3 style="font-size:16px; font-weight:700; color:var(--accent-color); margin:0 0 10px; flex-shrink:0; font-family: 'Noto Sans KR', sans-serif;">복합 기능성 니즈 미충족</h3>
+                        <p style="font-size:14px; line-height:1.7; flex:1; overflow:hidden; color:rgba(255,255,255,0.92);">
+                            단순히 피부 건강을 넘어, 관절/모발 건강, 에너지 증진 등 복합적인 건강 관리를 원하는 소비자 니즈가 충분히 충족되지 못하고 있습니다.
+                        </p>
+                    </div>
+                    <!-- Pain Point 4 -->
+                    <div style="padding:20px 24px; border:1px solid var(--border-color); border-radius:6px; display:flex; flex-direction:column; overflow:hidden; min-height:0;">
+                        <h3 style="font-size:16px; font-weight:700; color:var(--accent-color); margin:0 0 10px; flex-shrink:0; font-family: 'Noto Sans KR', sans-serif;">섭취 편의성 및 맛</h3>
+                        <p style="font-size:14px; line-height:1.7; flex:1; overflow:hidden; color:rgba(255,255,255,0.92);">
+                            기존 액상, 정제, 분말 제형 중 일부는 섭취가 불편하거나 비린 맛 등 거부감이 있어 꾸준한 섭취를 방해합니다.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="insight-box">
+                    <h4 class="insight-box-title">소비자 불만 해소를 통한 기회</h4>
+                    <p class="insight-box-content">
+                        명확한 효능 입증, 복합 기능성 제공, 그리고 섭취 편의성 개선은 소비자 불만을 해소하고 시장 내 차별화된 입지를 구축할 핵심 기회입니다.
+                    </p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                출처: NPD 디렉터 분석 *(추정)
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 10: White Space (Differentiation Opportunities - 2x2 Grid, same as Concept) -->
+    <div class="slide" id="slide-10">
+        <div class="slide-inner">
+            <div class="slide-header">
+                03 기회 & 전략 | 차별화 기회 (White Space)
+            </div>
+            <div class="slide-body" style="display:flex; flex-direction:column;">
+                <div style="display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:16px; flex:1; min-height:0;">
+                    <!-- Opportunity 1 -->
+                    <div style="padding:20px 24px; border:1px solid var(--border-color); border-radius:6px; display:flex; flex-direction:column; overflow:hidden;">
+                        <h3 style="font-size:14px; font-weight:700; color:var(--accent-color); margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em; font-family: 'Noto Sans KR', sans-serif;">과학적 효능 입증</h3>
+                        <p style="font-size:15px; line-height:1.65; flex:1; color:rgba(255,255,255,0.92);">
+                            모호한 효능 주장 대신, 엄격한 인체 적용 시험을 통해 실제 체감 효과를 과학적으로 입증하고 공개하여 신뢰도를 높일 수 있습니다.
+                        </p>
+                    </div>
+                    <!-- Opportunity 2 -->
+                    <div style="padding:20px 24px; border:1px solid var(--border-color); border-radius:6px; display:flex; flex-direction:column; overflow:hidden;">
+                        <h3 style="font-size:14px; font-weight:700; color:var(--accent-color); margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em; font-family: 'Noto Sans KR', sans-serif;">멀티 액션 기능성</h3>
+                        <p style="font-size:15px; line-height:1.65; flex:1; color:rgba(255,255,255,0.92);">
+                            피부 건강을 넘어 관절, 모발, 에너지 등 복합적인 건강 니즈를 동시에 충족시키는 멀티 기능성 제품으로 차별화 가능합니다.
+                        </p>
+                    </div>
+                    <!-- Opportunity 3 -->
+                    <div style="padding:20px 24px; border:1px solid var(--border-color); border-radius:6px; display:flex; flex-direction:column; overflow:hidden;">
+                        <h3 style="font-size:14px; font-weight:700; color:var(--accent-color); margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em; font-family: 'Noto Sans KR', sans-serif;">혁신적인 섭취 경험</h3>
+                        <p style="font-size:15px; line-height:1.65; flex:1; color:rgba(255,255,255,0.92);">
+                            기존 제형의 불편함을 해소하고, 맛과 편의성을 극대화한 새로운 제형(예: 젤리)으로 매일 즐거운 섭취 습관을 제공합니다.
+                        </p>
+                    </div>
+                    <!-- Opportunity 4 -->
+                    <div style="padding:20px 24px; border:1px solid var(--border-color); border-radius:6px; display:flex; flex-direction:column; overflow:hidden;">
+                        <h3 style="font-size:14px; font-weight:700; color:var(--accent-color); margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em; font-family: 'Noto Sans KR', sans-serif;">타겟 맞춤형 솔루션</h3>
+                        <p style="font-size:15px; line-height:1.65; flex:1; color:rgba(255,255,255,0.92);">
+                            2030 예방적 관리, 4050 복합적 노화 관리 등 특정 고객층의 세분화된 니즈에 맞는 맞춤형 제품을 제공합니다.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="insight-box">
+                    <h4 class="insight-box-title">차별화 기회 요약</h4>
+                    <p class="insight-box-content">
+                        소비자 불만 해소와 미충족 니즈를 공략하여, 과학적 근거 기반의 복합 기능성 및 혁신적 섭취 편의성을 제공하는 것이 핵심 차별화 포인트입니다.
+                    </p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                출처: NPD 디렉터 분석
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 11: Concept (NPD Concept - 2x2 Card Layout) -->
+    <div class="slide" id="slide-11">
+        <div class="slide-inner">
+            <div class="slide-header">
+                03 기회 & 전략 | NPD 콘셉트 제안
+            </div>
+            <div class="slide-body" style="display:flex; flex-direction:column;">
+                <div style="display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:16px; flex:1; min-height:0;">
+                    <!-- Product Name -->
+                    <div style="padding:20px 24px; border:1px solid var(--border-color); border-radius:6px; display:flex; flex-direction:column; overflow:hidden;">
+                        <h3 style="font-size:14px; font-weight:700; color:var(--accent-color); margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em; font-family: 'Noto Sans KR', sans-serif;">제품명 (Product Name)</h3>
+                        <p style="font-size:15px; line-height:1.65; flex:1;">
+                            <strong>콜라겐 액티브 젤리 (Collagen Active Jelly)</strong><br>
+                            매일 활력과 아름다움을 채우는 맛있고 간편한 젤리 형태의 콜라겐.
+                        </p>
+                    </div>
+                    <!-- USP -->
+                    <div style="padding:20px 24px; border:1px solid var(--border-color); border-radius:6px; display:flex; flex-direction:column; overflow:hidden;">
+                        <h3 style="font-size:14px; font-weight:700; color:var(--accent-color); margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em; font-family: 'Noto Sans KR', sans-serif;">핵심 가치 제안 (USP)</h3>
+                        <p style="font-size:15px; line-height:1.65; flex:1;">
+                            "피부부터 관절, 모발까지 3개월 내 70% 이상 체감 효과를 과학적으로 입증한 멀티 액션 콜라겐 젤리"
+                        </p>
+                    </div>
+                    <!-- Target -->
+                    <div style="padding:20px 24px; border:1px solid var(--border-color); border-radius:6px; display:flex; flex-direction:column; overflow:hidden;">
+                        <h3 style="font-size:14px; font-weight:700; color:var(--accent-color); margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em; font-family: 'Noto Sans KR', sans-serif;">타겟 고객 (Target Audience)</h3>
+                        <p style="font-size:15px; line-height:1.65; flex:1;">
+                            20대 후반 &#8594; 40대 초반 여성 <br>
+                            &#8227; 바쁜 일상 속에서 간편하고 효과적인 이너뷰티를 추구하는 직장인 및 주부. <br>
+                            &#8227; 단순한 피부 관리를 넘어 복합적인 건강 관리에 관심 있는 소비자.
+                        </p>
+                    </div>
+                    <!-- Positioning Message -->
+                    <div style="padding:20px 24px; border:1px solid var(--border-color); border-radius:6px; display:flex; flex-direction:column; overflow:hidden;">
+                        <h3 style="font-size:14px; font-weight:700; color:var(--accent-color); margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em; font-family: 'Noto Sans KR', sans-serif;">포지셔닝 메시지</h3>
+                        <p style="font-size:15px; line-height:1.65; flex:1;">
+                            "과학이 증명한 콜라겐 액티브 젤리로, 당신의 매일을 더 활기차고 아름답게!" <br>
+                            "간편하게, 맛있게, 확실하게! 콜라겐 액티브 젤리로 차오르는 자신감을 경험하세요."
+                        </p>
+                    </div>
+                </div>
+
+                <div class="insight-box">
+                    <h4 class="insight-box-title">콘셉트 핵심 요약</h4>
+                    <p class="insight-box-content">
+                        과학적 효능 입증, 복합 기능성, 혁신적 젤리 제형을 통해 기존 시장의 한계를 극복하고,
+                        바쁜 현대 여성의 복합적인 건강 및 뷰티 니즈를 충족시키는 프리미엄 콘셉트입니다.
+                    </p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                출처: NPD 디렉터 제안 *(추정)
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 12: Pricing -->
+    <div class="slide" id="slide-12">
+        <div class="slide-inner">
+            <div class="slide-header">
+                03 기회 & 전략 | 가격 전략 제안
+            </div>
+            <div class="slide-body" style="display:flex; flex-direction:column; gap:16px;">
+                <h2 style="font-size:20px; font-weight:700; margin-bottom:10px; font-family: 'Noto Sans KR', sans-serif;">경쟁사 가격 분석 기반 가격 전략</h2>
+                <table style="width:100%; border-collapse:collapse; flex-shrink:0;">
+                    <thead>
+                        <tr style="background:rgba(255,255,255,0.05);">
+                            <th style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid var(--border-color);">구분</th>
+                            <th style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid var(--border-color);">경쟁사 월 환산 가격대</th>
+                            <th style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid var(--border-color);">목표 제조단가 (15~20% 원가율)</th>
+                            <th style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid var(--border-color);">제안 가격 전략 (월 기준)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid var(--border-color); color:var(--accent-color); font-weight:700;">저가</td>
+                            <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid var(--border-color);">2만원대</td>
+                            <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid var(--border-color);">3,000원 &#8594; 4,000원</td>
+                            <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid var(--border-color);">시장 진입용 (가성비)</td>
+                        </tr>
+                        <tr>
+                            <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid var(--border-color); color:var(--accent-color); font-weight:700;">중가</td>
+                            <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid var(--border-color);">3~4만원대</td>
+                            <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid var(--border-color);">4,500원 &#8594; 8,000원</td>
+                            <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid var(--border-color);"><strong>추천: 프리미엄 가치 제공</strong></td>
+                        </tr>
+                        <tr>
+                            <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid var(--border-color); color:var(--accent-color); font-weight:700;">고가</td>
+                            <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid var(--border-color);">5만원 이상</td>
+                            <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid var(--border-color);">7,500원 &#8594; 10,000원 이상</td>
+                            <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid var(--border-color);">니치 마켓 공략 (초고가)</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p style="font-size:16px; line-height:1.6; margin-top:20px; flex:1;">
+                    제안하는 <strong>'콜라겐 액티브 젤리'</strong>는 과학적 효능 입증과 복합 기능성, 혁신적 젤리 제형으로 차별화된 가치를 제공하므로,
+                    경쟁사 중가 가격대(3~4만원대)를 목표로 <strong>월 39,000원 (일 1,300원)</strong> 수준으로 포지셔닝하는 것을 추천합니다.
+                    이는 목표 원가율 15~20% (월 제조단가 5,850원 &#8594; 7,800원)를 충족하며,
+                    경쟁사 대비 높은 가치를 제공하는 프리미엄 포지셔닝이 가능합니다.
+                </p>
+
+                <div class="insight-box">
+                    <h4 class="insight-box-title">가격 전략 요약</h4>
+                    <p class="insight-box-content">
+                        경쟁사 중가 포지셔닝을 목표로 하되, 차별화된 가치를 통해 프리미엄 가격을 정당화하여
+                        높은 시장 경쟁력과 수익성을 동시에 확보하는 전략이 필요합니다.
+                    </p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                출처: 네이버 쇼핑 [3], NPD 디렉터 분석 *(추정)
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 13: Risk (2x2 Grid) -->
+    <div class="slide" id="slide-13">
+        <div class="slide-inner">
+            <div class="slide-header">
+                03 기회 & 전략 | 시장 진입 리스크 분석
+            </div>
+            <div class="slide-body" style="display:flex; flex-direction:column; gap:16px;">
+                <div style="display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:16px; flex:1; min-height:0;">
+                    <!-- Risk 1 -->
+                    <div style="padding:20px 24px; border:1px solid var(--border-color); border-radius:6px; display:flex; flex-direction:column; overflow:hidden; min-height:0;">
+                        <h3 style="font-size:16px; font-weight:700; color:var(--accent-color); margin:0 0 10px; flex-shrink:0; font-family: 'Noto Sans KR', sans-serif;">낮은 소비자 인지도 및 검색량</h3>
+                        <p style="font-size:14px; line-height:1.7; flex:1; overflow:hidden; color:rgba(255,255,255,0.92);">
+                            '콜라겐_건강기능식품' 키워드 자체의 검색량이 매우 낮아, 신제품 출시 시 초기 인지도 확보에 어려움이 예상됩니다.
+                        </p>
+                        <div style="border-top:1px solid rgba(255,255,255,0.1); margin-top:8px; padding-top:8px; font-size:12px; color:rgba(255,255,255,0.75); flex-shrink:0;">
+                            <strong>대응 방안:</strong> 인플루언서 마케팅, SNS 콘텐츠 확산, 바이럴 캠페인 등 간접 채널을 통한 인지도 제고.
+                        </div>
+                    </div>
+                    <!-- Risk 2 -->
+                    <div style="padding:20px 24px; border:1px solid var(--border-color); border-radius:6px; display:flex; flex-direction:column; overflow:hidden; min-height:0;">
+                        <h3 style="font-size:16px; font-weight:700; color:var(--accent-color); margin:0 0 10px; flex-shrink:0; font-family: 'Noto Sans KR', sans-serif;">기존 브랜드의 강력한 시장 지배력</h3>
+                        <p style="font-size:14px; line-height:1.7; flex:1; overflow:hidden; color:rgba(255,255,255,0.92);">
+                            '에버콜라겐', '라이필' 등 기존 강자들이 다수의 제품 라인업과 높은 인지도를 확보하고 있어 신규 진입이 어렵습니다.
+                        </p>
+                        <div style="border-top:1px solid rgba(255,255,255,0.1); margin-top:8px; padding-top:8px; font-size:12px; color:rgba(255,255,255,0.75); flex-shrink:0;">
+                            <strong>대응 방안:</strong> 명확한 UTP와 타겟 세분화를 통해 틈새시장 공략 및 차별화된 가치 제공.
+                        </div>
+                    </div>
+                    <!-- Risk 3 -->
+                    <div style="padding:20px 24px; border:1px solid var(--border-color); border-radius:6px; display:flex; flex-direction:column; overflow:hidden; min-height:0;">
+                        <h3 style="font-size:16px; font-weight:700; color:var(--accent-color); margin:0 0 10px; flex-shrink:0; font-family: 'Noto Sans KR', sans-serif;">소비자의 효능 체감 기대치 관리</h3>
+                        <p style="font-size:14px; line-height:1.7; flex:1; overflow:hidden; color:rgba(255,255,255,0.92);">
+                            콜라겐 제품에 대한 소비자의 기대치가 높으나, 개인별 효과 차이로 인한 불만족 발생 가능성이 있습니다.
+                        </p>
+                        <div style="border-top:1px solid rgba(255,255,255,0.1); margin-top:8px; padding-top:8px; font-size:12px; color:rgba(255,255,255,0.75); flex-shrink:0;">
+                            <strong>대응 방안:</strong> 인체 적용 시험 결과 공개, 합리적인 기대치 설정, 꾸준한 섭취의 중요성 강조.
+                        </div>
+                    </div>
+                    <!-- Risk 4 -->
+                    <div style="padding:20px 24px; border:1px solid var(--border-color); border-radius:6px; display:flex; flex-direction:column; overflow:hidden; min-height:0;">
+                        <h3 style="font-size:16px; font-weight:700; color:var(--accent-color); margin:0 0 10px; flex-shrink:0; font-family: 'Noto Sans KR', sans-serif;">원료 수급 및 규제 변화</h3>
+                        <p style="font-size:14px; line-height:1.7; flex:1; overflow:hidden; color:rgba(255,255,255,0.92);">
+                            식약처 원료 규제 변화 및 특정 기능성 원료의 안정적인 수급에 대한 불확실성이 존재합니다.
+                        </p>
+                        <div style="border-top:1px solid rgba(255,255,255,0.1); margin-top:8px; padding-top:8px; font-size:12px; color:rgba(255,255,255,0.75); flex-shrink:0;">
+                            <strong>대응 방안:</strong> 다각적인 원료처 확보, 식약처 규제 동향 상시 모니터링 및 선제적 대응.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="insight-box">
+                    <h4 class="insight-box-title">리스크 관리 전략</h4>
+                    <p class="insight-box-content">
+                        낮은 인지도, 강한 경쟁, 효능 기대치 관리 등은 신중한 접근이 필요합니다.
+                        데이터 기반 마케팅과 명확한 차별화, 그리고 규제 준수로 리스크를 최소화해야 합니다.
+                    </p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                출처: NPD 디렉터 분석
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 14: Roadmap (3-stage horizontal) -->
+    <div class="slide" id="slide-14">
+        <div class="slide-inner">
+            <div class="slide-header">
+                03 기회 & 전략 | 실행 로드맵
+            </div>
+            <div class="slide-body" style="display:flex; flex-direction:column; gap:16px;">
+                <h2 style="font-size:20px; font-weight:700; margin-bottom:10px; font-family: 'Noto Sans KR', sans-serif;">콜라겐 액티브 젤리 시장 진입 로드맵</h2>
+                <div style="display:flex; flex-direction:row; align-items:flex-start; gap:20px; flex:1; min-height:0;">
+                    <!-- Stage 1: 제품 개발 및 검증 -->
+                    <div style="flex:1; padding:24px 20px; border-top:3px solid var(--accent-color); display:flex; flex-direction:column; gap:8px; background:rgba(255,255,255,0.03);">
+                        <h3 style="font-size:18px; font-weight:700; margin:0; font-family: 'Noto Sans KR', sans-serif;">1단계: 제품 개발 및 검증</h3>
+                        <p style="font-size:13px; color:rgba(255,255,255,0.55); margin:0;">2026년 2분기</p>
+                        <div style="height:1px; background:rgba(255,255,255,0.08); margin:4px 0;"></div>
+                        <ul style="list-style:none; padding:0; margin:0; font-size:14px; line-height:1.7; flex:1;">
+                            <li>&#8227; 원료 선정 및 배합 비율 확정</li>
+                            <li>&#8227; 제형 개발 및 샘플 테스트</li>
+                            <li>&#8227; 식약처 인체 적용 시험 설계 및 진행</li>
+                        </ul>
+                        <p style="font-size:12px; color:var(--accent-color); font-weight:700; margin-top:auto; padding-top:8px; border-top:1px solid rgba(255,255,255,0.08);">
+                            마일스톤: 제품 콘셉트 확정 및 인체 적용 시험 착수
+                        </p>
+                    </div>
+
+                    <!-- Stage 2: 마케팅 전략 수립 및 생산 준비 -->
+                    <div style="flex:1; padding:24px 20px; border-top:3px solid var(--accent-color); display:flex; flex-direction:column; gap:8px; background:rgba(255,255,255,0.03);">
+                        <h3 style="font-size:18px; font-weight:700; margin:0; font-family: 'Noto Sans KR', sans-serif;">2단계: 마케팅 및 생산 준비</h3>
+                        <p style="font-size:13px; color:rgba(255,255,255,0.55); margin:0;">2026년 3분기</p>
+                        <div style="height:1px; background:rgba(255,255,255,0.08); margin:4px 0;"></div>
+                        <ul style="list-style:none; padding:0; margin:0; font-size:14px; line-height:1.7; flex:1;">
+                            <li>&#8227; 브랜딩 및 패키징 디자인</li>
+                            <li>&#8227; 마케팅 채널 전략 수립 (SNS, 인플루언서)</li>
+                            <li>&#8227; 생산 공장 선정 및 계약, 초기 생산 준비</li>
+                        </ul>
+                        <p style="font-size:12px; color:var(--accent-color); font-weight:700; margin-top:auto; padding-top:8px; border-top:1px solid rgba(255,255,255,0.08);">
+                            마일스톤: 마케팅 전략 확정 및 초도 생산 시작
+                        </p>
+                    </div>
+
+                    <!-- Stage 3: 시장 런칭 및 성과 관리 -->
+                    <div style="flex:1; padding:24px 20px; border-top:3px solid var(--accent-color); display:flex; flex-direction:column; gap:8px; background:rgba(255,255,255,0.03);">
+                        <h3 style="font-size:18px; font-weight:700; margin:0; font-family: 'Noto Sans KR', sans-serif;">3단계: 시장 런칭 및 관리</h3>
+                        <p style="font-size:13px; color:rgba(255,255,255,0.55); margin:0;">2026년 4분기</p>
+                        <div style="height:1px; background:rgba(255,255,255,0.08); margin:4px 0;"></div>
+                        <ul style="list-style:none; padding:0; margin:0; font-size:14px; line-height:1.7; flex:1;">
+                            <li>&#8227; 공식 런칭 및 초기 마케팅 캠페인</li>
+                            <li>&#8227; 소비자 피드백 수집 및 제품 개선</li>
+                            <li>&#8227; 판매 성과 분석 및 유통 채널 확대</li>
+                        </ul>
+                        <p style="font-size:12px; color:var(--accent-color); font-weight:700; margin-top:auto; padding-top:8px; border-top:1px solid rgba(255,255,255,0.08);">
+                            마일스톤: 시장 성공적 진입 및 초기 판매 목표 달성
+                        </p>
+                    </div>
+                </div>
+
+                <div class="insight-box">
+                    <h4 class="insight-box-title">성공적인 시장 진입을 위한 로드맵</h4>
+                    <p class="insight-box-content">
+                        체계적인 제품 개발과 과학적 검증, 그리고 데이터 기반의 마케팅 전략을 통해
+                        '콜라겐 액티브 젤리'가 시장에 성공적으로 안착하도록 지원합니다.
+                    </p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                출처: NPD 디렉터 제안
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 15: References -->
+    <div class="slide" id="slide-15">
+        <div class="slide-inner">
+            <div class="slide-header">
+                참고문헌 및 데이터 출처
+            </div>
+            <div class="slide-body" style="display:flex; flex-direction:column; overflow-y:auto; padding-bottom:8px;">
+                <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
+                    <span style="color:var(--accent-color); font-weight:700; flex-shrink:0; min-width:24px;">[1]</span>
+                    <span style="color:rgba(255,255,255,0.85);">네이버 데이터랩 검색어트렌드, 조회일: 2026-04-15, 키워드: 콜라겐_건강기능식품</span>
+                </div>
+                <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
+                    <span style="color:var(--accent-color); font-weight:700; flex-shrink:0; min-width:24px;">[2]</span>
+                    <span style="color:rgba(255,255,255,0.85);">네이버 검색광고 키워드도구, 조회일: 2026-04-15, 키워드: 콜라겐_건강기능식품 &#8212; 월간 PC/모바일 검색수 (확인 결과, PC: &lt; 10회 / 모바일: &lt; 10회 / 합계: &lt; 10회)</span>
+                </div>
+                <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
+                    <span style="color:var(--accent-color); font-weight:700; flex-shrink:0; min-width:24px;">[3]</span>
+                    <span style="color:rgba(255,255,255,0.85);">네이버 쇼핑 검색결과, 조회일: 2026-04-15, 키워드: 콜라겐_건강기능식품, 상위 20개 상품 기준</span>
+                </div>
+                <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
+                    <span style="color:var(--accent-color); font-weight:700; flex-shrink:0; min-width:24px;">[4]</span>
+                    <span style="color:rgba(255,255,255,0.85);">제약사, 포트폴리오 확대로 매출 다변화에 '사활'..., <a href="https://www.ajunews.com/" target="_blank" style="color:inherit; text-decoration:underline;">ajunews.com</a>, Wed, 01 Apr 2026</span>
+                </div>
+                <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
+                    <span style="color:var(--accent-color); font-weight:700; flex-shrink:0; min-width:24px;">[5]</span>
+                    <span style="color:rgba(255,255,255,0.85);">셀프케어와 디지털화, 멕시코 일반의약품 시장 동향, <a href="https://dream.kotra.or.kr/" target="_blank" style="color:inherit; text-decoration:underline;">dream.kotra.or.kr</a>, Fri, 20 Mar 2026</span>
+                </div>
+                <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
+                    <span style="color:var(--accent-color); font-weight:700; flex-shrink:0; min-width:24px;">[6]</span>
+                    <span style="color:rgba(255,255,255,0.85);">모르고 먹으면 손해… 해외에서 갈아탄 관절 원료 DEM | 국내 건강기능식품 업계에서도 앞다퉈 원료 확보에 나서고 있다. 특히 유럽 난막 시장은 가파른... DEM은 콘드로이친, 콜라겐, 히알루론산, 엘, <a href="https://www.nongup.net/" target="_blank" style="color:inherit; text-decoration:underline;">nongup.net</a>, Sat, 04 Apr 2026</span>
+                </div>
+                <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
+                    <span style="color:var(--accent-color); font-weight:700; flex-shrink:0; min-width:24px;">[7]</span>
+                    <span style="color:rgba(255,255,255,0.85);">웰니스에 살아난 건기식…ODM업체 실적 '훨훨', <a href="https://www.hankyung.com/" target="_blank" style="color:inherit; text-decoration:underline;">hankyung.com</a>, Tue, 17 Mar 2026</span>
+                </div>
+                <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
+                    <span style="color:var(--accent-color); font-weight:700; flex-shrink:0; min-width:24px;">[8]</span>
+                    <span style="color:rgba(255,255,255,0.85);">성장판 열린 이너뷰티…뷰티·식품·건기식 ‘대격돌’ [푸드360], <a href="https://biz.heraldcorp.com/" target="_blank" style="color:inherit; text-decoration:underline;">biz.heraldcorp.com</a>, Tue, 07 Apr 2026</span>
+                </div>
+                <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
+                    <span style="color:var(--accent-color); font-weight:700; flex-shrink:0; min-width:24px;">[9]</span>
+                    <span style="color:rgba(255,255,255,0.85);">콜라겐 시장 급성장…뉴트리 '에버콜라겐' 가장 많이 팔렸다, <a href="https://www.mkhealth.co.kr/" target="_blank" style="color:inherit; text-decoration:underline;">mkhealth.co.kr</a>, Tue, 04 Oct 2022</span>
+                </div>
+                <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
+                    <span style="color:var(--accent-color); font-weight:700; flex-shrink:0; min-width:24px;">[10]</span>
+                    <span style="color:rgba(255,255,255,0.85);">K-제약바이오, 반려동물 치료제 시장 눈독, <a href="https://www.theviewers.co.kr/" target="_blank" style="color:inherit; text-decoration:underline;">theviewers.co.kr</a>, Tue, 17 Feb 2026</span>
+                </div>
+                <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
+                    <span style="color:var(--accent-color); font-weight:700; flex-shrink:0; min-width:24px;">[식약처]</span>
+                    <span style="color:rgba(255,255,255,0.85);">식품안전나라 공공데이터포털, I0760(건강기능식품 원료분류), C002(일반식품 원재료), 조회일: 2026-04-15</span>
+                </div>
+                <div style="display:flex; gap:12px; padding:10px 0; font-size:13px; line-height:1.8; opacity:0.7;">
+                    <span style="color:var(--accent-color); font-weight:700; flex-shrink:0; min-width:24px;">*</span>
+                    <span style="color:rgba(255,255,255,0.85);">*(추정) 표시는 제공된 데이터를 기반으로 NPD 디렉터가 분석&#8226;추정한 내용으로 공식 통계가 아님</span>
+                </div>
+            </div>
+            <div class="slide-footer">
+                출처: NPD 디렉터
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // viewport scale
+        function scaleSlides() {
+          var s = Math.min(window.innerWidth/1600, window.innerHeight/800);
+          document.querySelectorAll('.slide-inner').forEach(function(el) {
+            el.style.transform = 'scale('+s+')';
+            el.style.transformOrigin = 'center center';
+          });
+        }
+        window.addEventListener('resize', scaleSlides);
+        scaleSlides();
+
+        // Canvas chart drawing function
+        function drawTrendChart() {
+          var ACCENT = '#FF5722';
+          var pts = [
+            {l:'2024.04', v:8}, {l:'2024.07', v:7}, {l:'2024.10', v:6},
+            {l:'2025.01', v:5}, {l:'2025.04', v:5}, {l:'2025.07', v:4},
+            {l:'2025.10', v:3}, {l:'2026.04', v:2}
+          ];
+          var cv = document.getElementById('trendChart');
+          if (!cv) return;
+          var par = cv.parentElement;
+          var W = par.clientWidth || 1300, H = par.clientHeight || 350;
+          cv.width = W; cv.height = H;
+          var ctx = cv.getContext('2d');
+          var PL=60, PR=20, PT=20, PB=45;
+          var cW=W-PL-PR, cH=H-PT-PB;
+          var maxV=10;
+          function xp(i){return PL + i/(pts.length-1)*cW;}
+          function yp(v){return PT + cH - v/maxV*cH;}
+          // 그리드 + Y축 레이블
+          ctx.font='11px "Noto Sans KR", sans-serif'; ctx.textAlign='right'; ctx.fillStyle='rgba(255,255,255,0.4)';
+          [0, 2.5, 5, 7.5, 10].forEach(function(v){
+            var y=yp(v);
+            ctx.strokeStyle='rgba(255,255,255,0.07)'; ctx.lineWidth=1;
+            ctx.beginPath(); ctx.moveTo(PL,y); ctx.lineTo(PL+cW,y); ctx.stroke();
+            ctx.fillText(v,PL-6,y+4);
+          });
+          // 면적 그라디언트
+          var gr=ctx.createLinearGradient(0,PT,0,PT+cH);
+          gr.addColorStop(0,ACCENT+'55'); gr.addColorStop(1,ACCENT+'05');
+          ctx.beginPath();
+          ctx.moveTo(xp(0),yp(0));
+          pts.forEach(function(d,i){ctx.lineTo(xp(i),yp(d.v));});
+          ctx.lineTo(xp(pts.length-1),yp(0)); ctx.closePath();
+          ctx.fillStyle=gr; ctx.fill();
+          // 선
+          ctx.beginPath(); ctx.strokeStyle=ACCENT; ctx.lineWidth=2.5; ctx.lineJoin='round';
+          pts.forEach(function(d,i){i?ctx.lineTo(xp(i),yp(d.v)):ctx.moveTo(xp(i),yp(d.v));});
+          ctx.stroke();
+          // 점 + 값 레이블 + X축 레이블
+          ctx.fillStyle=ACCENT; ctx.textAlign='center'; ctx.font='11px "Noto Sans KR", sans-serif';
+          pts.forEach(function(d,i){
+            ctx.beginPath(); ctx.arc(xp(i),yp(d.v),4,0,2*Math.PI); ctx.fill();
+            ctx.fillStyle='rgba(255,255,255,0.7)';
+            ctx.fillText(d.v, xp(i), yp(d.v)-10);
+            ctx.fillStyle='rgba(255,255,255,0.4)';
+            ctx.fillText(d.l, xp(i), H-8);
+            ctx.fillStyle=ACCENT;
+          });
+        }
+
+        // 전환
+        var slides = document.querySelectorAll('.slide');
+        var cur = 0, lock = false;
+        function show(n) {
+          slides[cur].classList.remove('active');
+          cur = (n + slides.length) % slides.length;
+          slides[cur].classList.add('active');
+          document.getElementById('slide-num-display').textContent = (cur+1)+' / '+slides.length;
+          // Re-draw canvas charts on slide change
+          if (slides[cur].querySelector('#trendChart')) {
+            setTimeout(function() {
+              drawTrendChart();
+            }, 100); // Small delay to ensure canvas is visible and sized
+          }
+        }
+        document.addEventListener('keydown', function(e) {
+          if (e.key==='ArrowRight'||e.key===' '){e.preventDefault();show(cur+1);}
+          if (e.key==='ArrowLeft'){e.preventDefault();show(cur-1);}
+          if (e.key==='f'||e.key==='F'){document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen();}
+        });
+        document.addEventListener('wheel', function(e) {
+          e.preventDefault();
+          if (lock) return; lock=true;
+          show(e.deltaY>0?cur+1:cur-1);
+          setTimeout(function(){lock=false;},300);
+        },{passive:false});
+        
+        // Initial draw on document ready or font load
+        if(document.fonts) document.fonts.ready.then(function() {
+            show(0);
+            drawTrendChart(); // Ensure chart draws on initial load if slide 4 is visible
+        }); else window.addEventListener('load', function() {
+            show(0);
+            drawTrendChart();
+        });
+        window.addEventListener('resize',drawTrendChart);
+    </script>
+<script>
+(function() {
+  var contentScales = {};
+
+  function measureAll() {
+    document.querySelectorAll('.slide').forEach(function(slide, i) {
+      var hidden = !slide.classList.contains('active');
+      if (hidden) {
+        slide.style.visibility = 'hidden';
+        slide.style.display    = 'flex';
+      }
+      var inner = slide.querySelector('.slide-inner');
+      if (inner) {
+        contentScales[i] = inner.scrollHeight > 800
+          ? (790 / inner.scrollHeight)
+          : 1;
+      }
+      if (hidden) {
+        slide.style.display    = '';
+        slide.style.visibility = '';
+      }
+    });
+  }
+
+  function applyScales() {
+    var vScale = Math.min(window.innerWidth / 1600, window.innerHeight / 800);
+    document.querySelectorAll('.slide').forEach(function(slide, i) {
+      var inner = slide.querySelector('.slide-inner');
+      if (!inner) return;
+      var cScale   = (contentScales[i] != null) ? contentScales[i] : 1;
+      var combined = vScale * cScale;
+      inner.style.transform       = 'scale(' + combined + ')';
+      inner.style.transformOrigin = 'center center';
+    });
+  }
+
+  window.scaleSlides = applyScales;
+  window.addEventListener('resize', applyScales);
+
+  (document.fonts ? document.fonts.ready : Promise.resolve()).then(function() {
+    measureAll();
+    applyScales();
+  });
+})();
+</script>
+</body>
+</html>
