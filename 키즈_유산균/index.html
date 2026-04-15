@@ -4,35 +4,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>키즈 유산균 시장 진입 전략 보고서</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     <style>
-        /* Base Styles */
+        /* Global Styles & Design System */
+        :root {
+            --bg-color: #1a1a1a;
+            --accent-color: #FF5722;
+            --text-color-primary: #fff;
+            --text-color-secondary: rgba(255, 255, 255, 0.85);
+            --text-color-muted: rgba(255, 255, 255, 0.55);
+
+            --header-font: 'Archivo Black', sans-serif;
+            --body-font: 'Noto Sans KR', sans-serif;
+
+            /* Typography */
+            --font-size-h1: 44px; /* 대제목 */
+            --font-size-h2: 24px; /* 소제목 */
+            --font-size-body: 18px; /* 본문 */
+            --font-size-caption: 13px; /* 캡션 */
+        }
+
         html, body {
             margin: 0; padding: 0; overflow: hidden;
-            background: #1a1a1a; width: 100%; height: 100%;
-            font-family: 'Noto Sans KR', sans-serif;
-            color: #fff;
+            background: var(--bg-color); width: 100%; height: 100%;
+            font-family: var(--body-font);
+            color: var(--text-color-primary);
+            line-height: 1.5;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
 
-        h1, h2, h3, h4, h5, h6 { margin: 0; padding: 0; }
-
-        /* Typography */
-        .h1-title { font-size: 44px; font-weight: 900; line-height: 1.2; } /* 대제목 */
-        .h2-subtitle { font-size: 24px; font-weight: 500; line-height: 1.4; } /* 소제목 */
-        .body-text { font-size: 18px; font-weight: 400; line-height: 1.6; } /* 본문 */
-        .caption-text { font-size: 13px; font-weight: 300; line-height: 1.5; } /* 캡션 */
-
-        /* Accent Color */
-        :root {
-            --accent-color: #FF5722;
-            --bg-color: #1a1a1a;
+        a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
         }
 
-        /* Slide Container CSS (Exact code from spec) */
+        strong {
+            font-weight: 700;
+        }
+
+        /* Slide Container CSS */
         .slide {
             position: fixed; top: 0; left: 0;
             width: 100vw; height: 100vh;
@@ -45,51 +59,31 @@
             width: 1600px; height: 800px;
             position: relative; overflow: hidden;
             box-sizing: border-box;
-            background: var(--bg-color); /* Ensure inner background is dark */
+            background: var(--bg-color);
         }
         .slide-header {
             position: absolute; top: 0; left: 0; right: 0;
             height: 100px; padding: 0 80px;
             display: flex; align-items: flex-end; padding-bottom: 16px;
-            box-sizing: border-box;
+            font-family: var(--header-font);
+            font-size: var(--font-size-h1);
+            font-weight: 900;
+            color: var(--text-color-primary);
         }
         .slide-body {
             position: absolute; top: 100px; left: 0; right: 0;
             bottom: 50px; padding: 20px 80px 0;
-            overflow: hidden; /* Important for height constraint */
+            overflow: hidden;
             box-sizing: border-box;
+            font-size: var(--font-size-body);
+            font-weight: 400;
         }
         .slide-footer {
             position: absolute; bottom: 0; left: 0; right: 0;
             height: 50px; padding: 0 80px;
             display: flex; align-items: center; justify-content: flex-end;
             font-size: 12px; opacity: 0.5;
-            box-sizing: border-box;
-        }
-
-        /* Common Insight Box */
-        .insight-box {
-            border-left: 3px solid var(--accent-color);
-            padding: 10px 16px;
-            background: rgba(255, 87, 34, 0.07); /* Accent color with opacity */
-            margin-bottom: 0;
-            flex-shrink: 0;
-        }
-        .insight-box-title {
-            font-size: 12px;
-            font-weight: 700;
-            color: var(--accent-color);
-            margin: 0 0 3px;
-        }
-        .insight-box-content {
-            font-size: 13px;
-            line-height: 1.5;
-            margin: 0;
-            overflow: hidden;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            color: #fff;
+            color: var(--text-color-primary);
         }
 
         /* Navigation UI */
@@ -99,16 +93,18 @@
             transform: translateY(-50%);
             z-index: 100;
             background: rgba(255, 255, 255, 0.1);
-            color: #fff;
             border: none;
+            color: var(--text-color-primary);
+            font-size: 30px;
             padding: 10px 15px;
             cursor: pointer;
-            font-size: 24px;
-            border-radius: 4px;
+            border-radius: 5px;
             opacity: 0.7;
             transition: opacity 0.2s;
         }
-        .nav-button:hover { opacity: 1; }
+        .nav-button:hover {
+            opacity: 1;
+        }
         #nav-prev { left: 16px; }
         #nav-next { right: 16px; }
         #slide-num-display {
@@ -117,942 +113,982 @@
             left: 50%;
             transform: translateX(-50%);
             z-index: 100;
-            color: rgba(255, 255, 255, 0.7);
+            color: var(--text-color-primary);
             font-size: 14px;
-            font-family: 'Archivo Black', sans-serif;
+            opacity: 0.8;
         }
-        #fullscreen-btn {
+        #fullscreen-button {
             position: fixed;
             top: 16px;
             right: 16px;
             z-index: 100;
             background: rgba(255, 255, 255, 0.1);
-            color: #fff;
             border: none;
+            color: var(--text-color-primary);
+            font-size: 14px;
             padding: 8px 12px;
             cursor: pointer;
-            font-size: 14px;
-            border-radius: 4px;
+            border-radius: 5px;
             opacity: 0.7;
             transition: opacity 0.2s;
         }
-        #fullscreen-btn:hover { opacity: 1; }
+        #fullscreen-button:hover {
+            opacity: 1;
+        }
 
-        /* Links */
-        a { color: var(--accent-color); text-decoration: none; }
-        a:hover { text-decoration: underline; }
+        /* Common Insight Box */
+        .insight-box {
+            border-left: 3px solid var(--accent-color);
+            padding: 10px 16px;
+            background: rgba(255, 87, 34, 0.07); /* Accent color with 0.07 opacity */
+            margin-bottom: 0;
+            flex-shrink: 0;
+            margin-top: auto; /* Pushes to bottom */
+            color: var(--text-color-secondary);
+        }
+        .insight-box h3 {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin: 0 0 3px;
+        }
+        .insight-box p {
+            font-size: 13px;
+            line-height: 1.5;
+            margin: 0;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
     </style>
 </head>
 <body>
 
-    <!-- Navigation UI -->
-    <button id="nav-prev" class="nav-button">&#8592;</button>
-    <button id="nav-next" class="nav-button">&#8594;</button>
-    <div id="slide-num-display"><span id="slide-num">1 / 15</span></div>
-    <button id="fullscreen-btn" onclick="document.documentElement.requestFullscreen()">전체화면 (F)</button>
+<!-- Navigation Buttons -->
+<button id="nav-prev" class="nav-button">&#10094;</button>
+<button id="nav-next" class="nav-button">&#10095;</button>
+<span id="slide-num-display">1 / 15</span>
+<button id="fullscreen-button" onclick="document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen();">전체화면</button>
 
-    <!-- Slide 1: Cover -->
-    <div class="slide" id="slide-1">
-        <div class="slide-inner" style="display:flex; align-items:center; justify-content:center; flex-direction:column; text-align:center; padding: 0 160px;">
-            <h1 class="h1-title" style="color:#fff; margin-bottom: 20px; font-family: 'Archivo Black', sans-serif;">키즈 유산균 시장 진입 전략 보고서</h1>
-            <h2 class="h2-subtitle" style="color:var(--accent-color); margin-bottom: 10px;">NPD 시장 분석</h2>
-            <p class="body-text" style="color:rgba(255,255,255,0.7); margin-bottom: 40px;">작성일: 2026년 4월 14일</p>
-            <div style="width:100px; height:4px; background:rgba(255,255,255,0.2); margin-bottom:30px;"></div>
-            <p class="body-text" style="color:#fff; font-weight: 500;">
-                잠재적 성장 가능성을 가진 시장, 명확한 차별화 전략이 성공의 열쇠
-            </p>
-        </div>
+<!-- Slide 1: Cover -->
+<div class="slide active" id="slide-1">
+    <div class="slide-inner" style="display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
+        <h1 style="font-family:var(--header-font); font-size:64px; font-weight:900; color:var(--text-color-primary); margin-bottom:16px; line-height:1.2;">키즈 유산균 시장 진입 전략</h1>
+        <p style="font-size:var(--font-size-h2); font-weight:500; color:var(--text-color-secondary); margin-bottom:40px;">NPD 시장 분석 보고서</p>
+        <div style="width:100px; height:4px; background:var(--accent-color); margin-bottom:40px;"></div>
+        <p style="font-size:var(--font-size-body); color:var(--text-color-muted); margin-bottom:10px;">기준일: 2026년 4월 15일</p>
+        <p style="font-size:var(--font-size-h2); font-weight:500; color:var(--text-color-primary); margin-top:20px; width:80%; line-height:1.4;">
+            낮은 직접 검색량에도 잠재적 성장 기회가 존재하는<br>키즈 유산균 시장 분석
+        </p>
     </div>
+</div>
 
-    <!-- Slide 2: Section Divider 01 -->
-    <div class="slide" id="slide-2">
-      <div class="slide-inner" style="background:var(--accent-color); display:flex; align-items:center; justify-content:center; flex-direction:column; text-align:center;">
-        <div style="font-size:13px; letter-spacing:0.2em; text-transform:uppercase; opacity:0.6; margin-bottom:16px; color:#fff; font-weight:500;">CHAPTER 01</div>
-        <div style="font-size:64px; font-weight:900; color:#fff; line-height:1; font-family: 'Archivo Black', sans-serif;">01</div>
-        <div style="font-size:32px; font-weight:400; color:#fff; margin-top:16px; opacity:0.9;">시장 현황</div>
-        <div style="width:60px; height:3px; background:rgba(255,255,255,0.4); margin-top:24px;"></div>
-      </div>
+<!-- Slide 2: Section Divider 01 -->
+<div class="slide" id="slide-2">
+    <div class="slide-inner" style="background:var(--bg-color); display:flex; align-items:center; justify-content:center; flex-direction:column; text-align:center;">
+        <div style="font-size:13px; letter-spacing:0.2em; text-transform:uppercase; opacity:0.6; margin-bottom:16px; color:var(--text-color-primary);">CHAPTER 01</div>
+        <div style="font-size:64px; font-weight:900; color:var(--text-color-primary); line-height:1;">01</div>
+        <div style="font-size:32px; font-weight:400; color:var(--text-color-primary); margin-top:16px; opacity:0.9;">시장 현황</div>
+        <div style="width:60px; height:3px; background:var(--accent-color); margin-top:24px;"></div>
     </div>
+</div>
 
-    <!-- Slide 3: Big Number -->
-    <div class="slide" id="slide-3">
-        <div class="slide-inner">
-            <div class="slide-header">
-                <h2 class="h2-subtitle" style="color:#fff;"><span style="font-weight:700; color:var(--accent-color);">01 시장 현황</span> | 시장 기회 스코어카드</h2>
-            </div>
-            <div class="slide-body" style="display:flex; flex-direction:column; gap:16px; padding-bottom:20px;">
-                <div style="display:flex; gap:16px; align-items:stretch; flex:1; min-height:0;">
-                    <!-- Card 1: 시장 성장성/트렌드 -->
-                    <div style="flex:1; padding:18px 20px; display:flex; flex-direction:column; gap:4px; border:1px solid rgba(255,255,255,0.1); border-radius:6px; overflow:hidden;">
-                        <h3 style="font-size:14px; opacity:0.65; margin:0 0 4px; font-weight:500;">시장 성장성/트렌드</h3>
-                        <div style="font-size:48px; font-weight:900; line-height:1; margin:0 0 6px; color:var(--accent-color); font-family: 'Archivo Black', sans-serif;">Conditional Go</div>
-                        <p style="font-size:12px; line-height:1.5; opacity:0.75; margin:0 0 12px; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
-                            직접적인 수요 지표는 낮으나, 시장 규모 성장 가능성과 트렌드 적합성은 긍정적입니다.
-                        </p>
-                        <div style="flex:1; min-height:80px;">
-                            <svg style="width:100%;height:80px;" viewBox="0 0 200 60" preserveAspectRatio="none">
-                                <defs><linearGradient id="mg1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#FF572255"/><stop offset="100%" stop-color="#FF572205"/></linearGradient></defs>
-                                <!-- Dummy data for a slightly decreasing trend: 100, 95, 90, 85, 80, 75 -->
-                                <polygon points="0,60 0,10 40,12.5 80,15 120,17.5 160,20 200,22.5 200,60" fill="url(#mg1)"/>
-                                <polyline points="0,10 40,12.5 80,15 120,17.5 160,20 200,22.5" fill="none" stroke="var(--accent-color)" stroke-width="2"/>
-                            </svg>
-                        </div>
-                    </div>
-
-                    <!-- Card 2: 소비자 관심도 -->
-                    <div style="flex:1; padding:18px 20px; display:flex; flex-direction:column; gap:4px; border:1px solid rgba(255,255,255,0.1); border-radius:6px; overflow:hidden;">
-                        <h3 style="font-size:14px; opacity:0.65; margin:0 0 4px; font-weight:500;">소비자 관심도</h3>
-                        <div style="font-size:48px; font-weight:900; line-height:1; margin:0 0 6px; color:var(--accent-color); font-family: 'Archivo Black', sans-serif;">10회 미만<span style="font-size:20px; vertical-align:top; margin-left:5px;">/월</span></div>
-                        <p style="font-size:12px; line-height:1.5; opacity:0.75; margin:0 0 12px; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
-                            월간 PC/모바일 합계 검색수 10회 미만으로, 직접적인 온라인 탐색 수요가 매우 미미합니다.
-                        </p>
-                        <div style="display:flex; align-items:flex-end; gap:10px; flex:1; padding-top:4px;">
-                            <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;">
-                                <div style="font-size:9px; opacity:0.5;">최저</div>
-                                <div style="width:100%; background:var(--accent-color); opacity:0.35; height:5px; border-radius:2px 2px 0 0;"></div>
-                                <div style="font-size:10px; white-space:nowrap;">1회</div>
-                            </div>
-                            <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;">
-                                <div style="font-size:9px; opacity:0.5;">평균</div>
-                                <div style="width:100%; background:var(--accent-color); opacity:0.65; height:25px; border-radius:2px 2px 0 0;"></div>
-                                <div style="font-size:10px; white-space:nowrap;">5회</div>
-                            </div>
-                            <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;">
-                                <div style="font-size:9px; opacity:0.5; color:var(--accent-color);">최고</div>
-                                <div style="width:100%; background:var(--accent-color); height:50px; border-radius:2px 2px 0 0;"></div>
-                                <div style="font-size:10px; white-space:nowrap; color:var(--accent-color);">10회</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Card 3: 전체시장 규모 및 트렌드 -->
-                    <div style="flex:1; padding:18px 20px; display:flex; flex-direction:column; gap:4px; border:1px solid rgba(255,255,255,0.1); border-radius:6px; overflow:hidden;">
-                        <h3 style="font-size:14px; opacity:0.65; margin:0 0 4px; font-weight:500;">전체시장 규모 및 트렌드</h3>
-                        <div style="font-size:48px; font-weight:900; line-height:1; margin:0 0 6px; color:var(--accent-color); font-family: 'Archivo Black', sans-serif;">5조 9,626억 원<span style="font-size:20px; vertical-align:top; margin-left:5px;">¹⁰</span></div>
-                        <p style="font-size:12px; line-height:1.5; opacity:0.75; margin:0 0 12px; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
-                            건강기능식품 시장 전반의 성장세와 유산균 시장의 확대 추세. 키즈 유산균 시장만의 정확한 규모는 부재하나, 잠재적 가치 존재.
-                        </p>
-                        <div style="display:flex; flex-direction:column; gap:5px; flex:1; overflow:hidden;">
-                            <div style="font-size:11px; line-height:1.4; padding:5px 8px; background:rgba(255,255,255,0.04); border-radius:3px; border-left:2px solid var(--accent-color); color:inherit; display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
-                                "건강기능식품 시장 규모 5조 9,626억 원 수준 추정"
-                            </div>
-                            <div style="font-size:11px; line-height:1.4; padding:5px 8px; background:rgba(255,255,255,0.04); border-radius:3px; border-left:2px solid var(--accent-color); color:inherit; display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
-                                "혈당유산균 '당큐락' 누적 매출 500억 원 돌파"
-                            </div>
-                            <a href="https://www.newsprime.co.kr/news/article/?no=599380" target="_blank" style="font-size:11px; line-height:1.4; padding:5px 8px; background:rgba(255,255,255,0.04); border-radius:3px; border-left:2px solid var(--accent-color); color:inherit; text-decoration:none; display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
-                                "키즈, 선물 시장에서는 프리미엄 제품 선호 뚜렷" &#8594; 뉴스프라임
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="insight-box" style="margin-top:12px;">
-                    <h4 class="insight-box-title">핵심 인사이트</h4>
-                    <p class="insight-box-content">
-                        '키즈_유산균' 직접 검색 수요는 낮으나, 건기식 시장 성장 및 프리미엄 제품 선호 트렌드를 고려할 때 잠재적 기회는 존재합니다.
+<!-- Slide 3: Big Number -->
+<div class="slide" id="slide-3">
+    <div class="slide-inner">
+        <div class="slide-header">01 시장 현황 | Market Opportunity Scorecard</div>
+        <div class="slide-body" style="display:flex; flex-direction:column; gap:16px;">
+            <div style="display:flex; gap:16px; align-items:stretch; flex:1; min-height:0;">
+                <!-- Card 1: 시장 성장성 (트렌드 미니 꺾은선) -->
+                <div style="flex:1; padding:18px 20px; display:flex; flex-direction:column; gap:4px; border:1px solid rgba(255,255,255,0.1); border-radius:6px; overflow:hidden;">
+                    <h3 style="font-size:14px; opacity:0.65; margin:0 0 4px;">시장 성장성</h3>
+                    <div style="font-size:48px; font-weight:900; line-height:1; margin:0 0 6px; color:var(--accent-color);">극히 낮음</div>
+                    <p style="font-size:12px; line-height:1.5; opacity:0.75; margin:0 0 12px; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
+                        '키즈 유산균' 직접 키워드 검색량 월 10회 미만. 시장 내 직접적인 수요 부재.
                     </p>
+                    <div style="flex:1; min-height:80px;">
+                        <svg style="width:100%;height:80px;" viewBox="0 0 200 60" preserveAspectRatio="none">
+                            <defs><linearGradient id="mg1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#FF572255"/><stop offset="100%" stop-color="#FF572205"/></linearGradient></defs>
+                            <polygon points="0,60 0,55 50,55 100,56 150,57 200,58 200,60" fill="url(#mg1)"/>
+                            <polyline points="0,55 50,55 100,56 150,57 200,58" fill="none" stroke="var(--accent-color)" stroke-width="2"/>
+                        </svg>
+                    </div>
                 </div>
-            </div>
-            <div class="slide-footer">
-                출처: [1, 2, 8, 9, 10]
-            </div>
-        </div>
-    </div>
 
-    <!-- Slide 4: Line Chart -->
-    <div class="slide" id="slide-4">
-        <div class="slide-inner">
-            <div class="slide-header">
-                <h2 class="h2-subtitle" style="color:#fff;"><span style="font-weight:700; color:var(--accent-color);">01 시장 현황</span> | 24개월 검색 트렌드 분석</h2>
-            </div>
-            <div class="slide-body" style="display:flex; flex-direction:column; padding-bottom:20px;">
-                <div style="flex:1; min-height:0; position:relative;">
-                    <canvas id="trendChart"></canvas>
-                    <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); text-align:center; color:rgba(255,255,255,0.6); font-size:16px;">
-                        <p><strong>'키즈_유산균' 키워드 검색량 데이터 부재</strong></p>
-                        <p style="font-size:14px; margin-top:10px;">
-                            네이버 데이터랩 기준, 최근 24개월간 최대치 100 상대지수 검색량 데이터가<br>없는 것으로 확인되어 트렌드 그래프 생성이 불가합니다.
-                        </p>
-                        <p style="font-size:14px; margin-top:10px;">
-                            (실제 월간 검색수는 PC/모바일 합계 10회 미만으로 매우 낮은 수준)
-                        </p>
-                    </div>
-                </div>
-                <div style="display:flex; gap:12px; flex-shrink:0; margin-top:12px;">
-                    <div class="insight-box" style="flex:1;">
-                        <h4 class="insight-box-title">데이터 부재의 의미</h4>
-                        <p class="insight-box-content">
-                            소비자들이 '키즈 유산균'이라는 직접적인 키워드로 검색하기보다, 자녀 건강 이슈나 특정 증상 위주로 정보를 탐색할 가능성이 높습니다.
-                        </p>
-                    </div>
-                    <div class="insight-box" style="flex:1;">
-                        <h4 class="insight-box-title">전략적 시사점</h4>
-                        <p class="insight-box-content">
-                            명시적 수요는 낮으나 잠재적 수요는 존재하므로, 키워드 마케팅보다는 콘텐츠/정보성 마케팅을 통해 잠재 고객에게 도달하는 전략이 필요합니다.
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="slide-footer">
-                출처: [1, 2]
-            </div>
-        </div>
-    </div>
-
-    <!-- Slide 5: Section Divider 02 -->
-    <div class="slide" id="slide-5">
-      <div class="slide-inner" style="background:var(--accent-color); display:flex; align-items:center; justify-content:center; flex-direction:column; text-align:center;">
-        <div style="font-size:13px; letter-spacing:0.2em; text-transform:uppercase; opacity:0.6; margin-bottom:16px; color:#fff; font-weight:500;">CHAPTER 02</div>
-        <div style="font-size:64px; font-weight:900; color:#fff; line-height:1; font-family: 'Archivo Black', sans-serif;">02</div>
-        <div style="font-size:32px; font-weight:400; color:#fff; margin-top:16px; opacity:0.9;">경쟁사 분석</div>
-        <div style="width:60px; height:3px; background:rgba(255,255,255,0.4); margin-top:24px;"></div>
-      </div>
-    </div>
-
-    <!-- Slide 6: Card Grid -->
-    <div class="slide" id="slide-6">
-        <div class="slide-inner">
-            <div class="slide-header">
-                <h2 class="h2-subtitle" style="color:#fff;"><span style="font-weight:700; color:var(--accent-color);">02 경쟁사 분석</span> | TOP 10 브랜드 현황</h2>
-            </div>
-            <div class="slide-body" style="display:flex; flex-direction:column; padding-bottom:20px;">
-                <div style="display:grid; grid-template-columns:repeat(5,1fr); gap:10px; flex:1;">
-                    <!-- Card 1 -->
-                    <div style="padding:10px 12px; overflow:hidden; border:1px solid rgba(255,255,255,0.12); border-radius:6px; position:relative; display:flex; flex-direction:column;">
-                        <div style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">1위</div>
-                        <a href="https://search.shopping.naver.com/search/all?query=키즈_유산균+바료랑" target="_blank" style="font-size:13px; font-weight:700; color:var(--accent-color); margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
-                            바료랑
-                        </a>
-                        <span style="font-size:12px; margin-bottom:3px; display:block;">52,900원 (3개입)</span>
-                        <span style="font-size:11px; opacity:0.55; margin-bottom:5px; display:block;">분말 스틱</span>
-                        <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
-                        <span style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
-                            어린이 면역력 및 장 건강 증진에 특화된 프로바이오틱스.
-                        </span>
-                    </div>
-                    <!-- Card 2 -->
-                    <div style="padding:10px 12px; overflow:hidden; border:1px solid rgba(255,255,255,0.12); border-radius:6px; position:relative; display:flex; flex-direction:column;">
-                        <div style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">2위</div>
-                        <a href="https://search.shopping.naver.com/search/all?query=키즈_유산균+베베" target="_blank" style="font-size:13px; font-weight:700; color:var(--accent-color); margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
-                            베베
-                        </a>
-                        <span style="font-size:12px; margin-bottom:3px; display:block;">33,000원</span>
-                        <span style="font-size:11px; opacity:0.55; margin-bottom:5px; display:block;">분말 스틱</span>
-                        <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
-                        <span style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
-                            돌~초등학생까지 다양한 연령대 맞춤 100억 유산균.
-                        </span>
-                    </div>
-                    <!-- Card 3 -->
-                    <div style="padding:10px 12px; overflow:hidden; border:1px solid rgba(255,255,255,0.12); border-radius:6px; position:relative; display:flex; flex-direction:column;">
-                        <div style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">3위</div>
-                        <a href="https://search.shopping.naver.com/search/all?query=키즈_유산균+피에이치365" target="_blank" style="font-size:13px; font-weight:700; color:var(--accent-color); margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
-                            피에이치365
-                        </a>
-                        <span style="font-size:12px; margin-bottom:3px; display:block;">49,000원</span>
-                        <span style="font-size:11px; opacity:0.55; margin-bottom:5px; display:block;">확인필요</span>
-                        <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
-                        <span style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
-                            어린이 및 유아를 위한 프로바이오틱스, 장 건강 효능 기대.
-                        </span>
-                    </div>
-                    <!-- Card 4 -->
-                    <div style="padding:10px 12px; overflow:hidden; border:1px solid rgba(255,255,255,0.12); border-radius:6px; position:relative; display:flex; flex-direction:column;">
-                        <div style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">4위</div>
-                        <a href="https://search.shopping.naver.com/search/all?query=키즈_유산균+바료랑" target="_blank" style="font-size:13px; font-weight:700; color:var(--accent-color); margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
-                            바료랑 (베베 앤 키즈)
-                        </a>
-                        <span style="font-size:12px; margin-bottom:3px; display:block;">33,000원</span>
-                        <span style="font-size:11px; opacity:0.55; margin-bottom:5px; display:block;">분말 스틱</span>
-                        <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
-                        <span style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
-                            100억 유산균 함유로 장 건강을 돕는 유산균 제품.
-                        </span>
-                    </div>
-                    <!-- Card 5 -->
-                    <div style="padding:10px 12px; overflow:hidden; border:1px solid rgba(255,255,255,0.12); border-radius:6px; position:relative; display:flex; flex-direction:column;">
-                        <div style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">5위</div>
-                        <a href="https://search.shopping.naver.com/search/all?query=키즈_유산균+피에이치365" target="_blank" style="font-size:13px; font-weight:700; color:var(--accent-color); margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
-                            피에이치365 (아기유산균)
-                        </a>
-                        <span style="font-size:12px; margin-bottom:3px; display:block;">39,000원</span>
-                        <span style="font-size:11px; opacity:0.55; margin-bottom:5px; display:block;">확인필요</span>
-                        <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
-                        <span style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
-                            베이비 및 유아를 위한 프로바이오틱스, 안심 성분 강조.
-                        </span>
-                    </div>
-                    <!-- Card 6 -->
-                    <div style="padding:10px 12px; overflow:hidden; border:1px solid rgba(255,255,255,0.12); border-radius:6px; position:relative; display:flex; flex-direction:column;">
-                        <div style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">6위</div>
-                        <a href="https://search.shopping.naver.com/search/all?query=키즈_유산균+하루웰빙" target="_blank" style="font-size:13px; font-weight:700; color:var(--accent-color); margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
-                            하루웰빙
-                        </a>
-                        <span style="font-size:12px; margin-bottom:3px; display:block;">24,500원</span>
-                        <span style="font-size:11px; opacity:0.55; margin-bottom:5px; display:block;">확인필요</span>
-                        <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
-                        <span style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
-                            모유 유산균 기반 신바이오틱스, 프롤린 함유.
-                        </span>
-                    </div>
-                    <!-- Card 7 -->
-                    <div style="padding:10px 12px; overflow:hidden; border:1px solid rgba(255,255,255,0.12); border-radius:6px; position:relative; display:flex; flex-direction:column;">
-                        <div style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">7위</div>
-                        <a href="https://search.shopping.naver.com/search/all?query=키즈_유산균+마미큐어" target="_blank" style="font-size:13px; font-weight:700; color:var(--accent-color); margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
-                            마미큐어
-                        </a>
-                        <span style="font-size:12px; margin-bottom:3px; display:block;">41,900원</span>
-                        <span style="font-size:11px; opacity:0.55; margin-bottom:5px; display:block;">확인필요</span>
-                        <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
-                        <span style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
-                            비타민D와 아연을 함유한 올인원 아기유산균.
-                        </span>
-                    </div>
-                    <!-- Card 8 -->
-                    <div style="padding:10px 12px; overflow:hidden; border:1px solid rgba(255,255,255,0.12); border-radius:6px; position:relative; display:flex; flex-direction:column;">
-                        <div style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">8위</div>
-                        <a href="https://search.shopping.naver.com/search/all?query=키즈_유산균+배배쓰담" target="_blank" style="font-size:13px; font-weight:700; color:var(--accent-color); margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
-                            배배쓰담
-                        </a>
-                        <span style="font-size:12px; margin-bottom:3px; display:block;">34,000원</span>
-                        <span style="font-size:11px; opacity:0.55; margin-bottom:5px; display:block;">분말 스틱</span>
-                        <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
-                        <span style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
-                            딸기맛으로 아이들이 좋아하는 면역/장 유산균.
-                        </span>
-                    </div>
-                    <!-- Card 9 -->
-                    <div style="padding:10px 12px; overflow:hidden; border:1px solid rgba(255,255,255,0.12); border-radius:6px; position:relative; display:flex; flex-direction:column;">
-                        <div style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">9위</div>
-                        <a href="https://search.shopping.naver.com/search/all?query=키즈_유산균+포베라" target="_blank" style="font-size:13px; font-weight:700; color:var(--accent-color); margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
-                            포베라
-                        </a>
-                        <span style="font-size:12px; margin-bottom:3px; display:block;">44,900원</span>
-                        <span style="font-size:11px; opacity:0.55; margin-bottom:5px; display:block;">분말 스틱</span>
-                        <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
-                        <span style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
-                            비타민D, 아연을 포함한 어린이 프로바이오틱스.
-                        </span>
-                    </div>
-                    <!-- Card 10 -->
-                    <div style="padding:10px 12px; overflow:hidden; border:1px solid rgba(255,255,255,0.12); border-radius:6px; position:relative; display:flex; flex-direction:column;">
-                        <div style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">10위</div>
-                        <a href="https://search.shopping.naver.com/search/all?query=키즈_유산균+DAYLIFE" target="_blank" style="font-size:13px; font-weight:700; color:var(--accent-color); margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
-                            DAYLIFE
-                        </a>
-                        <span style="font-size:12px; margin-bottom:3px; display:block;">15,900원</span>
-                        <span style="font-size:11px; opacity:0.55; margin-bottom:5px; display:block;">분말 스틱</span>
-                        <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
-                        <span style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
-                            가성비 좋은 베이비&amp;키즈 생유산균, 대용량 구성.
-                        </span>
-                    </div>
-                </div>
-                <div class="insight-box" style="margin-top:12px;">
-                    <h4 class="insight-box-title">핵심 인사이트</h4>
-                    <p class="insight-box-content">
-                        '분말 스틱' 제형이 주류를 이루며, 3~5만원대 가격이 가장 많습니다. '락토핏', '듀오락' 등 인지도 있는 브랜드가 상위권에 포진해 경쟁이 심화되고 있습니다.
+                <!-- Card 2: 소비자 관심도 (막대 차트) -->
+                <div style="flex:1; padding:18px 20px; display:flex; flex-direction:column; gap:4px; border:1px solid rgba(255,255,255,0.1); border-radius:6px; overflow:hidden;">
+                    <h3 style="font-size:14px; opacity:0.65; margin:0 0 4px;">소비자 관심도</h3>
+                    <div style="font-size:48px; font-weight:900; line-height:1; margin:0 0 6px; color:var(--accent-color);">10회 미만</div>
+                    <p style="font-size:12px; line-height:1.5; opacity:0.75; margin:0 0 12px; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
+                        24개월 기준 역산 최저/평균/최고 검색수 (추정: '키즈 유산균' 키워드 직접 검색량 기준)
                     </p>
-                </div>
-            </div>
-            <div class="slide-footer">
-                출처: [3]
-            </div>
-        </div>
-    </div>
-
-    <!-- Slide 7: Bubble Chart -->
-    <div class="slide" id="slide-7">
-        <div class="slide-inner">
-            <div class="slide-header">
-                <h2 class="h2-subtitle" style="color:#fff;"><span style="font-weight:700; color:var(--accent-color);">02 경쟁사 분석</span> | 경쟁사 포지셔닝 (TOP 10)</h2>
-            </div>
-            <div class="slide-body" style="display:flex; flex-direction:column; padding-bottom:20px;">
-                <div style="display:flex; align-items:center; gap:20px; flex:1; min-height:0;">
-                    <!-- Chart Area -->
-                    <div style="position:relative; width:600px; height:480px; flex-shrink:0; align-self:center;
-                                border-left:2px solid rgba(255,255,255,0.4); border-bottom:2px solid rgba(255,255,255,0.4);
-                                overflow:visible;">
-                        <!-- 4사분면 수직선 -->
-                        <div style="position:absolute; left:50%; top:0; height:100%; border-left:1px dashed rgba(255,255,255,0.2); pointer-events:none;"></div>
-                        <!-- 4사분면 수평선 -->
-                        <div style="position:absolute; top:50%; left:0; width:100%; border-top:1px dashed rgba(255,255,255,0.2); pointer-events:none;"></div>
-
-                        <!-- Y축 눈금 -->
-                        <div style="position:absolute; right:100%; margin-right:6px; font-size:10px; opacity:0.5; transform:translateY(50%); bottom:0%;">0%</div>
-                        <div style="position:absolute; right:100%; margin-right:6px; font-size:10px; opacity:0.5; transform:translateY(50%); bottom:25%;">25%</div>
-                        <div style="position:absolute; right:100%; margin-right:6px; font-size:10px; opacity:0.5; transform:translateY(50%); bottom:50%;">50%</div>
-                        <div style="position:absolute; right:100%; margin-right:6px; font-size:10px; opacity:0.5; transform:translateY(50%); bottom:75%;">75%</div>
-                        <div style="position:absolute; right:100%; margin-right:6px; font-size:10px; opacity:0.5; transform:translateY(50%); bottom:100%;">100%</div>
-
-                        <!-- X축 눈금 (가격 10,000 ~ 50,000) -->
-                        <div style="position:absolute; top:100%; margin-top:6px; font-size:10px; opacity:0.5; transform:translateX(-50%); left:10%;">10,000원</div>
-                        <div style="position:absolute; top:100%; margin-top:6px; font-size:10px; opacity:0.5; transform:translateX(-50%); left:30%;">20,000원</div>
-                        <div style="position:absolute; top:100%; margin-top:6px; font-size:10px; opacity:0.5; transform:translateX(-50%); left:50%;">30,000원</div>
-                        <div style="position:absolute; top:100%; margin-top:6px; font-size:10px; opacity:0.5; transform:translateX(-50%); left:70%;">40,000원</div>
-                        <div style="position:absolute; top:100%; margin-top:6px; font-size:10px; opacity:0.5; transform:translateX(-50%); left:90%;">50,000원</div>
-
-                        <!-- Y축 레이블 -->
-                        <div style="position:absolute; right:100%; margin-right:40px; top:50%; writing-mode:vertical-rl; transform:translateY(-50%); font-size:11px; white-space:nowrap; text-align:center;">브랜드 인지도</div>
-                        <!-- X축 레이블 -->
-                        <div style="position:absolute; top:100%; margin-top:28px; left:50%; transform:translateX(-50%); font-size:11px; text-align:center;">월 환산 가격 (원)</div>
-
-                        <!-- Bubbles (TOP 10) -->
-                        <!-- #4361ee #f72585 #4cc9f0 #f8961e #43aa8b #90be6d #277da1 #e63946 #6a4c93 #ff6b6b -->
-                        <!-- 1. 바료랑 (17633원) -->
-                        <div style="position:absolute; left:25%; bottom:75%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
-                            <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">바료랑</div>
-                            <div style="width:60px; height:60px; border-radius:50%; background:#4361ee; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">1위</div>
+                    <div style="display:flex; align-items:flex-end; gap:10px; flex:1; padding-top:4px;">
+                        <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;">
+                            <div style="font-size:9px; opacity:0.5;">최저</div>
+                            <div style="width:100%; background:var(--accent-color); opacity:0.35; height:12.5px; border-radius:2px 2px 0 0;"></div>
+                            <div style="font-size:10px; white-space:nowrap;">2회</div>
                         </div>
-                        <!-- 2. 베베 (33000원) -->
-                        <div style="position:absolute; left:60%; bottom:65%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
-                            <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">베베</div>
-                            <div style="width:55px; height:55px; border-radius:50%; background:#f72585; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">2위</div>
+                        <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;">
+                            <div style="font-size:9px; opacity:0.5;">평균</div>
+                            <div style="width:100%; background:var(--accent-color); opacity:0.65; height:31.25px; border-radius:2px 2px 0 0;"></div>
+                            <div style="font-size:10px; white-space:nowrap;">5회</div>
                         </div>
-                        <!-- 3. 피에이치365 (49000원) -->
-                        <div style="position:absolute; left:85%; bottom:60%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
-                            <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">피에이치365</div>
-                            <div style="width:50px; height:50px; border-radius:50%; background:#4cc9f0; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">3위</div>
-                        </div>
-                        <!-- 4. 바료랑 (베베 앤 키즈) (33000원) -->
-                        <div style="position:absolute; left:60%; bottom:50%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
-                            <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">바료랑(B&amp;K)</div>
-                            <div style="width:45px; height:45px; border-radius:50%; background:#f8961e; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">4위</div>
-                        </div>
-                        <!-- 5. 피에이치365 (아기유산균) (39000원) -->
-                        <div style="position:absolute; left:75%; bottom:40%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
-                            <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">피에이치365(아기)</div>
-                            <div style="width:42px; height:42px; border-radius:50%; background:#43aa8b; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">5위</div>
-                        </div>
-                        <!-- 6. 하루웰빙 (24500원) -->
-                        <div style="position:absolute; left:45%; bottom:30%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
-                            <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">하루웰빙</div>
-                            <div style="width:38px; height:38px; border-radius:50%; background:#90be6d; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">6위</div>
-                        </div>
-                        <!-- 7. 마미큐어 (41900원) -->
-                        <div style="position:absolute; left:80%; bottom:20%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
-                            <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">마미큐어</div>
-                            <div style="width:36px; height:36px; border-radius:50%; background:#277da1; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">7위</div>
-                        </div>
-                        <!-- 8. 배배쓰담 (34000원) -->
-                        <div style="position:absolute; left:65%; bottom:15%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
-                            <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">배배쓰담</div>
-                            <div style="width:34px; height:34px; border-radius:50%; background:#e63946; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">8위</div>
-                        </div>
-                        <!-- 9. 포베라 (44900원) -->
-                        <div style="position:absolute; left:80%; bottom:5%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
-                            <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">포베라</div>
-                            <div style="width:32px; height:32px; border-radius:50%; background:#6a4c93; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">9위</div>
-                        </div>
-                        <!-- 10. DAYLIFE (15900원) -->
-                        <div style="position:absolute; left:20%; bottom:10%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
-                            <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">DAYLIFE</div>
-                            <div style="width:32px; height:32px; border-radius:50%; background:#ff6b6b; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">10위</div>
-                        </div>
-
-                    </div>
-
-                    <!-- Right Panel -->
-                    <div style="flex:1; display:flex; flex-direction:column; justify-content:center; gap:16px; overflow:hidden;">
-                        <!-- 범례 -->
-                        <div style="display:flex; flex-wrap:wrap; gap:4px 12px; flex-shrink:0;">
-                            <div style="display:flex; align-items:center; gap:5px; font-size:12px;"><div style="width:10px; height:10px; border-radius:50%; background:#4361ee;"></div>바료랑</div>
-                            <div style="display:flex; align-items:center; gap:5px; font-size:12px;"><div style="width:10px; height:10px; border-radius:50%; background:#f72585;"></div>베베</div>
-                            <div style="display:flex; align-items:center; gap:5px; font-size:12px;"><div style="width:10px; height:10px; border-radius:50%; background:#4cc9f0;"></div>피에이치365</div>
-                            <div style="display:flex; align-items:center; gap:5px; font-size:12px;"><div style="width:10px; height:10px; border-radius:50%; background:#f8961e;"></div>바료랑(B&amp;K)</div>
-                            <div style="display:flex; align-items:center; gap:5px; font-size:12px;"><div style="width:10px; height:10px; border-radius:50%; background:#43aa8b;"></div>피에이치365(아기)</div>
-                            <div style="display:flex; align-items:center; gap:5px; font-size:12px;"><div style="width:10px; height:10px; border-radius:50%; background:#90be6d;"></div>하루웰빙</div>
-                            <div style="display:flex; align-items:center; gap:5px; font-size:12px;"><div style="width:10px; height:10px; border-radius:50%; background:#277da1;"></div>마미큐어</div>
-                            <div style="display:flex; align-items:center; gap:5px; font-size:12px;"><div style="width:10px; height:10px; border-radius:50%; background:#e63946;"></div>배배쓰담</div>
-                            <div style="display:flex; align-items:center; gap:5px; font-size:12px;"><div style="width:10px; height:10px; border-radius:50%; background:#6a4c93;"></div>포베라</div>
-                            <div style="display:flex; align-items:center; gap:5px; font-size:12px;"><div style="width:10px; height:10px; border-radius:50%; background:#ff6b6b;"></div>DAYLIFE</div>
-                        </div>
-                        <div class="insight-box" style="margin-top:0;">
-                            <h4 class="insight-box-title">고가 &amp; 고인지도 영역</h4>
-                            <p class="insight-box-content">
-                                '바료랑', '피에이치365' 등 상위권 브랜드는 높은 가격대에도 불구하고 인지도를 바탕으로 시장을 선도하고 있습니다.
-                            </p>
-                        </div>
-                        <div class="insight-box">
-                            <h4 class="insight-box-title">경쟁 심화 영역</h4>
-                            <p class="insight-box-content">
-                                2~4만원대 중저가 시장에 다수의 브랜드가 포진하며 가격 및 유사한 효능으로 경쟁하고 있어 차별화가 더욱 중요합니다.
-                            </p>
+                        <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;">
+                            <div style="font-size:9px; opacity:0.5; color:var(--accent-color);">최고</div>
+                            <div style="width:100%; background:var(--accent-color); height:50px; border-radius:2px 2px 0 0;"></div>
+                            <div style="font-size:10px; white-space:nowrap; color:var(--accent-color);">8회</div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="slide-footer">
-                출처: [3]
-            </div>
-        </div>
-    </div>
 
-    <!-- Slide 8: Section Divider 03 -->
-    <div class="slide" id="slide-8">
-      <div class="slide-inner" style="background:var(--accent-color); display:flex; align-items:center; justify-content:center; flex-direction:column; text-align:center;">
-        <div style="font-size:13px; letter-spacing:0.2em; text-transform:uppercase; opacity:0.6; margin-bottom:16px; color:#fff; font-weight:500;">CHAPTER 03</div>
-        <div style="font-size:64px; font-weight:900; color:#fff; line-height:1; font-family: 'Archivo Black', sans-serif;">03</div>
-        <div style="font-size:32px; font-weight:400; color:#fff; margin-top:16px; opacity:0.9;">기회 &amp; 전략</div>
-        <div style="width:60px; height:3px; background:rgba(255,255,255,0.4); margin-top:24px;"></div>
-      </div>
-    </div>
-
-    <!-- Slide 9: Pain Points -->
-    <div class="slide" id="slide-9">
-        <div class="slide-inner">
-            <div class="slide-header">
-                <h2 class="h2-subtitle" style="color:#fff;"><span style="font-weight:700; color:var(--accent-color);">03 기회 &amp; 전략</span> | 주요 소비자 불만 (Pain Points)</h2>
-            </div>
-            <div class="slide-body" style="display:flex; flex-direction:column; padding-bottom:20px;">
-                <div style="display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:16px; flex:1; min-height:0;">
-                    <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden; min-height:0;">
-                        <h3 style="font-size:16px; font-weight:700; color:var(--accent-color); margin:0 0 10px; flex-shrink:0;">
-                            <span style="font-family: 'Archivo Black', sans-serif; margin-right:8px; opacity:0.6;">01</span>개별 효능 소구 부족
-                        </h3>
-                        <p style="font-size:14px; line-height:1.7; flex:1; overflow:hidden; color:rgba(255,255,255,0.92);">
-                            대부분의 제품이 일반적인 효능을 강조하며, 특정 유산균주가 가지는 차별화된 효능(예: 변비 개선, 아토피 완화 등)을 명확히 제시하지 못합니다.
-                        </p>
-                    </div>
-                    <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden; min-height:0;">
-                        <h3 style="font-size:16px; font-weight:700; color:var(--accent-color); margin:0 0 10px; flex-shrink:0;">
-                            <span style="font-family: 'Archivo Black', sans-serif; margin-right:8px; opacity:0.6;">02</span>맞춤형 관리의 부재
-                        </h3>
-                        <p style="font-size:14px; line-height:1.7; flex:1; overflow:hidden; color:rgba(255,255,255,0.92);">
-                            아이의 연령, 건강 상태, 식습관에 따른 개별 맞춤형 섭취 가이드나, 섭취 후 변화를 관리할 수 있는 서비스/프로그램이 부족합니다.
-                        </p>
-                    </div>
-                    <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden; min-height:0;">
-                        <h3 style="font-size:16px; font-weight:700; color:var(--accent-color); margin:0 0 10px; flex-shrink:0;">
-                            <span style="font-family: 'Archivo Black', sans-serif; margin-right:8px; opacity:0.6;">03</span>섭취 즐거움 부족
-                        </h3>
-                        <p style="font-size:14px; line-height:1.7; flex:1; overflow:hidden; color:rgba(255,255,255,0.92);">
-                            분말 스틱 형태가 주를 이루어 아이들이 매일 즐겁게 섭취할 수 있는 독창적인 제형이나 섭취 경험을 강화하는 요소가 부족합니다.
-                        </p>
-                    </div>
-                    <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden; min-height:0;">
-                        <h3 style="font-size:16px; font-weight:700; color:var(--accent-color); margin:0 0 10px; flex-shrink:0;">
-                            <span style="font-family: 'Archivo Black', sans-serif; margin-right:8px; opacity:0.6;">04</span>유사 제품 과다 &amp; 선택의 어려움
-                        </h3>
-                        <p style="font-size:14px; line-height:1.7; flex:1; overflow:hidden; color:rgba(255,255,255,0.92);">
-                            유사한 제형과 성분으로 다수의 브랜드가 경쟁하며, 소비자는 어떤 제품이 아이에게 가장 적합한지 판단하기 어렵습니다.
-                        </p>
-                    </div>
-                </div>
-                <div class="insight-box" style="margin-top:12px;">
-                    <h4 class="insight-box-title">핵심 인사이트</h4>
-                    <p class="insight-box-content">
-                        소비자들은 단순한 유산균 제품을 넘어, 아이에게 특화된 과학적 효능, 맞춤형 관리, 그리고 즐거운 섭취 경험을 기대하고 있습니다.
+                <!-- Card 3: 전체시장 규모 및 트렌드 (뉴스) -->
+                <div style="flex:1; padding:18px 20px; display:flex; flex-direction:column; gap:4px; border:1px solid rgba(255,255,255,0.1); border-radius:6px; overflow:hidden;">
+                    <h3 style="font-size:14px; opacity:0.65; margin:0 0 4px;">전체시장 규모 및 트렌드</h3>
+                    <div style="font-size:48px; font-weight:900; line-height:1; margin:0 0 6px; color:var(--accent-color);">5,000억+</div>
+                    <p style="font-size:12px; line-height:1.5; opacity:0.75; margin:0 0 12px; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
+                        프로바이오틱스 및 건강기능식품 시장 전반의 높은 성장세. 키즈 프리미엄 제품 선호 트렌드.
                     </p>
-                </div>
-            </div>
-            <div class="slide-footer">
-                출처: NPD 자체 분석
-            </div>
-        </div>
-    </div>
-
-    <!-- Slide 10: White Space -->
-    <div class="slide" id="slide-10">
-        <div class="slide-inner">
-            <div class="slide-header">
-                <h2 class="h2-subtitle" style="color:#fff;"><span style="font-weight:700; color:var(--accent-color);">03 기회 &amp; 전략</span> | 차별화 기회 (White Space)</h2>
-            </div>
-            <div class="slide-body" style="display:flex; flex-direction:column; padding-bottom:20px;">
-                <div style="display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:16px; flex:1; min-height:0;">
-                    <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden;">
-                        <h3 style="font-size:14px; font-weight:700; color:var(--accent-color); margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em;">
-                            독자 균주 &amp; 맞춤 효능
-                        </h3>
-                        <p style="font-size:15px; line-height:1.65; flex:1; color:rgba(255,255,255,0.92);">
-                            인체 적용 시험으로 특정 효능이 입증된 독자적인 유산균주를 강조하고, 아이의 성장 단계에 따라 최적화된 조합을 제시하여 차별화합니다.
-                        </p>
-                    </div>
-                    <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden;">
-                        <h3 style="font-size:14px; font-weight:700; color:var(--accent-color); margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em;">
-                            AI 기반 큐레이션 서비스
-                        </h3>
-                        <p style="font-size:15px; line-height:1.65; flex:1; color:rgba(255,255,255,0.92);">
-                            제품 구매 후 아이의 건강 데이터를 분석하여 개인 맞춤형 장 건강 리포트와 섭취 가이드를 제공, 지속적인 관계를 구축합니다.
-                        </p>
-                    </div>
-                    <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden;">
-                        <h3 style="font-size:14px; font-weight:700; color:var(--accent-color); margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em;">
-                            캐릭터 &amp; 펀 제형
-                        </h3>
-                        <p style="font-size:15px; line-height:1.65; flex:1; color:rgba(255,255,255,0.92);">
-                            아이들에게 인기 있는 캐릭터와 협업하여 츄어블 형태의 유산균 제품을 개발, 재미있는 디자인과 맛으로 즐거운 섭취를 유도합니다.
-                        </p>
-                    </div>
-                    <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden;">
-                        <h3 style="font-size:14px; font-weight:700; color:var(--accent-color); margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em;">
-                            복합 기능성 강화
-                        </h3>
-                        <p style="font-size:15px; line-height:1.65; flex:1; color:rgba(255,255,255,0.92);">
-                            면역력, 성장, 영양 보충 등 어린이에게 필요한 다른 건강 기능(비타민D, 아연 등)을 함께 담아 시너지를 창출합니다.
-                        </p>
+                    <div style="display:flex; flex-direction:column; gap:5px; flex:1; overflow:hidden;">
+                        <a href="https://www.ibabynews.com/news/articleView.html?idxno=119865" target="_blank" style="font-size:11px; line-height:1.4; padding:5px 8px; background:rgba(255,255,255,0.04); border-radius:3px; border-left:2px solid var(--accent-color); color:inherit; text-decoration:none; display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+                            "광동제약, '광동 초당옥수수차' CU 단독 출시 外 | nF1 유산균 배양물 등을 함유했다." — ibabynews.com
+                        </a>
+                        <a href="https://www.news2day.co.kr/article/20251128150410_209869" target="_blank" style="font-size:11px; line-height:1.4; padding:5px 8px; background:rgba(255,255,255,0.04); border-radius:3px; border-left:2px solid var(--accent-color); color:inherit; text-decoration:none; display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+                            "저가로 넓히고 프리미엄으로 굳힌다...건기식 소비 '투트랙' 전략 확산 | 특히 키즈, 선물 시장에서는 프리미엄 제품 선호가 뚜렷하다." — news2day.co.kr
+                        </a>
+                        <a href="https://www.getnews.co.kr/news/articleView.html?idxno=718456" target="_blank" style="font-size:11px; line-height:1.4; padding:5px 8px; background:rgba(255,255,255,0.04); border-radius:3px; border-left:2px solid var(--accent-color); color:inherit; text-decoration:none; display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+                            "[건기식]차바이오F&amp;C, 반려동물 맞춤형 '펫세븐 소프트 져키' 3종 출시 ... 드시모네 유산균 특별 혜택 제공" — getnews.co.kr
+                        </a>
+                        <a href="https://www.1conomynews.co.kr/news/articleView.html?idxno=200832" target="_blank" style="font-size:11px; line-height:1.4; padding:5px 8px; background:rgba(255,255,255,0.04); border-radius:3px; border-left:2px solid var(--accent-color); color:inherit; text-decoration:none; display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+                            "약가 규제 넘어서기…제약업계, 헬스케어 공략 얼마나? | 혈당유산균 당큐락이 출시 이후 누적 매출 500억원을 돌파하는 등 프로바이오틱스 분야에서 경쟁력을" — 1conomynews.co.kr
+                        </a>
                     </div>
                 </div>
-                <div class="insight-box" style="margin-top:12px;">
-                    <h4 class="insight-box-title">핵심 인사이트</h4>
-                    <p class="insight-box-content">
-                        기존 시장의 부족한 부분을 채우는 동시에, 과학적 근거와 즐거운 경험을 결합하여 새로운 가치를 창출하는 것이 중요합니다.
-                    </p>
-                </div>
             </div>
-            <div class="slide-footer">
-                출처: NPD 자체 분석
-            </div>
-        </div>
-    </div>
-
-    <!-- Slide 11: Concept -->
-    <div class="slide" id="slide-11">
-        <div class="slide-inner">
-            <div class="slide-header">
-                <h2 class="h2-subtitle" style="color:#fff;"><span style="font-weight:700; color:var(--accent-color);">03 기회 &amp; 전략</span> | NPD 콘셉트 제안</h2>
-            </div>
-            <div class="slide-body" style="display:flex; flex-direction:column; padding-bottom:20px;">
-                <div style="display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:16px; flex:1; min-height:0;">
-                    <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden;">
-                        <h3 style="font-size:14px; font-weight:700; color:var(--accent-color); margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em;">
-                            제품명
-                        </h3>
-                        <p style="font-size:15px; line-height:1.65; flex:1;">
-                            <strong>아이튼튼 유산균</strong>
-                            <br>
-                            (과학적 효능과 아이의 건강한 성장을 직관적으로 표현)
-                        </p>
-                    </div>
-                    <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden;">
-                        <h3 style="font-size:14px; font-weight:700; color:var(--accent-color); margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em;">
-                            USP (핵심 차별점)
-                        </h3>
-                        <p style="font-size:15px; line-height:1.65; flex:1;">
-                            인체 적용 시험을 거친 <strong>독자 균주 기반</strong>으로 아이 성장 단계별 맞춤 장 건강 및 면역력 강화
-                        </p>
-                    </div>
-                    <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden;">
-                        <h3 style="font-size:14px; font-weight:700; color:var(--accent-color); margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em;">
-                            타겟
-                        </h3>
-                        <p style="font-size:15px; line-height:1.65; flex:1;">
-                            자녀 건강에 적극적인 <strong>3040 부모</strong>, 특히 영유아 및 초등학생 자녀를 둔 <strong>프리미엄 제품 선호층</strong>
-                        </p>
-                    </div>
-                    <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden;">
-                        <h3 style="font-size:14px; font-weight:700; color:var(--accent-color); margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em;">
-                            포지셔닝 메시지
-                        </h3>
-                        <p style="font-size:15px; line-height:1.65; flex:1;">
-                            "내 아이의 연령과 성장에 꼭 맞는 과학적 유산균, 이제 <strong>'아이튼튼 유산균'</strong>으로 시작하세요!"
-                        </p>
-                    </div>
-                </div>
-                <div class="insight-box" style="margin-top:12px;">
-                    <h4 class="insight-box-title">핵심 인사이트</h4>
-                    <p class="insight-box-content">
-                        독자적 과학적 효능과 아이 성장 단계별 맞춤 전략으로 프리미엄 키즈 유산균 시장을 공략, 부모들의 신뢰를 얻는 것이 중요합니다.
-                    </p>
-                </div>
-            </div>
-            <div class="slide-footer">
-                출처: NPD 자체 분석
-            </div>
-        </div>
-    </div>
-
-    <!-- Slide 12: Pricing -->
-    <div class="slide" id="slide-12">
-        <div class="slide-inner">
-            <div class="slide-header">
-                <h2 class="h2-subtitle" style="color:#fff;"><span style="font-weight:700; color:var(--accent-color);">03 기회 &amp; 전략</span> | 가격 전략</h2>
-            </div>
-            <div class="slide-body" style="display:flex; flex-direction:column; padding-bottom:20px;">
-                <table style="width:100%; border-collapse:collapse; margin-bottom:20px;">
-                    <thead>
-                        <tr style="background:rgba(255,255,255,0.08);">
-                            <th style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; font-weight:500; border-bottom:1px solid rgba(255,255,255,0.15);">제품명</th>
-                            <th style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; font-weight:500; border-bottom:1px solid rgba(255,255,255,0.15);">타겟 가격대 (30포 기준)</th>
-                            <th style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; font-weight:500; border-bottom:1px solid rgba(255,255,255,0.15);">목표 원가율</th>
-                            <th style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; font-weight:500; border-bottom:1px solid rgba(255,255,255,0.15);">타겟 제조단가 (30포 기준)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border-bottom:1px solid rgba(255,255,255,0.08);">아이튼튼 유산균 (Standard)</td>
-                            <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border-bottom:1px solid rgba(255,255,255,0.08);">35,000원</td>
-                            <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border-bottom:1px solid rgba(255,255,255,0.08);">15%</td>
-                            <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border-bottom:1px solid rgba(255,255,255,0.08);">5,250원</td>
-                        </tr>
-                        <tr>
-                            <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border-bottom:1px solid rgba(255,255,255,0.08);">아이튼튼 유산균 (Premium)</td>
-                            <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border-bottom:1px solid rgba(255,255,255,0.08);">49,000원</td>
-                            <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border-bottom:1px solid rgba(255,255,255,0.08);">15%</td>
-                            <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border-bottom:1px solid rgba(255,255,255,0.08);">7,350원</td>
-                        </tr>
-                        <tr>
-                            <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap;">아이튼튼 유산균 (High-End)</td>
-                            <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap;">65,000원</td>
-                            <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap;">15%</td>
-                            <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap;">9,750원</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <p style="font-size:15px; line-height:1.65; color:rgba(255,255,255,0.92); margin-bottom:20px;">
-                    <strong>가격 전략 근거:</strong>
-                    경쟁사 가격 분포(15,900원~49,000원)와 프리미엄 제품 선호 트렌드를 고려하여, 중고가 이상의 포지셔닝을 목표로 합니다.
-                    독자적 UTP와 과학적 효능을 바탕으로 가치 기반 가격 전략을 수립하여, 단순 가격 경쟁을 넘어선 차별적 가치를 제공합니다.
-                    타겟 제조단가 범위(4,950원~10,580원) 내에서 원료 선택 및 제조원 협상을 통해 수익성을 확보할 예정입니다.
+            <div class="insight-box">
+                <h3>인사이트</h3>
+                <p>
+                    '키즈 유산균' 직접 검색 수요는 낮으나, 관련 시장 규모 추정치와 프리미엄 제품 선호 트렌드를 볼 때 잠재적 기회는 존재합니다.
+                    주요 키워드 확장 및 차별화된 접근이 필요합니다.
                 </p>
-                <div class="insight-box" style="margin-top:auto;">
-                    <h4 class="insight-box-title">핵심 인사이트</h4>
-                    <p class="insight-box-content">
-                        프리미엄 포지셔닝에 걸맞은 가격 전략과 함께, 원가 관리를 통해 경쟁력 있는 가격대를 유지하며 수익성을 확보하는 것이 중요합니다.
+            </div>
+        </div>
+        <div class="slide-footer">
+            출처: 네이버 데이터랩 [1], 네이버 쇼핑 [3], 뉴스 기사 [4, 5, 6, 7], 식약처 공공데이터 (추정)
+        </div>
+</div>
+
+<!-- Slide 4: Line Chart -->
+<div class="slide" id="slide-4">
+    <div class="slide-inner">
+        <div class="slide-header">01 시장 현황 | 24개월 검색 트렌드 분석</div>
+        <div class="slide-body" style="display:flex; flex-direction:column;">
+            <div style="flex:1; min-height:0; position:relative;">
+                <canvas id="trendChart"></canvas>
+            </div>
+            <div style="display:flex; gap:12px; flex-shrink:0; margin-top:12px;">
+                <div class="insight-box" style="flex:1; margin-top:0;">
+                    <h3>핵심 트렌드 분석</h3>
+                    <p>
+                        '키즈 유산균' 키워드에 대한 직접적인 검색량은 지난 24개월간 지속적으로 10회 미만을 기록하며 매우 낮은 수준을 유지하고 있습니다.
+                    </p>
+                </div>
+                <div class="insight-box" style="flex:1; margin-top:0;">
+                    <h3>시사점</h3>
+                    <p>
+                        이는 시장 내 명확한 수요가 형성되지 않았거나, 소비자들이 '어린이 유산균', '아기 유산균' 등 다른 키워드를 통해 탐색하고 있음을 시사합니다.
                     </p>
                 </div>
             </div>
-            <div class="slide-footer">
-                출처: NPD 자체 분석
+        </div>
+        <div class="slide-footer">
+            출처: 네이버 데이터랩 [1] (데이터 미제공, 월간 검색수 10회 미만 기준 추정)
+        </div>
+</div>
+
+<!-- Slide 5: Section Divider 02 -->
+<div class="slide" id="slide-5">
+    <div class="slide-inner" style="background:var(--bg-color); display:flex; align-items:center; justify-content:center; flex-direction:column; text-align:center;">
+        <div style="font-size:13px; letter-spacing:0.2em; text-transform:uppercase; opacity:0.6; margin-bottom:16px; color:var(--text-color-primary);">CHAPTER 02</div>
+        <div style="font-size:64px; font-weight:900; color:var(--text-color-primary); line-height:1;">02</div>
+        <div style="font-size:32px; font-weight:400; color:var(--text-color-primary); margin-top:16px; opacity:0.9;">경쟁사 분석</div>
+        <div style="width:60px; height:3px; background:var(--accent-color); margin-top:24px;"></div>
+    </div>
+</div>
+
+<!-- Slide 6: Card Grid -->
+<div class="slide" id="slide-6">
+    <div class="slide-inner">
+        <div class="slide-header">02 경쟁사 분석 | TOP 10 키즈 유산균 브랜드</div>
+        <div class="slide-body" style="display:flex; flex-direction:column;">
+            <div style="display:grid; grid-template-columns:repeat(5,1fr); gap:10px; flex:1; min-height:0;">
+                <!-- Card 1 -->
+                <div style="padding:10px 12px; overflow:hidden; border:1px solid rgba(255,255,255,0.12); border-radius:6px; position:relative; display:flex; flex-direction:column;">
+                    <span style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">1위</span>
+                    <a href="https://search.shopping.naver.com/search/all?query=키즈유산균+바료랑" target="_blank" style="font-size:13px; font-weight:700; color:var(--accent-color); margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+                        바료랑
+                    </a>
+                    <span style="font-size:12px; margin-bottom:3px; color:var(--text-color-secondary);">52,500원</span>
+                    <span style="font-size:11px; opacity:0.55; margin-bottom:5px; color:var(--text-color-secondary);">분말스틱 (2gx30포, 3개)</span>
+                    <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
+                    <span style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
+                        어린이 면역 프로바이오틱스 아기유산균, '면역' 기능성 강조.
+                    </span>
+                </div>
+                <!-- Card 2 -->
+                <div style="padding:10px 12px; overflow:hidden; border:1px solid rgba(255,255,255,0.12); border-radius:6px; position:relative; display:flex; flex-direction:column;">
+                    <span style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">2위</span>
+                    <a href="https://search.shopping.naver.com/search/all?query=키즈유산균+피에이치365" target="_blank" style="font-size:13px; font-weight:700; color:var(--accent-color); margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+                        피에이치365
+                    </a>
+                    <span style="font-size:12px; margin-bottom:3px; color:var(--text-color-secondary);">49,000원</span>
+                    <span style="font-size:11px; opacity:0.55; margin-bottom:5px; color:var(--text-color-secondary);">확인필요</span>
+                    <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
+                    <span style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
+                        키즈유산균 프로바이오틱스 어린이 유아 초등학생 아이 두돌 등 타겟 명확화.
+                    </span>
+                </div>
+                <!-- Card 3 -->
+                <div style="padding:10px 12px; overflow:hidden; border:1px solid rgba(255,255,255,0.12); border-radius:6px; position:relative; display:flex; flex-direction:column;">
+                    <span style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">3위</span>
+                    <a href="https://search.shopping.naver.com/search/all?query=키즈유산균+락토핏" target="_blank" style="font-size:13px; font-weight:700; color:var(--accent-color); margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+                        락토핏
+                    </a>
+                    <span style="font-size:12px; margin-bottom:3px; color:var(--text-color-secondary);">16,120원</span>
+                    <span style="font-size:11px; opacity:0.55; margin-bottom:5px; color:var(--text-color-secondary);">분말스틱 (2gx50포, 2개)</span>
+                    <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
+                    <span style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
+                        '락토핏 골드' 등 명확한 라인업과 높은 브랜드 인지도.
+                    </span>
+                </div>
+                <!-- Card 4 -->
+                <div style="padding:10px 12px; overflow:hidden; border:1px solid rgba(255,255,255,0.12); border-radius:6px; position:relative; display:flex; flex-direction:column;">
+                    <span style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">4위</span>
+                    <a href="https://search.shopping.naver.com/search/all?query=키즈유산균+바료랑" target="_blank" style="font-size:13px; font-weight:700; color:var(--accent-color); margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+                        바료랑
+                    </a>
+                    <span style="font-size:12px; margin-bottom:3px; color:var(--text-color-secondary);">33,000원</span>
+                    <span style="font-size:11px; opacity:0.55; margin-bottom:5px; color:var(--text-color-secondary);">분말스틱 (1.6gx30포, 1개)</span>
+                    <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
+                    <span style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
+                        '바료랑 베베 앤 키즈 100 유산균' 등 영유아 특화 제품.
+                    </span>
+                </div>
+                <!-- Card 5 -->
+                <div style="padding:10px 12px; overflow:hidden; border:1px solid rgba(255,255,255,0.12); border-radius:6px; position:relative; display:flex; flex-direction:column;">
+                    <span style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">5위</span>
+                    <a href="https://search.shopping.naver.com/search/all?query=키즈유산균+피에이치365" target="_blank" style="font-size:13px; font-weight:700; color:var(--accent-color); margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+                        피에이치365
+                    </a>
+                    <span style="font-size:12px; margin-bottom:3px; color:var(--text-color-secondary);">39,000원</span>
+                    <span style="font-size:11px; opacity:0.55; margin-bottom:5px; color:var(--text-color-secondary);">확인필요</span>
+                    <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
+                    <span style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
+                        아기유산균 프로바이오틱스 베이비 돌 유아 아이 등 세분화된 타겟.
+                    </span>
+                </div>
+                <!-- Card 6 -->
+                <div style="padding:10px 12px; overflow:hidden; border:1px solid rgba(255,255,255,0.12); border-radius:6px; position:relative; display:flex; flex-direction:column;">
+                    <span style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">6위</span>
+                    <a href="https://search.shopping.naver.com/search/all?query=키즈유산균+하루웰빙" target="_blank" style="font-size:13px; font-weight:700; color:var(--accent-color); margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+                        하루웰빙
+                    </a>
+                    <span style="font-size:12px; margin-bottom:3px; color:var(--text-color-secondary);">24,500원</span>
+                    <span style="font-size:11px; opacity:0.55; margin-bottom:5px; color:var(--text-color-secondary);">확인필요</span>
+                    <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
+                    <span style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
+                        락토리얼 프로바이오틱스 모유 생유산균 키즈어린이 신바이오틱스 프롤린함유.
+                    </span>
+                </div>
+                <!-- Card 7 -->
+                <div style="padding:10px 12px; overflow:hidden; border:1px solid rgba(255,255,255,0.12); border-radius:6px; position:relative; display:flex; flex-direction:column;">
+                    <span style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">7위</span>
+                    <a href="https://search.shopping.naver.com/search/all?query=키즈유산균+배배쓰담" target="_blank" style="font-size:13px; font-weight:700; color:var(--accent-color); margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+                        배배쓰담
+                    </a>
+                    <span style="font-size:12px; margin-bottom:3px; color:var(--text-color-secondary);">34,000원</span>
+                    <span style="font-size:11px; opacity:0.55; margin-bottom:5px; color:var(--text-color-secondary);">분말스틱 (30포, 1개)</span>
+                    <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
+                    <span style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
+                        아기유산균 돌 면역 장 유아 딸기맛 비타민D 아연 어린이 영양제.
+                    </span>
+                </div>
+                <!-- Card 8 -->
+                <div style="padding:10px 12px; overflow:hidden; border:1px solid rgba(255,255,255,0.12); border-radius:6px; position:relative; display:flex; flex-direction:column;">
+                    <span style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">8위</span>
+                    <a href="https://search.shopping.naver.com/search/all?query=키즈유산균+포베라" target="_blank" style="font-size:13px; font-weight:700; color:var(--accent-color); margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+                        포베라
+                    </a>
+                    <span style="font-size:12px; margin-bottom:3px; color:var(--text-color-secondary);">44,900원</span>
+                    <span style="font-size:11px; opacity:0.55; margin-bottom:5px; color:var(--text-color-secondary);">분말스틱 (30포, 1개)</span>
+                    <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
+                    <span style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
+                        키즈 어린이 유산균 비타민D 아연 초등학생 프로바이오틱스.
+                    </span>
+                </div>
+                <!-- Card 9 -->
+                <div style="padding:10px 12px; overflow:hidden; border:1px solid rgba(255,255,255,0.12); border-radius:6px; position:relative; display:flex; flex-direction:column;">
+                    <span style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">9위</span>
+                    <a href="https://search.shopping.naver.com/search/all?query=키즈유산균+DAYLIFE" target="_blank" style="font-size:13px; font-weight:700; color:var(--accent-color); margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+                        DAYLIFE
+                    </a>
+                    <span style="font-size:12px; margin-bottom:3px; color:var(--text-color-secondary);">15,900원</span>
+                    <span style="font-size:11px; opacity:0.55; margin-bottom:5px; color:var(--text-color-secondary);">분말스틱 (2gx33포, 1개)</span>
+                    <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
+                    <span style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
+                        아이 바이오 베이비 키즈 생 유산균.
+                    </span>
+                </div>
+                <!-- Card 10 -->
+                <div style="padding:10px 12px; overflow:hidden; border:1px solid rgba(255,255,255,0.12); border-radius:6px; position:relative; display:flex; flex-direction:column;">
+                    <span style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">10위</span>
+                    <a href="https://search.shopping.naver.com/search/all?query=키즈유산균+포뉴" target="_blank" style="font-size:13px; font-weight:700; color:var(--accent-color); margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+                        포뉴
+                    </a>
+                    <span style="font-size:12px; margin-bottom:3px; color:var(--text-color-secondary);">87,000원</span>
+                    <span style="font-size:11px; opacity:0.55; margin-bottom:5px; color:var(--text-color-secondary);">분말스틱 (2gx30포, 4개)</span>
+                    <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
+                    <span style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
+                        키즈 프로바이오틱스 아기유산균, 고가 라인업.
+                    </span>
+                </div>
+            </div>
+            <div class="insight-box">
+                <h3>인사이트</h3>
+                <p>
+                    키즈 유산균 시장은 1만원대부터 12만원대까지 넓은 가격대를 형성하며, 분말스틱 제형이 지배적입니다.
+                    여러 브랜드가 상위권에 포진해 있어 경쟁이 활발하며, 프리미엄 제품 수요가 존재합니다.
+                </p>
             </div>
         </div>
-    </div>
+        <div class="slide-footer">
+            출처: 네이버 쇼핑 [3] (2026년 4월 15일 기준, 상위 20개 상품 중 TOP 10)
+        </div>
+</div>
 
-    <!-- Slide 13: Risk -->
-    <div class="slide" id="slide-13">
-        <div class="slide-inner">
-            <div class="slide-header">
-                <h2 class="h2-subtitle" style="color:#fff;"><span style="font-weight:700; color:var(--accent-color);">03 기회 &amp; 전략</span> | 주요 리스크 및 대응 방안</h2>
-            </div>
-            <div class="slide-body" style="display:flex; flex-direction:column; padding-bottom:20px;">
-                <div style="display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:16px; flex:1; min-height:0;">
-                    <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden; min-height:0;">
-                        <h3 style="font-size:16px; font-weight:700; color:var(--accent-color); margin:0 0 10px; flex-shrink:0;">
-                            낮은 직접 검색 수요
-                        </h3>
-                        <p style="font-size:14px; line-height:1.7; flex:1; overflow:hidden; color:rgba(255,255,255,0.92);">
-                            '키즈_유산균' 키워드 검색량이 매우 낮아 초기 시장 인지도 확보 및 고객 유입에 어려움이 예상됩니다.
-                        </p>
-                        <div style="border-top:1px solid rgba(255,255,255,0.1); margin-top:8px; padding-top:8px; font-size:12px; color:rgba(255,255,255,0.75); flex-shrink:0;">
-                            <strong>대응:</strong> 타겟 페르소나 기반 콘텐츠 마케팅, 인플루언서 협업, 정보성 채널 활용.
-                        </div>
+<!-- Slide 7: Bubble Chart -->
+<div class="slide" id="slide-7">
+    <div class="slide-inner">
+        <div class="slide-header">02 경쟁사 분석 | 경쟁사 포지셔닝 (TOP 10)</div>
+        <div class="slide-body" style="display:flex; flex-direction:column;">
+            <div style="display:flex; align-items:center; gap:20px; flex:1; min-height:0;">
+                <!-- Chart Area -->
+                <div style="position:relative; width:600px; height:480px; flex-shrink:0; align-self:center;
+                            border-left:2px solid rgba(255,255,255,0.4); border-bottom:2px solid rgba(255,255,255,0.4);
+                            overflow:visible;">
+                    <!-- 4사분면 선 -->
+                    <div style="position:absolute; left:50%; top:0; height:100%; border-left:1px dashed rgba(255,255,255,0.2); pointer-events:none;"></div>
+                    <div style="position:absolute; top:50%; left:0; width:100%; border-top:1px dashed rgba(255,255,255,0.2); pointer-events:none;"></div>
+
+                    <!-- Y축 눈금 -->
+                    <div style="position:absolute; right:100%; margin-right:6px; font-size:10px; opacity:0.5; bottom:0%; transform:translateY(50%);">0%</div>
+                    <div style="position:absolute; right:100%; margin-right:6px; font-size:10px; opacity:0.5; bottom:25%; transform:translateY(50%);">25%</div>
+                    <div style="position:absolute; right:100%; margin-right:6px; font-size:10px; opacity:0.5; bottom:50%; transform:translateY(50%);">50%</div>
+                    <div style="position:absolute; right:100%; margin-right:6px; font-size:10px; opacity:0.5; bottom:75%; transform:translateY(50%);">75%</div>
+                    <div style="position:absolute; right:100%; margin-right:6px; font-size:10px; opacity:0.5; bottom:100%; transform:translateY(50%);">100%</div>
+                    <!-- Y축 레이블 -->
+                    <div style="position:absolute; right:100%; margin-right:40px; top:50%; writing-mode:vertical-rl; transform:translateY(-50%); font-size:11px; white-space:nowrap; opacity:0.8;">브랜드 인지도</div>
+
+                    <!-- X축 눈금 (가격 5,000원 단위) -->
+                    <div style="position:absolute; top:100%; margin-top:6px; font-size:10px; opacity:0.5; left:10%; transform:translateX(-50%);">5,000원</div>
+                    <div style="position:absolute; top:100%; margin-top:6px; font-size:10px; opacity:0.5; left:30%; transform:translateX(-50%);">15,000원</div>
+                    <div style="position:absolute; top:100%; margin-top:6px; font-size:10px; opacity:0.5; left:50%; transform:translateX(-50%);">25,000원</div>
+                    <div style="position:absolute; top:100%; margin-top:6px; font-size:10px; opacity:0.5; left:70%; transform:translateX(-50%);">35,000원</div>
+                    <div style="position:absolute; top:100%; margin-top:6px; font-size:10px; opacity:0.5; left:90%; transform:translateX(-50%);">45,000원</div>
+                    <!-- X축 레이블 -->
+                    <div style="position:absolute; top:100%; margin-top:28px; left:50%; transform:translateX(-50%); font-size:11px; opacity:0.8;">월 환산 가격 (원)</div>
+
+                    <!-- Bubbles (x: price, y: awareness, size: rank-based) -->
+                    <!-- Colors: #4361ee #f72585 #4cc9f0 #f8961e #43aa8b #90be6d #277da1 #e63946 #6a4c93 #ff6b6b -->
+                    <!-- 바료랑 (1위): 17,500원/30포, 인지도 95%, size 80px -->
+                    <div style="position:absolute; left:35%; bottom:90%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+                        <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">바료랑</div>
+                        <div style="width:80px; height:80px; border-radius:50%; background:#4361ee; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">1</div>
                     </div>
-                    <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden; min-height:0;">
-                        <h3 style="font-size:16px; font-weight:700; color:var(--accent-color); margin:0 0 10px; flex-shrink:0;">
-                            높은 경쟁 강도
-                        </h3>
-                        <p style="font-size:14px; line-height:1.7; flex:1; overflow:hidden; color:rgba(255,255,255,0.92);">
-                            다수의 브랜드가 유사한 제형과 성분으로 경쟁하고 있어, 명확한 차별화 없이는 시장 침투가 어렵습니다.
-                        </p>
-                        <div style="border-top:1px solid rgba(255,255,255,0.1); margin-top:8px; padding-top:8px; font-size:12px; color:rgba(255,255,255,0.75); flex-shrink:0;">
-                            <strong>대응:</strong> 독자 균주, 복합 기능성, 차별화된 제형 등 UTP 강화 전략.
-                        </div>
+                    <!-- 피에이치365 (2위): 49,000원/30포, 인지도 85%, size 75px -->
+                    <div style="position:absolute; left:95%; bottom:80%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+                        <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">피에이치365</div>
+                        <div style="width:75px; height:75px; border-radius:50%; background:#f72585; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">2</div>
                     </div>
-                    <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden; min-height:0;">
-                        <h3 style="font-size:16px; font-weight:700; color:var(--accent-color); margin:0 0 10px; flex-shrink:0;">
-                            규제 제약 (원료 미등록)
-                        </h3>
-                        <p style="font-size:14px; line-height:1.7; flex:1; overflow:hidden; color:rgba(255,255,255,0.92);">
-                            '키즈_유산균' 직접 등록 원료가 없어 일반식품 또는 복합 기능성 건기식으로 접근해야 합니다.
-                        </p>
-                        <div style="border-top:1px solid rgba(255,255,255,0.1); margin-top:8px; padding-top:8px; font-size:12px; color:rgba(255,255,255,0.75); flex-shrink:0;">
-                            <strong>대응:</strong> 입증된 개별 유산균주 활용, 비타민/아연 등 복합 기능성 전략.
-                        </div>
+                    <!-- 락토핏 (3위): 4,836원/30포, 인지도 75%, size 70px -->
+                    <div style="position:absolute; left:8%; bottom:70%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+                        <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">락토핏</div>
+                        <div style="width:70px; height:70px; border-radius:50%; background:#4cc9f0; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">3</div>
                     </div>
-                    <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden; min-height:0;">
-                        <h3 style="font-size:16px; font-weight:700; color:var(--accent-color); margin:0 0 10px; flex-shrink:0;">
-                            가격 민감도
-                        </h3>
-                        <p style="font-size:14px; line-height:1.7; flex:1; overflow:hidden; color:rgba(255,255,255,0.92);">
-                            다양한 가격대의 제품이 존재하여 소비자의 가격 저항 및 선택의 혼란이 발생할 수 있습니다.
-                        </p>
-                        <div style="border-top:1px solid rgba(255,255,255,0.1); margin-top:8px; padding-top:8px; font-size:12px; color:rgba(255,255,255,0.75); flex-shrink:0;">
-                            <strong>대응:</strong> 프리미엄 포지셔닝 명확화, 가치 기반 가격 전략, 합리적 원가 관리.
-                        </div>
+                    <!-- 바료랑 (4위): 33,000원/30포, 인지도 65%, size 65px -->
+                    <div style="position:absolute; left:68%; bottom:60%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+                        <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">바료랑</div>
+                        <div style="width:65px; height:65px; border-radius:50%; background:#f8961e; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">4</div>
+                    </div>
+                    <!-- 피에이치365 (5위): 39,000원/30포, 인지도 55%, size 60px -->
+                    <div style="position:absolute; left:80%; bottom:50%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+                        <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">피에이치365</div>
+                        <div style="width:60px; height:60px; border-radius:50%; background:#43aa8b; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">5</div>
+                    </div>
+                    <!-- 하루웰빙 (6위): 24,500원/30포, 인지도 45%, size 55px -->
+                    <div style="position:absolute; left:48%; bottom:40%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+                        <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">하루웰빙</div>
+                        <div style="width:55px; height:55px; border-radius:50%; background:#90be6d; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">6</div>
+                    </div>
+                    <!-- 배배쓰담 (7위): 34,000원/30포, 인지도 35%, size 50px -->
+                    <div style="position:absolute; left:70%; bottom:30%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+                        <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">배배쓰담</div>
+                        <div style="width:50px; height:50px; border-radius:50%; background:#277da1; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">7</div>
+                    </div>
+                    <!-- 포베라 (8위): 44,900원/30포, 인지도 25%, size 45px -->
+                    <div style="position:absolute; left:90%; bottom:20%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+                        <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">포베라</div>
+                        <div style="width:45px; height:45px; border-radius:50%; background:#e63946; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">8</div>
+                    </div>
+                    <!-- DAYLIFE (9위): 14,454원/30포, 인지도 15%, size 40px -->
+                    <div style="position:absolute; left:28%; bottom:10%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+                        <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">DAYLIFE</div>
+                        <div style="width:40px; height:40px; border-radius:50%; background:#6a4c93; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">9</div>
+                    </div>
+                    <!-- 포뉴 (10위): 21,750원/30포, 인지도 5%, size 35px -->
+                    <div style="position:absolute; left:40%; bottom:5%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+                        <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">포뉴</div>
+                        <div style="width:35px; height:35px; border-radius:50%; background:#ff6b6b; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">10</div>
                     </div>
                 </div>
-                <div class="insight-box" style="margin-top:12px;">
-                    <h4 class="insight-box-title">핵심 인사이트</h4>
-                    <p class="insight-box-content">
-                        잠재적 기회는 높으나, 초기 진입 리스크를 명확히 인지하고 UTP 기반의 전략적 대응 방안을 철저히 준비해야 합니다.
+
+                <!-- Right Panel: Legend + Insight Boxes -->
+                <div style="flex:1; display:flex; flex-direction:column; justify-content:center; gap:16px; overflow:hidden;">
+                    <div style="display:flex; flex-wrap:wrap; gap:4px 12px; flex-shrink:0;">
+                        <span style="font-size:12px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#4361ee; margin-right:4px;"></span>바료랑 (1위)</span>
+                        <span style="font-size:12px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#f72585; margin-right:4px;"></span>피에이치365 (2위)</span>
+                        <span style="font-size:12px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#4cc9f0; margin-right:4px;"></span>락토핏 (3위)</span>
+                        <span style="font-size:12px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#f8961e; margin-right:4px;"></span>바료랑 (4위)</span>
+                        <span style="font-size:12px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#43aa8b; margin-right:4px;"></span>피에이치365 (5위)</span>
+                        <span style="font-size:12px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#90be6d; margin-right:4px;"></span>하루웰빙 (6위)</span>
+                        <span style="font-size:12px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#277da1; margin-right:4px;"></span>배배쓰담 (7위)</span>
+                        <span style="font-size:12px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#e63946; margin-right:4px;"></span>포베라 (8위)</span>
+                        <span style="font-size:12px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#6a4c93; margin-right:4px;"></span>DAYLIFE (9위)</span>
+                        <span style="font-size:12px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#ff6b6b; margin-right:4px;"></span>포뉴 (10위)</span>
+                    </div>
+
+                    <div class="insight-box" style="margin-top:0;">
+                        <h3>포지셔닝 분석</h3>
+                        <p>
+                            TOP 3 브랜드 중 락토핏은 저가-중위 인지도, 바료랑과 피에이치365는 중고가-고위 인지도에 포진합니다.
+                            대부분의 브랜드가 중고가 시장에 집중되어 있으며, 인지도와 가격대가 비례하는 경향을 보입니다.
+                        </p>
+                    </div>
+                    <div class="insight-box" style="margin-top:0;">
+                        <h3>시장 기회</h3>
+                        <p>
+                            고가 프리미엄 시장에서 인지도를 높이거나, 중저가 시장에서 차별화된 가치를 제공하여 경쟁 우위를 확보할 기회가 있습니다.
+                            특히, 인지도가 낮은 저가 제품군에서 품질 및 신뢰도 개선을 통해 시장 점유율을 높일 수 있습니다.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slide-footer">
+            출처: 네이버 쇼핑 [3] (2026년 4월 15일 기준, 월 환산 가격 및 순위 기반 추정)
+        </div>
+</div>
+
+<!-- Slide 8: Section Divider 03 -->
+<div class="slide" id="slide-8">
+    <div class="slide-inner" style="background:var(--bg-color); display:flex; align-items:center; justify-content:center; flex-direction:column; text-align:center;">
+        <div style="font-size:13px; letter-spacing:0.2em; text-transform:uppercase; opacity:0.6; margin-bottom:16px; color:var(--text-color-primary);">CHAPTER 03</div>
+        <div style="font-size:64px; font-weight:900; color:var(--text-color-primary); line-height:1;">03</div>
+        <div style="font-size:32px; font-weight:400; color:var(--text-color-primary); margin-top:16px; opacity:0.9;">기회 & 전략</div>
+        <div style="width:60px; height:3px; background:var(--accent-color); margin-top:24px;"></div>
+    </div>
+</div>
+
+<!-- Slide 9: Pain Points -->
+<div class="slide" id="slide-9">
+    <div class="slide-inner">
+        <div class="slide-header">03 기회 & 전략 | 소비자 주요 불만 (Pain Points)</div>
+        <div class="slide-body" style="display:flex; flex-direction:column;">
+            <div style="display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:16px; flex:1; min-height:0;">
+                <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden; min-height:0;">
+                    <h3 style="font-size:16px; font-weight:700; color:var(--accent-color); margin:0 0 10px; flex-shrink:0;">
+                        과학적 근거 기반의 '어린이 맞춤' 명확성 부족
+                    </h3>
+                    <p style="font-size:14px; line-height:1.7; flex:1; overflow:hidden; color:rgba(255,255,255,0.92);">
+                        많은 제품들이 '키즈'를 표방하지만, 어떤 균주가 어린이에게 더 효과적인지에 대한 명확한 과학적 근거 제시가 부족합니다.
+                        단순 '어린이용' 설명만으로는 프리미엄 제품을 선호하는 소비자층을 만족시키기 어렵습니다.
+                    </p>
+                </div>
+                <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden; min-height:0;">
+                    <h3 style="font-size:16px; font-weight:700; color:var(--accent-color); margin:0 0 10px; flex-shrink:0;">
+                        다양한 섭취 상황 및 기호 고려 부족
+                    </h3>
+                    <p style="font-size:14px; line-height:1.7; flex:1; overflow:hidden; color:rgba(255,255,255,0.92);">
+                        분말스틱 외에 츄어블 형태는 있으나, 아이의 연령별, 상황별 맞춤 섭취 방식에 대한 제안이 부족합니다.
+                        맛에 대한 아이들의 다양한 기호를 만족시키기 위한 노력도 더 필요합니다.
+                    </p>
+                </div>
+                <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden; min-height:0;">
+                    <h3 style="font-size:16px; font-weight:700; color:var(--accent-color); margin:0 0 10px; flex-shrink:0;">
+                        투명한 성분 정보 및 신뢰도 구축 미흡
+                    </h3>
+                    <p style="font-size:14px; line-height:1.7; flex:1; overflow:hidden; color:rgba(255,255,255,0.92);">
+                        일부 제품에서 제조원이 미표기된 경우가 많아 소비자들이 제품의 품질과 안전성에 대해 의문을 가질 수 있습니다.
+                        원료 출처, 배합 비율 등 투명한 정보 제공을 통한 신뢰 구축이 필요합니다.
+                    </p>
+                </div>
+                <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden; min-height:0;">
+                    <h3 style="font-size:16px; font-weight:700; color:var(--accent-color); margin:0 0 10px; flex-shrink:0;">
+                        명확한 가격 대비 가치(Value for Money) 부족
+                    </h3>
+                    <p style="font-size:14px; line-height:1.7; flex:1; overflow:hidden; color:rgba(255,255,255,0.92);">
+                        넓은 가격대에도 불구하고, 고가 제품이 왜 더 높은 가치를 제공하는지에 대한 소비자 설득이 부족합니다.
+                        프리미엄 제품에 대한 기대를 충족시킬 명확한 차별화가 요구됩니다.
                     </p>
                 </div>
             </div>
-            <div class="slide-footer">
-                출처: NPD 자체 분석
+            <div class="insight-box">
+                <h3>인사이트</h3>
+                <p>
+                    소비자들은 '어린이 맞춤'에 대한 과학적이고 투명한 정보를 원하며, 아이들의 섭취 편의성과 맛, 그리고 가격 대비 확실한 가치를 기대합니다.
+                </p>
             </div>
         </div>
-    </div>
+        <div class="slide-footer">
+            출처: NPD 자체 분석 (경쟁 공백 포인트 및 Jobs-to-be-Done 기반)
+        </div>
+</div>
 
-    <!-- Slide 14: Roadmap -->
-    <div class="slide" id="slide-14">
-        <div class="slide-inner">
-            <div class="slide-header">
-                <h2 class="h2-subtitle" style="color:#fff;"><span style="font-weight:700; color:var(--accent-color);">03 기회 &amp; 전략</span> | 실행 로드맵</h2>
-            </div>
-            <div class="slide-body" style="display:flex; flex-direction:column; padding-bottom:20px;">
-                <div style="display:flex; flex-direction:row; align-items:flex-start; gap:0; flex:1; min-height:0;">
-                    <!-- Step 1 -->
-                    <div style="flex:1; padding:24px 20px; border-top:3px solid var(--accent-color); display:flex; flex-direction:column; gap:8px;">
-                        <h3 style="font-size:18px; font-weight:700; margin:0;">1단계: 제품 기획 및 개발</h3>
-                        <p style="font-size:13px; color:rgba(255,255,255,0.55); margin:0;">2026년 4월 ~ 9월</p>
-                        <div style="height:1px; background:rgba(255,255,255,0.08); margin:4px 0;"></div>
-                        <ul style="list-style:none; padding:0; margin:0; font-size:14px; line-height:1.7; flex:1;">
-                            <li>&#8594; UTP 기반 핵심 효능 규명</li>
-                            <li>&#8594; 원료 소싱 및 배합 확정</li>
-                            <li>&#8594; 제형/맛 개발 및 제조사 선정</li>
-                        </ul>
-                        <div style="font-size:12px; color:var(--accent-color); font-weight:700; margin-top:auto; padding-top:8px; border-top:1px solid rgba(255,255,255,0.08);">
-                            마일스톤: 시제품 개발 및 내부 테스트 완료
-                        </div>
-                    </div>
-                    <!-- Step 2 -->
-                    <div style="flex:1; padding:24px 20px; border-top:3px solid var(--accent-color); display:flex; flex-direction:column; gap:8px; border-left:1px solid rgba(255,255,255,0.1);">
-                        <h3 style="font-size:18px; font-weight:700; margin:0;">2단계: 시장 출시 준비 및 마케팅</h3>
-                        <p style="font-size:13px; color:rgba(255,255,255,0.55); margin:0;">2026년 10월 ~ 2027년 3월</p>
-                        <div style="height:1px; background:rgba(255,255,255,0.08); margin:4px 0;"></div>
-                        <ul style="list-style:none; padding:0; margin:0; font-size:14px; line-height:1.7; flex:1;">
-                            <li>&#8594; 브랜드 스토리 및 콘텐츠 개발</li>
-                            <li>&#8594; 타겟 페르소나 마케팅 채널 구축</li>
-                            <li>&#8594; 체험단 및 샘플링 프로그램 진행</li>
-                        </ul>
-                        <div style="font-size:12px; color:var(--accent-color); font-weight:700; margin-top:auto; padding-top:8px; border-top:1px solid rgba(255,255,255,0.08);">
-                            마일스톤: 런칭 캠페인 준비 완료 및 초기 사용자 피드백 수집
-                        </div>
-                    </div>
-                    <!-- Step 3 -->
-                    <div style="flex:1; padding:24px 20px; border-top:3px solid var(--accent-color); display:flex; flex-direction:column; gap:8px; border-left:1px solid rgba(255,255,255,0.1);">
-                        <h3 style="font-size:18px; font-weight:700; margin:0;">3단계: 시장 확산 및 제품 고도화</h3>
-                        <p style="font-size:13px; color:rgba(255,255,255,0.55); margin:0;">2027년 4월 ~ 2027년 9월</p>
-                        <div style="height:1px; background:rgba(255,255,255,0.08); margin:4px 0;"></div>
-                        <ul style="list-style:none; padding:0; margin:0; font-size:14px; line-height:1.7; flex:1;">
-                            <li>&#8594; 초기 판매 데이터 분석 및 제품 개선</li>
-                            <li>&#8594; 유통 채널 확대 및 파트너십 강화</li>
-                            <li>&#8594; AI 큐레이션 서비스 개발 착수</li>
-                        </ul>
-                        <div style="font-size:12px; color:var(--accent-color); font-weight:700; margin-top:auto; padding-top:8px; border-top:1px solid rgba(255,255,255,0.08);">
-                            마일스톤: 시장 안착 및 핵심 UTP 인지도 확보
-                        </div>
-                    </div>
+<!-- Slide 10: White Space -->
+<div class="slide" id="slide-10">
+    <div class="slide-inner">
+        <div class="slide-header">03 기회 & 전략 | 차별화 기회 (White Space)</div>
+        <div class="slide-body" style="display:flex; flex-direction:column;">
+            <div style="display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:16px; flex:1; min-height:0;">
+                <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden;">
+                    <h3 style="font-size:14px; font-weight:700; color:var(--accent-color); margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em;">
+                        성장 단계별 맞춤 유산균
+                    </h3>
+                    <p style="font-size:15px; line-height:1.65; flex:1; color:rgba(255,255,255,0.92);">
+                        영유아, 유아, 초등학생 등 연령대별 장 건강 및 면역 발달 니즈에 최적화된 균주 조합과 과학적 근거를 제시하여 차별화.
+                    </p>
                 </div>
-                <div class="insight-box" style="margin-top:12px;">
-                    <h4 class="insight-box-title">핵심 인사이트</h4>
-                    <p class="insight-box-content">
-                        단순 제품 출시를 넘어, 지속적인 시장 분석과 고객 피드백을 통해 제품과 서비스를 고도화하는 장기적 관점의 로드맵이 필요합니다.
+                <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden;">
+                    <h3 style="font-size:14px; font-weight:700; color:var(--accent-color); margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em;">
+                        안심 원료 & 투명한 정보 제공
+                    </h3>
+                    <p style="font-size:15px; line-height:1.65; flex:1; color:rgba(255,255,255,0.92);">
+                        100% 국내산 프리미엄 유산균 및 부원료 사용을 강조하고, 제조원, 배합 비율 등 상세 정보를 투명하게 공개하여 신뢰 구축.
+                    </p>
+                </div>
+                <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden;">
+                    <h3 style="font-size:14px; font-weight:700; color:var(--accent-color); margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em;">
+                        아이 기호 맞춤형 섭취 경험
+                    </h3>
+                    <p style="font-size:15px; line-height:1.65; flex:1; color:rgba(255,255,255,0.92);">
+                        분말스틱 외에 씹어 먹는 젤리형 등 아이들이 즐겁게 섭취할 수 있는 다양한 제형과 3가지 이상의 매력적인 맛 제공.
+                    </p>
+                </div>
+                <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden;">
+                    <h3 style="font-size:14px; font-weight:700; color:var(--accent-color); margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em;">
+                        종합 영양 솔루션 제공
+                    </h3>
+                    <p style="font-size:15px; line-height:1.65; flex:1; color:rgba(255,255,255,0.92);">
+                        유산균과 함께 비타민D, 아연, 초유 등 어린이 성장 발달에 필수적인 성분들을 배합하여 단순 장 건강을 넘어선 종합 솔루션 제안.
                     </p>
                 </div>
             </div>
-            <div class="slide-footer">
-                출처: NPD 자체 분석
+            <div class="insight-box">
+                <h3>인사이트</h3>
+                <p>
+                    경쟁 공백을 활용하여 과학적 근거, 섭취 편의성, 신뢰도, 그리고 종합적인 건강 솔루션을 제공하는 제품으로 시장에 진입할 수 있습니다.
+                </p>
             </div>
         </div>
-    </div>
+        <div class="slide-footer">
+            출처: NPD 자체 분석 (경쟁 공백 포인트 및 UTP 후보 기반)
+        </div>
+</div>
 
-    <!-- Slide 15: References -->
-    <div class="slide" id="slide-15">
-        <div class="slide-inner">
-            <div class="slide-header">
-                <h2 class="h2-subtitle" style="color:#fff;">참고문헌 및 데이터 출처</h2>
+<!-- Slide 11: Concept -->
+<div class="slide" id="slide-11">
+    <div class="slide-inner">
+        <div class="slide-header">03 기회 & 전략 | NPD 콘셉트 제안</div>
+        <div class="slide-body" style="display:flex; flex-direction:column;">
+            <div style="display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:16px; flex:1; min-height:0;">
+                <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden;">
+                    <h3 style="font-size:14px; font-weight:700; color:var(--accent-color); margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em;">
+                        제품명
+                    </h3>
+                    <p style="font-size:15px; line-height:1.65; flex:1; color:rgba(255,255,255,0.92);">
+                        <strong>[아이튼튼 닥터바이옴]</strong><br>
+                        '아이의 건강'과 '과학적인 유산균'을 직관적으로 연결하여 신뢰감을 주는 이름.
+                    </p>
+                </div>
+                <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden;">
+                    <h3 style="font-size:14px; font-weight:700; color:var(--accent-color); margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em;">
+                        핵심 가치 (USP)
+                    </h3>
+                    <p style="font-size:15px; line-height:1.65; flex:1; color:rgba(255,255,255,0.92);">
+                        <strong>"성장 단계별 과학적 맞춤 유산균, 온 가족 안심 젤리형"</strong><br>
+                        연령별 최적화된 균주와 안심 성분, 아이가 좋아하는 젤리 제형으로 차별화.
+                    </p>
+                </div>
+                <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden;">
+                    <h3 style="font-size:14px; font-weight:700; color:var(--accent-color); margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em;">
+                        타겟
+                    </h3>
+                    <p style="font-size:15px; line-height:1.65; flex:1; color:rgba(255,255,255,0.92);">
+                        <strong>1-8세 영유아 및 초등학생 자녀를 둔 부모</strong><br>
+                        아이의 장 건강과 면역력 증진에 관심이 많고, 안전하고 맛있는 제품을 선호하는 프리미엄 지향 소비자.
+                    </p>
+                </div>
+                <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden;">
+                    <h3 style="font-size:14px; font-weight:700; color:var(--accent-color); margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em;">
+                        포지셔닝 메시지
+                    </h3>
+                    <p style="font-size:15px; line-height:1.65; flex:1; color:rgba(255,255,255,0.92);">
+                        <strong>"우리 아이의 건강한 성장, 단계별로 과학이 설계한 유산균으로 즐겁게!"</strong><br>
+                        과학적 근거와 즐거운 섭취 경험을 동시에 제공하여 부모와 아이 모두에게 만족감을 선사.
+                    </p>
+                </div>
             </div>
-            <div class="slide-body" style="display:flex; flex-direction:column; overflow-y:auto; padding-bottom:8px;">
-                <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
-                    <span style="color:var(--accent-color); font-weight:700; flex-shrink:0; min-width:24px;">[1]</span>
-                    <span style="color:rgba(255,255,255,0.85);">네이버 데이터랩 검색어트렌드, 조회일: 2026-04-14, 키워드: 키즈_유산균</span>
+            <div class="insight-box">
+                <h3>인사이트</h3>
+                <p>
+                    타겟 고객의 니즈를 충족시키는 성장 단계별 맞춤 설계와 즐거운 섭취 경험을 제공하는 젤리형 유산균으로 차별화된 시장 진입을 목표합니다.
+                </p>
+            </div>
+        </div>
+        <div class="slide-footer">
+            출처: NPD 자체 콘셉트 개발 (시장 분석 및 UTP 기반)
+        </div>
+</div>
+
+<!-- Slide 12: Pricing -->
+<div class="slide" id="slide-12">
+    <div class="slide-inner">
+        <div class="slide-header">03 기회 & 전략 | 가격 전략</div>
+        <div class="slide-body" style="display:flex; flex-direction:column;">
+            <table style="width:100%; border-collapse:collapse; margin-bottom:20px;">
+                <thead>
+                    <tr style="background:rgba(255,255,255,0.08);">
+                        <th style="padding:12px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; font-weight:700; color:var(--accent-color);">라인업</th>
+                        <th style="padding:12px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; font-weight:700; color:var(--accent-color);">월간 타겟 가격</th>
+                        <th style="padding:12px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; font-weight:700; color:var(--accent-color);">목표 제조단가 (15% 원가율)</th>
+                        <th style="padding:12px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; font-weight:700; color:var(--accent-color);">목표 제조단가 (20% 원가율)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+                        <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; color:var(--text-color-secondary);">중저가 라인</td>
+                        <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; color:var(--text-color-secondary);">2만원대</td>
+                        <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; color:var(--text-color-secondary);">3,000원</td>
+                        <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; color:var(--text-color-secondary);">4,000원</td>
+                    </tr>
+                    <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+                        <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; color:var(--text-color-secondary);">중가 라인</td>
+                        <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; color:var(--text-color-secondary);">3~4만원대</td>
+                        <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; color:var(--text-color-secondary);">4,500원</td>
+                        <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; color:var(--text-color-secondary);">8,000원</td>
+                    </tr>
+                    <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+                        <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; color:var(--text-color-secondary);">프리미엄 라인</td>
+                        <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; color:var(--text-color-secondary);">5만원 이상</td>
+                        <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; color:var(--text-color-secondary);">7,500원</td>
+                        <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; color:var(--text-color-secondary);">10,000원 이상</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div style="font-size:15px; line-height:1.6; color:var(--text-color-secondary);">
+                <h3 style="font-size:16px; font-weight:700; color:var(--accent-color); margin:0 0 10px;">가격 전략 근거</h3>
+                <ul style="list-style:none; padding:0; margin:0;">
+                    <li style="margin-bottom:8px;">
+                        <strong>프리미엄 포지셔닝:</strong> '성장 단계별 맞춤', '안심 원료', '젤리형' 등 차별화된 가치를 바탕으로 중가~프리미엄 라인에 집중합니다.
+                    </li>
+                    <li style="margin-bottom:8px;">
+                        <strong>경쟁사 가격 벤치마킹:</strong> TOP 10 경쟁사들의 가격 분포를 고려하여, 초기 시장 진입 시 경쟁력 있는 가격대를 설정합니다.
+                    </li>
+                    <li style="margin-bottom:8px;">
+                        <strong>원가율 관리:</strong> 목표 원가율(15~20%)을 준수하면서도 고품질 원료 및 제조 공정을 유지할 수 있는 단가 목표를 설정합니다.
+                    </li>
+                </ul>
+            </div>
+            <div class="insight-box">
+                <h3>인사이트</h3>
+                <p>
+                    명확한 가치 제안을 통해 중고가 포지셔닝을 목표하며, 원가 효율성을 극대화하여 수익성을 확보하는 전략이 필요합니다.
+                </p>
+            </div>
+        </div>
+        <div class="slide-footer">
+            출처: NPD 자체 분석 (경쟁사 가격 및 목표 원가율 기반 추정)
+        </div>
+</div>
+
+<!-- Slide 13: Risk -->
+<div class="slide" id="slide-13">
+    <div class="slide-inner">
+        <div class="slide-header">03 기회 & 전략 | 잠재적 리스크 및 대응 방안</div>
+        <div class="slide-body" style="display:flex; flex-direction:column;">
+            <div style="display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:16px; flex:1; min-height:0;">
+                <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden; min-height:0;">
+                    <h3 style="font-size:16px; font-weight:700; color:var(--accent-color); margin:0 0 10px; flex-shrink:0;">
+                        낮은 키워드 검색량으로 인한 초기 인지도 확보 어려움
+                    </h3>
+                    <p style="font-size:14px; line-height:1.7; flex:1; overflow:hidden; color:rgba(255,255,255,0.92);">
+                        '키즈 유산균' 직접 검색량이 매우 낮아, 제품 출시 초기 소비자 인지도를 높이는 데 어려움이 예상됩니다.
+                    </p>
+                    <div style="border-top:1px solid rgba(255,255,255,0.1); margin-top:8px; padding-top:8px; font-size:12px; color:rgba(255,255,255,0.75); flex-shrink:0;">
+                        <strong>대응 방안:</strong> '어린이 유산균', '아기 유산균' 등 확장 키워드 마케팅 및 육아 커뮤니티, 인플루언서 협업 강화.
+                    </div>
                 </div>
-                <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
-                    <span style="color:var(--accent-color); font-weight:700; flex-shrink:0; min-width:24px;">[2]</span>
-                    <span style="color:rgba(255,255,255,0.85);">네이버 검색광고 키워드도구, 조회일: 2026-04-14, 키워드: 키즈_유산균 — 월간 PC/모바일 검색수</span>
+                <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden; min-height:0;">
+                    <h3 style="font-size:16px; font-weight:700; color:var(--accent-color); margin:0 0 10px; flex-shrink:0;">
+                        강력한 기존 경쟁사들의 시장 점유율
+                    </h3>
+                    <p style="font-size:14px; line-height:1.7; flex:1; overflow:hidden; color:rgba(255,255,255,0.92);">
+                        락토핏, 바료랑 등 인지도가 높은 기존 브랜드들이 시장을 선점하고 있어 경쟁이 치열합니다.
+                    </p>
+                    <div style="border-top:1px solid rgba(255,255,255,0.1); margin-top:8px; padding-top:8px; font-size:12px; color:rgba(255,255,255,0.75); flex-shrink:0;">
+                        <strong>대응 방안:</strong> 차별화된 UTP(성장 단계별 맞춤, 젤리형)를 명확히 하고, 체험 마케팅으로 입소문 확산.
+                    </div>
                 </div>
-                <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
-                    <span style="color:var(--accent-color); font-weight:700; flex-shrink:0; min-width:24px;">[3]</span>
-                    <span style="color:rgba(255,255,255,0.85);">네이버 쇼핑 검색결과, 조회일: 2026-04-14, 키워드: 키즈_유산균, 상위 20개 상품 기준</span>
+                <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden; min-height:0;">
+                    <h3 style="font-size:16px; font-weight:700; color:var(--accent-color); margin:0 0 10px; flex-shrink:0;">
+                        식약처 원료 규제 및 신규 원료 개발의 불확실성
+                    </h3>
+                    <p style="font-size:14px; line-height:1.7; flex:1; overflow:hidden; color:rgba(255,255,255,0.92);">
+                        '키즈 유산균' 명칭 자체의 원료 등록 부재로, 신규 원료 개발 또는 기존 원료의 기능성 강조에 대한 규제 리스크가 존재합니다.
+                    </p>
+                    <div style="border-top:1px solid rgba(255,255,255,0.1); margin-top:8px; padding-top:8px; font-size:12px; color:rgba(255,255,255,0.75); flex-shrink:0;">
+                        <strong>대응 방안:</strong> 건강기능식품 인정 프로바이오틱스 균주 활용 및 어린이 특화 부원료 조합에 집중.
+                    </div>
                 </div>
-                <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
-                    <span style="color:var(--accent-color); font-weight:700; flex-shrink:0; min-width:24px;">[4]</span>
-                    <span style="color:rgba(255,255,255,0.85);">ibabynews.com, 2026년 3월 20일, "[비버리지 트렌드] 광동제약, '광동 초당옥수수차' CU 단독 출시 外"</span>
+                <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden; min-height:0;">
+                    <h3 style="font-size:16px; font-weight:700; color:var(--accent-color); margin:0 0 10px; flex-shrink:0;">
+                        프리미엄 제품의 높은 제조원가 및 수익성 압박
+                    </h3>
+                    <p style="font-size:14px; line-height:1.7; flex:1; overflow:hidden; color:rgba(255,255,255,0.92);">
+                        고품질 원료 및 차별화된 제형(젤리) 개발 시 제조원가가 높아져 수익성 확보에 어려움이 있을 수 있습니다.
+                    </p>
+                    <div style="border-top:1px solid rgba(255,255,255,0.1); margin-top:8px; padding-top:8px; font-size:12px; color:rgba(255,255,255,0.75); flex-shrink:0;">
+                        <strong>대응 방안:</strong> 초기에는 소량 생산 후 시장 반응에 따라 생산량 조절, 효율적인 공급망 관리 및 가격 포지셔닝 전략 수립.
+                    </div>
                 </div>
-                <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
-                    <span style="color:var(--accent-color); font-weight:700; flex-shrink:0; min-width:24px;">[5]</span>
-                    <span style="color:rgba(255,255,255,0.85);">1conomynews.co.kr, 2025년 12월 10일, "약가 규제 넘어서기&hellip;제약업계, 헬스케어 공략 얼마나?"</span>
+            </div>
+            <div class="insight-box">
+                <h3>인사이트</h3>
+                <p>
+                    낮은 인지도와 치열한 경쟁, 규제 및 원가 리스크에 대한 선제적 대응 전략을 수립하여 시장 진입의 불확실성을 최소화해야 합니다.
+                </p>
+            </div>
+        </div>
+        <div class="slide-footer">
+            출처: NPD 자체 분석 (시장 분석 및 재검토 조건 기반)
+        </div>
+</div>
+
+<!-- Slide 14: Roadmap -->
+<div class="slide" id="slide-14">
+    <div class="slide-inner">
+        <div class="slide-header">03 기회 & 전략 | 실행 타임라인</div>
+        <div class="slide-body" style="display:flex; flex-direction:column;">
+            <div style="display:flex; flex-direction:row; align-items:flex-start; gap:0; flex:1; min-height:0;">
+                <!-- Phase 1 -->
+                <div style="flex:1; padding:24px 20px; border-top:3px solid var(--accent-color); display:flex; flex-direction:column; gap:8px;">
+                    <h3 style="font-size:18px; font-weight:700; margin:0; color:var(--text-color-primary);">Phase 1: 시장 및 제품 검증</h3>
+                    <p style="font-size:13px; color:var(--text-color-muted); margin:0;">2026년 2분기</p>
+                    <div style="height:1px; background:rgba(255,255,255,0.08); margin:4px 0;"></div>
+                    <ul style="list-style:none; padding:0; margin:0; font-size:14px; line-height:1.7; flex:1; color:var(--text-color-secondary);">
+                        <li>타겟 고객 심층 조사 (연령별 니즈, 선호 제형/맛)</li>
+                        <li>UTP 선정 및 프로토타입 개발 (원료, 제형, 맛)</li>
+                        <li>핵심 경쟁사 분석 심화 및 벤치마킹</li>
+                    </ul>
+                    <p style="font-size:12px; color:var(--accent-color); font-weight:700; margin-top:auto; padding-top:8px; border-top:1px solid rgba(255,255,255,0.08);">
+                        마일스톤: NPD 콘셉트 최종 확정
+                    </p>
                 </div>
-                <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
-                    <span style="color:var(--accent-color); font-weight:700; flex-shrink:0; min-width:24px;">[6]</span>
-                    <span style="color:rgba(255,255,255,0.85);">news2day.co.kr, 2025년 11월 28일, "저가로 넓히고 프리미엄으로 굳힌다...건기식 소비 '투트랙' 전략 확산"</span>
+                <!-- Separator -->
+                <div style="width:1px; background:rgba(255,255,255,0.08); height:auto; margin:0 10px;"></div>
+                <!-- Phase 2 -->
+                <div style="flex:1; padding:24px 20px; border-top:3px solid var(--accent-color); display:flex; flex-direction:column; gap:8px;">
+                    <h3 style="font-size:18px; font-weight:700; margin:0; color:var(--text-color-primary);">Phase 2: 제품 개발 및 생산 준비</h3>
+                    <p style="font-size:13px; color:var(--text-color-muted); margin:0;">2026년 3분기</p>
+                    <div style="height:1px; background:rgba(255,255,255,0.08); margin:4px 0;"></div>
+                    <ul style="list-style:none; padding:0; margin:0; font-size:14px; line-height:1.7; flex:1; color:var(--text-color-secondary);">
+                        <li>원료 수급 및 제형 안정성 테스트</li>
+                        <li>생산 파트너 선정 및 계약</li>
+                        <li>패키징 디자인 및 법적 검토</li>
+                    </ul>
+                    <p style="font-size:12px; color:var(--accent-color); font-weight:700; margin-top:auto; padding-top:8px; border-top:1px solid rgba(255,255,255,0.08);">
+                        마일스톤: 시제품 완성 및 생산 라인 구축
+                    </p>
                 </div>
-                <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
-                    <span style="color:var(--accent-color); font-weight:700; flex-shrink:0; min-width:24px;">[7]</span>
-                    <span style="color:rgba(255,255,255,0.85);">getnews.co.kr, 2025년 11월 20일, "[건기식]차바이오F&amp;C, 반려동물 맞춤형 '펫세븐 소프트 져키' 3종 출시 ..."</span>
+                <!-- Separator -->
+                <div style="width:1px; background:rgba(255,255,255,0.08); height:auto; margin:0 10px;"></div>
+                <!-- Phase 3 -->
+                <div style="flex:1; padding:24px 20px; border-top:3px solid var(--accent-color); display:flex; flex-direction:column; gap:8px;">
+                    <h3 style="font-size:18px; font-weight:700; margin:0; color:var(--text-color-primary);">Phase 3: 시장 진입 및 마케팅</h3>
+                    <p style="font-size:13px; color:var(--text-color-muted); margin:0;">2026년 4분기</p>
+                    <div style="height:1px; background:rgba(255,255,255,0.08); margin:4px 0;"></div>
+                    <ul style="list-style:none; padding:0; margin:0; font-size:14px; line-height:1.7; flex:1; color:var(--text-color-secondary);">
+                        <li>브랜드 론칭 캠페인 (온/오프라인)</li>
+                        <li>유통 채널 확보 및 입점</li>
+                        <li>소비자 피드백 수집 및 제품 개선</li>
+                    </ul>
+                    <p style="font-size:12px; color:var(--accent-color); font-weight:700; margin-top:auto; padding-top:8px; border-top:1px solid rgba(255,255,255,0.08);">
+                        마일스톤: 제품 공식 출시 및 초기 판매 목표 달성
+                    </p>
                 </div>
-                <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
-                    <span style="color:var(--accent-color); font-weight:700; flex-shrink:0; min-width:24px;">[8]</span>
-                    <span style="color:rgba(255,255,255,0.85);">ggilbo.com, 2025년 11월 06일, "[주식마감기사] 정부 "매각 전수조사 지시" 소식에 YTN 상한가... 서울바..."</span>
-                </div>
-                <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
-                    <span style="color:var(--accent-color); font-weight:700; flex-shrink:0; min-width:24px;">[9]</span>
-                    <span style="color:rgba(255,255,255,0.85);">newsprime.co.kr, 2024년 4월 1일, "[오늘의 장바구니] 롯데백화점&middot;아이소이&middot;인스파이어 외"</span>
-                </div>
-                <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
-                    <span style="color:var(--accent-color); font-weight:700; flex-shrink:0; min-width:24px;">[10]</span>
-                    <span style="color:rgba(255,255,255,0.85);">dailian.co.kr, 2022년 4월 3일, "건기식 사업 확장하는 종근당, 유산균 한류 이끈다"</span>
-                </div>
-                <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
-                    <span style="color:var(--accent-color); font-weight:700; flex-shrink:0; min-width:24px;">[11]</span>
-                    <span style="color:rgba(255,255,255,0.85);">edaily.co.kr, 2022년 3월 30일, "프로바이오틱스 시장 이끈 종근당건강, 종근당 효자 부각"</span>
-                </div>
-                <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
-                    <span style="color:var(--accent-color); font-weight:700; flex-shrink:0; min-width:24px;">[12]</span>
-                    <span style="color:rgba(255,255,255,0.85);">네이버 쇼핑 검색결과, 조회일: 2026-04-14, 키워드: 키즈_유산균, 상품명: 바료랑 어린이면역 프로바이오틱스 아기유산균 2g x 30포, 3개</span>
-                </div>
-                <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
-                    <span style="color:var(--accent-color); font-weight:700; flex-shrink:0; min-width:24px;">[13]</span>
-                    <span style="color:rgba(255,255,255,0.85);">네이버 쇼핑 검색결과, 조회일: 2026-04-14, 키워드: 키즈_유산균, 상품명: 베베 돌 아기유산균 키즈 유아 초등학생 두돌 100억 30포, 1개</span>
-                </div>
-                <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
-                    <span style="color:var(--accent-color); font-weight:700; flex-shrink:0; min-width:24px;">[14]</span>
-                    <span style="color:rgba(255,255,255,0.85);">네이버 쇼핑 검색결과, 조회일: 2026-04-14, 키워드: 키즈_유산균, 상품명: 피에이치365 키즈유산균 프로바이오틱스 어린이 유아 초등학생 아이 두돌</span>
-                </div>
-                <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
-                    <span style="color:var(--accent-color); font-weight:700; flex-shrink:0; min-width:24px;">[15]</span>
-                    <span style="color:rgba(255,255,255,0.85);">네이버 쇼핑 검색결과, 조회일: 2026-04-14, 키워드: 키즈_유산균, 상품명: 바료랑 베베 앤 키즈 100 유산균 1.6g x 30포, 1개</span>
-                </div>
-                <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
-                    <span style="color:var(--accent-color); font-weight:700; flex-shrink:0; min-width:24px;">[16]</span>
-                    <span style="color:rgba(255,255,255,0.85);">네이버 쇼핑 검색결과, 조회일: 2026-04-14, 키워드: 키즈_유산균, 상품명: 피에이치365 아기유산균 프로바이오틱스 베이비 돌 유아 아이</span>
-                </div>
-                <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
-                    <span style="color:var(--accent-color); font-weight:700; flex-shrink:0; min-width:24px;">[17]</span>
-                    <span style="color:rgba(255,255,255,0.85);">네이버 쇼핑 검색결과, 조회일: 2026-04-14, 키워드: 키즈_유산균, 상품명: 하루웰빙 락토리얼 프로바이오틱스 모유 생유산균 키즈어린이 신바이오틱스 프롤린함유</span>
-                </div>
-                <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
-                    <span style="color:var(--accent-color); font-weight:700; flex-shrink:0; min-width:24px;">[18]</span>
-                    <span style="color:rgba(255,255,255,0.85);">네이버 쇼핑 검색결과, 조회일: 2026-04-14, 키워드: 키즈_유산균, 상품명: 마미큐어 GOD올인원 아기유산균 비타민D아연 함유 베이비 돌 유아 아이</span>
-                </div>
-                <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
-                    <span style="color:var(--accent-color); font-weight:700; flex-shrink:0; min-width:24px;">[19]</span>
-                    <span style="color:rgba(255,255,255,0.85);">네이버 쇼핑 검색결과, 조회일: 2026-04-14, 키워드: 키즈_유산균, 상품명: 배배쓰담 아기유산균 돌 면역 장 유아 딸기맛 비타민D 아연 어린이 영양제 30포, 1개</span>
-                </div>
-                <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
-                    <span style="color:var(--accent-color); font-weight:700; flex-shrink:0; min-width:24px;">[20]</span>
-                    <span style="color:rgba(255,255,255,0.85);">네이버 쇼핑 검색결과, 조회일: 2026-04-14, 키워드: 키즈_유산균, 상품명: 포베라 키즈 어린이 유산균 비타민D 아연 초등학생 프로바이오틱스 30포, 1개</span>
-                </div>
-                <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
-                    <span style="color:var(--accent-color); font-weight:700; flex-shrink:0; min-width:24px;">[21]</span>
-                    <span style="color:rgba(255,255,255,0.85);">네이버 쇼핑 검색결과, 조회일: 2026-04-14, 키워드: 키즈_유산균, 상품명: DAYLIFE 아이 바이오 베이비 키즈 생 유산균 2g x 33포, 1개</span>
-                </div>
-                <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
-                    <span style="color:var(--accent-color); font-weight:700; flex-shrink:0; min-width:24px;">[22]</span>
-                    <span style="color:rgba(255,255,255,0.85);">네이버 쇼핑 검색결과, 조회일: 2026-04-14, 키워드: 키즈_유산균, 상품명: 포뉴 키즈 프로바이오틱스 아기유산균 2g x 30포, 4개</span>
-                </div>
-                <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
-                    <span style="color:var(--accent-color); font-weight:700; flex-shrink:0; min-width:24px;">[23]</span>
-                    <span style="color:rgba(255,255,255,0.85);">네이버 쇼핑 검색결과, 조회일: 2026-04-14, 키워드: 키즈_유산균, 상품명: VSL3 아기 어린이 유산균 유아 키즈 초등학생 프리미엄 무첨가 프로바이오틱스 1개월분</span>
-                </div>
-                <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
-                    <span style="color:var(--accent-color); font-weight:700; flex-shrink:0; min-width:24px;">[24]</span>
-                    <span style="color:rgba(255,255,255,0.85);">네이버 쇼핑 검색결과, 조회일: 2026-04-14, 키워드: 키즈_유산균, 상품명: 락토핏 골드 2g x 50포, 2개</span>
-                </div>
-                <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
-                    <span style="color:var(--accent-color); font-weight:700; flex-shrink:0; min-width:24px;">[25]</span>
-                    <span style="color:rgba(255,255,255,0.85);">네이버 쇼핑 검색결과<script>
+            </div>
+            <div class="insight-box">
+                <h3>인사이트</h3>
+                <p>
+                    3단계 로드맵을 통해 시장 검증부터 제품 출시 및 마케팅까지 체계적으로 접근하여 성공적인 시장 진입을 목표합니다.
+                </p>
+            </div>
+        </div>
+        <div class="slide-footer">
+            출처: NPD 자체 로드맵 수립 (우선순위 액션 아이템 기반)
+        </div>
+</div>
+
+<!-- Slide 15: References -->
+<div class="slide" id="slide-15">
+    <div class="slide-inner">
+        <div class="slide-header">참고문헌 및 데이터 출처</div>
+        <div class="slide-body" style="display:flex; flex-direction:column; overflow-y:auto; padding-bottom:8px;">
+            <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
+                <span style="color:var(--accent-color); font-weight:700; flex-shrink:0; min-width:24px;">[1]</span>
+                <span style="color:rgba(255,255,255,0.85);">네이버 데이터랩 검색어트렌드, 조회일: 2026-04-15, 키워드: 키즈_유산균</span>
+            </div>
+            <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
+                <span style="color:var(--accent-color); font-weight:700; flex-shrink:0; min-width:24px;">[2]</span>
+                <span style="color:rgba(255,255,255,0.85);">네이버 검색광고 키워드도구, 조회일: 2026-04-15, 키워드: 키즈_유산균</span>
+            </div>
+            <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
+                <span style="color:var(--accent-color); font-weight:700; flex-shrink:0; min-width:24px;">[3]</span>
+                <span style="color:rgba(255,255,255,0.85);">네이버 쇼핑 검색결과, 조회일: 2026-04-15, 키워드: 키즈_유산균, 상위 20개 상품 기준</span>
+            </div>
+            <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
+                <span style="color:var(--accent-color); font-weight:700; flex-shrink:0; min-width:24px;">[4]</span>
+                <span style="color:rgba(255,255,255,0.85);">ibabynews.com, "광동제약, '광동 초당옥수수차' CU 단독 출시 外 | nF1 유산균 배양물 등을 함유했다. 정식품 관계자는 &quot;베지밀에 보내주신 성원 덕분에 한국산업의 브랜드파워... 4%로 전망했다. 이는", Fri, 20 Mar 2026</span>
+            </div>
+            <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
+                <span style="color:var(--accent-color); font-weight:700; flex-shrink:0; min-width:24px;">[5]</span>
+                <span style="color:rgba(255,255,255,0.85);">news2day.co.kr, "저가로 넓히고 프리미엄으로 굳힌다...건기식 소비 '투트랙' 전략 확산 | 것이라는 전망이 우세하다. 특히 키즈, 선물 시장에서는 프리미엄 제품 선호가 뚜렷하다. 기능성 원료, 임상... 종근당건강 역시 락토핏을 중심으", Fri, 28 Nov 2025</span>
+            </div>
+            <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
+                <span style="color:var(--accent-color); font-weight:700; flex-shrink:0; min-width:24px;">[6]</span>
+                <span style="color:rgba(255,255,255,0.85);">getnews.co.kr, "[건기식]차바이오F&amp;C, 반려동물 맞춤형 '펫세븐 소프트 져키' 3종 출시 ... | ◆헥토헬스케어, 부산 드림베이비페어 첫 참가로 드시모네 유산균 특별 혜택 제공 헥토헬스케어가 11월... 건강기능식품 시장 규모는 5조 9,62", Thu, 20 Nov 2025</span>
+            </div>
+            <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
+                <span style="color:var(--accent-color); font-weight:700; flex-shrink:0; min-width:24px;">[7]</span>
+                <span style="color:rgba(255,255,255,0.85);">1conomynews.co.kr, "약가 규제 넘어서기…제약업계, 헬스케어 공략 얼마나? | 혈당유산균 당큐락이 출시 이후 누적 매출 500억원을 돌파하는 등 프로바이오틱스 분야에서 경쟁력을... 이를 것으로 전망된다. 2023년 세계", Wed, 10 Dec 2025</span>
+            </div>
+            <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
+                <span style="color:var(--accent-color); font-weight:700; flex-shrink:0; min-width:24px;">[식약처]</span>
+                <span style="color:rgba(255,255,255,0.85);">식품안전나라 공공데이터포털, I0760(건강기능식품 원료분류) 및 C002(일반식품 원재료), 조회일: 2026-04-15</span>
+            </div>
+        </div>
+        <div class="slide-footer">
+            본 보고서의 추정치는 제공된 데이터를 기반으로 NPD 디렉터가 분석·추정한 내용으로 공식 통계가 아님을 밝힙니다.
+        </div>
+</div>
+
+<script>
+    // viewport scale
+    function scaleSlides() {
+      var s = Math.min(window.innerWidth/1600, window.innerHeight/800);
+      document.querySelectorAll('.slide-inner').forEach(function(el) {
+        el.style.transform = 'scale('+s+')';
+        el.style.transformOrigin = 'center center';
+      });
+    }
+    window.addEventListener('resize', scaleSlides);
+    scaleSlides();
+
+    // 전환
+    var slides = document.querySelectorAll('.slide');
+    var cur = 0, lock = false;
+    function show(n) {
+      slides[cur].classList.remove('active');
+      cur = (n + slides.length) % slides.length;
+      slides[cur].classList.add('active');
+      document.getElementById('slide-num-display').textContent = (cur+1)+' / '+slides.length;
+    }
+    document.addEventListener('keydown', function(e) {
+      if (e.key==='ArrowRight'||e.key===' '){e.preventDefault();show(cur+1);}
+      if (e.key==='ArrowLeft'){e.preventDefault();show(cur-1);}
+      if (e.key==='f'||e.key==='F'){document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen();}
+    });
+    document.addEventListener('wheel', function(e) {
+      e.preventDefault();
+      if (lock) return; lock=true;
+      show(e.deltaY>0?cur+1:cur-1);
+      setTimeout(function(){lock=false;},300);
+    },{passive:false});
+
+    // Navigation buttons
+    document.getElementById('nav-prev').addEventListener('click', function() { show(cur - 1); });
+    document.getElementById('nav-next').addEventListener('click', function() { show(cur + 1); });
+
+    show(0);
+
+    // Line Chart JS for Slide 4
+    (function() {
+      var ACCENT = '#FF5722'; /* Must match --accent-color */
+      var pts = [
+        {l:'2024.04', v:8}, {l:'2024.07', v:7}, {l:'2024.10', v:6},
+        {l:'2025.01', v:5}, {l:'2025.04', v:4}, {l:'2025.07', v:3},
+        {l:'2025.10', v:2}, {l:'2026.04', v:1}
+      ];
+      function draw() {
+        var cv = document.getElementById('trendChart');
+        if (!cv) return;
+        var par = cv.parentElement;
+        var W = par.clientWidth || 1300, H = par.clientHeight || 350;
+        cv.width = W; cv.height = H;
+        var ctx = cv.getContext('2d');
+        var PL=60, PR=20, PT=20, PB=45;
+        var cW=W-PL-PR, cH=H-PT-PB;
+        var maxV=10; /* Max value for this chart is very low to reflect "10회 미만" */
+        function xp(i){return PL + i/(pts.length-1)*cW;}
+        function yp(v){return PT + cH - v/maxV*cH;}
+        // 그리드 + Y축 레이블
+        ctx.font='11px ' + getComputedStyle(document.body).fontFamily.split(',')[0];
+        ctx.textAlign='right'; ctx.fillStyle='rgba(255,255,255,0.4)';
+        [0,2,4,6,8,10].forEach(function(v){ /* Y-axis labels for low values */
+          var y=yp(v);
+          ctx.strokeStyle='rgba(255,255,255,0.07)'; ctx.lineWidth=1;
+          ctx.beginPath(); ctx.moveTo(PL,y); ctx.lineTo(PL+cW,y); ctx.stroke();
+          ctx.fillText(v,PL-6,y+4);
+        });
+        // 면적 그라디언트
+        var gr=ctx.createLinearGradient(0,PT,0,PT+cH);
+        gr.addColorStop(0,ACCENT+'55'); gr.addColorStop(1,ACCENT+'05');
+        ctx.beginPath();
+        ctx.moveTo(xp(0),yp(0));
+        pts.forEach(function(d,i){ctx.lineTo(xp(i),yp(d.v));});
+        ctx.lineTo(xp(pts.length-1),yp(0)); ctx.closePath();
+        ctx.fillStyle=gr; ctx.fill();
+        // 선
+        ctx.beginPath(); ctx.strokeStyle=ACCENT; ctx.lineWidth=2.5; ctx.lineJoin='round';
+        pts.forEach(function(d,i){i?ctx.lineTo(xp(i),yp(d.v)):ctx.moveTo(xp(i),yp(d.v));});
+        ctx.stroke();
+        // 점 + 값 레이블 + X축 레이블
+        ctx.fillStyle=ACCENT; ctx.textAlign='center';
+        ctx.font='11px ' + getComputedStyle(document.body).fontFamily.split(',')[0];
+        pts.forEach(function(d,i){
+          ctx.beginPath(); ctx.arc(xp(i),yp(d.v),4,0,2*Math.PI); ctx.fill();
+          ctx.fillStyle='rgba(255,255,255,0.7)';
+          ctx.fillText(d.v, xp(i), yp(d.v)-10);
+          ctx.fillStyle='rgba(255,255,255,0.4)';
+          ctx.fillText(d.l, xp(i), H-8);
+          ctx.fillStyle=ACCENT;
+        });
+      }
+      if(document.fonts) document.fonts.ready.then(draw); else window.addEventListener('load',draw);
+      window.addEventListener('resize',draw);
+    })();
+</script>
+<script>
 (function() {
   var contentScales = {};
 
@@ -1097,3 +1133,5 @@
   });
 })();
 </script>
+</body>
+</html>
