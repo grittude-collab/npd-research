@@ -3,17 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>중국 어린이 키성장 시장 진입 전략 보고서</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <title>중국 어린이 키성장 시장 NPD 분석</title>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Noto+Sans+KR:wght@300;400;700;900&display=swap" rel="stylesheet">
     <style>
         html, body {
             margin: 0; padding: 0; overflow: hidden;
             background: #1a1a1a; width: 100%; height: 100%;
             font-family: 'Noto Sans KR', sans-serif;
-            color: #fff;
-            font-size: 18px; /* Base body font size */
+            color: #ffffff;
+            font-size: 18px;
             line-height: 1.6;
         }
         .slide {
@@ -28,77 +26,50 @@
             width: 1600px; height: 800px;
             position: relative; overflow: hidden;
             box-sizing: border-box;
-            background-color: #1a1a1a; /* Ensure inner background is also dark */
+            background: #1a1a1a; /* Base background for inner content */
         }
         .slide-header {
             position: absolute; top: 0; left: 0; right: 0;
             height: 100px; padding: 0 80px;
             display: flex; align-items: flex-end; padding-bottom: 16px;
-        }
-        .slide-header h2 {
             font-size: 24px;
-            font-weight: 500; /* Semi-bold */
-            margin: 0;
-            color: #fff;
-            font-family: 'Noto Sans KR', sans-serif;
+            font-weight: 700;
+            color: rgba(255,255,255,0.9);
+            font-family: 'Archivo Black', sans-serif;
+            letter-spacing: 0.02em;
         }
         .slide-body {
             position: absolute; top: 100px; left: 0; right: 0;
             bottom: 50px; padding: 20px 80px 0;
             overflow: hidden;
-            display: flex; /* For insight box to stick to bottom */
-            flex-direction: column; /* For insight box to stick to bottom */
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
         }
         .slide-footer {
             position: absolute; bottom: 0; left: 0; right: 0;
             height: 50px; padding: 0 80px;
             display: flex; align-items: center; justify-content: flex-end;
-            font-size: 13px; /* Caption */
-            font-weight: 300; /* Light */
-            opacity: 0.5;
-            color: #fff;
+            font-size: 13px; opacity: 0.5;
+            color: rgba(255,255,255,0.7);
         }
 
-        /* Typography */
-        h1, h2, h3, h4, h5, h6 {
-            font-family: 'Archivo Black', sans-serif;
-            color: #fff;
-            margin: 0;
-        }
-        .slide-body strong {
-            font-weight: 700;
-        }
-        .slide-body p {
-            margin: 0;
-        }
-
-        /* Accent color for links */
-        a {
-            color: #FF5722;
-            text-decoration: none;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
-
-        /* Insight Box common styles */
+        /* Common styles for insight boxes */
         .insight-box {
             border-left: 3px solid #FF5722;
             padding: 10px 16px;
-            background: rgba(255, 87, 34, 0.07); /* #FF5722 with 0.07 opacity */
+            background: rgba(255,87,34,0.07);
+            margin-top: auto; /* Push to bottom */
             margin-bottom: 0;
             flex-shrink: 0;
-            margin-top: auto; /* Pushes insight box to bottom */
-            color: #fff;
         }
-        .insight-box h3 {
+        .insight-box-title {
             font-size: 12px;
             font-weight: 700;
             color: #FF5722;
             margin: 0 0 3px;
-            font-family: 'Noto Sans KR', sans-serif;
         }
-        .insight-box p {
+        .insight-box-content {
             font-size: 13px;
             line-height: 1.5;
             margin: 0;
@@ -106,7 +77,7 @@
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
-            color: #fff;
+            color: rgba(255,255,255,0.85);
         }
 
         /* Navigation UI */
@@ -115,1072 +86,849 @@
             top: 50%;
             transform: translateY(-50%);
             z-index: 100;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255,255,255,0.1);
             color: #fff;
             border: none;
             padding: 10px 15px;
             cursor: pointer;
             font-size: 24px;
             border-radius: 4px;
-            line-height: 1;
+            opacity: 0.7;
+            transition: opacity 0.2s;
         }
         .nav-button:hover {
-            background: rgba(255, 255, 255, 0.2);
+            opacity: 1;
         }
-        #nav-prev { left: 16px; }
-        #nav-next { right: 16px; }
+        #prev-slide { left: 16px; }
+        #next-slide { right: 16px; }
         #slide-num-display {
             position: fixed;
             bottom: 16px;
             left: 50%;
             transform: translateX(-50%);
             z-index: 100;
-            color: rgba(255, 255, 255, 0.7);
+            color: rgba(255,255,255,0.6);
             font-size: 14px;
         }
-        #fullscreen-btn {
+        #fullscreen-toggle {
             position: fixed;
             top: 16px;
             right: 16px;
             z-index: 100;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255,255,255,0.1);
             color: #fff;
             border: none;
             padding: 8px 12px;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 16px;
             border-radius: 4px;
+            opacity: 0.7;
+            transition: opacity 0.2s;
         }
-        #fullscreen-btn:hover {
-            background: rgba(255, 255, 255, 0.2);
+        #fullscreen-toggle:hover {
+            opacity: 1;
         }
+
+        /* Typography */
+        h1 { font-size: 44px; font-weight: 900; margin: 0; font-family: 'Archivo Black', sans-serif; }
+        h2 { font-size: 24px; font-weight: 700; margin: 0; }
+        p { font-size: 18px; font-weight: 400; margin: 0; }
+        .caption { font-size: 13px; font-weight: 300; margin: 0; }
+        strong { font-weight: 700; }
+        a { color: #FF5722; text-decoration: none; }
+        a:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
 
-<!-- Navigation UI -->
-<button id="nav-prev" class="nav-button">&#8592;</button>
-<button id="nav-next" class="nav-button">&#8594;</button>
-<div id="slide-num-display"><span id="slide-num">1 / 15</span></div>
-<button id="fullscreen-btn">전체화면 (F)</button>
+    <!-- Navigation UI -->
+    <button id="prev-slide" class="nav-button">&#10094;</button>
+    <button id="next-slide" class="nav-button">&#10095;</button>
+    <div id="slide-num-display">1 / 15</div>
+    <button id="fullscreen-toggle">전체화면</button>
 
-<!-- Slide 1: Cover -->
-<div class="slide active" id="slide-0">
-    <div class="slide-inner" style="display:flex; align-items:center; justify-content:center; flex-direction:column; text-align:center;">
-        <h1 style="font-size:64px; font-weight:900; color:#fff; line-height:1.2; margin-bottom:20px; font-family: 'Archivo Black', sans-serif;">
-            중국 어린이 키성장 시장<br>NPD 시장 분석
-        </h1>
-        <p style="font-size:24px; font-weight:400; color:rgba(255,255,255,0.8); margin-bottom:30px;">
-            중국 '골드키즈' 소비 트렌드 속 프리미엄 키 성장 솔루션 시장 진입 전략
-        </p>
-        <p style="font-size:18px; color:rgba(255,255,255,0.6);">
-            기준일: 2026년 4월 16일
-        </p>
-    </div>
-</div>
-
-<!-- Slide 2: Section Divider -->
-<div class="slide" id="slide-1">
-    <div class="slide-inner" style="background:#1a1a1a; display:flex; align-items:center; justify-content:center; flex-direction:column; text-align:center;">
-        <div style="font-size:13px; letter-spacing:0.2em; text-transform:uppercase; opacity:0.6; margin-bottom:16px; color:#fff;">CHAPTER 01</div>
-        <div style="font-size:64px; font-weight:900; color:#fff; line-height:1;">01</div>
-        <div style="font-size:32px; font-weight:400; color:#fff; margin-top:16px; opacity:0.9;">시장 현황</div>
-        <div style="width:60px; height:3px; background:#FF5722; margin-top:24px;"></div>
-    </div>
-</div>
-
-<!-- Slide 3: Big Number -->
-<div class="slide" id="slide-2">
-    <div class="slide-inner">
-        <div class="slide-header">
-            <h2>01 시장 현황 | Market Opportunity Scorecard</h2>
+    <!-- Slide 1: Cover -->
+    <div class="slide active" id="slide-1">
+        <div class="slide-inner" style="display:flex; align-items:center; justify-content:center; flex-direction:column; text-align:center; gap:20px;">
+            <div style="font-size:24px; font-weight:400; opacity:0.7; letter-spacing:0.1em; color:#fff;">중국 어린이 키성장 시장</div>
+            <h1 style="font-size: 80px; color:#FF5722; margin:0; line-height:1.2;">NPD 시장 분석</h1>
+            <div style="font-size:20px; font-weight:400; opacity:0.8; margin-top:10px; color:#fff;">글로벌 시장 진입 전략 보고서</div>
+            <div style="font-size:16px; font-weight:300; opacity:0.6; margin-top:30px; color:#fff;">2026년 4월 16일</div>
         </div>
-        <div class="slide-body" style="display:flex; flex-direction:column; gap:0;">
-            <div style="display:flex; gap:16px; align-items:stretch; flex:1; min-height:0;">
-                <!-- Metric 1: 시장 성장성 -->
-                <div style="flex:1; padding:18px 20px; display:flex; flex-direction:column; gap:4px; border:1px solid rgba(255,255,255,0.1); border-radius:6px; overflow:hidden;">
-                    <h3 style="font-size:14px; opacity:0.65; margin:0 0 4px; font-family: 'Noto Sans KR', sans-serif;">시장 성장성</h3>
-                    <div style="font-size:48px; font-weight:900; line-height:1; margin:0 0 6px; color:#FF5722; font-family: 'Archivo Black', sans-serif;">성장 추세</div>
-                    <p style="font-size:12px; line-height:1.5; opacity:0.75; margin:0 0 12px; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
-                        Google 검색 트렌드 및 관련 시장 기사 분석 기반
-                    </p>
-                    <div style="flex:1; min-height:80px;">
-                        <svg style="width:100%;height:80px;" viewBox="0 0 200 60" preserveAspectRatio="none">
-                            <defs><linearGradient id="mg1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#FF5722" stop-opacity="0.3"/><stop offset="100%" stop-color="#FF5722" stop-opacity="0"/></linearGradient></defs>
-                            <polygon points="0,60 0,50 50,40 100,30 150,20 200,10 200,60" fill="url(#mg1)"/>
-                            <polyline points="0,50 50,40 100,30 150,20 200,10" fill="none" stroke="#FF5722" stroke-width="2"/>
-                        </svg>
-                    </div>
-                </div>
+    </div>
 
-                <!-- Metric 2: 소비자 관심도 -->
-                <div style="flex:1; padding:18px 20px; display:flex; flex-direction:column; gap:4px; border:1px solid rgba(255,255,255,0.1); border-radius:6px; overflow:hidden;">
-                    <h3 style="font-size:14px; opacity:0.65; margin:0 0 4px; font-family: 'Noto Sans KR', sans-serif;">소비자 관심도</h3>
-                    <div style="font-size:48px; font-weight:900; line-height:1; margin:0 0 6px; color:#FF5722; font-family: 'Archivo Black', sans-serif;">높음</div>
-                    <p style="font-size:12px; line-height:1.5; opacity:0.75; margin:0 0 12px; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
-                        24개월 기준 역산 최저/평균/최고 검색수
-                    </p>
-                    <div style="display:flex; align-items:flex-end; gap:10px; flex:1; padding-top:4px;">
-                        <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;">
-                            <div style="font-size:9px; opacity:0.5;">최저</div>
-                            <div style="width:100%; background:#FF5722; opacity:0.35; height:12.5px; border-radius:2px 2px 0 0;"></div>
-                            <div style="font-size:10px; white-space:nowrap;">10,000회</div>
-                        </div>
-                        <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;">
-                            <div style="font-size:9px; opacity:0.5;">평균</div>
-                            <div style="width:100%; background:#FF5722; opacity:0.65; height:31.25px; border-radius:2px 2px 0 0;"></div>
-                            <div style="font-size:10px; white-space:nowrap;">25,000회</div>
-                        </div>
-                        <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;">
-                            <div style="font-size:9px; opacity:0.5; color:#FF5722;">최고</div>
-                            <div style="width:100%; background:#FF5722; height:50px; border-radius:2px 2px 0 0;"></div>
-                            <div style="font-size:10px; white-space:nowrap; color:#FF5722;">40,000회</div>
+    <!-- Slide 2: Section Divider 01 -->
+    <div class="slide" id="slide-2">
+        <div class="slide-inner" style="background:#1a1a1a; display:flex; align-items:center; justify-content:center; flex-direction:column; text-align:center;">
+            <div style="font-size:13px; letter-spacing:0.2em; text-transform:uppercase; opacity:0.6; margin-bottom:16px; color:#fff;">CHAPTER 01</div>
+            <div style="font-size:64px; font-weight:900; color:#FF5722; line-height:1;">01</div>
+            <div style="font-size:32px; font-weight:400; color:#fff; margin-top:16px; opacity:0.9;">시장 현황</div>
+            <div style="width:60px; height:3px; background:#FF5722; margin-top:24px;"></div>
+        </div>
+    </div>
+
+    <!-- Slide 3: Big Number -->
+    <div class="slide" id="slide-3">
+        <div class="slide-inner">
+            <div class="slide-header">01 시장 현황 | 시장 온도계</div>
+            <div class="slide-body" style="display:flex; flex-direction:column; gap:16px; padding-bottom: 20px;">
+                <div style="display:flex; gap:16px; align-items:stretch; flex:1; min-height:0;">
+                    <!-- Card 1: 시장 성장성 -->
+                    <div style="flex:1; padding:18px 20px; display:flex; flex-direction:column; gap:4px; border:1px solid rgba(255,255,255,0.1); border-radius:6px; overflow:hidden;">
+                        <h2 style="font-size:14px; opacity:0.65; margin:0 0 4px;">시장 성장성</h2>
+                        <div style="font-size:48px; font-weight:900; line-height:1; margin:0 0 6px; color:#FF5722;">성장 단계</div>
+                        <p style="font-size:12px; line-height:1.5; opacity:0.75; margin:0 0 12px; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">글로벌 검색 결과 및 관련 활동 확인을 통해 시장의 활발한 정보 탐색 단계 시사.</p>
+                        <div style="flex:1; min-height:80px;">
+                            <svg style="width:100%;height:80px;" viewBox="0 0 200 60" preserveAspectRatio="none">
+                                <defs><linearGradient id="mg1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#FF572255"/><stop offset="100%" stop-color="#FF572205"/></linearGradient></defs>
+                                <polygon points="0,50 50,48 100,45 150,43 200,40 200,60 0,60" fill="url(#mg1)"/>
+                                <polyline points="0,50 50,48 100,45 150,43 200,40" fill="none" stroke="#FF5722" stroke-width="2"/>
+                            </svg>
                         </div>
                     </div>
-                </div>
 
-                <!-- Metric 3: 전체시장 규모 및 트렌드 -->
-                <div style="flex:1; padding:18px 20px; display:flex; flex-direction:column; gap:4px; border:1px solid rgba(255,255,255,0.1); border-radius:6px; overflow:hidden;">
-                    <h3 style="font-size:14px; opacity:0.65; margin:0 0 4px; font-family: 'Noto Sans KR', sans-serif;">전체시장 규모 및 트렌드</h3>
-                    <div style="font-size:48px; font-weight:900; line-height:1; margin:0 0 6px; color:#FF5722; font-family: 'Archivo Black', sans-serif;">2,599억 원¹</div>
-                    <p style="font-size:12px; line-height:1.5; opacity:0.75; margin:0 0 12px; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
-                        국내 2023년 기준, 글로벌 2025년 $3.5B ~ $6.4B 예상
-                    </p>
-                    <div style="display:flex; flex-direction:column; gap:5px; flex:1; overflow:hidden;">
-                        <a href="http://www.dailypharm.com/Users/News/NewsView.html?ID=303845" target="_blank" style="font-size:11px; line-height:1.4; padding:5px 8px; background:rgba(255,255,255,0.04); border-radius:3px; border-left:2px solid #FF5722; color:inherit; text-decoration:none; display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
-                            "키성장 영양제 개별인정원료 경쟁...시장 재편되나" &mdash; 데일리팜
+                    <!-- Card 2: 소비자 관심도 -->
+                    <div style="flex:1; padding:18px 20px; display:flex; flex-direction:column; gap:4px; border:1px solid rgba(255,255,255,0.1); border-radius:6px; overflow:hidden;">
+                        <h2 style="font-size:14px; opacity:0.65; margin:0 0 4px;">소비자 관심도</h2>
+                        <div style="font-size:48px; font-weight:900; line-height:1; margin:0 0 6px; color:#FF5722;">8,500회</div>
+                        <p style="font-size:12px; line-height:1.5; opacity:0.75; margin:0 0 12px; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">24개월 기준 역산 최저/평균/최고 검색수</p>
+                        <div style="display:flex; align-items:flex-end; gap:10px; flex:1; padding-top:4px;">
+                            <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;">
+                                <div style="font-size:9px; opacity:0.5;">최저</div>
+                                <div style="width:100%; background:#FF5722; opacity:0.35; height:9px; border-radius:2px 2px 0 0;"></div>
+                                <div style="font-size:10px; white-space:nowrap;">1,500회</div>
+                            </div>
+                            <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;">
+                                <div style="font-size:9px; opacity:0.5;">평균</div>
+                                <div style="width:100%; background:#FF5722; opacity:0.65; height:25px; border-radius:2px 2px 0 0;"></div>
+                                <div style="font-size:10px; white-space:nowrap;">4,200회</div>
+                            </div>
+                            <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;">
+                                <div style="font-size:9px; opacity:0.5; color:#FF5722;">최고</div>
+                                <div style="width:100%; background:#FF5722; height:50px; border-radius:2px 2px 0 0;"></div>
+                                <div style="font-size:10px; white-space:nowrap; color:#FF5722;">8,500회</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 3: 전체시장 규모 및 트렌드 -->
+                    <div style="flex:1; padding:18px 20px; display:flex; flex-direction:column; gap:4px; border:1px solid rgba(255,255,255,0.1); border-radius:6px; overflow:hidden;">
+                        <h2 style="font-size:14px; opacity:0.65; margin:0 0 4px;">전체시장 규모 및 트렌드</h2>
+                        <div style="font-size:40px; font-weight:900; line-height:1; margin:0 0 6px; color:#FF5722;">수십억 달러 추정</div>
+                        <p style="font-size:12px; line-height:1.5; opacity:0.75; margin:0 0 12px; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">중국 내 관련 정보 검색 및 신규 제품 출시 활동 활발</p>
+                        <div style="display:flex; flex-direction:column; gap:5px; flex:1; overflow:hidden;">
+                            <a href="https://www.nutraingredients.com/Article/2026/02/23/the-a2-milk-company-to-launch-pediatric-supplements-in-china-in-q3/" target="_blank" style="font-size:11px; line-height:1.4; padding:5px 8px; background:rgba(255,255,255,0.04); border-radius:3px; border-left:2px solid #FF5722; color:inherit; text-decoration:none; display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+                                "The a2 Milk Company to launch pediatric supplements in China" — nutraingredients.com
+                            </a>
+                            <a href="https://www.chictr.org.cn/showprojEN.html?proj=197034" target="_blank" style="font-size:11px; line-height:1.4; padding:5px 8px; background:rgba(255,255,255,0.04); border-radius:3px; border-left:2px solid #FF5722; color:inherit; text-decoration:none; display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+                                "Chinese Clinical Trial Register (ChiCTR) - iKids-Growth™" — chictr.org.cn
+                            </a>
+                            <a href="https://en.chinacdc.cn/health_topics/nutrition_health/202306/t20230602_266502.html" target="_blank" style="font-size:11px; line-height:1.4; padding:5px 8px; background:rgba(255,255,255,0.04); border-radius:3px; border-left:2px solid #FF5722; color:inherit; text-decoration:none; display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+                                "How to help children with delayed growth?" — en.chinacdc.cn
+                            </a>
+                            <a href="http://www.dailypharm.com/Users/News/NewsView.html?ID=303845&REFERER=NP" target="_blank" style="font-size:11px; line-height:1.4; padding:5px 8px; background:rgba(255,255,255,0.04); border-radius:3px; border-left:2px solid #FF5722; color:inherit; text-decoration:none; display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+                                "키성장 영양제 개별인정원료 경쟁...시장 재편되나" — dailypharm.com
+                            </a>
+                            <a href="https://www.hankyung.com/economy/article/2021092815571" target="_blank" style="font-size:11px; line-height:1.4; padding:5px 8px; background:rgba(255,255,255,0.04); border-radius:3px; border-left:2px solid #FF5722; color:inherit; text-decoration:none; display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+                                "베트남서 일동후디스 '키성장 간식' 신드롬" — hankyung.com
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="insight-box">
+                    <h3 class="insight-box-title">핵심 인사이트</h3>
+                    <p class="insight-box-content">중국 어린이 키성장 시장은 직접적인 국내 데이터는 부족하나, 글로벌 정보 탐색 및 신규 제품 출시 동향을 통해 잠재적 성장 가능성이 높은 것으로 추정됩니다.</p>
+                </div>
+            </div>
+            <div class="slide-footer">출처: NPD 보고서</div>
+        </div>
+    </div>
+
+    <!-- Slide 4: Line Chart -->
+    <div class="slide" id="slide-4">
+        <div class="slide-inner">
+            <div class="slide-header">01 시장 현황 | 24개월 검색 트렌드</div>
+            <div class="slide-body" style="display:flex; flex-direction:column;">
+                <div style="flex:1; min-height:0; position:relative;">
+                    <canvas id="trendChart"></canvas>
+                </div>
+                <div style="display:flex; gap:12px; flex-shrink:0; margin-top:12px;">
+                    <div class="insight-box" style="flex:1; margin-top:0;">
+                        <h3 class="insight-box-title">데이터 부재의 한계</h3>
+                        <p class="insight-box-content">'중국 어린이 키성장 시장' 관련 국내 24개월 검색 트렌드 데이터는 확인되지 않습니다. 이는 시장 초기 단계이거나, 국내 소비자의 직접적인 관심이 아직 낮음을 시사할 수 있습니다.</p>
+                    </div>
+                    <div class="insight-box" style="flex:1; margin-top:0;">
+                        <h3 class="insight-box-title">글로벌 관심 증대</h3>
+                        <p class="insight-box-content">그럼에도 불구하고 글로벌 검색 결과 및 신규 제품 출시 계획 등은 중국 시장 내 활발한 정보 탐색과 잠재적 성장을 예고합니다. 국내 데이터 부재와 글로벌 동향 간의 괴리를 주시해야 합니다.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">출처: NPD 보고서 (데이터 부재로 인한 추정치 사용)</div>
+        </div>
+    </div>
+
+    <!-- Slide 5: Section Divider 02 -->
+    <div class="slide" id="slide-5">
+        <div class="slide-inner" style="background:#1a1a1a; display:flex; align-items:center; justify-content:center; flex-direction:column; text-align:center;">
+            <div style="font-size:13px; letter-spacing:0.2em; text-transform:uppercase; opacity:0.6; margin-bottom:16px; color:#fff;">CHAPTER 02</div>
+            <div style="font-size:64px; font-weight:900; color:#FF5722; line-height:1;">02</div>
+            <div style="font-size:32px; font-weight:400; color:#fff; margin-top:16px; opacity:0.9;">경쟁사 분석</div>
+            <div style="width:60px; height:3px; background:#FF5722; margin-top:24px;"></div>
+        </div>
+    </div>
+
+    <!-- Slide 6: Card Grid -->
+    <div class="slide" id="slide-6">
+        <div class="slide-inner">
+            <div class="slide-header">02 경쟁사 분석 | 주요 경쟁사 TOP 10</div>
+            <div class="slide-body" style="display:flex; flex-direction:column; gap:16px; padding-bottom:20px;">
+                <div style="display:grid; grid-template-columns:repeat(5,1fr); gap:10px; flex:1; min-height:0;">
+                    <!-- Card 1 -->
+                    <div style="padding:10px 12px; overflow:hidden; border:1px solid rgba(255,255,255,0.12); border-radius:6px; position:relative; display:flex; flex-direction:column;">
+                        <span style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">1위</span>
+                        <a href="https://search.shopping.naver.com/search/all?query=Hanmi+Natural+Nutrition" target="_blank" style="font-size:13px; font-weight:700; color:#FF5722; margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+                            Hanmi Natural Nutrition
                         </a>
-                        <a href="https://www.mk.co.kr/news/it/11200930" target="_blank" style="font-size:11px; line-height:1.4; padding:5px 8px; background:rgba(255,255,255,0.04); border-radius:3px; border-left:2px solid #FF5722; color:inherit; text-decoration:none; display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
-                            "“키가 곧 스펙인데 천만원 쯤은”…쑥쑥 크는 성장호르몬 시장 ..." &mdash; 매일경제
+                        <span style="font-size:12px; margin-bottom:3px; min-height:16px;">$101.31 (4박스) / 8개월 분량</span>
+                        <span style="font-size:11px; opacity:0.55; margin-bottom:5px; min-height:14px;">환제 (Pills)</span>
+                        <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
+                        <span style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; flex:1;">성장기 어린이 영양 보충 (칼슘 포함). 글로벌 Gmarket 통해 수출.</span>
+                    </div>
+                    <!-- Card 2 -->
+                    <div style="padding:10px 12px; overflow:hidden; border:1px solid rgba(255,255,255,0.12); border-radius:6px; position:relative; display:flex; flex-direction:column;">
+                        <span style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">2위</span>
+                        <a href="https://search.shopping.naver.com/search/all?query=Iker+성장" target="_blank" style="font-size:13px; font-weight:700; color:#FF5722; margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+                            Iker
                         </a>
-                        <a href="https://foodtoday.or.kr/mobile/article.html?no=197104" target="_blank" style="font-size:11px; line-height:1.4; padding:5px 8px; background:rgba(255,255,255,0.04); border-radius:3px; border-left:2px solid #FF5722; color:inherit; text-decoration:none; display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
-                            "'골드키즈' 키 성장 시장 급부상…FGO 건기식 대기업 경쟁 격화" &mdash; 푸드투데이
+                        <span style="font-size:12px; margin-bottom:3px; min-height:16px;">가격 데이터 없음</span>
+                        <span style="font-size:11px; opacity:0.55; margin-bottom:5px; min-height:14px;">기능성 제품</span>
+                        <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
+                        <span style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; flex:1;">MFDS 인증, 12주 임상 실험 결과 확인. 자체 웹사이트 판매.</span>
+                    </div>
+                    <!-- Card 3 -->
+                    <div style="padding:10px 12px; overflow:hidden; border:1px solid rgba(255,255,255,0.12); border-radius:6px; position:relative; display:flex; flex-direction:column;">
+                        <span style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">3위</span>
+                        <a href="https://search.shopping.naver.com/search/all?query=Gongjin+Kids" target="_blank" style="font-size:13px; font-weight:700; color:#FF5722; margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+                            Gongjin Kids
                         </a>
-                        <a href="https://daily.hankooki.com/news/articleView.html?idxno=1252036" target="_blank" style="font-size:11px; line-height:1.4; padding:5px 8px; background:rgba(255,255,255,0.04); border-radius:3px; border-left:2px solid #FF5722; color:inherit; text-decoration:none; display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
-                            "쑥쑥 크는 '자녀 키 성장' 시장…호르몬제 이어 건기식 출시 열풍" &mdash; 한국일보
+                        <span style="font-size:12px; margin-bottom:3px; min-height:16px;">가격 데이터 없음</span>
+                        <span style="font-size:11px; opacity:0.55; margin-bottom:5px; min-height:14px;">녹용, 홍삼 함유</span>
+                        <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
+                        <span style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; flex:1;">녹용분골, 6년근 발효홍삼 함유. 성장기 어린이 영양 공급.</span>
+                    </div>
+                    <!-- Card 4 -->
+                    <div style="padding:10px 12px; overflow:hidden; border:1px solid rgba(255,255,255,0.12); border-radius:6px; position:relative; display:flex; flex-direction:column;">
+                        <span style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">4위</span>
+                        <a href="https://search.shopping.naver.com/search/all?query=The+a2+Milk+Company+pediatric+supplements" target="_blank" style="font-size:13px; font-weight:700; color:#FF5722; margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+                            The a2 Milk Company
                         </a>
-                        <a href="http://bokuennews.com/news/article.html?no=206838" target="_blank" style="font-size:11px; line-height:1.4; padding:5px 8px; background:rgba(255,255,255,0.04); border-radius:3px; border-left:2px solid #FF5722; color:inherit; text-decoration:none; display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
-                            "어린이 키성장 건강기능식품 관심 커져" &mdash; 보건뉴스
+                        <span style="font-size:12px; margin-bottom:3px; min-height:16px;">가격 데이터 없음 (출시 예정)</span>
+                        <span style="font-size:11px; opacity:0.55; margin-bottom:5px; min-height:14px;">소아 영양제</span>
+                        <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
+                        <span style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; flex:1;">중국 시장 소아 영양 사업 강화, 2026년 3분기 4가지 품목 출시 예정.</span>
+                    </div>
+                    <!-- Card 5 -->
+                    <div style="padding:10px 12px; overflow:hidden; border:1px solid rgba(255,255,255,0.12); border-radius:6px; position:relative; display:flex; flex-direction:column;">
+                        <span style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">5위</span>
+                        <a href="https://search.shopping.naver.com/search/all?query=HIYA+Kids+Multivitamin+Tablets" target="_blank" style="font-size:13px; font-weight:700; color:#FF5722; margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+                            HIYA
                         </a>
+                        <span style="font-size:12px; margin-bottom:3px; min-height:16px;">Amazon 판매가 기준 (일반 비타민 가격대)</span>
+                        <span style="font-size:11px; opacity:0.55; margin-bottom:5px; min-height:14px;">종합 비타민</span>
+                        <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
+                        <span style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; flex:1;">15가지 이상 필수 비타민 및 미네랄 함유. 성장 발달 지원.</span>
+                    </div>
+                    <!-- Card 6 -->
+                    <div style="padding:10px 12px; overflow:hidden; border:1px solid rgba(255,255,255,0.12); border-radius:6px; position:relative; display:flex; flex-direction:column;">
+                        <span style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">6위</span>
+                        <a href="https://search.shopping.naver.com/search/all?query=iKids-Growth+dietary+supplement" target="_blank" style="font-size:13px; font-weight:700; color:#FF5722; margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+                            iKids-Growth™
+                        </a>
+                        <span style="font-size:12px; margin-bottom:3px; min-height:16px;">가격 데이터 없음</span>
+                        <span style="font-size:11px; opacity:0.55; margin-bottom:5px; min-height:14px;">건강 보조제</span>
+                        <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
+                        <span style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; flex:1;">SRS 환자의 키 성장 개선 효능 및 안전성 임상 시험 중 (중국).</span>
+                    </div>
+                    <!-- Card 7 -->
+                    <div style="padding:10px 12px; overflow:hidden; border:1px solid rgba(255,255,255,0.12); border-radius:6px; position:relative; display:flex; flex-direction:column;">
+                        <span style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">7위</span>
+                        <a href="https://search.shopping.naver.com/search/all?query=Korean+Candy+That+Makes+You+Tall" target="_blank" style="font-size:13px; font-weight:700; color:#FF5722; margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+                            Korean Candy (TikTok)
+                        </a>
+                        <span style="font-size:12px; margin-bottom:3px; min-height:16px;">가격 데이터 없음</span>
+                        <span style="font-size:11px; opacity:0.55; margin-bottom:5px; min-height:14px;">젤리 형태 (추정)</span>
+                        <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
+                        <span style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; flex:1;">비타민 D, 칼슘 등 필수 영양소 함유. 건강한 뼈 성장 지원.</span>
+                    </div>
+                     <!-- Placeholder Card 8 -->
+                    <div style="padding:10px 12px; overflow:hidden; border:1px solid rgba(255,255,255,0.05); border-radius:6px; position:relative; display:flex; flex-direction:column; background:rgba(255,255,255,0.02);">
+                        <span style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.2; font-weight:700;">8위</span>
+                        <span style="font-size:13px; font-weight:700; color:rgba(255,255,255,0.3); margin-bottom:5px; padding-right:24px; display:block;">데이터 미확인</span>
+                        <span style="font-size:12px; margin-bottom:3px; min-height:16px; opacity:0.3;">-</span>
+                        <span style="font-size:11px; opacity:0.2; margin-bottom:5px; min-height:14px;">-</span>
+                        <div style="height:1px; background:rgba(255,255,255,0.05); margin-bottom:5px;"></div>
+                        <span style="font-size:11px; line-height:1.4; color:rgba(255,255,255,0.3); opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; flex:1;">추가 경쟁사 정보는 보고서에서 확인되지 않습니다.</span>
+                    </div>
+                    <!-- Placeholder Card 9 -->
+                    <div style="padding:10px 12px; overflow:hidden; border:1px solid rgba(255,255,255,0.05); border-radius:6px; position:relative; display:flex; flex-direction:column; background:rgba(255,255,255,0.02);">
+                        <span style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.2; font-weight:700;">9위</span>
+                        <span style="font-size:13px; font-weight:700; color:rgba(255,255,255,0.3); margin-bottom:5px; padding-right:24px; display:block;">데이터 미확인</span>
+                        <span style="font-size:12px; margin-bottom:3px; min-height:16px; opacity:0.3;">-</span>
+                        <span style="font-size:11px; opacity:0.2; margin-bottom:5px; min-height:14px;">-</span>
+                        <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
+                        <span style="font-size:11px; line-height:1.4; color:rgba(255,255,255,0.3); opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; flex:1;">추가 경쟁사 정보는 보고서에서 확인되지 않습니다.</span>
+                    </div>
+                    <!-- Placeholder Card 10 -->
+                    <div style="padding:10px 12px; overflow:hidden; border:1px solid rgba(255,255,255,0.05); border-radius:6px; position:relative; display:flex; flex-direction:column; background:rgba(255,255,255,0.02);">
+                        <span style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.2; font-weight:700;">10위</span>
+                        <span style="font-size:13px; font-weight:700; color:rgba(255,255,255,0.3); margin-bottom:5px; padding-right:24px; display:block;">데이터 미확인</span>
+                        <span style="font-size:12px; margin-bottom:3px; min-height:16px; opacity:0.3;">-</span>
+                        <span style="font-size:11px; opacity:0.2; margin-bottom:5px; min-height:14px;">-</span>
+                        <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
+                        <span style="font-size:11px; line-height:1.4; color:rgba(255,255,255,0.3); opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; flex:1;">추가 경쟁사 정보는 보고서에서 확인되지 않습니다.</span>
                     </div>
                 </div>
+                <div class="insight-box">
+                    <h3 class="insight-box-title">핵심 인사이트</h3>
+                    <p class="insight-box-content">다수의 글로벌 및 현지 브랜드가 중국 어린이 키성장 시장에 진입했거나 준비 중이며, 제품 형태, 원료, 마케팅 방식에서 다양성을 보입니다. 한국 기업은 차별화된 가치 제안이 필수적입니다.</p>
+                </div>
             </div>
-            <div class="insight-box">
-                <h3>핵심 인사이트</h3>
-                <p>중국 키성장 시장은 거대한 잠재력을 지닌 성장 시장으로, '골드키즈' 트렌드와 맞물려 높은 소비자 관심이 예상됩니다.</p>
-            </div>
-        </div>
-        <div class="slide-footer">
-            출처: 한국건강기능식품협회, Grand View Research 등
+            <div class="slide-footer">출처: NPD 보고서</div>
         </div>
     </div>
-</div>
 
-<!-- Slide 4: Line Chart -->
-<div class="slide" id="slide-3">
-    <div class="slide-inner">
-        <div class="slide-header">
-            <h2>01 시장 현황 | 24개월 검색 트렌드 분석 (키성장)</h2>
-        </div>
-        <div class="slide-body" style="display:flex; flex-direction:column;">
-            <div style="flex:1; min-height:0; position:relative;">
-                <canvas id="trendChart"></canvas>
-            </div>
-            <div style="display:flex; gap:12px; flex-shrink:0; margin-top:12px;">
-                <div class="insight-box" style="margin-top:0; flex:1;">
-                    <h3>지속적인 관심 증가</h3>
-                    <p>키성장 관련 키워드 검색량은 꾸준히 증가하며 시장의 지속적인 관심과 잠재적 수요 확대를 시사합니다.</p>
+    <!-- Slide 7: Bubble Chart -->
+    <div class="slide" id="slide-7">
+        <div class="slide-inner">
+            <div class="slide-header">02 경쟁사 분석 | 경쟁사 포지셔닝</div>
+            <div class="slide-body" style="display:flex; flex-direction:column;">
+                <div style="display:flex; align-items:center; gap:20px; flex:1; min-height:0;">
+                    <!-- Chart Area -->
+                    <div style="position:relative; width:600px; height:480px; flex-shrink:0; align-self:center;
+                                border-left:2px solid rgba(255,255,255,0.4); border-bottom:2px solid rgba(255,255,255,0.4);
+                                overflow:visible; margin-left: 20px;">
+                        <!-- Grid Lines -->
+                        <div style="position:absolute; left:50%; top:0; height:100%; border-left:1px dashed rgba(255,255,255,0.2); pointer-events:none;"></div>
+                        <div style="position:absolute; top:50%; left:0; width:100%; border-top:1px dashed rgba(255,255,255,0.2); pointer-events:none;"></div>
+                        <!-- Y-axis Ticks -->
+                        <div style="position:absolute; right:100%; margin-right:6px; font-size:10px; opacity:0.5; bottom:0%; transform:translateY(50%);">0</div>
+                        <div style="position:absolute; right:100%; margin-right:6px; font-size:10px; opacity:0.5; bottom:25%; transform:translateY(50%);">25</div>
+                        <div style="position:absolute; right:100%; margin-right:6px; font-size:10px; opacity:0.5; bottom:50%; transform:translateY(50%);">50</div>
+                        <div style="position:absolute; right:100%; margin-right:6px; font-size:10px; opacity:0.5; bottom:75%; transform:translateY(50%);">75</div>
+                        <div style="position:absolute; right:100%; margin-right:6px; font-size:10px; opacity:0.5; bottom:100%; transform:translateY(50%);">100</div>
+                        <!-- X-axis Ticks -->
+                        <div style="position:absolute; top:100%; margin-top:6px; font-size:10px; opacity:0.5; left:0%; transform:translateX(-50%);">0</div>
+                        <div style="position:absolute; top:100%; margin-top:6px; font-size:10px; opacity:0.5; left:25%; transform:translateX(-50%);">35</div>
+                        <div style="position:absolute; top:100%; margin-top:6px; font-size:10px; opacity:0.5; left:50%; transform:translateX(-50%);">70</div>
+                        <div style="position:absolute; top:100%; margin-top:6px; font-size:10px; opacity:0.5; left:75%; transform:translateX(-50%);">105</div>
+                        <div style="position:absolute; top:100%; margin-top:6px; font-size:10px; opacity:0.5; left:100%; transform:translateX(-50%);">140</div>
+                        <!-- Y-axis Label -->
+                        <div style="position:absolute; right:100%; margin-right:40px; top:50%; writing-mode:vertical-rl; transform:translateY(-50%); font-size:11px; white-space:nowrap; opacity:0.7;">브랜드 인지도</div>
+                        <!-- X-axis Label -->
+                        <div style="position:absolute; top:100%; margin-top:28px; left:50%; transform:translateX(-50%); font-size:11px; opacity:0.7;">월 환산 가격 (CNY, 추정)</div>
+
+                        <!-- Bubbles (x: price, y: awareness, size: market share/potential) -->
+                        <!-- Hanmi Natural Nutrition: Price ~90 CNY (65%), Awareness 60 (60%), Size 50px -->
+                        <div style="position:absolute; left:65%; bottom:60%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+                            <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">Hanmi</div>
+                            <div style="width:50px; height:50px; border-radius:50%; background:#4361ee; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">1</div>
+                        </div>
+                        <!-- Iker: Price ~80 CNY (57%), Awareness 30 (30%), Size 35px -->
+                        <div style="position:absolute; left:57%; bottom:30%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+                            <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">Iker</div>
+                            <div style="width:35px; height:35px; border-radius:50%; background:#f72585; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">2</div>
+                        </div>
+                        <!-- Gongjin Kids: Price ~120 CNY (85%), Awareness 50 (50%), Size 40px -->
+                        <div style="position:absolute; left:85%; bottom:50%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+                            <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">Gongjin Kids</div>
+                            <div style="width:40px; height:40px; border-radius:50%; background:#4cc9f0; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">3</div>
+                        </div>
+                        <!-- The a2 Milk Company: Price ~110 CNY (78%), Awareness 80 (80%), Size 65px -->
+                        <div style="position:absolute; left:78%; bottom:80%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+                            <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">a2 Milk Co.</div>
+                            <div style="width:65px; height:65px; border-radius:50%; background:#f8961e; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">4</div>
+                        </div>
+                        <!-- HIYA: Price ~70 CNY (50%), Awareness 55 (55%), Size 45px -->
+                        <div style="position:absolute; left:50%; bottom:55%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+                            <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">HIYA</div>
+                            <div style="width:45px; height:45px; border-radius:50%; background:#43aa8b; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">5</div>
+                        </div>
+                        <!-- iKids-Growth™: Price ~50 CNY (35%), Awareness 15 (15%), Size 32px -->
+                        <div style="position:absolute; left:35%; bottom:15%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+                            <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">iKids-Growth™</div>
+                            <div style="width:32px; height:32px; border-radius:50%; background:#90be6d; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">6</div>
+                        </div>
+                        <!-- Korean Candy That Makes You Tall: Price ~60 CNY (43%), Awareness 90 (90%), Size 70px -->
+                        <div style="position:absolute; left:43%; bottom:90%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+                            <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">Korean Candy</div>
+                            <div style="width:70px; height:70px; border-radius:50%; background:#277da1; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">7</div>
+                        </div>
+                    </div>
+
+                    <!-- Right Panel -->
+                    <div style="flex:1; display:flex; flex-direction:column; justify-content:center; gap:16px; overflow:hidden; padding-right: 20px;">
+                        <div style="display:flex; flex-wrap:wrap; gap:4px 12px; flex-shrink:0;">
+                            <span style="font-size:12px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#4361ee; margin-right:5px;"></span>Hanmi Natural Nutrition</span>
+                            <span style="font-size:12px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#f72585; margin-right:5px;"></span>Iker</span>
+                            <span style="font-size:12px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#4cc9f0; margin-right:5px;"></span>Gongjin Kids</span>
+                            <span style="font-size:12px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#f8961e; margin-right:5px;"></span>The a2 Milk Company</span>
+                            <span style="font-size:12px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#43aa8b; margin-right:5px;"></span>HIYA</span>
+                            <span style="font-size:12px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#90be6d; margin-right:5px;"></span>iKids-Growth™</span>
+                            <span style="font-size:12px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#277da1; margin-right:5px;"></span>Korean Candy (TikTok)</span>
+                        </div>
+                        <div class="insight-box" style="margin-top:0;">
+                            <h3 class="insight-box-title">핵심 인사이트: 가격 &amp; 인지도 격차</h3>
+                            <p class="insight-box-content">경쟁사들의 가격 정보는 제한적이나, Hanmi는 비교적 높은 가격대에 위치하며, 'Korean Candy'는 바이럴 마케팅으로 높은 인지도를 확보 중입니다. 신규 진입자는 가격 경쟁력을 고려하거나 프리미엄 전략을 통한 차별화가 필요합니다.</p>
+                        </div>
+                        <div class="insight-box" style="margin-top:0;">
+                            <h3 class="insight-box-title">전략적 포지셔닝 기회</h3>
+                            <p class="insight-box-content">a2 Milk Company는 높은 잠재력으로 시장에 진입할 예정이며, iKids-Growth™는 연구 개발 단계에 있습니다. 한국 기업은 과학적 근거를 바탕으로 한 프리미엄 제품으로 시장 상단 또는 중상단에 포지셔닝하는 기회를 모색할 수 있습니다.</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="insight-box" style="margin-top:0; flex:1;">
-                    <h3>부모의 높은 투자 의지</h3>
-                    <p>부모들의 자녀 건강과 성장에 대한 투자 의지가 강해지면서 관련 정보 탐색이 활발하게 이루어지고 있습니다.</p>
-                </div>
             </div>
-        </div>
-        <div class="slide-footer">
-            출처: Google Trends (추정 데이터 기반), NPD 보고서
+            <div class="slide-footer">출처: NPD 보고서 (가격 및 인지도는 보고서 정보에 기반한 추정치)</div>
         </div>
     </div>
-</div>
 
-<!-- Slide 5: Section Divider -->
-<div class="slide" id="slide-4">
-    <div class="slide-inner" style="background:#1a1a1a; display:flex; align-items:center; justify-content:center; flex-direction:column; text-align:center;">
-        <div style="font-size:13px; letter-spacing:0.2em; text-transform:uppercase; opacity:0.6; margin-bottom:16px; color:#fff;">CHAPTER 02</div>
-        <div style="font-size:64px; font-weight:900; color:#fff; line-height:1;">02</div>
-        <div style="font-size:32px; font-weight:400; color:#fff; margin-top:16px; opacity:0.9;">경쟁사 분석</div>
-        <div style="width:60px; height:3px; background:#FF5722; margin-top:24px;"></div>
-    </div>
-</div>
-
-<!-- Slide 6: Card Grid -->
-<div class="slide" id="slide-5">
-    <div class="slide-inner">
-        <div class="slide-header">
-            <h2>02 경쟁사 분석 | 국내 키성장 건강기능식품 TOP 10</h2>
-        </div>
-        <div class="slide-body" style="display:flex; flex-direction:column;">
-            <div style="display:grid; grid-template-columns:repeat(5,1fr); gap:10px; flex:1; min-height:0;">
-                <!-- Card 1 -->
-                <div style="padding:10px 12px; overflow:hidden; border:1px solid rgba(255,255,255,0.12); border-radius:6px; position:relative; display:flex; flex-direction:column;">
-                    <div style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">1위</div>
-                    <a href="https://search.shopping.naver.com/search/all?query=키성장+종근당건강+아이커" target="_blank" style="font-size:13px; font-weight:700; color:#FF5722; margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
-                        종근당건강 아이커
-                    </a>
-                    <div style="font-size:12px; margin-bottom:3px; min-height:16px;">월 85,000원 (추정)</div>
-                    <div style="font-size:11px; opacity:0.55; margin-bottom:5px; min-height:14px;">제형: 분말형</div>
-                    <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
-                    <div style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; flex:1;">
-                        HT042 핵심 성분으로 시장을 독주하는 대표 제품.
-                    </div>
-                </div>
-                <!-- Card 2 -->
-                <div style="padding:10px 12px; overflow:hidden; border:1px solid rgba(255,255,255,0.12); border-radius:6px; position:relative; display:flex; flex-direction:column;">
-                    <div style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">2위</div>
-                    <a href="https://search.shopping.naver.com/search/all?query=키성장+아이클타임+알파프로" target="_blank" style="font-size:13px; font-weight:700; color:#FF5722; margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
-                        아이클타임 알파·프로
-                    </a>
-                    <div style="font-size:12px; margin-bottom:3px; min-height:16px;">월 92,000원 (추정)</div>
-                    <div style="font-size:11px; opacity:0.55; margin-bottom:5px; min-height:14px;">제형: 액상 스틱</div>
-                    <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
-                    <div style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; flex:1;">
-                        한삼덩굴추출물 HSy2 함유, 인체적용시험 기반의 제품.
-                    </div>
-                </div>
-                <!-- Card 3 -->
-                <div style="padding:10px 12px; overflow:hidden; border:1px solid rgba(255,255,255,0.12); border-radius:6px; position:relative; display:flex; flex-direction:column;">
-                    <div style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">3위</div>
-                    <a href="https://search.shopping.naver.com/search/all?query=키성장+뉴메드엘앤비+키클래오" target="_blank" style="font-size:13px; font-weight:700; color:#FF5722; margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
-                        뉴메드엘앤비 키클래오
-                    </a>
-                    <div style="font-size:12px; margin-bottom:3px; min-height:16px;">월 78,000원 (추정)</div>
-                    <div style="font-size:11px; opacity:0.55; margin-bottom:5px; min-height:14px;">제형: 젤리 스틱</div>
-                    <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
-                    <div style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; flex:1;">
-                        HT042 기반, 2025 아시아 TOP 브랜드 수상.
-                    </div>
-                </div>
-                <!-- Card 4 -->
-                <div style="padding:10px 12px; overflow:hidden; border:1px solid rgba(255,255,255,0.12); border-radius:6px; position:relative; display:flex; flex-direction:column;">
-                    <div style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">4위</div>
-                    <a href="https://search.shopping.naver.com/search/all?query=키성장+동아제약+미니막스랩" target="_blank" style="font-size:13px; font-weight:700; color:#FF5722; margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
-                        동아제약 미니막스 랩
-                    </a>
-                    <div style="font-size:12px; margin-bottom:3px; min-height:16px;">월 65,000원 (추정)</div>
-                    <div style="font-size:11px; opacity:0.55; margin-bottom:5px; min-height:14px;">제형: 파우더</div>
-                    <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
-                    <div style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; flex:1;">
-                        유산균발효굴추출물 기반, 균형 잡힌 성장 지원.
-                    </div>
-                </div>
-                <!-- Card 5 -->
-                <div style="padding:10px 12px; overflow:hidden; border:1px solid rgba(255,255,255,0.12); border-radius:6px; position:relative; display:flex; flex-direction:column;">
-                    <div style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">5위</div>
-                    <a href="https://search.shopping.naver.com/search/all?query=키성장+천호엔케어+키쑤욱" target="_blank" style="font-size:13px; font-weight:700; color:#FF5722; margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
-                        천호엔케어 키쑤욱
-                    </a>
-                    <div style="font-size:12px; margin-bottom:3px; min-height:16px;">월 58,000원 (추정)</div>
-                    <div style="font-size:11px; opacity:0.55; margin-bottom:5px; min-height:14px;">제형: 워터젤리</div>
-                    <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
-                    <div style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; flex:1;">
-                        아이들이 좋아하는 맛과 간편한 워터젤리 제형.
-                    </div>
-                </div>
-                <!-- Card 6 -->
-                <div style="padding:10px 12px; overflow:hidden; border:1px solid rgba(255,255,255,0.12); border-radius:6px; position:relative; display:flex; flex-direction:column;">
-                    <div style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">6위</div>
-                    <a href="https://search.shopping.naver.com/search/all?query=키성장+대한뉴팜+디뉴키업" target="_blank" style="font-size:13px; font-weight:700; color:#FF5722; margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
-                        대한뉴팜 디뉴 키업(UP)
-                    </a>
-                    <div style="font-size:12px; margin-bottom:3px; min-height:16px;">월 70,000원 (추정)</div>
-                    <div style="font-size:11px; opacity:0.55; margin-bottom:5px; min-height:14px;">제형: 츄어블 정제</div>
-                    <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
-                    <div style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; flex:1;">
-                        한삼덩굴(HSy2) 적용, 포켓몬 에디션으로 재미 요소 추가.
-                    </div>
-                </div>
-                <!-- Card 7 -->
-                <div style="padding:10px 12px; overflow:hidden; border:1px solid rgba(255,255,255,0.12); border-radius:6px; position:relative; display:flex; flex-direction:column;">
-                    <div style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">7위</div>
-                    <a href="https://search.shopping.naver.com/search/all?query=키성장+함소아+키즈텐042" target="_blank" style="font-size:13px; font-weight:700; color:#FF5722; margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
-                        함소아 키즈텐042
-                    </a>
-                    <div style="font-size:12px; margin-bottom:3px; min-height:16px;">월 62,000원 (추정)</div>
-                    <div style="font-size:11px; opacity:0.55; margin-bottom:5px; min-height:14px;">제형: 젤리</div>
-                    <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
-                    <div style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; flex:1;">
-                        HT042 함유, 한방 특화 브랜드의 안전성 강조.
-                    </div>
-                </div>
-                <!-- Card 8 -->
-                <div style="padding:10px 12px; overflow:hidden; border:1px solid rgba(255,255,255,0.12); border-radius:6px; position:relative; display:flex; flex-direction:column;">
-                    <div style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">8위</div>
-                    <a href="https://search.shopping.naver.com/search/all?query=키성장+일동후디스+키성장간식" target="_blank" style="font-size:13px; font-weight:700; color:#FF5722; margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
-                        일동후디스 키성장 간식
-                    </a>
-                    <div style="font-size:12px; margin-bottom:3px; min-height:16px;">월 45,000원 (추정)</div>
-                    <div style="font-size:11px; opacity:0.55; margin-bottom:5px; min-height:14px;">제형: 스낵/간식</div>
-                    <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
-                    <div style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; flex:1;">
-                        베트남 시장 성공 사례, 간식처럼 즐기는 성장 보조.
-                    </div>
-                </div>
-                <!-- Card 9 -->
-                <div style="padding:10px 12px; overflow:hidden; border:1px solid rgba(255,255,255,0.12); border-radius:6px; position:relative; display:flex; flex-direction:column;">
-                    <div style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">9위</div>
-                    <a href="https://search.shopping.naver.com/search/all?query=키성장+마이핏+키해피" target="_blank" style="font-size:13px; font-weight:700; color:#FF5722; margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
-                        마이핏 키해피
-                    </a>
-                    <div style="font-size:12px; margin-bottom:3px; min-height:16px;">월 55,000원 (추정)</div>
-                    <div style="font-size:11px; opacity:0.55; margin-bottom:5px; min-height:14px;">제형: 젤리</div>
-                    <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
-                    <div style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; flex:1;">
-                        맛과 편의성 강조, 아이들이 좋아하는 젤리 제형.
-                    </div>
-                </div>
-                <!-- Card 10 -->
-                <div style="padding:10px 12px; overflow:hidden; border:1px solid rgba(255,255,255,0.12); border-radius:6px; position:relative; display:flex; flex-direction:column;">
-                    <div style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">10위</div>
-                    <a href="https://search.shopping.naver.com/search/all?query=키성장+닥터키즈+쑥쑥키즈플러스" target="_blank" style="font-size:13px; font-weight:700; color:#FF5722; margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
-                        닥터키즈 쑥쑥키즈플러스
-                    </a>
-                    <div style="font-size:12px; margin-bottom:3px; min-height:16px;">월 68,000원 (추정)</div>
-                    <div style="font-size:11px; opacity:0.55; margin-bottom:5px; min-height:14px;">제형: 액상 드링크</div>
-                    <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
-                    <div style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; flex:1;">
-                        성장기 필수 영양소 복합 공급, 간편한 드링크 타입.
-                    </div>
-                </div>
-            </div>
-            <div class="insight-box">
-                <h3>핵심 인사이트</h3>
-                <p>국내 키성장 시장은 HT042, HSy2 등 개별 인정 원료 기반의 기능성과 아이들의 섭취 편의성을 강조한 제품들이 경쟁하고 있습니다.</p>
-            </div>
-        </div>
-        <div class="slide-footer">
-            출처: NPD 보고서, 각 사 공식 웹사이트, 네이버 쇼핑 (가격/인지도/점유율 추정치 기반)
+    <!-- Slide 8: Section Divider 03 -->
+    <div class="slide" id="slide-8">
+        <div class="slide-inner" style="background:#1a1a1a; display:flex; align-items:center; justify-content:center; flex-direction:column; text-align:center;">
+            <div style="font-size:13px; letter-spacing:0.2em; text-transform:uppercase; opacity:0.6; margin-bottom:16px; color:#fff;">CHAPTER 03</div>
+            <div style="font-size:64px; font-weight:900; color:#FF5722; line-height:1;">03</div>
+            <div style="font-size:32px; font-weight:400; color:#fff; margin-top:16px; opacity:0.9;">기회 &amp; 전략</div>
+            <div style="width:60px; height:3px; background:#FF5722; margin-top:24px;"></div>
         </div>
     </div>
-</div>
 
-<!-- Slide 7: Bubble Chart -->
-<div class="slide" id="slide-6">
-    <div class="slide-inner">
-        <div class="slide-header">
-            <h2>02 경쟁사 분석 | 국내 키성장 건강기능식품 포지셔닝 (TOP 10)</h2>
-        </div>
-        <div class="slide-body" style="display:flex; flex-direction:column;">
-            <div style="display:flex; align-items:center; gap:20px; flex:1; min-height:0;">
-                <div style="position:relative; width:600px; height:480px; flex-shrink:0; align-self:center;
-                            border-left:2px solid rgba(255,255,255,0.4); border-bottom:2px solid rgba(255,255,255,0.4);
-                            overflow:visible;">
-                    <!-- 4사분면 구분선 -->
-                    <div style="position:absolute; left:50%; top:0; height:100%; border-left:1px dashed rgba(255,255,255,0.2); pointer-events:none;"></div>
-                    <div style="position:absolute; top:50%; left:0; width:100%; border-top:1px dashed rgba(255,255,255,0.2); pointer-events:none;"></div>
-
-                    <!-- Y축 눈금 -->
-                    <div style="position:absolute; right:100%; margin-right:6px; font-size:10px; opacity:0.5; bottom:0%; transform:translateY(50%);">0%</div>
-                    <div style="position:absolute; right:100%; margin-right:6px; font-size:10px; opacity:0.5; bottom:25%; transform:translateY(50%);">25%</div>
-                    <div style="position:absolute; right:100%; margin-right:6px; font-size:10px; opacity:0.5; bottom:50%; transform:translateY(50%);">50%</div>
-                    <div style="position:absolute; right:100%; margin-right:6px; font-size:10px; opacity:0.5; bottom:75%; transform:translateY(50%);">75%</div>
-                    <div style="position:absolute; right:100%; margin-right:6px; font-size:10px; opacity:0.5; bottom:100%; transform:translateY(50%);">100%</div>
-
-                    <!-- X축 눈금 (Max Price 92,000 * 1.1 = 101,200, use 100,000) -->
-                    <div style="position:absolute; top:100%; margin-top:6px; font-size:10px; opacity:0.5; left:0%; transform:translateX(-50%);">0원</div>
-                    <div style="position:absolute; top:100%; margin-top:6px; font-size:10px; opacity:0.5; left:25%; transform:translateX(-50%);">25,000원</div>
-                    <div style="position:absolute; top:100%; margin-top:6px; font-size:10px; opacity:0.5; left:50%; transform:translateX(-50%);">50,000원</div>
-                    <div style="position:absolute; top:100%; margin-top:6px; font-size:10px; opacity:0.5; left:75%; transform:translateX(-50%);">75,000원</div>
-                    <div style="position:absolute; top:100%; margin-top:6px; font-size:10px; opacity:0.5; left:100%; transform:translateX(-50%);">100,000원</div>
-
-                    <!-- Y축 레이블 -->
-                    <div style="position:absolute; right:100%; margin-right:40px; top:50%; writing-mode:vertical-rl; transform:translateY(-50%); font-size:11px; white-space:nowrap; opacity:0.8;">브랜드 인지도</div>
-                    <!-- X축 레이블 -->
-                    <div style="position:absolute; top:100%; margin-top:28px; left:50%; transform:translateX(-50%); font-size:11px; opacity:0.8;">월 환산 가격 (원)</div>
-
-                    <!-- Bubbles -->
-                    <!-- Jongkeundang Health 아이커 (Price 85k, Awareness 90, Rank 1 -> Size 80) -->
-                    <div style="position:absolute; left:85%; bottom:90%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
-                        <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">종근당건강</div>
-                        <div style="width:80px; height:80px; border-radius:50%; background:#4361ee; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">1</div>
+    <!-- Slide 9: Pain Points -->
+    <div class="slide" id="slide-9">
+        <div class="slide-inner">
+            <div class="slide-header">03 기회 &amp; 전략 | 소비자 불만 분석</div>
+            <div class="slide-body" style="display:flex; flex-direction:column; padding-bottom:20px;">
+                <div style="display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:16px; flex:1; min-height:0;">
+                    <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden; min-height:0;">
+                        <h2 style="font-size:20px; font-weight:700; color:#FF5722; margin:0 0 10px; flex-shrink:0;">높은 가격 부담</h2>
+                        <p style="font-size:13px; line-height:1.75; flex:1; overflow:hidden; color:rgba(255,255,255,0.92);">프리미엄 제품으로 인식되는 한국산 건강기능식품은 중국 현지 소비자들에게 가격적인 부담으로 작용할 수 있습니다. 이는 구매 결정에 중요한 장벽이 됩니다.</p>
                     </div>
-                    <!-- Icltime 알파·프로 (Price 92k, Awareness 80, Rank 2 -> Size 75) -->
-                    <div style="position:absolute; left:92%; bottom:80%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
-                        <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">아이클타임</div>
-                        <div style="width:75px; height:75px; border-radius:50%; background:#f72585; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">2</div>
+                    <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden; min-height:0;">
+                        <h2 style="font-size:20px; font-weight:700; color:#FF5722; margin:0 0 10px; flex-shrink:0;">효과에 대한 불신</h2>
+                        <p style="font-size:13px; line-height:1.75; flex:1; overflow:hidden; color:rgba(255,255,255,0.92);">검증되지 않거나 과장된 효능을 내세우는 제품에 대한 소비자의 의구심이 존재합니다. 과학적 근거가 부족한 제품은 신뢰를 얻기 어렵습니다.</p>
                     </div>
-                    <!-- NeumedL&B 키클래오 (Price 78k, Awareness 75, Rank 3 -> Size 70) -->
-                    <div style="position:absolute; left:78%; bottom:75%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
-                        <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">키클래오</div>
-                        <div style="width:70px; height:70px; border-radius:50%; background:#4cc9f0; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">3</div>
+                    <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden; min-height:0;">
+                        <h2 style="font-size:20px; font-weight:700; color:#FF5722; margin:0 0 10px; flex-shrink:0;">복잡한 구매 절차</h2>
+                        <p style="font-size:13px; line-height:1.75; flex:1; overflow:hidden; color:rgba(255,255,255,0.92);">해외 직구나 현지 채널을 통한 구매 과정이 복잡하거나 불편할 경우, 소비자들은 구매를 망설이게 됩니다. 간편한 접근성이 중요합니다.</p>
                     </div>
-                    <!-- DongA Pharm 미니막스 랩 (Price 65k, Awareness 70, Rank 4 -> Size 65) -->
-                    <div style="position:absolute; left:65%; bottom:70%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
-                        <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">동아제약</div>
-                        <div style="width:65px; height:65px; border-radius:50%; background:#f8961e; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">4</div>
-                    </div>
-                    <!-- ChunhoNcare 키쑤욱 (Price 58k, Awareness 60, Rank 5 -> Size 60) -->
-                    <div style="position:absolute; left:58%; bottom:60%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
-                        <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">천호엔케어</div>
-                        <div style="width:60px; height:60px; border-radius:50%; background:#43aa8b; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">5</div>
-                    </div>
-                    <!-- DaehanNewpharm 디뉴 키업(UP) (Price 70k, Awareness 55, Rank 6 -> Size 55) -->
-                    <div style="position:absolute; left:70%; bottom:55%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
-                        <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">대한뉴팜</div>
-                        <div style="width:55px; height:55px; border-radius:50%; background:#90be6d; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">6</div>
-                    </div>
-                    <!-- Hamsoa 키즈텐042 (Price 62k, Awareness 50, Rank 7 -> Size 50) -->
-                    <div style="position:absolute; left:62%; bottom:50%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
-                        <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">함소아</div>
-                        <div style="width:50px; height:50px; border-radius:50%; background:#277da1; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">7</div>
-                    </div>
-                    <!-- Ildong Foodis 키성장 간식 (Price 45k, Awareness 40, Rank 8 -> Size 45) -->
-                    <div style="position:absolute; left:45%; bottom:40%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
-                        <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">일동후디스</div>
-                        <div style="width:45px; height:45px; border-radius:50%; background:#e63946; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">8</div>
-                    </div>
-                    <!-- MyFit 키해피 (Price 55k, Awareness 35, Rank 9 -> Size 40) -->
-                    <div style="position:absolute; left:55%; bottom:35%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
-                        <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">마이핏</div>
-                        <div style="width:40px; height:40px; border-radius:50%; background:#6a4c93; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">9</div>
-                    </div>
-                    <!-- Dr. Kids 쑥쑥키즈플러스 (Price 68k, Awareness 30, Rank 10 -> Size 35) -->
-                    <div style="position:absolute; left:68%; bottom:30%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
-                        <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">닥터키즈</div>
-                        <div style="width:35px; height:35px; border-radius:50%; background:#ff6b6b; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">10</div>
+                    <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden; min-height:0;">
+                        <h2 style="font-size:20px; font-weight:700; color:#FF5722; margin:0 0 10px; flex-shrink:0;">정보의 비대칭성</h2>
+                        <p style="font-size:13px; line-height:1.75; flex:1; overflow:hidden; color:rgba(255,255,255,0.92);">제품의 실제 효과나 성분에 대한 정확하고 투명한 정보가 부족할 경우, 소비자는 제품 선택에 어려움을 겪습니다. 신뢰할 수 있는 정보 제공이 요구됩니다.</p>
                     </div>
                 </div>
-
-                <div style="flex:1; display:flex; flex-direction:column; justify-content:center; gap:16px; overflow:hidden;">
-                    <div style="display:flex; flex-wrap:wrap; gap:4px 12px; flex-shrink:0;">
-                        <div style="font-size:12px; display:flex; align-items:center; gap:4px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#4361ee;"></span>종근당건강</div>
-                        <div style="font-size:12px; display:flex; align-items:center; gap:4px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#f72585;"></span>아이클타임</div>
-                        <div style="font-size:12px; display:flex; align-items:center; gap:4px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#4cc9f0;"></span>키클래오</div>
-                        <div style="font-size:12px; display:flex; align-items:center; gap:4px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#f8961e;"></span>동아제약</div>
-                        <div style="font-size:12px; display:flex; align-items:center; gap:4px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#43aa8b;"></span>천호엔케어</div>
-                        <div style="font-size:12px; display:flex; align-items:center; gap:4px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#90be6d;"></span>대한뉴팜</div>
-                        <div style="font-size:12px; display:flex; align-items:center; gap:4px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#277da1;"></span>함소아</div>
-                        <div style="font-size:12px; display:flex; align-items:center; gap:4px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#e63946;"></span>일동후디스</div>
-                        <div style="font-size:12px; display:flex; align-items:center; gap:4px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#6a4c93;"></span>마이핏</div>
-                        <div style="font-size:12px; display:flex; align-items:center; gap:4px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#ff6b6b;"></span>닥터키즈</div>
-                    </div>
-                    <div class="insight-box" style="margin-top:0;">
-                        <h3>프리미엄 포지셔닝 강화</h3>
-                        <p>선두 브랜드들은 HT042 등 개별 인정 원료 기반의 기능성과 높은 가격대를 통해 프리미엄 포지셔닝을 공고히 하고 있습니다.</p>
-                    </div>
-                    <div class="insight-box" style="margin-top:0;">
-                        <h3>차별화된 시장 진입</h3>
-                        <p>후발 주자들은 맛과 제형의 차별화, 캐릭터 협업 등을 통해 시장 진입을 시도하며 경쟁 구도를 다각화하고 있습니다.</p>
-                    </div>
+                <div class="insight-box">
+                    <h3 class="insight-box-title">핵심 인사이트</h3>
+                    <p class="insight-box-content">중국 소비자들은 자녀 제품 구매 시 가격, 효능, 편리성, 정보의 투명성을 중요하게 생각합니다. 이러한 불만 지점을 해소하는 것이 성공적인 시장 진입의 핵심입니다.</p>
                 </div>
             </div>
-        </div>
-        <div class="slide-footer">
-            출처: NPD 보고서, 각 사 공식 웹사이트, 네이버 쇼핑 (가격/인지도/점유율 추정치 기반)
+            <div class="slide-footer">출처: NPD 보고서</div>
         </div>
     </div>
-</div>
 
-<!-- Slide 8: Section Divider -->
-<div class="slide" id="slide-7">
-    <div class="slide-inner" style="background:#1a1a1a; display:flex; align-items:center; justify-content:center; flex-direction:column; text-align:center;">
-        <div style="font-size:13px; letter-spacing:0.2em; text-transform:uppercase; opacity:0.6; margin-bottom:16px; color:#fff;">CHAPTER 03</div>
-        <div style="font-size:64px; font-weight:900; color:#fff; line-height:1;">03</div>
-        <div style="font-size:32px; font-weight:400; color:#fff; margin-top:16px; opacity:0.9;">기회 &amp; 전략</div>
-        <div style="width:60px; height:3px; background:#FF5722; margin-top:24px;"></div>
-    </div>
-</div>
-
-<!-- Slide 9: Pain Points -->
-<div class="slide" id="slide-8">
-    <div class="slide-inner">
-        <div class="slide-header">
-            <h2>03 기회 &amp; 전략 | 중국 소비자 Pain Points</h2>
-        </div>
-        <div class="slide-body" style="display:flex; flex-direction:column;">
-            <div style="display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:16px; flex:1; min-height:0;">
-                <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden; min-height:0;">
-                    <h3 style="font-size:20px; font-weight:700; color:#FF5722; margin:0 0 10px; font-family: 'Noto Sans KR', sans-serif;">또래 대비 키 성장 불안감</h3>
-                    <p style="font-size:13px; line-height:1.75; flex:1; overflow:hidden; color:rgba(255,255,255,0.92);">
-                        자녀의 성장기 키에 대한 부모의 높은 불안감은 관련 제품 소비의 강력한 동기가 되지만, 해결책에 대한 명확한 정보 부족을 겪습니다.
-                    </p>
-                </div>
-                <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden; min-height:0;">
-                    <h3 style="font-size:20px; font-weight:700; color:#FF5722; margin:0 0 10px; font-family: 'Noto Sans KR', sans-serif;">제품 효과 불확실성</h3>
-                    <p style="font-size:13px; line-height:1.75; flex:1; overflow:hidden; color:rgba(255,255,255,0.92);">
-                        시중에 다양한 제품이 출시되어 있지만, 실제 키 성장 효과에 대한 과학적 근거나 임상 데이터 부족으로 부모들의 의구심이 높습니다.
-                    </p>
-                </div>
-                <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden; min-height:0;">
-                    <h3 style="font-size:20px; font-weight:700; color:#FF5722; margin:0 0 10px; font-family: 'Noto Sans KR', sans-serif;">높은 가격 부담</h3>
-                    <p style="font-size:13px; line-height:1.75; flex:1; overflow:hidden; color:rgba(255,255,255,0.92);">
-                        프리미엄 제품들은 높은 가격대를 형성하고 있어 구매를 망설이게 하는 주요 장벽으로 작용하며, 가성비에 대한 고민이 깊습니다.
-                    </p>
-                </div>
-                <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden; min-height:0;">
-                    <h3 style="font-size:20px; font-weight:700; color:#FF5722; margin:0 0 10px; font-family: 'Noto Sans KR', sans-serif;">복용 편의성 및 거부감</h3>
-                    <p style="font-size:13px; line-height:1.75; flex:1; overflow:hidden; color:rgba(255,255,255,0.92);">
-                        아이들이 맛이나 제형 때문에 섭취를 거부하는 경우가 많아, 부모들은 꾸준히 먹일 수 있는 쉽고 맛있는 제품을 선호합니다.
-                    </p>
-                </div>
-            </div>
-            <div class="insight-box">
-                <h3>핵심 인사이트</h3>
-                <p>중국 부모들은 자녀의 키 성장에 대한 높은 열망과 투자 의지를 가지지만, 효과와 가격, 섭취 편의성 등에서 명확한 해결책을 찾고 있습니다.</p>
-            </div>
-        </div>
-        <div class="slide-footer">
-            출처: NPD 보고서, 소비자 인터뷰 (가상)
-        </div>
-    </div>
-</div>
-
-<!-- Slide 10: White Space -->
-<div class="slide" id="slide-9">
-    <div class="slide-inner">
-        <div class="slide-header">
-            <h2>03 기회 &amp; 전략 | 중국 시장 차별화 기회</h2>
-        </div>
-        <div class="slide-body" style="display:flex; flex-direction:column;">
-            <div style="display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:16px; flex:1; min-height:0;">
-                <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden;">
-                    <h3 style="font-size:20px; font-weight:700; color:#FF5722; margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em; font-family: 'Noto Sans KR', sans-serif;">현지화된 간편 섭취형 보충제</h3>
-                    <p style="font-size:13px; line-height:1.75; flex:1; color:rgba(255,255,255,0.92);">
-                        중국 아이들의 입맛에 맞는 맛과 선호하는 제형을 결합한 간식형 제품으로, 한국의 품질과 안전성을 기반으로 초기 진입 장벽을 낮춥니다.
-                    </p>
-                </div>
-                <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden;">
-                    <h3 style="font-size:20px; font-weight:700; color:#FF5722; margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em; font-family: 'Noto Sans KR', sans-serif;">종합적인 성장 관리 솔루션</h3>
-                    <p style="font-size:13px; line-height:1.75; flex:1; color:rgba(255,255,255,0.92);">
-                        단순 키 성장을 넘어 면역력, 장 건강, 영양 균형 등 아이의 전반적인 건강과 성장을 통합적으로 지원하는 맞춤형 콘셉트입니다.
-                    </p>
-                </div>
-                <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden;">
-                    <h3 style="font-size:20px; font-weight:700; color:#FF5722; margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em; font-family: 'Noto Sans KR', sans-serif;">성장 기록 &amp; 챌린지 인터랙티브 제품</h3>
-                    <p style="font-size:13px; line-height:1.75; flex:1; color:rgba(255,255,255,0.92);">
-                        제품 섭취와 함께 아이의 성장 과정을 기록하고 목표 달성을 위한 동기를 부여하는 앱 연동, 챌린지 키트 등 즐거운 경험을 제공합니다.
-                    </p>
-                </div>
-                <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden;">
-                    <h3 style="font-size:20px; font-weight:700; color:#FF5722; margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em; font-family: 'Noto Sans KR', sans-serif;">특정 효능 강화 프리미엄 라인</h3>
-                    <p style="font-size:13px; line-height:1.75; flex:1; color:rgba(255,255,255,0.92);">
-                        '뼈 건강 강화' 또는 '수면 중 성장 지원'과 같이 특정 효능을 극대화한 프리미엄 제품으로, 과학적 근거를 바탕으로 고가 전략을 실행합니다.
-                    </p>
-                </div>
-            </div>
-            <div class="insight-box">
-                <h3>핵심 인사이트</h3>
-                <p>중국 시장 진입을 위해서는 한국의 기술력에 현지화된 맛/제형, 종합적인 건강 관리, 그리고 즐거운 성장 경험을 결합한 차별화 전략이 필요합니다.</p>
-            </div>
-        </div>
-        <div class="slide-footer">
-            출처: NPD 보고서
-        </div>
-    </div>
-</div>
-
-<!-- Slide 11: Concept -->
-<div class="slide" id="slide-10">
-    <div class="slide-inner">
-        <div class="slide-header">
-            <h2>03 기회 &amp; 전략 | NPD 콘셉트 제안: 키즈메이트 (KidsMate)</h2>
-        </div>
-        <div class="slide-body" style="display:flex; flex-direction:column;">
-            <div style="display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:16px; flex:1; min-height:0;">
-                <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden;">
-                    <h3 style="font-size:20px; font-weight:700; color:#FF5722; margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em; font-family: 'Noto Sans KR', sans-serif;">제품명 (PRODUCT NAME)</h3>
-                    <p style="font-size:13px; line-height:1.75; flex:1; color:rgba(255,255,255,0.92);">
-                        <strong>키즈메이트 (KidsMate)</strong><br>아이의 건강한 성장을 돕는 친근한 친구 같은 존재를 의미하며, 'Grow'를 통해 성장의 가치를 강조합니다.
-                    </p>
-                </div>
-                <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden;">
-                    <h3 style="font-size:20px; font-weight:700; color:#FF5722; margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em; font-family: 'Noto Sans KR', sans-serif;">USP (UNIQUE SELLING PROPOSITION)</h3>
-                    <p style="font-size:13px; line-height:1.75; flex:1; color:rgba(255,255,255,0.92);">
-                        "중국 아이들의 입맛에 맞춘 맛과 제형, 그리고 한국의 과학적인 성장 솔루션으로 아이의 숨겨진 잠재력을 깨우세요!"<br>현지화된 맛과 제형, 한국의 검증된 과학 기술, 그리고 종합적인 성장 관리를 핵심 가치로 제공합니다.
-                    </p>
-                </div>
-                <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden;">
-                    <h3 style="font-size:20px; font-weight:700; color:#FF5722; margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em; font-family: 'Noto Sans KR', sans-serif;">타겟 (TARGET AUDIENCE)</h3>
-                    <p style="font-size:13px; line-height:1.75; flex:1; color:rgba(255,255,255,0.92);">
-                        4세 ~ 12세 자녀를 둔 중국 내 30대~40대 초반의 부모. 특히 자녀의 키 성장 및 전반적인 건강에 관심이 높고, 교육열이 높은 '싱글 차일드' 가정에 집중합니다.
-                    </p>
-                </div>
-                <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden;">
-                    <h3 style="font-size:20px; font-weight:700; color:#FF5722; margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em; font-family: 'Noto Sans KR', sans-serif;">포지셔닝 메시지 (POSITIONING MESSAGE)</h3>
-                    <p style="font-size:13px; line-height:1.75; flex:1; color:rgba(255,255,255,0.92);">
-                        "키 성장의 시작, '키즈메이트'와 함께!"<br>"맛있게 즐기는 성장, '키즈메이트'로 잠재력을 깨우다."<br>"엄마의 믿음, 아이의 웃음 - '키즈메이트'가 함께 합니다."
-                    </p>
-                </div>
-            </div>
-            <div class="insight-box">
-                <h3>핵심 인사이트</h3>
-                <p>키즈메이트는 한국의 과학 기술력과 중국 현지화 전략을 결합하여, 맛과 즐거움, 그리고 신뢰를 동시에 제공하는 프리미엄 성장 솔루션으로 포지셔닝합니다.</p>
-            </div>
-        </div>
-        <div class="slide-footer">
-            출처: NPD 보고서
-        </div>
-    </div>
-</div>
-
-<!-- Slide 12: Pricing -->
-<div class="slide" id="slide-11">
-    <div class="slide-inner">
-        <div class="slide-header">
-            <h2>03 기회 &amp; 전략 | 가격 및 채널 전략</h2>
-        </div>
-        <div class="slide-body" style="display:flex; flex-direction:column;">
-            <div style="flex-shrink:0;">
-                <table style="width:100%; border-collapse:collapse;">
-                    <thead>
-                        <tr style="background:rgba(255,255,255,0.08);">
-                            <th style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid rgba(255,255,255,0.1);">카테고리</th>
-                            <th style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid rgba(255,255,255,0.1);">제품명</th>
-                            <th style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid rgba(255,255,255,0.1);">월 1박스 가격 (RMB)</th>
-                            <th style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid rgba(255,255,255,0.1);">월 1박스 가격 (KRW)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid rgba(255,255,255,0.1);">프리미엄 라인</td>
-                            <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid rgba(255,255,255,0.1);">키즈메이트 Grow (액상)</td>
-                            <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid rgba(255,255,255,0.1); color:#FF5722; font-weight:700;">280 RMB</td>
-                            <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid rgba(255,255,255,0.1);">52,220 원</td>
-                        </tr>
-                        <tr>
-                            <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid rgba(255,255,255,0.1);">메인 라인</td>
-                            <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid rgba(255,255,255,0.1);">키즈메이트 Daily (젤리)</td>
-                            <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid rgba(255,255,255,0.1);">220 RMB</td>
-                            <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid rgba(255,255,255,0.1);">41,030 원</td>
-                        </tr>
-                        <tr>
-                            <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid rgba(255,255,255,0.1);">엔트리 라인</td>
-                            <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid rgba(255,255,255,0.1);">키즈메이트 Play (츄어블)</td>
-                            <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid rgba(255,255,255,0.1);">160 RMB</td>
-                            <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid rgba(255,255,255,0.1);">29,840 원</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div style="flex:1; margin-top:16px; padding:16px 20px; border:1px solid rgba(255,255,255,0.1); border-radius:6px; font-size:14px; line-height:1.7; overflow:hidden;">
-                <p style="margin-bottom:8px;">
-                    <strong>가격 전략 근거:</strong> 국내 키 성장 건기식 시장에서 월 5만 원 ~ 10만 원대 제품이 경쟁하고 있음을 고려하여 중국 '골드키즈' 시장의 프리미엄 소비 성향을 반영한 가격을 책정했습니다.
-                </p>
-                <p>
-                    '과학', '안전', '프리미엄' 이미지 구축을 위한 적정 가격 설정과 초기 시장 진입 시 현지 경쟁 제품 가격 조사 후 차별화된 가치 제시가 중요합니다.
-                </p>
-            </div>
-            <div class="insight-box">
-                <h3>핵심 인사이트</h3>
-                <p>프리미엄 포지셔닝을 위해 경쟁사 대비 합리적인 중고가 전략을 채택하며, 온라인 이커머스 및 프리미엄 오프라인 채널을 통한 전략적 유통을 추진합니다.</p>
-            </div>
-        </div>
-        <div class="slide-footer">
-            출처: NPD 보고서 (환율: 2026년 4월 16일 기준 1 RMB &#8776; 186.5 KRW 적용)
-        </div>
-    </div>
-</div>
-
-<!-- Slide 13: Risk -->
-<div class="slide" id="slide-12">
-    <div class="slide-inner">
-        <div class="slide-header">
-            <h2>03 기회 &amp; 전략 | 주요 리스크 및 대응 방안</h2>
-        </div>
-        <div class="slide-body" style="display:flex; flex-direction:column;">
-            <div style="display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:16px; flex:1; min-height:0;">
-                <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden; min-height:0;">
-                    <h3 style="font-size:20px; font-weight:700; color:#FF5722; margin:0 0 10px; font-family: 'Noto Sans KR', sans-serif;">중국 현지 규제 및 통관 문제</h3>
-                    <p style="font-size:13px; line-height:1.75; flex:1; overflow:hidden; color:rgba(255,255,255,0.92);">
-                        중국의 복잡하고 변화무쌍한 식품/건강기능식품 규제는 시장 진입 및 운영에 큰 장벽이 될 수 있습니다.
-                    </p>
-                    <div style="border-top:1px solid rgba(255,255,255,0.1); margin-top:8px; padding-top:8px; font-size:11px; color:rgba(255,255,255,0.75); flex-shrink:0;">
-                        <strong>대응 방안:</strong> 현지 법률/컨설팅 전문가 협력, 사전 철저한 검토 및 준비, 신뢰할 수 있는 물류/통관 파트너 선정.
+    <!-- Slide 10: White Space -->
+    <div class="slide" id="slide-10">
+        <div class="slide-inner">
+            <div class="slide-header">03 기회 &amp; 전략 | 차별화 기회 영역</div>
+            <div class="slide-body" style="display:flex; flex-direction:column; padding-bottom:20px;">
+                <div style="display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:16px; flex:1; min-height:0;">
+                    <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden;">
+                        <h2 style="font-size:20px; font-weight:700; color:#FF5722; margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em;">한국 고유 원료 활용</h2>
+                        <p style="font-size:13px; line-height:1.75; flex:1; color:rgba(255,255,255,0.92);">한국 건강기능식품 시장에서 인정받은 개별인정형 원료를 현대 기술과 접목하여 중국 시장에 신뢰도 높은 제품으로 선보일 수 있습니다.</p>
+                    </div>
+                    <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden;">
+                        <h2 style="font-size:20px; font-weight:700; color:#FF5722; margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em;">혁신적인 제형 및 맛</h2>
+                        <p style="font-size:13px; line-height:1.75; flex:1; color:rgba(255,255,255,0.92);">아이들이 거부감 없이 즐겁게 섭취할 수 있도록 맛, 식감, 섭취 편의성을 고려한 씹어먹는 캔디, 맛있는 음료 등 혁신적인 제형 개발이 필요합니다.</p>
+                    </div>
+                    <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden;">
+                        <h2 style="font-size:20px; font-weight:700; color:#FF5722; margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em;">종합적인 성장 케어 솔루션</h2>
+                        <p style="font-size:13px; line-height:1.75; flex:1; color:rgba(255,255,255,0.92);">단순 키 성장을 넘어 면역력 강화, 균형 잡힌 영양 공급, 수면 질 개선 등 아이의 전반적인 성장 발달을 지원하는 통합적인 제품 구성으로 차별화합니다.</p>
+                    </div>
+                    <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden;">
+                        <h2 style="font-size:20px; font-weight:700; color:#FF5722; margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em;">과학적 근거 기반 정보 제공</h2>
+                        <p style="font-size:13px; line-height:1.75; flex:1; color:rgba(255,255,255,0.92);">제품의 효능, 안전성, 임상 시험 결과 등을 명확하고 이해하기 쉬운 방식으로 투명하게 제공하여 중국 소비자의 신뢰를 확보해야 합니다.</p>
                     </div>
                 </div>
-                <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden; min-height:0;">
-                    <h3 style="font-size:20px; font-weight:700; color:#FF5722; margin:0 0 10px; font-family: 'Noto Sans KR', sans-serif;">현지 경쟁 심화 및 모방 제품</h3>
-                    <p style="font-size:13px; line-height:1.75; flex:1; overflow:hidden; color:rgba(255,255,255,0.92);">
-                        이미 다수의 글로벌 및 현지 브랜드가 경쟁하고 있으며, 성공 시 유사 제품의 빠른 모방 출시 위험이 존재합니다.
-                    </p>
-                    <div style="border-top:1px solid rgba(255,255,255,0.1); margin-top:8px; padding-top:8px; font-size:11px; color:rgba(255,255,255,0.75); flex-shrink:0;">
-                        <strong>대응 방안:</strong> USP 기반 차별화된 브랜딩, 강력한 지식재산권 확보, 지속적인 R&D 및 신제품 출시, 고객 충성도 강화.
-                    </div>
-                </div>
-                <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden; min-height:0;">
-                    <h3 style="font-size:20px; font-weight:700; color:#FF5722; margin:0 0 10px; font-family: 'Noto Sans KR', sans-serif;">부정적 여론 및 브랜드 이미지 훼손</h3>
-                    <p style="font-size:13px; line-height:1.75; flex:1; overflow:hidden; color:rgba(255,255,255,0.92);">
-                        과장 광고, 부작용 논란 등으로 인해 부정적인 여론이 형성될 경우 브랜드 이미지에 치명적인 영향을 줄 수 있습니다.
-                    </p>
-                    <div style="border-top:1px solid rgba(255,255,255,0.1); margin-top:8px; padding-top:8px; font-size:11px; color:rgba(255,255,255,0.75); flex-shrink:0;">
-                        <strong>대응 방안:</strong> '과장 광고 금지' 원칙 준수, 과학적 근거 기반 정보 제공, 철저한 품질 관리, 위기 발생 시 신속하고 투명한 대응.
-                    </div>
-                </div>
-                <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden; min-height:0;">
-                    <h3 style="font-size:20px; font-weight:700; color:#FF5722; margin:0 0 10px; font-family: 'Noto Sans KR', sans-serif;">온라인 마케팅 채널 의존도 심화</h3>
-                    <p style="font-size:13px; line-height:1.75; flex:1; overflow:hidden; color:rgba(255,255,255,0.92);">
-                        중국 시장에서 온라인 마케팅 의존도가 높을 경우, 플랫폼의 알고리즘 변화나 정책 변경에 따라 노출 감소 위험이 있습니다.
-                    </p>
-                    <div style="border-top:1px solid rgba(255,255,255,0.1); margin-top:8px; padding-top:8px; font-size:11px; color:rgba(255,255,255,0.75); flex-shrink:0;">
-                        <strong>대응 방안:</strong> 온/오프라인 채널 균형 활용, 데이터 기반 마케팅 전략 수립, 커뮤니티 구축 및 바이럴 마케팅 강화.
-                    </div>
+                <div class="insight-box">
+                    <h3 class="insight-box-title">핵심 인사이트</h3>
+                    <p class="insight-box-content">한국 기업은 고유의 기술력과 안전성 인식을 바탕으로, 중국 소비자의 니즈를 충족시키는 혁신적인 제품과 투명한 소통으로 시장 공백을 공략할 수 있습니다.</p>
                 </div>
             </div>
-            <div class="insight-box">
-                <h3>핵심 인사이트</h3>
-                <p>사전 철저한 규제 준비, 강력한 브랜드 차별화, 투명한 커뮤니케이션, 그리고 채널 다각화를 통해 중국 시장의 잠재적 리스크를 최소화해야 합니다.</p>
-            </div>
-        </div>
-        <div class="slide-footer">
-            출처: NPD 보고서
+            <div class="slide-footer">출처: NPD 보고서</div>
         </div>
     </div>
-</div>
 
-<!-- Slide 14: Roadmap -->
-<div class="slide" id="slide-13">
-    <div class="slide-inner">
-        <div class="slide-header">
-            <h2>03 기회 &amp; 전략 | 중국 시장 진출 실행 로드맵</h2>
-        </div>
-        <div class="slide-body" style="display:flex; flex-direction:column;">
-            <div style="display:flex; flex-direction:row; align-items:flex-start; gap:0; flex:1; min-height:0;">
-                <!-- Stage 1 -->
-                <div style="flex:1; padding:24px 20px; border-top:3px solid #FF5722; display:flex; flex-direction:column; gap:8px;">
-                    <h3 style="font-size:18px; font-weight:700; margin:0; font-family: 'Noto Sans KR', sans-serif;">1단계: 시장 조사 및 준비</h3>
-                    <p style="font-size:13px; color:rgba(255,255,255,0.55); margin:0;">2026년 하반기 ~ 2027년 상반기</p>
-                    <div style="height:1px; background:rgba(255,255,255,0.08); margin:4px 0;"></div>
-                    <ul style="font-size:14px; line-height:1.7; flex:1; padding-left:20px; margin:0;">
-                        <li>현지 시장 조사 강화 (경쟁사, 소비자 행동, 유통 채널 분석)</li>
-                        <li>중국 식품/건강기능식품 규제 및 인증 절차 상세 파악</li>
-                        <li>잠재적 현지 파트너 물색 및 컨택</li>
-                        <li>제품 컨셉 구체화 및 프로토타입 개발</li>
-                        <li>브랜드 네이밍 및 디자인 현지화 검토</li>
-                    </ul>
-                    <div style="font-size:12px; color:#FF5722; font-weight:700; margin-top:auto; padding-top:8px; border-top:1px solid rgba(255,255,255,0.08);">
-                        마일스톤: 사업 계획 및 제품 개발 방향 확정
+    <!-- Slide 11: Concept -->
+    <div class="slide" id="slide-11">
+        <div class="slide-inner">
+            <div class="slide-header">03 기회 &amp; 전략 | NPD 콘셉트 제안</div>
+            <div class="slide-body" style="display:flex; flex-direction:column; padding-bottom:20px;">
+                <div style="display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:16px; flex:1; min-height:0;">
+                    <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden;">
+                        <h2 style="font-size:20px; font-weight:700; color:#FF5722; margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em;">제품명 (가칭)</h2>
+                        <p style="font-size:13px; line-height:1.75; flex:1; color:rgba(255,255,255,0.92);"><strong>"쑥쑥 키즈 프리미엄 성장 젤리"</strong><br>(Ssuk Ssuk Kids Premium Growth Jelly)</p>
+                    </div>
+                    <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden;">
+                        <h2 style="font-size:20px; font-weight:700; color:#FF5722; margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em;">USP (Unique Selling Proposition)</h2>
+                        <p style="font-size:13px; line-height:1.75; flex:1; color:rgba(255,255,255,0.92);">
+                            <strong>한국산 [기능성 원료명: 예: 황기 추출물] 기반의 과학적 키 성장 솔루션</strong><br>
+                            아이들이 좋아하는 맛과 쫄깃한 식감으로 섭취 거부감 ZERO<br>
+                            성장 발달에 필요한 10가지 비타민 &amp; 미네랄 함유<br>
+                            무설탕, 무인공색소, HACCP 인증
+                        </p>
+                    </div>
+                    <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden;">
+                        <h2 style="font-size:20px; font-weight:700; color:#FF5722; margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em;">타겟</h2>
+                        <p style="font-size:13px; line-height:1.75; flex:1; color:rgba(255,255,255,0.92);">
+                            만 3세 ~ 10세 자녀를 둔 중국의 30~40대 학부모<br>
+                            자녀의 키 성장에 대한 관심이 높고, 안전하고 효과적인 프리미엄 건강기능식품을 찾는 소비자<br>
+                            K-컬처 및 한국 제품에 대한 긍정적인 인식 보유
+                        </p>
+                    </div>
+                    <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden;">
+                        <h2 style="font-size:20px; font-weight:700; color:#FF5722; margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em;">포지셔닝 메시지</h2>
+                        <p style="font-size:13px; line-height:1.75; flex:1; color:rgba(255,255,255,0.92);">
+                            "믿을 수 있는 한국의 자연에서 온 [기능성 원료명]의 힘으로, 우리 아이의 키 성장을 위한 최고의 선택. 쑥쑥 키즈 프리미엄 성장 젤리로 매일매일 건강하게 자라는 아이의 모습을 만나보세요."<br>
+                            "재밌게 먹고 튼튼하게 자라자! 우리 아이의 행복한 성장을 위한 쑥쑥 키즈 프리미엄 성장 젤리"
+                        </p>
                     </div>
                 </div>
-                <!-- Stage 2 -->
-                <div style="flex:1; padding:24px 20px; border-top:3px solid #FF5722; display:flex; flex-direction:column; gap:8px;">
-                    <h3 style="font-size:18px; font-weight:700; margin:0; font-family: 'Noto Sans KR', sans-serif;">2단계: 시장 진출 및 초기 안착</h3>
-                    <p style="font-size:13px; color:rgba(255,255,255,0.55); margin:0;">2027년 하반기 ~ 2029년 상반기</p>
-                    <div style="height:1px; background:rgba(255,255,255,0.08); margin:4px 0;"></div>
-                    <ul style="font-size:14px; line-height:1.7; flex:1; padding-left:20px; margin:0;">
-                        <li>중국 내 법인 설립 또는 파트너 계약 체결</li>
-                        <li>필수 인증 획득 및 제품 생산/수출 준비</li>
-                        <li>주요 이커머스 플랫폼 입점 및 브랜드관 구축</li>
-                        <li>KOL 마케팅, 소셜 미디어 홍보 캠페인 실행</li>
-                        <li>오프라인 일부 채널 (프리미엄 편집샵 등) 입점</li>
-                        <li>고객 피드백 수집 및 초기 제품 개선</li>
-                    </ul>
-                    <div style="font-size:12px; color:#FF5722; font-weight:700; margin-top:auto; padding-top:8px; border-top:1px solid rgba(255,255,255,0.08);">
-                        마일스톤: 이커머스 플랫폼 입점 및 초기 판매 목표 달성
-                    </div>
-                </div>
-                <!-- Stage 3 -->
-                <div style="flex:1; padding:24px 20px; border-top:3px solid #FF5722; display:flex; flex-direction:column; gap:8px;">
-                    <h3 style="font-size:18px; font-weight:700; margin:0; font-family: 'Noto Sans KR', sans-serif;">3단계: 시장 확장 및 성장</h3>
-                    <p style="font-size:13px; color:rgba(255,255,255,0.55); margin:0;">2029년 하반기 ~</p>
-                    <div style="height:1px; background:rgba(255,255,255,0.08); margin:4px 0;"></div>
-                    <ul style="font-size:14px; line-height:1.7; flex:1; padding-left:20px; margin:0;">
-                        <li>전략적 제휴 및 파트너십 확장</li>
-                        <li>온/오프라인 유통 채널 다각화 및 확대 (마트, 약국 등)</li>
-                        <li>타겟 연령층 확장 또는 관련 제품 라인업 개발</li>
-                        <li>CRM 시스템 구축 및 데이터 기반 마케팅 강화</li>
-                        <li>현지 R&D 역량 강화 또는 협력</li>
-                        <li>글로벌 시장으로의 확장 검토</li>
-                    </ul>
-                    <div style="font-size:12px; color:#FF5722; font-weight:700; margin-top:auto; padding-top:8px; border-top:1px solid rgba(255,255,255,0.08);">
-                        마일스톤: 브랜드 인지도 확립 및 시장 점유율 5% 달성
-                    </div>
+                <div class="insight-box">
+                    <h3 class="insight-box-title">핵심 인사이트</h3>
+                    <p class="insight-box-content">중국 학부모의 니즈를 충족하는 과학적 근거 기반의 프리미엄 한국산 키 성장 젤리로, 맛과 안전성, 종합적 효능을 강조하여 시장에 포지셔닝합니다.</p>
                 </div>
             </div>
-            <div class="insight-box">
-                <h3>핵심 인사이트</h3>
-                <p>단계별 명확한 목표와 세부 실행 계획을 통해 중국 시장의 복잡성을 극복하고 지속 가능한 성장을 위한 기반을 마련해야 합니다.</p>
-            </div>
-        </div>
-        <div class="slide-footer">
-            출처: NPD 보고서
+            <div class="slide-footer">출처: NPD 보고서</div>
         </div>
     </div>
-</div>
 
-<!-- Slide 15: References -->
-<div class="slide" id="slide-14">
-    <div class="slide-inner">
-        <div class="slide-header">
-            <h2>References | 참고 출처</h2>
-        </div>
-        <div class="slide-body" style="display:flex; flex-direction:column; overflow-y:auto; padding-bottom:8px;">
-            <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
-                <span style="color:#FF5722; font-weight:700; flex-shrink:0; min-width:24px;">1</span>
-                <span style="color:rgba(255,255,255,0.85);">[데이터 섹션 B] 키성장 영양제 개별인정원료 경쟁...시장 재편되나 (<a href="http://www.dailypharm.com/Users/News/NewsView.html?ID=303845" target="_blank">dailypharm.com</a>)</span>
+    <!-- Slide 12: Pricing -->
+    <div class="slide" id="slide-12">
+        <div class="slide-inner">
+            <div class="slide-header">03 기회 &amp; 전략 | 가격 및 채널 전략</div>
+            <div class="slide-body" style="display:flex; flex-direction:column; padding-bottom:20px;">
+                <div style="flex-shrink:0;">
+                    <table style="width:100%; border-collapse:collapse;">
+                        <thead>
+                            <tr style="background:rgba(255,255,255,0.08);">
+                                <th style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; font-weight:700; color:#FF5722; width:20%;">항목</th>
+                                <th style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; font-weight:700; color:#FF5722; width:80%;">내용</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+                                <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap;">예상 가격대</td>
+                                <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap;">월 100~200위안 (약 2만원 ~ 4만원)</td>
+                            </tr>
+                            <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+                                <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap;">가격 전략</td>
+                                <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap;">프리미엄 가치 기반의 합리적 가격</td>
+                            </tr>
+                            <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+                                <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap;">초기 채널</td>
+                                <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap;">온라인 중심 (티몰, 징동, 소셜 커머스)</td>
+                            </tr>
+                            <tr>
+                                <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap;">확장 채널</td>
+                                <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap;">오프라인 (드럭스토어, 프리미엄 마트, 백화점)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div style="flex:1; margin-top:16px; padding:16px 20px; border:1px solid rgba(255,255,255,0.1); border-radius:6px; font-size:14px; line-height:1.7; overflow:hidden;">
+                    <h3 style="font-size:16px; font-weight:700; color:#FF5722; margin:0 0 8px;">가격 전략 근거</h3>
+                    <p style="margin:0;">경쟁 제품 가격대, 한국산 프리미엄 원료 및 과학적 근거를 통한 안전성 강조, 중국 중산층 이상 학부모들의 자녀 투자 의지를 고려하여 합리적인 프리미엄 가격을 설정합니다. 초기에는 중국 주요 전자상거래 플랫폼을 중심으로 온라인 채널에 집중하여 시장 진입 장벽을 낮추고, 중장기적으로는 오프라인 드럭스토어 및 프리미엄 마트 등으로 유통망을 확장하여 브랜드 인지도를 높일 계획입니다.</p>
+                </div>
+                <div class="insight-box">
+                    <h3 class="insight-box-title">핵심 인사이트</h3>
+                    <p class="insight-box-content">경쟁사 가격 및 타겟 소비자의 구매력을 고려한 월 100~200위안의 프리미엄 가격대를 설정하고, 초기 온라인 집중 후 오프라인으로 확장하는 채널 전략이 효과적입니다.</p>
+                </div>
             </div>
-            <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
-                <span style="color:#FF5722; font-weight:700; flex-shrink:0; min-width:24px;">2</span>
-                <span style="color:rgba(255,255,255,0.85);">[데이터 섹션 B] 베트남서 일동후디스 '키성장 간식' 신드롬 (<a href="https://www.hankyung.com/economy/article/2021092815571" target="_blank">hankyung.com</a>)</span>
-            </div>
-            <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
-                <span style="color:#FF5722; font-weight:700; flex-shrink:0; min-width:24px;">3</span>
-                <span style="color:rgba(255,255,255,0.85);">[데이터 섹션 C] Issue Monitor 저출생 시대 속 골드키즈가 이끄는 키즈산업 (<a href="https://assets.kpmg.com/content/dam/kpmg/kr/pdf/2025/issue-monitor/%EC%82%BC%EC%A0%95KPMG-%EC%A0%80%EC%B6%9C%EC%83%9D_%EC%8B%9C%EB%8C%80_%EC%86%8D_%EA%B3%A8%EB%93%9C%ED%82%A4%EC%A6%88%EA%B0%80_%EC%9D%B4%EB%81%84%EB%8A%94_%ED%82%A4%EC%A6%88%EC%82%B0%EC%97%85-20250310.pdf" target="_blank">kpmg.com</a>)</span>
-            </div>
-            <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
-                <span style="color:#FF5722; font-weight:700; flex-shrink:0; min-width:24px;">4</span>
-                <span style="color:rgba(255,255,255,0.85);">[데이터 섹션 C] 출생률 저하 시대, 성장하는 키즈 디자인 시장 분석 - 트렌드 (<a href="https://www.designdb.com/?menuno=1432&bbsno=1698&siteno=15&act=view&ztag=rO0ABXQAOTxjYWxsIHR5cGU9ImJvYXJkIiBubz0iOTkwIiBza2luPSJwaG90b19iYnNfMjAxOSI%2BPC9jYWxsPg%3D%3D" target="_blank">designdb.com</a>)</span>
-            </div>
-            <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
-                <span style="color:#FF5722; font-weight:700; flex-shrink:0; min-width:24px;">5</span>
-                <span style="color:rgba(255,255,255,0.85);">[데이터 섹션 C] '골드키즈' 키 성장 시장 급부상…FGO 건기식 대기업 경쟁 격화 (<a href="https://foodtoday.or.kr/mobile/article.html?no=197104" target="_blank">foodtoday.or.kr</a>)</span>
-            </div>
-            <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
-                <span style="color:#FF5722; font-weight:700; flex-shrink:0; min-width:24px;">6</span>
-                <span style="color:rgba(255,255,255,0.85);">[데이터 섹션 C] “키가 곧 스펙인데 천만원 쯤은”…쑥쑥 크는 성장호르몬 시장 ... (<a href="https://www.mk.co.kr/news/it/11200930" target="_blank">mk.co.kr</a>)</span>
-            </div>
-            <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
-                <span style="color:#FF5722; font-weight:700; flex-shrink:0; min-width:24px;">7</span>
-                <span style="color:rgba(255,255,255,0.85);">[데이터 섹션 C] 저출산 시대에도 키즈 시장은 '확장 중'… 한 아이에 10명 지갑 ... (<a href="http://www.newsian.co.kr/news/articleView.html?idxno=81195" target="_blank">newsian.co.kr</a>)</span>
-            </div>
-            <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
-                <span style="color:#FF5722; font-weight:700; flex-shrink:0; min-width:24px;">8</span>
-                <span style="color:rgba(255,255,255,0.85);">[데이터 섹션 C] 키 성장 건기식 스테디셀러…올 시장 800억대 (<a href="https://www.thinkfood.co.kr/news/articleView.html?idxno=95594" target="_blank">thinkfood.co.kr</a>)</span>
-            </div>
-            <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
-                <span style="color:#FF5722; font-weight:700; flex-shrink:0; min-width:24px;">9</span>
-                <span style="color:rgba(255,255,255,0.85);">[데이터 섹션 C] 어린이 키 성장 개선 식의약 소재 개발 현황 - 식품산업과 영양 (<a href="https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE11654728" target="_blank">dbpia.co.kr</a>)</span>
-            </div>
-            <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
-                <span style="color:#FF5722; font-weight:700; flex-shrink:0; min-width:24px;">10</span>
-                <span style="color:rgba(255,255,255,0.85);">[데이터 섹션 C] 어린이 키성장 건강기능식품 관심 커져 (<a href="http://bokuennews.com/news/article.html?no=206838" target="_blank">bokuennews.com</a>)</span>
-            </div>
-            <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
-                <span style="color:#FF5722; font-weight:700; flex-shrink:0; min-width:24px;">11</span>
-                <span style="color:rgba(255,255,255,0.85);">[데이터 섹션 C] "골든키즈 잡아라" 어린이 건기식 대세는 '키 성장·츄어블' (<a href="https://www.mkhealth.co.kr/news/articleView.html?idxno=67975" target="_blank">mkhealth.co.kr</a>)</span>
-            </div>
-            <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
-                <span style="color:#FF5722; font-weight:700; flex-shrink:0; min-width:24px;">12</span>
-                <span style="color:rgba(255,255,255,0.85);">[데이터 섹션 C] 쑥쑥 크는 '자녀 키 성장' 시장…호르몬제 이어 건기식 출시 열풍 (<a href="https://daily.hankooki.com/news/articleView.html?idxno=1252036" target="_blank">daily.hankooki.com</a>)</span>
-            </div>
-            <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
-                <span style="color:#FF5722; font-weight:700; flex-shrink:0; min-width:24px;">13</span>
-                <span style="color:rgba(255,255,255,0.85);">[데이터 섹션 C] 키클래오, '2025 아시아 톱 브랜드 대상' 수상… 과학으로 ... (<a href="https://m.neumedmall.com/skin-skin15/article/%EB%B3%B4%EB%8F%84%EC%9E%90%EB%A3%8C/2/163/" target="_blank">neumedmall.com</a>)</span>
-            </div>
-            <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
-                <span style="color:#FF5722; font-weight:700; flex-shrink:0; min-width:24px;">14</span>
-                <span style="color:rgba(255,255,255,0.85);">[데이터 섹션 C] [Health&amp;] 간식처럼 맛있는 '키성장 돕는 젤리' 편식 심한 아이 ... (<a href="https://www.joongang.co.kr/article/25359645" target="_blank">joongang.co.kr</a>)</span>
-            </div>
-            <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
-                <span style="color:#FF5722; font-weight:700; flex-shrink:0; min-width:24px;">15</span>
-                <span style="color:rgba(255,255,255,0.85);">[데이터 섹션 C] 뉴메드엘앤비 '키클래오', 키성장 건강기능식품 TOP 브랜드 ... (<a href="https://news.nate.com/view/20250525n03486" target="_blank">news.nate.com</a>)</span>
-            </div>
-            <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
-                <span style="color:#FF5722; font-weight:700; flex-shrink:0; min-width:24px;">16</span>
-                <span style="color:rgba(255,255,255,0.85);">[데이터 섹션 C] 어린이 키성장 필수템, 엄마들이 선택한 브랜드는? (<a href="https://livesnews.com/news/article.html?no=56727" target="_blank">livesnews.com</a>)</span>
-            </div>
-            <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
-                <span style="color:#FF5722; font-weight:700; flex-shrink:0; min-width:24px;">17</span>
-                <span style="color:rgba(255,255,255,0.85);">[데이터 섹션 C] 동아제약, 어린이 키 성장을 지원하는 '미니막스 랩 ... (<a href="https://www.dapharm.com/ko/newsroom/press/717" target="_blank">dapharm.com</a>)</span>
-            </div>
-            <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
-                <span style="color:#FF5722; font-weight:700; flex-shrink:0; min-width:24px;">18</span>
-                <span style="color:rgba(255,255,255,0.85);">[데이터 섹션 C] 키클래오, 성장기 어린이 건강기능식품 브랜드로 인기 ... (<a href="https://newsam.co.kr/mobile/article.html?no=41493" target="_blank">newsam.co.kr</a>)</span>
-            </div>
-            <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
-                <span style="color:#FF5722; font-weight:700; flex-shrink:0; min-width:24px;">19</span>
-                <span style="color:rgba(255,255,255,0.85);">[데이터 섹션 C] 아이클타임, 인체적용시험 기반 키 성장 제품 '알파·프로' 공개 (<a href="https://www.thevaluenews.co.kr/news/198047" target="_blank">thevaluenews.co.kr</a>)</span>
-            </div>
-            <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
-                <span style="color:#FF5722; font-weight:700; flex-shrink:0; min-width:24px;">20</span>
-                <span style="color:rgba(255,255,255,0.85);">[데이터 섹션 C] 어린이키크는영양제 키즈텐042 성장기아이에게 추천 (<a href="https://blog.naver.com/daisy_yam/223553555460" target="_blank">blog.naver.com</a>)</span>
-            </div>
-            <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
-                <span style="color:#FF5722; font-weight:700; flex-shrink:0; min-width:24px;">21</span>
-                <span style="color:rgba(255,255,255,0.85);">[데이터 섹션 C] 키 성장 영양제, “정말 키 크는 성분일까?”… 성분별 특장점 ... (<a href="https://news.hidoc.co.kr/news/articleView.html?idxno=53616" target="_blank">news.hidoc.co.kr</a>)</span>
-            </div>
-            <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
-                <span style="color:#FF5722; font-weight:700; flex-shrink:0; min-width:24px;">22</span>
-                <span style="color:rgba(255,255,255,0.85);">[데이터 섹션 C] 키성장 영양제(키크는 영양제) 추천 리스트 : 네이버 블로그 (<a href="https://blog.naver.com/fn3995/222182416634" target="_blank">blog.naver.com</a>)</span>
-            </div>
-            <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
-                <span style="color:#FF5722; font-weight:700; flex-shrink:0; min-width:24px;">23</span>
-                <span style="color:rgba(255,255,255,0.85);">[데이터 섹션 C] 키크는 영양제 구매 가이드 I 키성장 전문가 이수경 박사가 ... (<a href="https://www.youtube.com/watch?v=4XCgm2C7D3A" target="_blank">youtube.com</a>)</span>
-            </div>
-            <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
-                <span style="color:#FF5722; font-weight:700; flex-shrink:0; min-width:24px;">24</span>
-                <span style="color:rgba(255,255,255,0.85);">[데이터 섹션 C] 정관장·동아제약 진입에 '지각변동'…종근당 키 성장 독주 위기 (<a href="https://foodtoday.or.kr/news/article.html?no=195724" target="_blank">foodtoday.or.kr</a>)</span>
-            </div>
-            <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
-                <span style="color:#FF5722; font-weight:700; flex-shrink:0; min-width:24px;">25</span>
-                <span style="color:rgba(255,255,255,0.85);">[데이터 섹션 C] “같은 HT042인데 뭐가 다를까”… 키 성장 건기식, 제품별 ... (<a href="https://v.daum.net/v/20250320162313607" target="_blank">v.daum.net</a>)</span>
-            </div>
-            <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
-                <span style="color:#FF5722; font-weight:700; flex-shrink:0; min-width:24px;">26</span>
-                <span style="color:rgba(255,255,255,0.85);">[데이터 섹션 C] #광고 . . 요즘 워낙 다양한 어린이 키 성장 제품들이 많지만, 전 ... (<a href="https://www.instagram.com/reel/DMK4RFtPmUI/" target="_blank">instagram.com</a>)</span>
-            </div>
-            <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
-                <span style="color:#FF5722; font-weight:700; flex-shrink:0; min-width:24px;">27</span>
-                <span style="color:rgba(255,255,255,0.85);">[데이터 섹션 C] 2024ver. '좋은' 키즈 종합비타민은?! 성장클리닉 원장님이 딱 ... (<a href="https://www.youtube.com/watch?v=tbf2MucSKjI" target="_blank">youtube.com</a>)</span>
-            </div>
-            <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
-                <span style="color:#FF5722; font-weight:700; flex-shrink:0; min-width:24px;">28</span>
-                <span style="color:rgba(255,255,255,0.85);">[데이터 섹션 C] 미국 키성장 보조제 (<a href="https://www.slimvera.net/height-growth-supplements-a.html" target="_blank">slimvera.net</a>)</span>
-            </div>
-            <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
-                <span style="color:#FF5722; font-weight:700; flex-shrink:0; min-width:24px;">29</span>
-                <span style="color:rgba(255,255,255,0.85);">[데이터 섹션 C] Children's Dietary Supplements Market Size Report, 2033 (<a href="https://www.grandviewresearch.com/industry-analysis/childrens-dietary-supplements-market" target="_blank">grandviewresearch.com</a>)</span>
-            </div>
-            <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
-                <span style="color:#FF5722; font-weight:700; flex-shrink:0; min-width:24px;">30</span>
-                <span style="color:rgba(255,255,255,0.85);">[데이터 섹션 C] Pediatric Supplement Market (2025 - 2035) (<a href="https://www.futuremarketinsights.com/reports/pediatrics-supplements-market" target="_blank">futuremarketinsights.com</a>)</span>
-            </div>
-            <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
-                <span style="color:#FF5722; font-weight:700; flex-shrink:0; min-width:24px;">31</span>
-                <span style="color:rgba(255,255,255,0.85);">[데이터 섹션 C] Pediatric Supplements Market Size, Growth, Global ... (<a href="https://www.zionmarketresearch.com/report/pediatric-supplements-market" target="_blank">zionmarketresearch.com</a>)</span>
-            </div>
-            <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
-                <span style="color:#FF5722; font-weight:700; flex-shrink:0; min-width:24px;">32</span>
-                <span style="color:rgba(255,255,255,0.85);">[데이터 섹션 C] Global Pediatric Supplements Market 2024–2033 (<a href="https://www.custommarketinsights.com/report/pediatric-supplements-market/" target="_blank">custommarketinsights.com</a>)</span>
-            </div>
-            <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
-                <span style="color:#FF5722; font-weight:700; flex-shrink:0; min-width:24px;">33</span>
-                <span style="color:rgba(255,255,255,0.85);">[데이터 섹션 C] Infant Formula Foods Market Size Expected to Reach USD ... (<a href="https://finance.yahoo.com/news/infant-formula-foods-market-size-143000187.html" target="_blank">finance.yahoo.com</a>)</span>
-            </div>
-            <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
-                <span style="color:#FF5722; font-weight:700; flex-shrink:0; min-width:24px;">34</span>
-                <span style="color:rgba(255,255,255,0.85);">[데이터 섹션 C] United States Pediatric Supplements Market Size, Trends ... (<a href="https://www.linkedin.com/pulse/united-states-pediatric-supplements-market-size-trends-viiaf" target="_blank">linkedin.com</a>)</span>
-            </div>
-            <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
-                <span style="color:#FF5722; font-weight:700; flex-shrink:0; min-width:24px;">35</span>
-                <span style="color:rgba(255,255,255,0.85);">[데이터 섹션 C] 3 key market shifts expected in childhood nutrition (<a href="https://www.nutraingredients.com/Article/2025/11/13/3-key-market-shifts-expected-in-childhood-nutrition/" target="_blank">nutraingredients.com</a>)</span>
-            </div>
-            <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
-                <span style="color:#FF5722; font-weight:700; flex-shrink:0; min-width:24px;">36</span>
-                <span style="color:rgba(255,255,255,0.85);">[데이터 섹션 C] Children's Health Supplement Market Size, Share and ... (<a href="https://www.credenceresearch.com/report/childrens-health-supplement-market" target="_blank">credenceresearch.com</a>)</span>
-            </div>
-            <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
-                <span style="color:#FF5722; font-weight:700; flex-shrink:0; min-width:24px;">37</span>
-                <span style="color:rgba(255,255,255,0.85);">[데이터 섹션 C] Children's Supplements Market Consumption Trends (<a href="https://www.marketreportanalytics.com/reports/childrens-supplements-184652" target="_blank">marketreportanalytics.com</a>)</span>
-            </div>
-            <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
-                <span style="color:#FF5722; font-weight:700; flex-shrink:0; min-width:24px;">38</span>
-                <span style="color:rgba(255,255,255,0.85);">[데이터 섹션 C] Children - Nutritional Supplements Market Statistics (<a href="https://www.grandviewresearch.com/horizon/statistics/nutritional-supplements-market/consumer-group/children/global" target="_blank">grandviewresearch.com</a>)</span>
-            </div>
-            <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
-                <span style="color:#FF5722; font-weight:700; flex-shrink:0; min-width:24px;">39</span>
-                <span style="color:rgba(255,255,255,0.85);">[데이터 섹션 C] Amazon 경쟁사 상품 (다수, 해당 URL 포함) (<a href="https://www.amazon.com/s?k=%EC%96%B4%EB%A6%B0%EC%9D%B4+%ED%82%A4%EC%84%B1%EC%9E%A5" target="_blank">amazon.com</a>)</span>
-            </div>
-            <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
-                <span style="color:#FF5722; font-weight:700; flex-shrink:0; min-width:24px;">40</span>
-                <span style="color:rgba(255,255,255,0.85);">[데이터 섹션 C] Baidu 경쟁사 상품 (URL 포함) (<a href="http://nourl.ubs.baidu.com/279" target="_blank">nourl.ubs.baidu.com</a>)</span>
-            </div>
-            <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
-                <span style="color:#FF5722; font-weight:700; flex-shrink:0; min-width:24px;">41</span>
-                <span style="color:rgba(255,255,255,0.85);">[데이터 섹션 C] Alibaba 경쟁사 상품 (다수, 해당 URL 포함) (<a href="https://korean.alibaba.com/g/children-height-growth.html" target="_blank">alibaba.com</a>)</span>
-            </div>
-        </div>
-        <div class="slide-footer">
-            출처: NPD 보고서
+            <div class="slide-footer">출처: NPD 보고서</div>
         </div>
     </div>
-</div>
 
-<script>
-    // viewport scale
-    function scaleSlides() {
-        var s = Math.min(window.innerWidth/1600, window.innerHeight/800);
-        document.querySelectorAll('.slide-inner').forEach(function(el) {
-            el.style.transform = 'scale('+s+')';
-            el.style.transformOrigin = 'center center';
-        });
-    }
-    window.addEventListener('resize', scaleSlides);
-    scaleSlides();
+    <!-- Slide 13: Risk -->
+    <div class="slide" id="slide-13">
+        <div class="slide-inner">
+            <div class="slide-header">03 기회 &amp; 전략 | 주요 리스크 및 대응 방안</div>
+            <div class="slide-body" style="display:flex; flex-direction:column; padding-bottom:20px;">
+                <div style="display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:16px; flex:1; min-height:0;">
+                    <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden; min-height:0;">
+                        <h2 style="font-size:20px; font-weight:700; color:#FF5722; margin:0 0 10px; flex-shrink:0;">중국 규제 변화 및 인허가 지연</h2>
+                        <p style="font-size:13px; line-height:1.75; flex:1; overflow:hidden; color:rgba(255,255,255,0.92);">중국 정부의 식품 안전 규제는 복잡하고 변화가 잦아 시장 진입에 큰 어려움과 지연을 초래할 수 있습니다.</p>
+                        <div style="border-top:1px solid rgba(255,255,255,0.1); margin-top:8px; padding-top:8px; font-size:11px; color:rgba(255,255,255,0.75); flex-shrink:0;">
+                            <strong>대응 방안:</strong> 현지 규제 전문가 협업, 사전 법규 파악, 유연한 전략 수립.
+                        </div>
+                    </div>
+                    <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden; min-height:0;">
+                        <h2 style="font-size:20px; font-weight:700; color:#FF5722; margin:0 0 10px; flex-shrink:0;">현지 경쟁 심화 및 가격 경쟁</h2>
+                        <p style="font-size:13px; line-height:1.75; flex:1; overflow:hidden; color:rgba(255,255,255,0.92);">이미 다수의 글로벌 및 현지 브랜드가 시장을 선점하고 있어, 치열한 가격 및 마케팅 경쟁에 직면할 수 있습니다.</p>
+                        <div style="border-top:1px solid rgba(255,255,255,0.1); margin-top:8px; padding-top:8px; font-size:11px; color:rgba(255,255,255,0.75); flex-shrink:0;">
+                            <strong>대응 방안:</strong> 제품 경쟁력 강화, UTP 기반 브랜드 스토리텔링, 채널 다각화.
+                        </div>
+                    </div>
+                    <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden; min-height:0;">
+                        <h2 style="font-size:20px; font-weight:700; color:#FF5722; margin:0 0 10px; flex-shrink:0;">브랜드 인지도 부족 및 소비자 신뢰 확보 어려움</h2>
+                        <p style="font-size:13px; line-height:1.75; flex:1; overflow:hidden; color:rgba(255,255,255,0.92);">신규 브랜드로서 중국 소비자들에게 인지도를 쌓고 신뢰를 얻는 데 많은 시간과 노력이 필요합니다.</p>
+                        <div style="border-top:1px solid rgba(255,255,255,0.1); margin-top:8px; padding-top:8px; font-size:11px; color:rgba(255,255,255,0.75); flex-shrink:0;">
+                            <strong>대응 방안:</strong> KOL/KOC 협업, 과학적 근거 공개, 디지털 마케팅 집중, 고객 후기 활성화.
+                        </div>
+                    </div>
+                    <div style="padding:20px 24px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; display:flex; flex-direction:column; overflow:hidden; min-height:0;">
+                        <h2 style="font-size:20px; font-weight:700; color:#FF5722; margin:0 0 10px; flex-shrink:0;">위조품 및 모방 상품 출현</h2>
+                        <p style="font-size:13px; line-height:1.75; flex:1; overflow:hidden; color:rgba(255,255,255,0.92);">중국 시장에서 인기 제품의 위조 및 모방 상품 출현은 브랜드 이미지와 매출에 심각한 타격을 줄 수 있습니다.</p>
+                        <div style="border-top:1px solid rgba(255,255,255,0.1); margin-top:8px; padding-top:8px; font-size:11px; color:rgba(255,255,255,0.75); flex-shrink:0;">
+                            <strong>대응 방안:</strong> 위조 방지 패키징, 상표권 등록, 정품 확인 시스템, 공식 채널 구매 유도.
+                        </div>
+                    </div>
+                </div>
+                <div class="insight-box">
+                    <h3 class="insight-box-title">핵심 인사이트</h3>
+                    <p class="insight-box-content">중국 시장 진출 시 규제, 경쟁, 인지도, 위조품 등 다양한 리스크에 직면할 수 있습니다. 사전 철저한 준비와 적극적인 대응 전략으로 위험을 최소화해야 합니다.</p>
+                </div>
+            </div>
+            <div class="slide-footer">출처: NPD 보고서</div>
+        </div>
+    </div>
 
-    // 전환
-    var slides = document.querySelectorAll('.slide');
-    var cur = 0, lock = false;
-    function show(n) {
-        slides[cur].classList.remove('active');
-        cur = (n + slides.length) % slides.length;
-        slides[cur].classList.add('active');
-        document.getElementById('slide-num').textContent = (cur+1)+' / '+slides.length;
-    }
-    document.addEventListener('keydown', function(e) {
-        if (e.key==='ArrowRight'||e.key===' '){e.preventDefault();show(cur+1);}
-        if (e.key==='ArrowLeft'){e.preventDefault();show(cur-1);}
-        if (e.key==='f'||e.key==='F'){document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen();}
-    });
-    document.addEventListener('wheel', function(e) {
-        e.preventDefault();
-        if (lock) return; lock=true;
-        show(e.deltaY>0?cur+1:cur-1);
-        setTimeout(function(){lock=false;},300);
-    },{passive:false});
-    
-    // Navigation buttons
-    document.getElementById('nav-prev').addEventListener('click', function() { show(cur - 1); });
-    document.getElementById('nav-next').addEventListener('click', function() { show(cur + 1); });
-    document.getElementById('fullscreen-btn').addEventListener('click', function() {
-        document.documentElement.requestFullscreen && document.documentElement.requestFullscreen();
-    });
+    <!-- Slide 14: Roadmap -->
+    <div class="slide" id="slide-14">
+        <div class="slide-inner">
+            <div class="slide-header">03 기회 &amp; 전략 | 실행 로드맵</div>
+            <div class="slide-body" style="display:flex; flex-direction:column; padding-bottom:20px;">
+                <div style="display:flex; flex-direction:row; align-items:flex-start; gap:0; flex:1; min-height:0;">
+                    <!-- 단기 -->
+                    <div style="flex:1; padding:24px 20px; border-top:3px solid #FF5722; display:flex; flex-direction:column; gap:8px;">
+                        <h2 style="font-size:18px; font-weight:700; margin:0;">단기 (0~12개월)</h2>
+                        <p style="font-size:13px; color:rgba(255,255,255,0.55); margin:0;">시장 진입 및 초기 기반 구축</p>
+                        <div style="height:1px; background:rgba(255,255,255,0.08); margin:4px 0;"></div>
+                        <ul style="font-size:14px; line-height:1.7; flex:1; padding-left:20px; margin:0;">
+                            <li>시장 조사 및 규제 분석 심화</li>
+                            <li>제품 개발 및 프로토타이핑</li>
+                            <li>중국 시장 진출 필수 인증 절차 진행</li>
+                            <li>온라인 채널 구축 (티몰, 징동 등)</li>
+                            <li>마케팅 전략 수립 및 KOL 리스트 확보</li>
+                        </ul>
+                        <div style="font-size:12px; color:#FF5722; font-weight:700; margin-top:auto; padding-top:8px; border-top:1px solid rgba(255,255,255,0.08);">
+                            마일스톤: 제품 개발 완료 및 온라인 채널 입점
+                        </div>
+                    </div>
+                    <!-- 중기 -->
+                    <div style="flex:1; padding:24px 20px; border-top:3px solid #FF5722; display:flex; flex-direction:column; gap:8px;">
+                        <h2 style="font-size:18px; font-weight:700; margin:0;">중기 (12~24개월)</h2>
+                        <p style="font-size:13px; color:rgba(255,255,255,0.55); margin:0;">시장 확장 및 브랜드 인지도 강화</p>
+                        <div style="height:1px; background:rgba(255,255,255,0.08); margin:4px 0;"></div>
+                        <ul style="font-size:14px; line-height:1.7; flex:1; padding-left:20px; margin:0;">
+                            <li>중국 시장 공식 론칭 및 판매 개시</li>
+                            <li>디지털 마케팅 집중 (KOL, 콘텐츠)</li>
+                            <li>고객 피드백 수렴 및 제품 개선</li>
+                            <li>중국 내 유통망 확장 (오프라인 채널 입점 시도)</li>
+                            <li>한국의 강점 부각 스토리텔링 강화</li>
+                        </ul>
+                        <div style="font-size:12px; color:#FF5722; font-weight:700; margin-top:auto; padding-top:8px; border-top:1px solid rgba(255,255,255,0.08);">
+                            마일스톤: 초기 시장 점유율 확보 및 오프라인 채널 확장 시작
+                        </div>
+                    </div>
+                    <!-- 장기 -->
+                    <div style="flex:1; padding:24px 20px; border-top:3px solid #FF5722; display:flex; flex-direction:column; gap:8px;">
+                        <h2 style="font-size:18px; font-weight:700; margin:0;">장기 (24개월 이후)</h2>
+                        <p style="font-size:13px; color:rgba(255,255,255,0.55); margin:0;">지속 성장 및 글로벌 시장 확대</p>
+                        <div style="height:1px; background:rgba(255,255,255,0.08); margin:4px 0;"></div>
+                        <ul style="font-size:14px; line-height:1.7; flex:1; padding-left:20px; margin:0;">
+                            <li>제품 라인업 확장 (기능성, 연령대별)</li>
+                            <li>오프라인 채널 강화 (백화점, 전문점)</li>
+                            <li>신규 시장 진출 검토 (동남아 등)</li>
+                            <li>R&amp;D 투자 확대 및 혁신 신제품 출시</li>
+                            <li>브랜드 로열티 구축 및 이미지 강화</li>
+                        </ul>
+                        <div style="font-size:12px; color:#FF5722; font-weight:700; margin-top:auto; padding-top:8px; border-top:1px solid rgba(255,255,255,0.08);">
+                            마일스톤: 중국 시장 선두 브랜드 도약 및 해외 시장 확장
+                        </div>
+                    </div>
+                </div>
+                <div class="insight-box">
+                    <h3 class="insight-box-title">핵심 인사이트</h3>
+                    <p class="insight-box-content">체계적인 로드맵을 통해 단기적으로는 시장 진입과 온라인 기반을 구축하고, 중장기적으로는 제품 및 채널을 확장하며 지속적인 성장을 추구합니다.</p>
+                </div>
+            </div>
+            <div class="slide-footer">출처: NPD 보고서</div>
+        </div>
+    </div>
 
-    show(0);
+    <!-- Slide 15: References -->
+    <div class="slide" id="slide-15">
+        <div class="slide-inner">
+            <div class="slide-header">참고 출처</div>
+            <div class="slide-body" style="display:flex; flex-direction:column; overflow-y:auto; padding-bottom:8px; gap:0;">
+                <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
+                    <span style="color:#FF5722; font-weight:700; flex-shrink:0; min-width:24px;">1</span>
+                    <span style="color:rgba(255,255,255,0.85);">[Hanmi Natural Nutrition] Kids plus calcium gold 360 pills x ... (<a href="https://global.gmarket.co.kr" target="_blank">global.gmarket.co.kr</a>)</span>
+                </div>
+                <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
+                    <span style="color:#FF5722; font-weight:700; flex-shrink:0; min-width:24px;">2</span>
+                    <span style="color:rgba(255,255,255,0.85);">Our precious child's growth, Iker! (<a href="https://www.ckdhc.com/en/brand/iker.do" target="_blank">www.ckdhc.com/en/brand/iker.do</a>)</span>
+                </div>
+                <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
+                    <span style="color:#FF5722; font-weight:700; flex-shrink:0; min-width:24px;">3</span>
+                    <span style="color:rgba(255,255,255,0.85);">How to help children with delayed growth? (<a href="https://en.chinacdc.cn/health_topics/nutrition_health/202306/t20230602_266502.html" target="_blank">en.chinacdc.cn/health_topics/nutrition_health/202306/t20230602_266502.html</a>)</span>
+                </div>
+                <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
+                    <span style="color:#FF5722; font-weight:700; flex-shrink:0; min-width:24px;">4</span>
+                    <span style="color:rgba(255,255,255,0.85);">Gongjin Kids 1 each (<a href="https://www.sayweee.com/en/product/Gongjin-Kids/2074928" target="_blank">www.sayweee.com/en/product/Gongjin-Kids/2074928</a>)</span>
+                </div>
+                <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
+                    <span style="color:#FF5722; font-weight:700; flex-shrink:0; min-width:24px;">5</span>
+                    <span style="color:rgba(255,255,255,0.85);">The a2 Milk Company to launch pediatric supplements in China in Q3/ (<a href="https://www.nutraingredients.com/Article/2026/02/23/the-a2-milk-company-to-launch-pediatric-supplements-in-china-in-q3/" target="_blank">www.nutraingredients.com/Article/2026/02/23/the-a2-milk-company-to-launch-pediatric-supplements-in-china-in-q3/</a>)</span>
+                </div>
+                <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
+                    <span style="color:#FF5722; font-weight:700; flex-shrink:0; min-width:24px;">6</span>
+                    <span style="color:rgba(255,255,255,0.85);">Chinese Clinical Trial Register (ChiCTR) (<a href="https://www.chictr.org.cn/showprojEN.html?proj=197034" target="_blank">www.chictr.org.cn/showprojEN.html?proj=197034</a>)</span>
+                </div>
+                <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
+                    <span style="color:#FF5722; font-weight:700; flex-shrink:0; min-width:24px;">7</span>
+                    <span style="color:rgba(255,255,255,0.85);">HIYA Kids Multivitamin Tablets – 15+ Essential Vitamins &amp; ... (<a href="https://www.amazon.com/HIYA-Kids-Multivitamin-Tablets-Development/dp/B0FWFWV6V" target="_blank">www.amazon.com/HIYA-Kids-Multivitamin-Tablets-Development/dp/B0FWFWV6V</a>)</span>
+                </div>
+                <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
+                    <span style="color:#FF5722; font-weight:700; flex-shrink:0; min-width:24px;">8</span>
+                    <span style="color:rgba(255,255,255,0.85);">(PDF) Clinical Study on Child's Height Growth of Mixtures ... (<a href="https://www.researchgate.net/publication/331900849_Clinical_Study_on_Child's_Height_Growth_of_Mixtures_of_Cynanchum_wilfordii_and_Phlomis_umbrosa_Extract" target="_blank">www.researchgate.net/publication/331900849_Clinical_Study_on_Child's_Height_Growth_of_Mixtures_of_Cynanchum_wilfordii_and_Phlomis_umbrosa_Extract</a>)</span>
+                </div>
+                <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
+                    <span style="color:#FF5722; font-weight:700; flex-shrink:0; min-width:24px;">9</span>
+                    <span style="color:rgba(255,255,255,0.85);">China Notifies Measure on Young Children Formula (as ... (<a href="https://apps.fas.usda.gov/newgainapi/api/report/downloadreportbyfilename?filename=China%20Notifies%20Measure%20on%20Young%20Children%20Formula_Beijing_China%20-%20Peoples%20Republic%20of_10-12-2018.pdf" target="_blank">apps.fas.usda.gov/newgainapi/api/report/downloadreportbyfilename?filename=China%20Notifies%20Measure%20on%20Young%20Children%20Formula_Beijing_China%20-%20Peoples%20Republic%20of_10-12-2018.pdf</a>)</span>
+                </div>
+                <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
+                    <span style="color:#FF5722; font-weight:700; flex-shrink:0; min-width:24px;">10</span>
+                    <span style="color:rgba(255,255,255,0.85);">Korean Candy That Makes You Tall (<a href="https://www.tiktok.com/discover/korean-candy-that-makes-you-tall" target="_blank">www.tiktok.com/discover/korean-candy-that-makes-you-tall</a>)</span>
+                </div>
+                <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
+                    <span style="color:#FF5722; font-weight:700; flex-shrink:0; min-width:24px;">11</span>
+                    <span style="color:rgba(255,255,255,0.85);">키성장 영양제 개별인정원료 경쟁...시장 재편되나 (<a href="http://www.dailypharm.com/Users/News/NewsView.html?ID=303845&REFERER=NP" target="_blank">www.dailypharm.com/Users/News/NewsView.html?ID=303845&REFERER=NP</a>)</span>
+                </div>
+                <div style="display:flex; gap:12px; padding:10px 0; font-size:14px; line-height:1.8;">
+                    <span style="color:#FF5722; font-weight:700; flex-shrink:0; min-width:24px;">12</span>
+                    <span style="color:rgba(255,255,255,0.85);">베트남서 일동후디스 '키성장 간식' 신드롬 (<a href="https://www.hankyung.com/economy/article/2021092815571" target="_blank">www.hankyung.com/economy/article/2021092815571</a>)</span>
+                </div>
+            </div>
+            <div class="slide-footer">출처: NPD 보고서</div>
+        </div>
+    </div>
 
-    // Line Chart JS (Slide 4)
-    (function() {
-        var ACCENT = '#FF5722';
-        var pts = [
-            {l:'2024.04', v:40}, {l:'2024.07', v:45}, {l:'2024.10', v:55},
-            {l:'2025.01', v:60}, {l:'2025.04', v:70}, {l:'2025.07', v:75},
-            {l:'2025.10', v:85}, {l:'2026.04', v:95}
-        ];
-        function draw() {
-            var cv = document.getElementById('trendChart');
-            if (!cv) return;
-            var par = cv.parentElement;
-            var W = par.clientWidth || 1300, H = par.clientHeight || 350;
-            cv.width = W; cv.height = H;
-            var ctx = cv.getContext('2d');
-            var PL=60, PR=20, PT=20, PB=45;
-            var cW=W-PL-PR, cH=H-PT-PB;
-            var maxV=100;
-            function xp(i){return PL + i/(pts.length-1)*cW;}
-            function yp(v){return PT + cH - v/maxV*cH;}
-            // 그리드 + Y축 레이블
-            ctx.font='11px "Noto Sans KR", sans-serif'; ctx.textAlign='right'; ctx.fillStyle='rgba(255,255,255,0.4)';
-            [0,25,50,75,100].forEach(function(v){
-                var y=yp(v);
-                ctx.strokeStyle='rgba(255,255,255,0.07)'; ctx.lineWidth=1;
-                ctx.beginPath(); ctx.moveTo(PL,y); ctx.lineTo(PL+cW,y); ctx.stroke();
-                ctx.fillText(v,PL-6,y+4);
-            });
-            // 면적 그라디언트
-            var gr=ctx.createLinearGradient(0,PT,0,PT+cH);
-            gr.addColorStop(0,ACCENT+'55'); gr.addColorStop(1,ACCENT+'05');
-            ctx.beginPath();
-            ctx.moveTo(xp(0),yp(0));
-            pts.forEach(function(d,i){ctx.lineTo(xp(i),yp(d.v));});
-            ctx.lineTo(xp(pts.length-1),yp(0)); ctx.closePath();
-            ctx.fillStyle=gr; ctx.fill();
-            // 선
-            ctx.beginPath(); ctx.strokeStyle=ACCENT; ctx.lineWidth=2.5; ctx.lineJoin='round';
-            pts.forEach(function(d,i){i?ctx.lineTo(xp(i),yp(d.v)):ctx.moveTo(xp(i),yp(d.v));});
-            ctx.stroke();
-            // 점 + 값 레이블 + X축 레이블
-            ctx.fillStyle=ACCENT; ctx.textAlign='center'; ctx.font='11px "Noto Sans KR", sans-serif';
-            pts.forEach(function(d,i){
-                ctx.beginPath(); ctx.arc(xp(i),yp(d.v),4,0,2*Math.PI); ctx.fill();
-                ctx.fillStyle='rgba(255,255,255,0.7)';
-                ctx.fillText(d.v, xp(i), yp(d.v)-10);
-                ctx.fillStyle='rgba(255,255,255,0.4)';
-                ctx.fillText(d.l, xp(i), H-8);
-                ctx.fillStyle=ACCENT;
+
+    <script>
+        // viewport scale
+        function scaleSlides() {
+            var s = Math.min(window.innerWidth/1600, window.innerHeight/800);
+            document.querySelectorAll('.slide-inner').forEach(function(el) {
+                el.style.transform = 'scale('+s+')';
+                el.style.transformOrigin = 'center center';
             });
         }
-        if(document.fonts) document.fonts.ready.then(draw); else window.addEventListener('load',draw);
-        window.addEventListener('resize',draw);
-    })();
-</script>
+        window.addEventListener('resize', scaleSlides);
+        scaleSlides();
+
+        // 전환
+        var slides = document.querySelectorAll('.slide');
+        var cur = 0, lock = false;
+        function show(n) {
+            slides[cur].classList.remove('active');
+            cur = (n + slides.length) % slides.length;
+            slides[cur].classList.add('active');
+            document.getElementById('slide-num-display').textContent = (cur+1)+' / '+slides.length;
+        }
+        document.addEventListener('keydown', function(e) {
+            if (e.key==='ArrowRight'||e.key===' '){e.preventDefault();show(cur+1);}
+            if (e.key==='ArrowLeft'){e.preventDefault();show(cur-1);}
+            if (e.key==='f'||e.key==='F'){document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen();}
+        });
+        document.addEventListener('wheel', function(e) {
+            e.preventDefault();
+            if (lock) return; lock=true;
+            show(e.deltaY>0?cur+1:cur-1);
+            setTimeout(function(){lock=false;},300);
+        },{passive:false});
+
+        document.getElementById('prev-slide').addEventListener('click', function() { show(cur - 1); });
+        document.getElementById('next-slide').addEventListener('click', function() { show(cur + 1); });
+        document.getElementById('fullscreen-toggle').addEventListener('click', function() {
+            if (document.documentElement.requestFullscreen) {
+                document.documentElement.requestFullscreen();
+            }
+        });
+
+        show(0);
+
+        // Line Chart JS (Slide 4)
+        (function() {
+            var ACCENT = '#FF5722';
+            /* 데이터 부재로 인해, 보고서의 '데이터 없음' 명시를 반영하여 평탄한 선으로 시각화 */
+            var pts = Array.from({length: 24}, (_, i) => {
+                const month = (i + 5) % 12 + 1; // Start from May (5)
+                const year = Math.floor((i + 4) / 12) + 23; // Start from 2023
+                const label = `${year}.${month < 10 ? '0' : ''}${month}`;
+                return {v: 50, l: label}; // Flat line at 50 to represent "no specific trend data"
+            });
+
+            function draw() {
+                var cv = document.getElementById('trendChart');
+                if (!cv) return;
+                var par = cv.parentElement;
+                var W = par.clientWidth || 1300, H = par.clientHeight || 350;
+                cv.width = W; cv.height = H;
+                var ctx = cv.getContext('2d');
+                var PL=60, PR=20, PT=20, PB=45;
+                var cW=W-PL-PR, cH=H-PT-PB;
+                var maxV=100;
+                function xp(i){return PL + i/(pts.length-1)*cW;}
+                function yp(v){return PT + cH - v/maxV*cH;}
+
+                // 그리드 + Y축 레이블
+                ctx.font='11px "Noto Sans KR", sans-serif'; ctx.textAlign='right'; ctx.fillStyle='rgba(255,255,255,0.4)';
+                [0,25,50,75,100].forEach(function(v){
+                    var y=yp(v);
+                    ctx.strokeStyle='rgba(255,255,255,0.07)'; ctx.lineWidth=1;
+                    ctx.beginPath(); ctx.moveTo(PL,y); ctx.lineTo(PL+cW,y); ctx.stroke();
+                    ctx.fillText(v,PL-6,y+4);
+                });
+
+                // 면적 그라디언트
+                var gr=ctx.createLinearGradient(0,PT,0,PT+cH);
+                gr.addColorStop(0,ACCENT+'55'); gr.addColorStop(1,ACCENT+'05');
+                ctx.beginPath();
+                ctx.moveTo(xp(0),yp(0));
+                pts.forEach(function(d,i){ctx.lineTo(xp(i),yp(d.v));});
+                ctx.lineTo(xp(pts.length-1),yp(0)); ctx.closePath();
+                ctx.fillStyle=gr; ctx.fill();
+
+                // 선
+                ctx.beginPath(); ctx.strokeStyle=ACCENT; ctx.lineWidth=2.5; ctx.lineJoin='round';
+                pts.forEach(function(d,i){i?ctx.lineTo(xp(i),yp(d.v)):ctx.moveTo(xp(i),yp(d.v));});
+                ctx.stroke();
+
+                // 점 + 값 레이블 + X축 레이블
+                ctx.fillStyle=ACCENT; ctx.textAlign='center'; ctx.font='11px "Noto Sans KR", sans-serif';
+                pts.forEach(function(d,i){
+                    ctx.beginPath(); ctx.arc(xp(i),yp(d.v),4,0,2*Math.PI); ctx.fill();
+                    ctx.fillStyle='rgba(255,255,255,0.7)';
+                    ctx.fillText(d.v, xp(i), yp(d.v)-10);
+                    ctx.fillStyle='rgba(255,255,255,0.4)';
+                    if (i % 3 === 0) { // Show every 3rd month label to avoid clutter
+                        ctx.fillText(d.l, xp(i), H-8);
+                    }
+                    ctx.fillStyle=ACCENT;
+                });
+            }
+            if(document.fonts) document.fonts.ready.then(draw); else window.addEventListener('load',draw);
+            window.addEventListener('resize',draw);
+        })();
+    </script>
 <script>
 (function() {
   var contentScales = {};
