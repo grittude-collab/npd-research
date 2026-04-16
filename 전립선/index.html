@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>전립선 건강 기능성 제품 시장 진입 전략 보고서</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #1a1a1a;
+    --accent: #FF5722;
+    --text-primary: #fff;
+    --text-secondary: rgba(255, 255, 255, 0.7);
+    --text-light: rgba(255, 255, 255, 0.5);
+    --border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  html, body {
+    margin: 0; padding: 0; overflow: hidden;
+    background: var(--bg); width: 100%; height: 100%;
+    font-family: 'Noto Sans KR', sans-serif;
+    color: var(--text-primary);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  .slide {
+    position: fixed; top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    display: none;
+    align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .slide.active { display: flex; }
+  .slide-inner {
+    width: 1600px; height: 800px;
+    position: relative; overflow: hidden;
+    box-sizing: border-box;
+    background: var(--bg);
+  }
+  .slide-header {
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 100px; padding: 0 80px;
+    display: flex; align-items: flex-end; padding-bottom: 16px;
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+  .slide-body {
+    position: absolute; top: 100px; left: 0; right: 0;
+    bottom: 50px; padding: 20px 80px 0;
+    overflow: hidden;
+    color: var(--text-primary);
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1.6;
+  }
+  .slide-footer {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 50px; padding: 0 80px;
+    display: flex; align-items: center; justify-content: flex-end;
+    font-size: 13px; opacity: 0.5;
+    color: var(--text-primary);
+    font-weight: 300;
+  }
+
+  /* Typography */
+  h1 { font-size: 44px; font-weight: 900; margin: 0; }
+  h2 { font-size: 24px; font-weight: 600; margin: 0; }
+  p, div { font-size: 18px; font-weight: 400; line-height: 1.6; margin: 0; }
+  small { font-size: 13px; font-weight: 300; }
+  strong { font-weight: 700; }
+
+  /* Common Components */
+  .insight-box {
+    border-left: 3px solid var(--accent);
+    padding: 10px 16px;
+    background: rgba(255, 87, 34, 0.07); /* var(--accent) with 0.07 opacity */
+    margin-bottom: 0;
+    flex-shrink: 0;
+  }
+  .insight-box-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--accent);
+    margin: 0 0 3px;
+  }
+  .insight-box-content {
+    font-size: 13px;
+    line-height: 1.5;
+    margin: 0;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+
+  /* Navigation UI */
+  .nav-btn {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 100;
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+    border: none;
+    padding: 12px 18px;
+    cursor: pointer;
+    font-size: 20px;
+    border-radius: 4px;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+  }
+  .nav-btn:hover {
+    opacity: 1;
+  }
+  .nav-btn.prev { left: 16px; }
+  .nav-btn.next { right: 16px; }
+  #slide-num {
+    position: fixed;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    color: var(--text-primary);
+    font-size: 14px;
+    opacity: 0.7;
+  }
+  .fullscreen-btn {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    z-index: 100;
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 4px;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+  }
+  .fullscreen-btn:hover {
+    opacity: 1;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+</style>
+</head>
+<body>
+
+<!-- Navigation UI -->
+<button class="nav-btn prev" onclick="show(cur-1)">&#10094;</button>
+<button class="nav-btn next" onclick="show(cur+1)">&#10095;</button>
+<div id="slide-num">1 / 15</div>
+<button class="fullscreen-btn" onclick="document.documentElement.requestFullscreen()">&#x2922;</button>
+
+<!-- Slide 1: Cover -->
+<div class="slide active" id="slide-1">
+  <div class="slide-inner" style="background:var(--bg); display:flex; align-items:center; justify-content:center; flex-direction:column; text-align:center; padding: 0 80px;">
+    <div style="font-size: 24px; font-weight: 500; margin-bottom: 20px; color: var(--text-light);">전립선 건강 기능성 제품 시장 진입 전략</div>
+    <h1 style="font-family: 'Archivo Black', sans-serif; font-size: 72px; color: var(--text-primary); line-height: 1.2; margin-bottom: 30px;">NPD 시장 분석</h1>
+    <div style="font-size: 20px; font-weight: 400; color: var(--text-secondary); margin-bottom: 40px;">2026년 4월 16일</div>
+    <p style="font-size: 24px; font-weight: 500; color: var(--text-primary); line-height: 1.4; max-width: 800px;">
+      하락 트렌드 속 틈새시장 공략을 위한<br>차별화된 전립선 건강 제품 개발 및 시장 진입 전략 제안
+    </p>
+  </div>
+</div>
+
+<!-- Slide 2: Section Divider "01 시장 현황" -->
+<div class="slide" id="slide-2">
+  <div class="slide-inner" style="background:var(--accent); display:flex; align-items:center; justify-content:center; flex-direction:column; text-align:center;">
+    <div style="font-size:13px; letter-spacing:0.2em; text-transform:uppercase; opacity:0.6; margin-bottom:16px; color:#fff;">CHAPTER 01</div>
+    <div style="font-size:64px; font-weight:900; color:#fff; line-height:1;">01</div>
+    <div style="font-size:32px; font-weight:400; color:#fff; margin-top:16px; opacity:0.9;">시장 현황</div>
+    <div style="width:60px; height:3px; background:#fff; margin-top:24px;"></div>
+  </div>
+</div>
+
+<!-- Slide 3: Big Number -->
+<div class="slide" id="slide-3">
+  <div class="slide-inner">
+    <div class="slide-header">01 시장현황 | Market Opportunity Scorecard</div>
+    <div class="slide-body" style="display:flex; flex-direction:column; gap:16px;">
+      <div style="display:flex; gap:16px; align-items:stretch; flex:1; min-height:0;">
+        <!-- Card 1: 시장 성장성 (검색 트렌드) -->
+        <div style="flex:1; padding:18px 20px; display:flex; flex-direction:column; gap:4px; border:1px solid var(--border-color); border-radius:6px; overflow:hidden;">
+          <h3 style="font-size:14px; opacity:0.65; margin:0 0 4px; font-weight:500;">시장 성장성 (검색 트렌드)</h3>
+          <div style="font-size:48px; font-weight:900; line-height:1; margin:0 0 6px; color:var(--accent);">2점</div>
+          <p style="font-size:12px; line-height:1.5; opacity:0.75; margin:0 0 12px; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
+            2년간 뚜렷한 하락세, 최근 급감 (전년 동기 대비 -66.6%)&#8305;[1]. 소비자 관심도 감소 시사.
+          </p>
+          <div style="flex:1; min-height:80px;">
+            <svg style="width:100%;height:80px;" viewBox="0 0 200 60" preserveAspectRatio="none">
+              <defs><linearGradient id="mg1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#FF572255"/><stop offset="100%" stop-color="#FF572205"/></linearGradient></defs>
+              <polygon points="0,60 0.0,9.2 8.3,5.4 16.7,8.8 25.0,7.3 33.3,5.0 41.7,9.9 50.0,5.2 58.3,7.0 66.7,6.1 75.0,6.2 83.3,8.0 91.7,7.6 100.0,8.5 108.3,9.7 116.7,17.0 125.0,13.3 133.3,10.9 141.7,15.4 150.0,14.4 158.3,16.4 166.7,18.4 175.0,14.4 183.3,24.4 191.7,22.2 200.0,42.8 200,60" fill="url(#mg1)"/>
+              <polyline points="0.0,9.2 8.3,5.4 16.7,8.8 25.0,7.3 33.3,5.0 41.7,9.9 50.0,5.2 58.3,7.0 66.7,6.1 75.0,6.2 83.3,8.0 91.7,7.6 100.0,8.5 108.3,9.7 116.7,17.0 125.0,13.3 133.3,10.9 141.7,15.4 150.0,14.4 158.3,16.4 166.7,18.4 175.0,14.4 183.3,24.4 191.7,22.2 200.0,42.8" fill="none" stroke="var(--accent)" stroke-width="2"/>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Card 2: 소비자 관심도 (월간 검색수) -->
+        <div style="flex:1; padding:18px 20px; display:flex; flex-direction:column; gap:4px; border:1px solid var(--border-color); border-radius:6px; overflow:hidden;">
+          <h3 style="font-size:14px; opacity:0.65; margin:0 0 4px; font-weight:500;">소비자 관심도 (월간 검색수)</h3>
+          <div style="font-size:48px; font-weight:900; line-height:1; margin:0 0 6px; color:var(--accent);" id="card2Accent"><span id="card2Total">14,450회</span></div>
+          <p style="font-size:12px; line-height:1.5; opacity:0.75; margin:0 0 12px; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
+            24개월 기준 역산 최저/평균/최고 검색수&#8305;[2].
+          </p>
+          <div id="card2Bar" style="display:flex;align-items:flex-end;gap:10px;flex:1;padding-top:4px;"></div>
+          <script>
+            (function() {
+              var barData = {min: 14450, avg: 39835, max: 46166, total: 14450};
+              var ACCENT = getComputedStyle(document.documentElement).getPropertyValue('--accent') || '#FF5722';
+              function fmtNum(n){return n>=10000?(Math.round(n/1000)+'천'):n.toLocaleString();}
+              function render(){
+                var el = document.getElementById('card2Bar');
+                if(!el) return;
+                var mx = barData.max || 1;
+                el.innerHTML = ['min','avg','max'].map(function(k,i){
+                  var v = barData[k]; var h = Math.max(8, Math.round(50*v/mx));
+                  var op = [0.35,0.65,1][i]; var lbl = ['최저','평균','최고'][i];
+                  var colorStyle = i===2 ? 'color:'+ACCENT+';' : '';
+                  return '<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;">'
+                    +'<div style="font-size:9px;opacity:0.5;'+colorStyle+'">'+lbl+'</div>'
+                    +'<div style="width:100%;background:'+ACCENT+';opacity:'+op+';height:'+h+'px;border-radius:2px 2px 0 0;"></div>'
+                    +'<div style="font-size:10px;white-space:nowrap;'+colorStyle+'">'+fmtNum(v)+'회</div>'
+                    +'</div>';
+                }).join('');
+                var tot = document.getElementById('card2Total');
+                if(tot) tot.textContent = fmtNum(barData.total)+'회';
+              }
+              if(document.fonts) document.fonts.ready.then(render); else window.addEventListener('load',render);
+            })();
+          </script>
+        </div>
+
+        <!-- Card 3: 전체시장 규모 및 트렌드 -->
+        <div style="flex:1; padding:18px 20px; display:flex; flex-direction:column; gap:4px; border:1px solid var(--border-color); border-radius:6px; overflow:hidden;">
+          <h3 style="font-size:14px; opacity:0.65; margin:0 0 4px; font-weight:500;">전체시장 규모 및 트렌드</h3>
+          <div style="font-size:48px; font-weight:900; line-height:1; margin:0 0 6px; color:var(--accent);">3점</div>
+          <p style="font-size:12px; line-height:1.5; opacity:0.75; margin:0 0 12px; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
+            2천억 원대 추정치 존재&#8305;[4, 5, 7]. 명확한 통계 부재하나, 일정 규모 이상 시장 형성 가능성.
+          </p>
+          <div style="display:flex; flex-direction:column; gap:5px; flex:1; overflow:hidden;">
+            <a href="https://www.kukinews.com/newsView/kuk202403220268" target="_blank" style="font-size:11px; line-height:1.4; padding:5px 8px; background:rgba(255,255,255,0.04); border-radius:3px; border-left:2px solid var(--accent); color:inherit; text-decoration:none; display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+              "빅파마는 왜 방사성의약품에 배팅하나 [글로벌 트렌드로 읽는 K-제약바...]" &#8212; Kukinews
+            </a>
+            <a href="https://www.dailypharm.com/Users/News/NewsView.html?ID=305101" target="_blank" style="font-size:11px; line-height:1.4; padding:5px 8px; background:rgba(255,255,255,0.04); border-radius:3px; border-left:2px solid var(--accent); color:inherit; text-decoration:none; display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+              "보스톤사이언티픽코리아, 2천억 돌파…포트폴리오 전환 성과" &#8212; Dailypharm
+            </a>
+            <div style="font-size:11px; line-height:1.4; padding:5px 8px; background:rgba(255,255,255,0.04); border-radius:3px; border-left:2px solid var(--accent); color:inherit; display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+              "글로벌 방사성의약품 시장 2033년 약 28조 3700억 원 전망"
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="insight-box" style="margin-top:12px;">
+        <div class="insight-box-title">핵심 인사이트</div>
+        <div class="insight-box-content">
+          종합 점수 3점 - 하락 트렌드는 위협적이나, 여전히 일정 규모 시장이 존재하며 신규 원료 또는 새로운 접근법으로 틈새시장 공략 가능성 있음.
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">출처: [1], [2], [4], [5], [6], [7], [8]</div>
+  </div>
+</div>
+
+<!-- Slide 4: Line Chart -->
+<div class="slide" id="slide-4">
+  <div class="slide-inner">
+    <div class="slide-header">01 시장현황 | 24개월 검색 트렌드 분석</div>
+    <div class="slide-body" style="display:flex; flex-direction:column;">
+      <div style="flex:1; min-height:0; position:relative;">
+        <canvas id="trendChart"></canvas>
+      </div>
+      <div style="display:flex; gap:12px; flex-shrink:0; margin-top:12px;">
+        <div class="insight-box" style="flex:1;">
+          <div class="insight-box-title">지속적인 관심도 하락</div>
+          <div class="insight-box-content">
+            지난 2년간 '전립선' 관련 검색량이 지속적으로 감소하여 소비자 관심도가 위축되고 있음을 시사합니다.
+          </div>
+        </div>
+        <div class="insight-box" style="flex:1;">
+          <div class="insight-box-title">새로운 접근의 필요성</div>
+          <div class="insight-box-content">
+            기존 전립선 건강 제품에 대한 소비자 니즈 충족 한계 또는 대체재 등장 가능성을 고려한 전략이 필요합니다.
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">출처: [1]</div>
+  </div>
+  <script>
+    (function() {
+      var ACCENT = '#FF5722';
+      var pts = [
+    {l:'2024.04', v:92.4},
+    {l:'2024.05', v:99.3},
+    {l:'2024.06', v:93.1},
+    {l:'2024.07', v:95.8},
+    {l:'2024.08', v:100.0},
+    {l:'2024.09', v:91.1},
+    {l:'2024.10', v:99.6},
+    {l:'2024.11', v:96.4},
+    {l:'2024.12', v:98.0},
+    {l:'2025.01', v:97.8},
+    {l:'2025.02', v:94.5},
+    {l:'2025.03', v:95.3},
+    {l:'2025.04', v:93.7},
+    {l:'2025.05', v:91.5},
+    {l:'2025.06', v:78.1},
+    {l:'2025.07', v:84.9},
+    {l:'2025.08', v:89.2},
+    {l:'2025.09', v:81.0},
+    {l:'2025.10', v:83.0},
+    {l:'2025.11', v:79.2},
+    {l:'2025.12', v:75.6},
+    {l:'2026.01', v:83.0},
+    {l:'2026.02', v:64.7},
+    {l:'2026.03', v:68.7},
+    {l:'2026.04', v:31.3}
+  ];
+      function draw() {
+        var cv = document.getElementById('trendChart');
+        if (!cv) return;
+        var par = cv.parentElement;
+        var W = par.clientWidth || 1300, H = par.clientHeight || 350;
+        cv.width = W; cv.height = H;
+        var ctx = cv.getContext('2d');
+        var PL=60, PR=20, PT=20, PB=45;
+        var cW=W-PL-PR, cH=H-PT-PB;
+        var maxV=100;
+        function xp(i){return PL + i/(pts.length-1)*cW;}
+        function yp(v){return PT + cH - v/maxV*cH;}
+        ctx.clearRect(0, 0, W, H);
+        // 그리드 + Y축 레이블
+        ctx.font='11px sans-serif'; ctx.textAlign='right'; ctx.fillStyle='rgba(255,255,255,0.4)';
+        [0,25,50,75,100].forEach(function(v){
+          var y=yp(v);
+          ctx.strokeStyle='rgba(255,255,255,0.07)'; ctx.lineWidth=1;
+          ctx.beginPath(); ctx.moveTo(PL,y); ctx.lineTo(PL+cW,y); ctx.stroke();
+          ctx.fillText(v,PL-6,y+4);
+        });
+        // 면적 그라디언트
+        var gr=ctx.createLinearGradient(0,PT,0,PT+cH);
+        gr.addColorStop(0,ACCENT+'55'); gr.addColorStop(1,ACCENT+'05');
+        ctx.beginPath();
+        ctx.moveTo(xp(0),yp(0));
+        pts.forEach(function(d,i){ctx.lineTo(xp(i),yp(d.v));});
+        ctx.lineTo(xp(pts.length-1),yp(0)); ctx.closePath();
+        ctx.fillStyle=gr; ctx.fill();
+        // 선
+        ctx.beginPath(); ctx.strokeStyle=ACCENT; ctx.lineWidth=2.5; ctx.lineJoin='round';
+        pts.forEach(function(d,i){i?ctx.lineTo(xp(i),yp(d.v)):ctx.moveTo(xp(i),yp(d.v));});
+        ctx.stroke();
+        // 점 + 값 레이블 + X축 레이블
+        ctx.fillStyle=ACCENT; ctx.textAlign='center'; ctx.font='11px sans-serif';
+        pts.forEach(function(d,i){
+          ctx.beginPath(); ctx.arc(xp(i),yp(d.v),4,0,2*Math.PI); ctx.fill();
+          ctx.fillStyle='rgba(255,255,255,0.7)';
+          ctx.fillText(d.v, xp(i), yp(d.v)-10);
+          ctx.fillStyle='rgba(255,255,255,0.4)';
+          ctx.fillText(d.l, xp(i), H-8);
+          ctx.fillStyle=ACCENT;
+        });
+      }
+      if(document.fonts) document.fonts.ready.then(draw); else window.addEventListener('load',draw);
+      window.addEventListener('resize',draw);
+    })();
+  </script>
+</div>
+
+<!-- Slide 5: Section Divider "02 경쟁사 분석" -->
+<div class="slide" id="slide-5">
+  <div class="slide-inner" style="background:var(--accent); display:flex; align-items:center; justify-content:center; flex-direction:column; text-align:center;">
+    <div style="font-size:13px; letter-spacing:0.2em; text-transform:uppercase; opacity:0.6; margin-bottom:16px; color:#fff;">CHAPTER 02</div>
+    <div style="font-size:64px; font-weight:900; color:#fff; line-height:1;">02</div>
+    <div style="font-size:32px; font-weight:400; color:#fff; margin-top:16px; opacity:0.9;">경쟁사 분석</div>
+    <div style="width:60px; height:3px; background:#fff; margin-top:24px;"></div>
+  </div>
+</div>
+
+<!-- Slide 6: Card Grid -->
+<div class="slide" id="slide-6">
+  <div class="slide-inner">
+    <div class="slide-header">02 경쟁사 분석 | TOP 10 브랜드 현황</div>
+    <div class="slide-body" style="display:flex; flex-direction:column;">
+      <div style="display:grid; grid-template-columns:repeat(5,1fr); gap:10px; flex:1; min-height:0;">
+        <!-- Card 1 -->
+        <div style="padding:10px 12px; overflow:hidden; border:1px solid var(--border-color); border-radius:6px; position:relative; display:flex; flex-direction:column;">
+          <div style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">1위</div>
+          <a href="https://search.shopping.naver.com/search/all?query=전립선+에코뉴트리션" target="_blank" style="font-size:13px; font-weight:700; color:var(--accent); margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+            에코뉴트리션
+          </a>
+          <div style="font-size:12px; margin-bottom:3px; min-height:16px;">16,900원 (3개월분)</div>
+          <div style="font-size:11px; opacity:0.55; margin-bottom:5px; min-height:14px;">확인필요</div>
+          <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
+          <div style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; flex:1;">
+            '쏘팔메토', '로르산' 함유. '맨즈파워업' 타이틀로 남성 기능성 강조.
+          </div>
+        </div>
+        <!-- Card 2 -->
+        <div style="padding:10px 12px; overflow:hidden; border:1px solid var(--border-color); border-radius:6px; position:relative; display:flex; flex-direction:column;">
+          <div style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">2위</div>
+          <a href="https://search.shopping.naver.com/search/all?query=전립선+노벨랩스" target="_blank" style="font-size:13px; font-weight:700; color:var(--accent); margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+            노벨랩스
+          </a>
+          <div style="font-size:12px; margin-bottom:3px; min-height:16px;">28,600원 (30캡슐, 2개)</div>
+          <div style="font-size:11px; opacity:0.55; margin-bottom:5px; min-height:14px;">캡슐</div>
+          <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
+          <div style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; flex:1;">
+            '초임계 쏘팔메토', '옥타코사놀' 함유. 캡슐 제형. 높은 원료 퀄리티 강조.
+          </div>
+        </div>
+        <!-- Card 3 -->
+        <div style="padding:10px 12px; overflow:hidden; border:1px solid var(--border-color); border-radius:6px; position:relative; display:flex; flex-direction:column;">
+          <div style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">3위</div>
+          <a href="https://search.shopping.naver.com/search/all?query=전립선+순수식품" target="_blank" style="font-size:13px; font-weight:700; color:var(--accent); margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+            순수식품
+          </a>
+          <div style="font-size:12px; margin-bottom:3px; min-height:16px;">25,090원 (60캡슐, 3개)</div>
+          <div style="font-size:11px; opacity:0.55; margin-bottom:5px; min-height:14px;">캡슐</div>
+          <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
+          <div style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; flex:1;">
+            '쏘팔메토', '로르산 115', '옥타코사놀' 함유. 캡슐 제형. 성분 조합 강조.
+          </div>
+        </div>
+        <!-- Card 4 -->
+        <div style="padding:10px 12px; overflow:hidden; border:1px solid var(--border-color); border-radius:6px; position:relative; display:flex; flex-direction:column;">
+          <div style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">4위</div>
+          <a href="https://search.shopping.naver.com/search/all?query=전립선+프로스겐" target="_blank" style="font-size:13px; font-weight:700; color:var(--accent); margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+            프로스겐
+          </a>
+          <div style="font-size:12px; margin-bottom:3px; min-height:16px;">38,000원</div>
+          <div style="font-size:11px; opacity:0.55; margin-bottom:5px; min-height:14px;">확인필요</div>
+          <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
+          <div style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; flex:1;">
+            '쏘팔메토', '아연' 함유. 영양제 + 약 케이스 구성으로 편의성 강조.
+          </div>
+        </div>
+        <!-- Card 5 -->
+        <div style="padding:10px 12px; overflow:hidden; border:1px solid var(--border-color); border-radius:6px; position:relative; display:flex; flex-direction:column;">
+          <div style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">5위</div>
+          <a href="https://search.shopping.naver.com/search/all?query=전립선+뉴트리디데이" target="_blank" style="font-size:13px; font-weight:700; color:var(--accent); margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+            뉴트리디데이
+          </a>
+          <div style="font-size:12px; margin-bottom:3px; min-height:16px;">15,900원 (90캡슐)</div>
+          <div style="font-size:11px; opacity:0.55; margin-bottom:5px; min-height:14px;">캡슐</div>
+          <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
+          <div style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; flex:1;">
+            '프리미엄 쏘팔메토 골드' 강조. 대용량 구성으로 가성비 소구.
+          </div>
+        </div>
+        <!-- Card 6 -->
+        <div style="padding:10px 12px; overflow:hidden; border:1px solid var(--border-color); border-radius:6px; position:relative; display:flex; flex-direction:column;">
+          <div style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">6위</div>
+          <a href="https://search.shopping.naver.com/search/all?query=전립선+바이오크로스" target="_blank" style="font-size:13px; font-weight:700; color:var(--accent); margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+            바이오크로스
+          </a>
+          <div style="font-size:12px; margin-bottom:3px; min-height:16px;">120,000원 (4개월분)</div>
+          <div style="font-size:11px; opacity:0.55; margin-bottom:5px; min-height:14px;">확인필요</div>
+          <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
+          <div style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; flex:1;">
+            '남진 쏘팔코사놀 레드', '옥타코사놀 쏘팔메토 골드' 복합 기능성 강조.
+          </div>
+        </div>
+        <!-- Card 7 -->
+        <div style="padding:10px 12px; overflow:hidden; border:1px solid var(--border-color); border-radius:6px; position:relative; display:flex; flex-direction:column;">
+          <div style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">7위</div>
+          <a href="https://search.shopping.naver.com/search/all?query=전립선+힐링팩토리" target="_blank" style="font-size:13px; font-weight:700; color:var(--accent); margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+            힐링팩토리
+          </a>
+          <div style="font-size:12px; margin-bottom:3px; min-height:16px;">29,900원 (180캡슐)</div>
+          <div style="font-size:11px; opacity:0.55; margin-bottom:5px; min-height:14px;">캡슐</div>
+          <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
+          <div style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; flex:1;">
+            '다이나믹 부스트업 쏘팔메토 맥스'. 고함량 및 대용량으로 효능과 가성비 소구.
+          </div>
+        </div>
+        <!-- Card 8 -->
+        <div style="padding:10px 12px; overflow:hidden; border:1px solid var(--border-color); border-radius:6px; position:relative; display:flex; flex-direction:column;">
+          <div style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">8위</div>
+          <a href="https://search.shopping.naver.com/search/all?query=전립선+유유제약" target="_blank" style="font-size:13px; font-weight:700; color:var(--accent); margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+            유유제약
+          </a>
+          <div style="font-size:12px; margin-bottom:3px; min-height:16px;">29,000원 (2개월분)</div>
+          <div style="font-size:11px; opacity:0.55; margin-bottom:5px; min-height:14px;">확인필요</div>
+          <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
+          <div style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; flex:1;">
+            'NCO 전립엔 쏘팔메토 옥타코사놀'. 제약사 브랜드 신뢰도 및 로르산 강조.
+          </div>
+        </div>
+        <!-- Card 9 -->
+        <div style="padding:10px 12px; overflow:hidden; border:1px solid var(--border-color); border-radius:6px; position:relative; display:flex; flex-direction:column;">
+          <div style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">9위</div>
+          <a href="https://search.shopping.naver.com/search/all?query=전립선+종근당" target="_blank" style="font-size:13px; font-weight:700; color:var(--accent); margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+            종근당
+          </a>
+          <div style="font-size:12px; margin-bottom:3px; min-height:16px;">62,900원 (30캡슐, 4개)</div>
+          <div style="font-size:11px; opacity:0.55; margin-bottom:5px; min-height:14px;">캡슐</div>
+          <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
+          <div style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; flex:1;">
+            '전립선지구력건강 초임계 쏘팔메토 옥타코사놀 루테인'. 복합 기능성 및 제약사 브랜드 강조.
+          </div>
+        </div>
+        <!-- Card 10 -->
+        <div style="padding:10px 12px; overflow:hidden; border:1px solid var(--border-color); border-radius:6px; position:relative; display:flex; flex-direction:column;">
+          <div style="position:absolute; top:8px; right:8px; font-size:10px; opacity:0.4; font-weight:700;">10위</div>
+          <a href="https://search.shopping.naver.com/search/all?query=전립선+RAWEL" target="_blank" style="font-size:13px; font-weight:700; color:var(--accent); margin-bottom:5px; padding-right:24px; display:block; text-decoration:none;">
+            RAWEL
+          </a>
+          <div style="font-size:12px; margin-bottom:3px; min-height:16px;">17,900원 (30캡슐, 3개)</div>
+          <div style="font-size:11px; opacity:0.55; margin-bottom:5px; min-height:14px;">캡슐</div>
+          <div style="height:1px; background:rgba(255,255,255,0.1); margin-bottom:5px;"></div>
+          <div style="font-size:11px; line-height:1.4; color:inherit; opacity:0.85; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; flex:1;">
+            '웰업 초임계 쏘팔메토 옥타코사놀'. 초임계 추출 방식 강조.
+          </div>
+        </div>
+      </div>
+      <div class="insight-box" style="margin-top:auto;">
+        <div class="insight-box-title">핵심 인사이트</div>
+        <div class="insight-box-content">
+          캡슐 제형이 압도적이며, 1만 원대 후반에서 3만 원대 제품이 가장 많습니다. 특정 브랜드 독점 없이 다수 중소형 브랜드가 경쟁 중입니다.
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">출처: [3]</div>
+  </div>
+</div>
+
+<!-- Slide 7: Bubble Chart -->
+<div class="slide" id="slide-7">
+  <div class="slide-inner">
+    <div class="slide-header">02 경쟁사 분석 | 경쟁사 포지셔닝 (Top 10)</div>
+    <div class="slide-body" style="display:flex; flex-direction:column;">
+      <div style="display:flex; align-items:center; gap:20px; flex:1; min-height:0;">
+        <div style="position:relative; width:600px; height:480px; flex-shrink:0; align-self:center; border-left:2px solid rgba(255,255,255,0.4); border-bottom:2px solid rgba(255,255,255,0.4); overflow:visible;">
+          <!-- 4사분면 기준선 -->
+          <div style="position:absolute; left:50%; top:0; height:100%; border-left:1px dashed rgba(255,255,255,0.2); pointer-events:none;"></div>
+          <div style="position:absolute; top:50%; left:0; width:100%; border-top:1px dashed rgba(255,255,255,0.2); pointer-events:none;"></div>
+
+          <!-- Y축 눈금 -->
+          <div style="position:absolute; right:100%; margin-right:6px; font-size:10px; opacity:0.5; bottom:0%; transform:translateY(50%);">0%</div>
+          <div style="position:absolute; right:100%; margin-right:6px; font-size:10px; opacity:0.5; bottom:25%; transform:translateY(50%);">25%</div>
+          <div style="position:absolute; right:100%; margin-right:6px; font-size:10px; opacity:0.5; bottom:50%; transform:translateY(50%);">50%</div>
+          <div style="position:absolute; right:100%; margin-right:6px; font-size:10px; opacity:0.5; bottom:75%; transform:translateY(50%);">75%</div>
+          <div style="position:absolute; right:100%; margin-right:6px; font-size:10px; opacity:0.5; bottom:100%; transform:translateY(50%);">100%</div>
+
+          <!-- X축 눈금 (max 33000원) -->
+          <div style="position:absolute; top:100%; margin-top:6px; font-size:10px; opacity:0.5; left:0%; transform:translateX(-50%);">0원</div>
+          <div style="position:absolute; top:100%; margin-top:6px; font-size:10px; opacity:0.5; left:25%; transform:translateX(-50%);">8천원</div>
+          <div style="position:absolute; top:100%; margin-top:6px; font-size:10px; opacity:0.5; left:50%; transform:translateX(-50%);">1.7만원</div>
+          <div style="position:absolute; top:100%; margin-top:6px; font-size:10px; opacity:0.5; left:75%; transform:translateX(-50%);">2.5만원</div>
+          <div style="position:absolute; top:100%; margin-top:6px; font-size:10px; opacity:0.5; left:95%; transform:translateX(-50%);">3.3만원</div>
+
+          <!-- Y축 레이블 -->
+          <div style="position:absolute; right:100%; margin-right:40px; top:50%; writing-mode:vertical-rl; transform:translateY(-50%); font-size:11px; white-space:nowrap; text-align:center;">브랜드 인지도</div>
+          <!-- X축 레이블 -->
+          <div style="position:absolute; top:100%; margin-top:28px; left:50%; transform:translateX(-50%); font-size:11px; text-align:center;">월 환산 가격 (원)</div>
+
+          <!-- Bubbles -->
+          <!-- Data: (가격, 인지도, 크기(순위 역순)) -->
+          <!-- Colors: #4361ee #f72585 #4cc9f0 #f8961e #43aa8b #90be6d #277da1 #e63946 #6a4c93 #ff6b6b -->
+          <!-- Max X = 33000. Max Y = 100. Size: Rank 1(80px) to Rank 10(32px) -->
+          <!-- 1. 에코뉴트리션: 5633원 (X: 17%), 인지도 100% (Y: 95%), Size: 80px -->
+          <div style="position:absolute; left:17%; bottom:95%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+            <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">에코뉴트리션</div>
+            <div style="width:80px; height:80px; border-radius:50%; background:#4361ee; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">1</div>
+          </div>
+          <!-- 2. 노벨랩스: 28600원 (X: 86%), 인지도 90% (Y: 85%), Size: 75px -->
+          <div style="position:absolute; left:86%; bottom:85%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+            <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">노벨랩스</div>
+            <div style="width:75px; height:75px; border-radius:50%; background:#f72585; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">2</div>
+          </div>
+          <!-- 3. 순수식품: 8363원 (X: 25%), 인지도 80% (Y: 75%), Size: 70px -->
+          <div style="position:absolute; left:25%; bottom:75%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+            <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">순수식품</div>
+            <div style="width:70px; height:70px; border-radius:50%; background:#4cc9f0; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">3</div>
+          </div>
+          <!-- 4. 프로스겐: 38000원 -> 33000원 이상이므로 X: 90% (최대치 초과 방지), 인지도 70% (Y: 65%), Size: 65px -->
+          <div style="position:absolute; left:90%; bottom:65%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+            <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">프로스겐</div>
+            <div style="width:65px; height:65px; border-radius:50%; background:#f8961e; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">4</div>
+          </div>
+          <!-- 5. 뉴트리디데이: 15900원 (X: 48%), 인지도 60% (Y: 55%), Size: 60px -->
+          <div style="position:absolute; left:48%; bottom:55%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+            <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">뉴트리디데이</div>
+            <div style="width:60px; height:60px; border-radius:50%; background:#43aa8b; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">5</div>
+          </div>
+          <!-- 6. 바이오크로스: 30000원 (X: 91%), 인지도 50% (Y: 45%), Size: 55px -->
+          <div style="position:absolute; left:91%; bottom:45%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+            <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">바이오크로스</div>
+            <div style="width:55px; height:55px; border-radius:50%; background:#90be6d; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">6</div>
+          </div>
+          <!-- 7. 힐링팩토리: 29900원 (X: 90%), 인지도 40% (Y: 35%), Size: 50px -->
+          <div style="position:absolute; left:90%; bottom:35%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+            <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">힐링팩토리</div>
+            <div style="width:50px; height:50px; border-radius:50%; background:#277da1; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">7</div>
+          </div>
+          <!-- 8. 유유제약: 14500원 (X: 44%), 인지도 30% (Y: 25%), Size: 45px -->
+          <div style="position:absolute; left:44%; bottom:25%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+            <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">유유제약</div>
+            <div style="width:45px; height:45px; border-radius:50%; background:#e63946; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">8</div>
+          </div>
+          <!-- 9. 종근당: 15725원 (X: 47%), 인지도 20% (Y: 15%), Size: 40px -->
+          <div style="position:absolute; left:47%; bottom:15%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+            <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">종근당</div>
+            <div style="width:40px; height:40px; border-radius:50%; background:#6a4c93; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">9</div>
+          </div>
+          <!-- 10. RAWEL: 5966원 (X: 18%), 인지도 10% (Y: 5%), Size: 32px -->
+          <div style="position:absolute; left:18%; bottom:5%; transform:translate(-50%,50%); display:flex; flex-direction:column; align-items:center;">
+            <div style="text-align:center; font-size:10px; white-space:nowrap; margin-bottom:3px; color:rgba(255,255,255,0.9);">RAWEL</div>
+            <div style="width:32px; height:32px; border-radius:50%; background:#ff6b6b; opacity:0.85; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;">10</div>
+          </div>
+        </div>
+
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; gap:16px; overflow:hidden;">
+          <div style="display:flex; flex-wrap:wrap; gap:4px 12px; flex-shrink:0;">
+            <div style="display:flex; align-items:center; gap:6px; font-size:12px;"><div style="width:10px; height:10px; border-radius:50%; background:#4361ee;"></div>에코뉴트리션</div>
+            <div style="display:flex; align-items:center; gap:6px; font-size:12px;"><div style="width:10px; height:10px; border-radius:50%; background:#f72585;"></div>노벨랩스</div>
+            <div style="display:flex; align-items:center; gap:6px; font-size:12px;"><div style="width:10px; height:10px; border-radius:50%; background:#4cc9f0;"></div>순수식품</div>
+            <div style="display:flex; align-items:center; gap:6px; font-size:12px;"><div style="width:10px; height:10px; border-radius:50%; background:#f8961e;"></div>프로스겐</div>
+            <div style="display:flex; align-items:center; gap:6px; font-size:12px;"><div style="width:10px; height:10px; border-radius:50%; background:#43aa8b;"></div>뉴트리디데이</div>
+            <div style="display:flex; align-items:center; gap:6px; font-size:12px;"><div style="width:10px; height:10px; border-radius:50%; background:#90be6d;"></div>바이오크로스</div>
+            <div style="display:flex; align-items:center; gap:6px; font-size:12px;"><div style="width:10px; height:10px; border-radius:50%; background:#277da1;"></div>힐링팩토리</div>
+            <div style="display:flex; align-items:center; gap:6px; font-size:12px;"><div style="width:10px; height:10px; border-radius:50%; background:#e63946;"></div>유유제약</div>
+            <div style="display:flex; align-items:center; gap:6px; font-size:12px;"><div style="width:10px; height:10px; border-radius:50%; background:#6a4c93;"></div>종근당</div>
+            <div style="display:flex; align-items:center; gap:6px; font-size:12px;"><div style="width:10px; height:10px; border-radius:50%; background:#ff6b6b;"></div>RAWEL</div>
+          </div>
+          <div class="insight-box" style="flex-shrink:0;">
+            <div class="insight-box-title">핵심 인사이트 1</div>
+            <div class="insight-box-content">
+              경쟁사들은 주로 중저가 시장에 포진하며 '쏘팔메토' 기반의 유사 성분 조합을 강조하고 있습니다.
+            </div>
+          </div>
+          <div class="insight-box" style="flex-shrink:0;">
+            <div class="insight-box-title">핵심 인사이트 2</div>
+            <div class="insight-box-content">
+              고가/프리미엄 시장은 상대적으로 비어있으며, 차별화된 성분이나 기능성으로 높은 인지도를 구축할 기회가 있습니다.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">출처: [3]</div>
+  </div>
+</div>
+
+<!-- Slide 8: Section Divider "03 기회 & 전략" -->
+<div class="slide" id="slide-8">
+  <div class="slide-inner" style="background:var(--accent); display:flex; align-items:center; justify-content:center; flex-direction:column; text-align:center;">
+    <div style="font-size:13px; letter-spacing:0.2em; text-transform:uppercase; opacity:0.6; margin-bottom:16px; color:#fff;">CHAPTER 03</div>
+    <div style="font-size:64px; font-weight:900; color:#fff; line-height:1;">03</div>
+    <div style="font-size:32px; font-weight:400; color:#fff; margin-top:16px; opacity:0.9;">기회 & 전략</div>
+    <div style="width:60px; height:3px; background:#fff; margin-top:24px;"></div>
+  </div>
+</div>
+
+<!-- Slide 9: Pain Points -->
+<div class="slide" id="slide-9">
+  <div class="slide-inner">
+    <div class="slide-header">03 기회 & 전략 | 주요 소비자 불만 (Pain Points)</div>
+    <div class="slide-body" style="display:flex; flex-direction:column;">
+      <div style="display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:16px; flex:1; min-height:0;">
+        <div style="padding:20px 24px; border:1px solid var(--border-color); border-radius:6px; display:flex; flex-direction:column; overflow:hidden; min-height:0;">
+          <h3 style="font-size:20px; font-weight:700; color:var(--accent); margin:0 0 10px; flex-shrink:0;">과학적 근거 및 투명한 정보 부족</h3>
+          <p style="font-size:13px; line-height:1.75; flex:1; overflow:hidden; color:rgba(255,255,255,0.92);">
+            대부분 제품이 주요 성분 함량만 표기할 뿐, 어떤 연구 결과를 기반으로 하는지, 실제 임상 효과는 어느 정도인지에 대한 구체적인 정보 제공이 미흡합니다. 소비자는 더 명확하고 신뢰할 수 있는 과학적 근거를 요구하고 있습니다.
+          </p>
+        </div>
+        <div style="padding:20px 24px; border:1px solid var(--border-color); border-radius:6px; display:flex; flex-direction:column; overflow:hidden; min-height:0;">
+          <h3 style="font-size:20px; font-weight:700; color:var(--accent); margin:0 0 10px; flex-shrink:0;">단순 전립선 건강 외 부가적인 남성 활력 증진 니즈</h3>
+          <p style="font-size:13px; line-height:1.75; flex:1; overflow:hidden; color:rgba(255,255,255,0.92);">
+            현재 시장의 대부분 제품은 '전립선 건강'이라는 기능성에만 집중하고 있습니다. 중장년 남성 소비자는 전립선 건강 관리와 더불어 전반적인 남성 활력, 에너지 증진, 스트레스 완화 등 복합적인 니즈를 가지고 있으나, 이를 충족하는 제품은 드뭅니다.
+          </p>
+        </div>
+        <div style="padding:20px 24px; border:1px solid var(--border-color); border-radius:6px; display:flex; flex-direction:column; overflow:hidden; min-height:0;">
+          <h3 style="font-size:20px; font-weight:700; color:var(--accent); margin:0 0 10px; flex-shrink:0;">맞춤형 솔루션 부재</h3>
+          <p style="font-size:13px; line-height:1.75; flex:1; overflow:hidden; color:rgba(255,255,255,0.92);">
+            소비자의 전립선 상태나 니즈는 개인마다 다를 수 있습니다. 하지만 현재 시장은 '하나의 제품으로 모두 해결'하는 방식이 일반적입니다. 개인의 상태에 맞는 솔루션을 제공하는 맞춤형 접근 방식에 대한 잠재적 니즈가 존재합니다.
+          </p>
+        </div>
+        <div style="padding:20px 24px; border:1px solid var(--border-color); border-radius:6px; display:flex; flex-direction:column; overflow:hidden; min-height:0;">
+          <h3 style="font-size:20px; font-weight:700; color:var(--accent); margin:0 0 10px; flex-shrink:0;">제품의 차별성 부족</h3>
+          <p style="font-size:13px; line-height:1.75; flex:1; overflow:hidden; color:rgba(255,255,255,0.92);">
+            대부분 쏘팔메토 기반의 유사 성분 조합으로, 소비자가 제품 간의 차이를 인지하기 어렵고 선택의 폭이 좁다고 느낍니다. 이는 새로운 접근을 통한 차별화 기회를 제공합니다.
+          </p>
+        </div>
+      </div>
+      <div class="insight-box" style="margin-top:auto;">
+        <div class="insight-box-title">핵심 인사이트</div>
+        <div class="insight-box-content">
+          소비자는 단순한 전립선 건강을 넘어선 복합적인 니즈와 신뢰할 수 있는 정보를 원하며, 개인화된 접근 방식에 대한 잠재적 수요가 있습니다.
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">출처: 보고서 내부 분석</div>
+  </div>
+</div>
+
+<!-- Slide 10: White Space -->
+<div class="slide" id="slide-10">
+  <div class="slide-inner">
+    <div class="slide-header">03 기회 & 전략 | 차별화 기회 (White Space)</div>
+    <div class="slide-body" style="display:flex; flex-direction:column;">
+      <div style="display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:16px; flex:1; min-height:0;">
+        <div style="padding:20px 24px; border:1px solid var(--border-color); border-radius:6px; display:flex; flex-direction:column; overflow:hidden;">
+          <h3 style="font-size:20px; font-weight:700; color:var(--accent); margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em; flex-shrink:0;">과학적 근거 기반의 효능 소구</h3>
+          <p style="font-size:13px; line-height:1.75; flex:1; color:rgba(255,255,255,0.92);">
+            명확한 임상 결과나 연구 데이터를 바탕으로 제품의 효능을 투명하게 제시하여 소비자 신뢰를 확보할 수 있는 기회입니다.
+          </p>
+        </div>
+        <div style="padding:20px 24px; border:1px solid var(--border-color); border-radius:6px; display:flex; flex-direction:column; overflow:hidden;">
+          <h3 style="font-size:20px; font-weight:700; color:var(--accent); margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em; flex-shrink:0;">복합 기능성 남성 활력 케어</h3>
+          <p style="font-size:13px; line-height:1.75; flex:1; color:rgba(255,255,255,0.92);">
+            전립선 건강 외에 지구력, 활력 증진 등 중장년 남성의 복합적인 니즈를 충족하는 다기능성 제품으로 시장을 확장할 수 있습니다.
+          </p>
+        </div>
+        <div style="padding:20px 24px; border:1px solid var(--border-color); border-radius:6px; display:flex; flex-direction:column; overflow:hidden;">
+          <h3 style="font-size:20px; font-weight:700; color:var(--accent); margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em; flex-shrink:0;">개인 맞춤형 전립선 솔루션</h3>
+          <p style="font-size:13px; line-height:1.75; flex:1; color:rgba(255,255,255,0.92);">
+            소비자 개인의 증상과 생활 습관에 따른 맞춤형 제품 추천 및 섭취 가이드를 제공하여 차별화된 경험을 제공할 수 있습니다.
+          </p>
+        </div>
+        <div style="padding:20px 24px; border:1px solid var(--border-color); border-radius:6px; display:flex; flex-direction:column; overflow:hidden;">
+          <h3 style="font-size:20px; font-weight:700; color:var(--accent); margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em; flex-shrink:0;">혁신적인 개별인정형 원료 도입</h3>
+          <p style="font-size:13px; line-height:1.75; flex:1; color:rgba(255,255,255,0.92);">
+            기존 고시형 원료를 넘어선 독자적인 개별인정형 원료를 개발 또는 확보하여 기술적 우위와 독점적 시장 지위를 구축할 기회입니다.
+          </p>
+        </div>
+      </div>
+      <div class="insight-box" style="margin-top:auto;">
+        <div class="insight-box-title">핵심 인사이트</div>
+        <div class="insight-box-content">
+          소비자 불만을 해소하고 진화된 니즈를 충족하는 과학적이고 개인화된 복합 기능성 제품으로 시장을 선점할 기회가 있습니다.
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">출처: 보고서 내부 분석</div>
+  </div>
+</div>
+
+<!-- Slide 11: Concept -->
+<div class="slide" id="slide-11">
+  <div class="slide-inner">
+    <div class="slide-header">03 기회 & 전략 | NPD 콘셉트 제안</div>
+    <div class="slide-body" style="display:flex; flex-direction:column;">
+      <div style="display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:16px; flex:1; min-height:0;">
+        <div style="padding:20px 24px; border:1px solid var(--border-color); border-radius:6px; display:flex; flex-direction:column; overflow:hidden;">
+          <h3 style="font-size:20px; font-weight:700; color:var(--accent); margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em; flex-shrink:0;">제품명</h3>
+          <p style="font-size:13px; line-height:1.75; flex:1; color:rgba(255,255,255,0.92);">
+            트리플 액션 프로스테이트 부스터 (Triple Action Prostate Booster)
+          </p>
+        </div>
+        <div style="padding:20px 24px; border:1px solid var(--border-color); border-radius:6px; display:flex; flex-direction:column; overflow:hidden;">
+          <h3 style="font-size:20px; font-weight:700; color:var(--accent); margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em; flex-shrink:0;">USP (Unique Selling Proposition)</h3>
+          <p style="font-size:13px; line-height:1.75; flex:1; color:rgba(255,255,255,0.92);">
+            전립선 건강 + 활력 증진 + 지구력 강화를 동시에! 3중 기능성 올인원 솔루션
+          </p>
+        </div>
+        <div style="padding:20px 24px; border:1px solid var(--border-color); border-radius:6px; display:flex; flex-direction:column; overflow:hidden;">
+          <h3 style="font-size:20px; font-weight:700; color:var(--accent); margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em; flex-shrink:0;">타겟</h3>
+          <p style="font-size:13px; line-height:1.75; flex:1; color:rgba(255,255,255,0.92);">
+            40대 이상, 전립선 건강과 함께 전반적인 남성 활력을 되찾고 싶은 액티브 시니어
+          </p>
+        </div>
+        <div style="padding:20px 24px; border:1px solid var(--border-color); border-radius:6px; display:flex; flex-direction:column; overflow:hidden;">
+          <h3 style="font-size:20px; font-weight:700; color:var(--accent); margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em; flex-shrink:0;">포지셔닝 메시지</h3>
+          <p style="font-size:13px; line-height:1.75; flex:1; color:rgba(255,255,255,0.92);">
+            과학적으로 설계된 3중 기능성으로, 당신의 전립선과 활력 넘치는 일상을 완벽하게 케어합니다.
+          </p>
+        </div>
+      </div>
+      <div class="insight-box" style="margin-top:auto;">
+        <div class="insight-box-title">핵심 인사이트</div>
+        <div class="insight-box-content">
+          핵심 기능성 원료와 부가적인 남성 활력 성분을 결합하여, 단순 전립선 케어를 넘어선 '삶의 질 향상'에 초점을 맞춘 제품 콘셉트입니다.
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">출처: 보고서 내부 분석</div>
+  </div>
+</div>
+
+<!-- Slide 12: Pricing -->
+<div class="slide" id="slide-12">
+  <div class="slide-inner">
+    <div class="slide-header">03 기회 & 전략 | 가격 전략</div>
+    <div class="slide-body" style="display:flex; flex-direction:column;">
+      <div style="flex-shrink:0;">
+        <table style="width:100%; border-collapse:collapse;">
+          <thead>
+            <tr style="background:rgba(255,255,255,0.08);">
+              <th style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; font-weight:700; border:1px solid var(--border-color);">포지셔닝</th>
+              <th style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; font-weight:700; border:1px solid var(--border-color);">월 환산 가격대</th>
+              <th style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; font-weight:700; border:1px solid var(--border-color); color:var(--accent);">목표 원가율 15% (월 환산)</th>
+              <th style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; font-weight:700; border:1px solid var(--border-color); color:var(--accent);">목표 원가율 20% (월 환산)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid var(--border-color);">1~3만원대 제품</td>
+              <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid var(--border-color);">10,000원 ~ 30,000원</td>
+              <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid var(--border-color);">1,500원 ~ 4,500원</td>
+              <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid var(--border-color);">2,000원 ~ 6,000원</td>
+            </tr>
+            <tr>
+              <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid var(--border-color);">3~5만원대 제품</td>
+              <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid var(--border-color);">30,000원 ~ 50,000원</td>
+              <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid var(--border-color);">4,500원 ~ 7,500원</td>
+              <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid var(--border-color);">6,000원 ~ 10,000원</td>
+            </tr>
+            <tr>
+              <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid var(--border-color);">5만원 이상 고가/프리미엄</td>
+              <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid var(--border-color);">50,000원 이상</td>
+              <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid var(--border-color);">7,500원 이상</td>
+              <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid var(--border-color);">10,000원 이상</td>
+            </tr>
+            <tr style="background:rgba(255,255,255,0.04);">
+              <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid var(--border-color); font-weight:500;">제안 제품 포지셔닝</td>
+              <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid var(--border-color); font-weight:500;">3만원대 중반</td>
+              <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid var(--border-color); font-weight:500; color:var(--accent);">5,250원</td>
+              <td style="padding:10px 14px; text-align:center; vertical-align:middle; font-size:14px; white-space:nowrap; border:1px solid var(--border-color); font-weight:500; color:var(--accent);">7,000원</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="flex:1; margin-top:16px; padding:16px 20px; border:1px solid var(--border-color); border-radius:6px; font-size:14px; line-height:1.7; overflow:hidden;">
+        <h3 style="font-size:18px; font-weight:700; margin:0 0 8px; color:var(--text-primary);">가격 전략 근거</h3>
+        <p style="font-size:14px; line-height:1.7; color:var(--text-secondary);">
+          제안하는 '트리플 액션 프로스테이트 부스터'는 기존 시장의 단순 전립선 제품과 차별화된 3중 기능성(전립선 건강 + 활력 증진 + 지구력 강화)을 제공하므로,
+          중저가 시장보다는 3~5만원대 중고가 시장에 포지셔닝하여 프리미엄 가치를 전달하는 것이 적절합니다. 특히, 월 3만원대 중반 가격은 소비자의 구매 부담을 줄이면서도
+          제품의 차별성을 어필하기에 용이합니다. 목표 원가율 15~20%를 준수하여 경쟁력 있는 제조단가를 확보하고, 마케팅 및 유통 비용을 고려한 합리적인 소비자 가격을 설정합니다.
+        </p>
+      </div>
+    </div>
+    <div class="slide-footer">출처: 보고서 내부 분석</div>
+  </div>
+</div>
+
+<!-- Slide 13: Risk -->
+<div class="slide" id="slide-13">
+  <div class="slide-inner">
+    <div class="slide-header">03 기회 & 전략 | 예상 리스크 및 대응 방안</div>
+    <div class="slide-body" style="display:flex; flex-direction:column;">
+      <div style="display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:16px; flex:1; min-height:0;">
+        <div style="padding:20px 24px; border:1px solid var(--border-color); border-radius:6px; display:flex; flex-direction:column; overflow:hidden; min-height:0;">
+          <h3 style="font-size:20px; font-weight:700; color:var(--accent); margin:0 0 10px; flex-shrink:0;">시장 관심도 추가 하락</h3>
+          <p style="font-size:13px; line-height:1.75; flex:1; overflow:hidden; color:rgba(255,255,255,0.92);">
+            전립선 관련 검색량 감소 추세가 심화되어 시장 규모 자체가 위축될 위험이 있습니다. 이는 투자 대비 낮은 성과로 이어질 수 있습니다.
+          </p>
+          <div style="border-top:1px solid rgba(255,255,255,0.1); margin-top:8px; padding-top:8px; font-size:11px; color:rgba(255,255,255,0.75); flex-shrink:0;">
+            대응 방안: '전립선 건강'을 넘어 '남성 활력' 등 확장된 베네핏으로 소구, 타겟 연령층 확대 및 신규 채널 발굴.
+          </div>
+        </div>
+        <div style="padding:20px 24px; border:1px solid var(--border-color); border-radius:6px; display:flex; flex-direction:column; overflow:hidden; min-height:0;">
+          <h3 style="font-size:20px; font-weight:700; color:var(--accent); margin:0 0 10px; flex-shrink:0;">경쟁 심화 및 가격 경쟁</h3>
+          <p style="font-size:13px; line-height:1.75; flex:1; overflow:hidden; color:rgba(255,255,255,0.92);">
+            유사 성분 기반의 저가 제품 출시로 인한 가격 경쟁이 심화될 수 있습니다. 이는 수익성 악화로 이어질 수 있습니다.
+          </p>
+          <div style="border-top:1px solid rgba(255,255,255,0.1); margin-top:8px; padding-top:8px; font-size:11px; color:rgba(255,255,255,0.75); flex-shrink:0;">
+            대응 방안: 차별화된 원료 및 기능성으로 프리미엄 포지셔닝 강화, 과학적 근거 기반의 가치 소구.
+          </div>
+        </div>
+        <div style="padding:20px 24px; border:1px solid var(--border-color); border-radius:6px; display:flex; flex-direction:column; overflow:hidden; min-height:0;">
+          <h3 style="font-size:20px; font-weight:700; color:var(--accent); margin:0 0 10px; flex-shrink:0;">규제 변화 및 신원료 개발 지연</h3>
+          <p style="font-size:13px; line-height:1.75; flex:1; overflow:hidden; color:rgba(255,255,255,0.92);">
+            식약처 규제 강화 또는 개별인정형 원료 개발 지연 시 시장 진입에 차질이 발생할 수 있습니다. 이는 출시 일정에 영향을 줍니다.
+          </p>
+          <div style="border-top:1px solid rgba(255,255,255,0.1); margin-top:8px; padding-top:8px; font-size:11px; color:rgba(255,255,255,0.75); flex-shrink:0;">
+            대응 방안: 규제 동향 상시 모니터링, 복수 원료 포트폴리오 구축, R&amp;D 역량 강화.
+          </div>
+        </div>
+        <div style="padding:20px 24px; border:1px solid var(--border-color); border-radius:6px; display:flex; flex-direction:column; overflow:hidden; min-height:0;">
+          <h3 style="font-size:20px; font-weight:700; color:var(--accent); margin:0 0 10px; flex-shrink:0;">소비자 신뢰도 확보의 어려움</h3>
+          <p style="font-size:13px; line-height:1.75; flex:1; overflow:hidden; color:rgba(255,255,255,0.92);">
+            과대 광고 논란 등으로 건강기능식품 전반에 대한 소비자 신뢰가 저하될 위험이 있습니다. 이는 제품 수용도에 부정적 영향을 미칩니다.
+          </p>
+          <div style="border-top:1px solid rgba(255,255,255,0.1); margin-top:8px; padding-top:8px; font-size:11px; color:rgba(255,255,255,0.75); flex-shrink:0;">
+            대응 방안: 투명한 정보 공개, 전문가 협력 마케팅, 실제 사용자 후기 및 임상 데이터 적극 활용.
+          </div>
+        </div>
+      </div>
+      <div class="insight-box" style="margin-top:auto;">
+        <div class="insight-box-title">핵심 인사이트</div>
+        <div class="insight-box-content">
+          시장 하락 트렌드, 경쟁 심화, 규제 및 신뢰도 이슈 등 다양한 리스크에 대한 선제적 대응 전략 마련이 성공적인 시장 진입의 핵심입니다.
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">출처: 보고서 내부 분석</div>
+  </div>
+</div>
+
+<!-- Slide 14: Roadmap -->
+<div class="slide" id="slide-14">
+  <div class="slide-inner">
+    <div class="slide-header">03 기회 & 전략 | 실행 로드맵</div>
+    <div class="slide-body" style="display:flex; flex-direction:column;">
+      <div style="display:flex; flex-direction:row; align-items:flex-start; gap:0; flex:1; min-height:0;">
+        <!-- 단계 1 -->
+        <div style="flex:1; padding:24px 20px; border-top:3px solid var(--accent); display:flex; flex-direction:column; gap:8px;">
+          <h3 style="font-size:18px; font-weight:700; margin:0;">1. 시장 및 제품 기획</h3>
+          <div style="font-size:13px; color:rgba(255,255,255,0.55); margin:0;">2026 Q2-Q3</div>
+          <div style="height:1px; background:rgba(255,255,255,0.08); margin:4px 0;"></div>
+          <ul style="font-size:14px; line-height:1.7; flex:1; padding-left:20px; margin:0;">
+            <li>UTP 기반 제품 콘셉트 구체화</li>
+            <li>원료 수급 및 제형 확정</li>
+            <li>제조사 선정 및 파트너십 구축</li>
+          </ul>
+          <div style="font-size:12px; color:var(--accent); font-weight:700; margin-top:auto; padding-top:8px; border-top:1px solid rgba(255,255,255,0.08);">
+            마일스톤: 제품 개발 완료 및 시제품 확보
+          </div>
+        </div>
+        <!-- 단계 2 -->
+        <div style="flex:1; padding:24px 20px; border-top:3px solid var(--accent); display:flex; flex-direction:column; gap:8px;">
+          <h3 style="font-size:18px; font-weight:700; margin:0;">2. 개발 및 인허가</h3>
+          <div style="font-size:13px; color:rgba(255,255,255,0.55); margin:0;">2026 Q4 - 2027 Q1</div>
+          <div style="height:1px; background:rgba(255,255,255,0.08); margin:4px 0;"></div>
+          <ul style="font-size:14px; line-height:1.7; flex:1; padding-left:20px; margin:0;">
+            <li>임상 시험 및 유효성 검증</li>
+            <li>식약처 품목 허가 신청</li>
+            <li>생산 공정 최적화</li>
+          </ul>
+          <div style="font-size:12px; color:var(--accent); font-weight:700; margin-top:auto; padding-top:8px; border-top:1px solid rgba(255,255,255,0.08);">
+            마일스톤: 식약처 품목 허가 획득
+          </div>
+        </div>
+        <!-- 단계 3 -->
+        <div style="flex:1; padding:24px 20px; border-top:3px solid var(--accent); display:flex; flex-direction:column; gap:8px;">
+          <h3 style="font-size:18px; font-weight:700; margin:0;">3. 런칭 및 시장 확장</h3>
+          <div style="font-size:13px; color:rgba(255,255,255,0.55); margin:0;">2027 Q2 이후</div>
+          <div style="height:1px; background:rgba(255,255,255,0.08); margin:4px 0;"></div>
+          <ul style="font-size:14px; line-height:1.7; flex:1; padding-left:20px; margin:0;">
+            <li>마케팅 전략 수립 및 실행</li>
+            <li>온/오프라인 유통 채널 확보</li>
+            <li>소비자 피드백 기반 제품 개선</li>
+          </ul>
+          <div style="font-size:12px; color:var(--accent); font-weight:700; margin-top:auto; padding-top:8px; border-top:1px solid rgba(255,255,255,0.08);">
+            마일스톤: 초기 시장 안착 및 판매 목표 달성
+          </div>
+        </div>
+      </div>
+      <div class="insight-box" style="margin-top:auto;">
+        <div class="insight-box-title">핵심 인사이트</div>
+        <div class="insight-box-content">
+          체계적인 로드맵을 통해 제품 개발부터 시장 진입 및 확장까지 각 단계별 목표를 명확히 하고, 유연한 실행 전략을 구축해야 합니다.
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">출처: 보고서 내부 분석</div>
+  </div>
+</div>
+
+<!-- Slide 15: References -->
+<div class="slide" id="slide-15">
+  <div class="slide-inner">
+    <div class="slide-header">참고문헌 및 데이터 출처</div>
+    <div class="slide-body" style="display:flex; flex-direction:column; overflow-y:auto; padding-bottom:8px;">
+      <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
+        <span style="color:var(--accent); font-weight:700; flex-shrink:0; min-width:24px;">[1]</span>
+        <span style="color:rgba(255,255,255,0.85);">네이버 데이터랩 검색어트렌드, 조회일: 2026-04-16, 키워드: 전립선 (연관 키워드 그룹 포함)</span>
+      </div>
+      <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
+        <span style="color:var(--accent); font-weight:700; flex-shrink:0; min-width:24px;">[2]</span>
+        <span style="color:rgba(255,255,255,0.85);">네이버 검색광고 키워드도구, 조회일: 2026-04-16, 키워드: 전립선 &#8212; 월간 PC/모바일 검색수 합계 14,450회</span>
+      </div>
+      <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
+        <span style="color:var(--accent); font-weight:700; flex-shrink:0; min-width:24px;">[3]</span>
+        <span style="color:rgba(255,255,255,0.85);">네이버 쇼핑 검색결과, 조회일: 2026-04-16, 키워드: 전립선, 상위 20개 상품 기준</span>
+      </div>
+      <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
+        <span style="color:var(--accent); font-weight:700; flex-shrink:0; min-width:24px;">[4]</span>
+        <span style="color:rgba(255,255,255,0.85);">식품안전나라 공공데이터포털, I0760(건강기능식품 원료분류), 조회일: 2026-04-16</span>
+      </div>
+      <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
+        <span style="color:var(--accent); font-weight:700; flex-shrink:0; min-width:24px;">[5]</span>
+        <span style="color:rgba(255,255,255,0.85);">WikiTree, "'M자 탈모' 치료에 '건강보험' 적용될 수도...보건복지부가 급히 내놓은...", 2026-04-02</span>
+      </div>
+      <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
+        <span style="color:var(--accent); font-weight:700; flex-shrink:0; min-width:24px;">[6]</span>
+        <span style="color:rgba(255,255,255,0.85);">Kukinews, "빅파마는 왜 방사성의약품에 배팅하나 [글로벌 트렌드로 읽는 K-제약바...]", 2026-03-24</span>
+      </div>
+      <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
+        <span style="color:var(--accent); font-weight:700; flex-shrink:0; min-width:24px;">[7]</span>
+        <span style="color:rgba(255,255,255,0.85);">Dailypharm, "보스톤사이언티픽코리아, 2천억 돌파…포트폴리오 전환 성과", 2026-04-09</span>
+      </div>
+      <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; line-height:1.8;">
+        <span style="color:var(--accent); font-weight:700; flex-shrink:0; min-width:24px;">[8]</span>
+        <span style="color:rgba(255,255,255,0.85);">Businesspost, "[Who Is ?] 윤재춘 대웅 대표이사 부회장", 2026-03-24</span>
+      </div>
+    </div>
+    <div class="slide-footer">본 보고서는 NPD 디렉터의 분석 및 추정 내용을 포함합니다.</div>
+  </div>
+</div>
+
+<script>
+  // viewport scale
+  function scaleSlides() {
+    var s = Math.min(window.innerWidth/1600, window.innerHeight/800);
+    document.querySelectorAll('.slide-inner').forEach(function(el) {
+      el.style.transform = 'scale('+s+')';
+      el.style.transformOrigin = 'center center';
+    });
+  }
+  window.addEventListener('resize', scaleSlides);
+  scaleSlides();
+
+  // 전환
+  var slides = document.querySelectorAll('.slide');
+  var cur = 0, lock = false;
+  function show(n) {
+    slides[cur].classList.remove('active');
+    cur = (n + slides.length) % slides.length;
+    slides[cur].classList.add('active');
+    document.getElementById('slide-num').textContent = (cur+1)+' / '+slides.length;
+  }
+  document.addEventListener('keydown', function(e) {
+    if (e.key==='ArrowRight'||e.key===' '){e.preventDefault();show(cur+1);}
+    if (e.key==='ArrowLeft'){e.preventDefault();show(cur-1);}
+    if (e.key==='f'||e.key==='F'){document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen();}
+  });
+  document.addEventListener('wheel', function(e) {
+    e.preventDefault();
+    if (lock) return; lock=true;
+    show(e.deltaY>0?cur+1:cur-1);
+    setTimeout(function(){lock=false;},300);
+  },{passive:false});
+  show(0);
+</script>
+
+
+<script>
+/* CARD2_BAR_DATA — Python 강제 주입 */
+(function(){
+  var barData = {min:14450, avg:39835, max:46166, total:14450};
+  var unit = '회';
+  function fmtNum(n){return (unit==='회'&&n>=10000)?(Math.round(n/1000)+'천'):String(n);}
+  function renderBar(){
+    var el = document.getElementById('card2Bar'); if(!el) return;
+    var ACCENT = '#FF5722'; var mx = barData.max||1;
+    el.innerHTML = ['min','avg','max'].map(function(k,i){
+      var v=barData[k]; var h=Math.max(8,Math.round(50*v/mx));
+      var op=[0.35,0.65,1][i]; var lbl=['최저','평균','최고'][i];
+      var cs=i===2?'color:'+ACCENT+';':'';
+      return '<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;">'
+        +'<div style="font-size:9px;opacity:0.5;'+cs+'">'+lbl+'</div>'
+        +'<div style="width:100%;background:'+ACCENT+';opacity:'+op+';height:'+h+'px;border-radius:2px 2px 0 0;"></div>'
+        +'<div style="font-size:10px;white-space:nowrap;'+cs+'">'+fmtNum(v)+unit+'</div>'
+        +'</div>';
+    }).join('');
+    var tot=document.getElementById('card2Total'); if(tot) tot.textContent=fmtNum(barData.total)+unit;
+  }
+  if(document.fonts) document.fonts.ready.then(renderBar); else window.addEventListener('load',renderBar);
+})();
+</script>
+<script>
+(function() {
+  var contentScales = {};
+
+  function measureAll() {
+    document.querySelectorAll('.slide').forEach(function(slide, i) {
+      var hidden = !slide.classList.contains('active');
+      if (hidden) {
+        slide.style.visibility = 'hidden';
+        slide.style.display    = 'flex';
+      }
+      var inner = slide.querySelector('.slide-inner');
+      if (inner) {
+        contentScales[i] = inner.scrollHeight > 800
+          ? (790 / inner.scrollHeight)
+          : 1;
+      }
+      if (hidden) {
+        slide.style.display    = '';
+        slide.style.visibility = '';
+      }
+    });
+  }
+
+  function applyScales() {
+    var vScale = Math.min(window.innerWidth / 1600, window.innerHeight / 800);
+    document.querySelectorAll('.slide').forEach(function(slide, i) {
+      var inner = slide.querySelector('.slide-inner');
+      if (!inner) return;
+      var cScale   = (contentScales[i] != null) ? contentScales[i] : 1;
+      var combined = vScale * cScale;
+      inner.style.transform       = 'scale(' + combined + ')';
+      inner.style.transformOrigin = 'center center';
+    });
+  }
+
+  window.scaleSlides = applyScales;
+  window.addEventListener('resize', applyScales);
+
+  (document.fonts ? document.fonts.ready : Promise.resolve()).then(function() {
+    measureAll();
+    applyScales();
+  });
+})();
+</script>
+</body>
+</html>
